@@ -3,8 +3,8 @@ package com.wildbody.kite.Dto;
 import lombok.Data;
 
 @Data
-public class Member {
+public class News {
   private int id;
-  private String email;
-  private int gender;
+  private String title;
+  private String content;
 }
