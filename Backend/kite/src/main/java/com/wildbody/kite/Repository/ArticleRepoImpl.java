@@ -1,8 +1,8 @@
 package com.wildbody.kite.Repository;
 
-import lombok.Data;
+import org.springframework.stereotype.Repository;
 
-@Data
+@Repository
 public class ArticleRepoImpl{
 
 }
