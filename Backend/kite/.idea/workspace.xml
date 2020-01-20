@@ -4,7 +4,10 @@
     <list default="true" id="e26264e4-6a8d-4fd7-9bfa-03396f2a3bb8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wildbody/kite/Dto/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wildbody/kite/Dto/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../FrontEnd/kite_front/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd/kite_front/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../FrontEnd/kite_front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd/kite_front/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../FrontEnd/kite_front/src/components/HelloWorld.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../FrontEnd/kite_front/src/components/HelloWorld.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +89,7 @@
       <updated>1579235862408</updated>
       <workItem from="1579235866063" duration="1576000" />
       <workItem from="1579237851598" duration="1104000" />
+      <workItem from="1579480471533" duration="70000" />
     </task>
     <servers />
   </component>
