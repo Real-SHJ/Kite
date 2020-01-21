@@ -8,19 +8,16 @@
 </template>
 
 <script>
-import Header from './components/Header';
-import Menu from './components/Menu';
-import Footer from './components/Footer';
-
+import Menu from './components/Menu.vue'
+import Footer from './components/Footer.vue'
+import Header from './components/Header.vue'
 export default {
-
   components: {
-    Header,
     Menu,
     Footer,
-  },
-
-};
+    Header
+  }
+}
 
 </script>
 
