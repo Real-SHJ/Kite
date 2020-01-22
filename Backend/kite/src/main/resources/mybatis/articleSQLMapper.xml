@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kite.article">
+	<insert id="insert" parameterType="Article">
+		insert into Article
+		(company,
+		title, summary, newspaper, publicationDate, url, image)
+		values(#{company}, #{title}, #{summary}, #{newspaper},
+		#{publicationDate}, #{url}, #{image});
+		insert into Article_content (content) values (#{content});
+		insert into Article_keyword (keyword) values (#{keyword});
+	</insert>
+	<update id="update" parameterType="Article">
+		update Article set
+		company=#{company}, title=#{title}, summary=#{summary},
+		newspaper=#{newspaper}, publicationDate=#{publicationDate},
+		url=#{url}, image=#{image}
+		where
+		articleid=#{articleid};
+		update Article_content set
+		content=#{content}
+		where
+		articleid=#{articleid};
+		update Article_keyword set
+		keyword=#{keyword}
+		where
+		articleid=#{articleid};
+	</update>
+	<delete id="delete" parameterType="int">
+		delete from Article
+		where
+		articleid=#{articleid}
+	</delete>
+	<select id="selectOne" parameterType="int"
+		resultType="Article">
+		select
+		articleid, company, title, summary, newspaper,
+		publicationDate, url, image
+		from Article
+		where articleid=#{articleid}
+	</select>
+	<select id="selectList" resultType="Article">
+		select
+		articleid, company,
+		title, summary, newspaper, publicationDate, url, image
+		from Article
+	</select>
+</mapper>

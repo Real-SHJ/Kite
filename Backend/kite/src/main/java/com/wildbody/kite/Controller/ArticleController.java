@@ -1,17 +1,134 @@
 package com.wildbody.kite.Controller;
 
 import com.wildbody.kite.Dto.Article;
-<<<<<<< HEAD:Backend/kite/src/main/java/com/wildbody/kite/Controller/ArticleController.java
-
-=======
->>>>>>> a5e070104e235c060f0d792e4e28fb5758f344bc:Backend/kite/src/main/java/com/wildbody/kite/Controller/ArticleController.java
+import com.wildbody.kite.Service.ArticleService;
+import io.swagger.annotations.ApiOperation;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("api/news/")
+@RestController
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
+@RequestMapping("/api")
 public class ArticleController {
-  @GetMapping("select")
-  public Article select(Article news) {
-    return null;
-  }
+
+    private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
+    @Autowired
+    ArticleService aSer;
+
+    @PostMapping("/registerarticle")
+    @ApiOperation(value = "article 등록 서비스")
+    private @ResponseBody
+    ResponseEntity<Map<String, Object>> registerArticle(@RequestBody Article dto) {
+        ResponseEntity<Map<String, Object>> resEntity = null;
+        try {
+            int insert = aSer.articleInsert(dto.getCompany(), dto.getTitle(), dto.getSummary(),
+                dto.getNewspaper(),
+                dto.getPublicationDate(), dto.getUrl(), dto.getImage(), dto.getContent(),
+                dto.getKeyword());
+            Map<String, Object> map = new HashMap<>();
+            map.put("resvalue", insert);
+            map.put("message", "기사 등록 성공");
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("message", "기사 등록 실패");
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        }
+        return resEntity;
+    }
+
+    @PutMapping("/updatearticle")
+    @ApiOperation(value = "article 수정 서비스")
+    private @ResponseBody
+    ResponseEntity<Map<String, Object>> updateArticle(@RequestBody Article dto) {
+        ResponseEntity<Map<String, Object>> resEntity = null;
+        try {
+            int update = aSer.articleUpdate(dto.getArticleid(), dto.getCompany(), dto.getTitle(),
+                dto.getSummary(),
+                dto.getNewspaper(), dto.getPublicationDate(), dto.getUrl(), dto.getImage(),
+                dto.getContent(),
+                dto.getKeyword());
+            Map<String, Object> map = new HashMap<>();
+            map.put("resvalue", update);
+            map.put("message", "기사 수정 성공");
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("message", "기사 수정 실패");
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        }
+        return resEntity;
+    }
+
+    @PostMapping("/deletearticle/{id}")
+    @ApiOperation(value = "id를 받아 article 삭제 서비스")
+    private ResponseEntity<Map<String, Object>> deleteArticle(@PathVariable("id") String id) {
+        ResponseEntity<Map<String, Object>> resEntity = null;
+        try {
+            int delete = aSer.articleDelete(id);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("message", "기사 삭제 성공");
+            map.put("resvalue", delete);
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("message", "기사 삭제 실패");
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        }
+        return resEntity;
+    }
+
+    @GetMapping("/infoarticle/{id}")
+    @ApiOperation(value = "id를 받아 article 조회 서비스", response = Article.class)
+    private ResponseEntity<Map<String, Object>> infoArticle(@PathVariable("id") String id) {
+        ResponseEntity<Map<String, Object>> resEntity = null;
+        Article article = null;
+        try {
+            article = aSer.articleInfo(id);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("message", "기사 조회 성공");
+            map.put("article", article);
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("message", "기사 조회 실패");
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        }
+        return resEntity;
+    }
+
+    @GetMapping("/listarticle")
+    @ApiOperation("기사 목록 조회 서비스")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> listArticle() {
+        ResponseEntity<Map<String, Object>> resEntity = null;
+        List<Article> list = null;
+        try {
+            list = aSer.articleList();
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("message", "기사 목록 조회 성공");
+            map.put("resvalue", list);
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("message", "기사 목록 조회 실패");
+            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        }
+        return resEntity;
+    }
 }

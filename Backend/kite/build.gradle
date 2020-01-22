@@ -1,34 +1,50 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.3.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-	id 'java'
+    id 'java'
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+
 }
 
 group = 'com.wildbody'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
+targetCompatibility = '1.8'
 
 repositories {
-	mavenCentral()
+    jcenter()
+    mavenCentral()
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+    implementation("org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1")
+    compile("mysql:mysql-connector-java:8.0.18")
+    compile("io.springfox:springfox-swagger-ui:2.9.2")
+    compile("io.springfox:springfox-swagger2:2.9.2")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testCompile("junit:junit:4.12")
+//	components {
+//        withModule('org.springframework:spring-beans') {
+//            allVariants {
+//                withDependencyConstraints {
+//                    // Need to patch constraints because snakeyaml is an optional dependency
+//                    it.findAll { it.name == 'snakeyaml' }.each { it.version { strictly '1.19' } }
+//                }
+//            }
+//        }
+//    }
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
