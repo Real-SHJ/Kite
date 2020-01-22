@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("api/mem/")
 public class MemberController {
 
-  @Autowired private IMemberService svc;
+  @Autowired
+  private IMemberService svc;
 
   @PostMapping("signup")
   public void Sign_Up(@RequestBody Member mem) {

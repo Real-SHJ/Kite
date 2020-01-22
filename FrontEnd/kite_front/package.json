@@ -10,10 +10,16 @@
   "dependencies": {
     "@mdi/font": "^3.6.95",
     "core-js": "^3.4.4",
+<<<<<<< HEAD
     "roboto-fontface": "*",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",
     "vuetify": "^2.1.0",
+=======
+    "vue": "^2.6.10",
+    "vue-router": "^3.1.3",
+    "vuetify": "^2.2.4",
+>>>>>>> a5e070104e235c060f0d792e4e28fb5758f344bc
     "vuex": "^3.1.2"
   },
   "devDependencies": {
@@ -22,6 +28,7 @@
     "@vue/cli-plugin-router": "^4.1.0",
     "@vue/cli-plugin-vuex": "^4.1.0",
     "@vue/cli-service": "^4.1.0",
+<<<<<<< HEAD
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
@@ -45,6 +52,12 @@
     "parserOptions": {
       "parser": "babel-eslint"
     }
+=======
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-vue": "^6.1.2",
+    "vue-template-compiler": "^2.6.10"
+>>>>>>> a5e070104e235c060f0d792e4e28fb5758f344bc
   },
   "browserslist": [
     "> 1%",
