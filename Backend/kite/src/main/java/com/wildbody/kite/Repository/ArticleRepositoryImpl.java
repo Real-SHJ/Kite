@@ -12,9 +12,6 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     @Autowired
     SqlSession session;
 
-    public ArticleRepositoryImpl() {
-        super();
-    }
 
     @Override
     public int articleInsert(Article a) {

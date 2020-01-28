@@ -12,26 +12,14 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleRepository repo;
 
-    public ArticleServiceImpl() {
-        super();
+    @Override
+    public int articleInsert(Article a) {
+        return repo.articleInsert(a);
     }
 
     @Override
-    public int articleInsert(String company, String title, String summary, String newspaper,
-        String publicationDate,
-        String url, String image, String content, String keyword) {
-        return repo.articleInsert(
-            new Article(0, company, title, summary, newspaper, publicationDate, url, image, content,
-                keyword));
-    }
-
-    @Override
-    public int articleUpdate(int articleid, String company, String title, String summary,
-        String newspaper,
-        String publicationDate, String url, String image, String content, String keyword) {
-        return repo.articleUpdate(
-            new Article(articleid, company, title, summary, newspaper, publicationDate, url,
-                image, content, keyword));
+    public int articleUpdate(Article a) {
+        return repo.articleUpdate(a);
     }
 
     @Override

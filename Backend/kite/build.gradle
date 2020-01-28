@@ -25,24 +25,34 @@ configurations {
 dependencies {
     implementation("org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE")
     implementation("org.springframework.boot:spring-boot-starter-web")
+//    Spring-boot-AOP
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.2.4.RELEASE'
+//    JDBC
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+//    Mybatis
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1")
+//    Mysql connector
     compile("mysql:mysql-connector-java:8.0.18")
+//    SWAGGER
     compile("io.springfox:springfox-swagger-ui:2.9.2")
     compile("io.springfox:springfox-swagger2:2.9.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testCompile("junit:junit:4.12")
-//	components {
-//        withModule('org.springframework:spring-beans') {
-//            allVariants {
-//                withDependencyConstraints {
-//                    // Need to patch constraints because snakeyaml is an optional dependency
-//                    it.findAll { it.name == 'snakeyaml' }.each { it.version { strictly '1.19' } }
-//                }
-//            }
-//        }
-//    }
+//    JWT
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+//    lombok
+    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+    compile 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+//    Logging
+
+//    HttpCommon REST Template
+    compile group: 'org.apache.httpcomponents', name: 'httpclient'
+
+
+
+
 }
 
 test {

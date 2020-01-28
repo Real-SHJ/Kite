@@ -7,10 +7,56 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="DatabaseLocalColorSettings">
+    <colors>
+      <entry key="kite/a33df264-2434-4ef7-a661-e1ac93d7bd28:SCHEMA" value="Orange" />
+    </colors>
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="kite@13.125.153.118" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="kite@13.125.153.118" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="kite@13.125.153.118" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="kite: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
@@ -20,13 +66,13 @@
   </component>
   <component name="ProjectId" id="1WkoEgtKY3Z3WrQEp4FI9qA8Cel" />
   <component name="ProjectViewState">
-    <option name="flattenPackages" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -46,10 +92,34 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="terminal" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="show.unlinked.gradle.project.popup" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.wildbody.kite.Config" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.KiteSpringApplication">
+    <configuration name="kite [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="KiteSpringApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="kite.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.wildbody.kite.KiteSpringApplication" />
@@ -57,13 +127,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.kite [dependencies]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
       <list>
         <serviceView>
           <treeState>
-            <expand />
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:kite@13.125.153.118" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:kite@13.125.153.118" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@425b8d73" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+            </expand>
             <select />
           </treeState>
         </serviceView>
@@ -81,6 +166,12 @@
       <option name="presentableId" value="Default" />
       <updated>1579702843781</updated>
       <workItem from="1579702845312" duration="1282000" />
+      <workItem from="1579737767412" duration="5329000" />
+      <workItem from="1579753188771" duration="244000" />
+      <workItem from="1579753447734" duration="4044000" />
+      <workItem from="1579848431364" duration="3081000" />
+      <workItem from="1579931650453" duration="11646000" />
+      <workItem from="1580178644362" duration="7445000" />
     </task>
     <servers />
   </component>
@@ -92,37 +183,107 @@
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state x="496" y="237" key="#Project_Structure/-54.-1057.1920.1057/0.23.1792.1097@0.23.1792.1097" timestamp="1579704167209" />
-    <state width="641" height="303" key="GridCell.Tab.0.bottom" timestamp="1579704133280">
+    <state x="496" y="238" key="#SQL_Dialects" timestamp="1579931745904">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="496" y="238" key="#SQL_Dialects/0.23.1792.1097@0.23.1792.1097" timestamp="1579931745904" />
+    <state x="129" y="291" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579848941443">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="129" y="291" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1097@0.23.1792.1097" timestamp="1579848941443" />
+    <state x="709" y="288" key="#com.intellij.ide.util.MemberChooser" timestamp="1580190956981">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="709" y="288" key="#com.intellij.ide.util.MemberChooser/0.23.1792.1097@0.23.1792.1097" timestamp="1580190956981" />
+    <state x="489" y="491" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1580023043124">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="489" y="491" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023043124" />
+    <state x="584" y="385" key="DUMP_DIALOG_DIMENSION_KEY" timestamp="1580172509511">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="584" y="385" key="DUMP_DIALOG_DIMENSION_KEY/0.23.1792.1097@0.23.1792.1097" timestamp="1580172509511" />
+    <state width="1750" height="303" key="GridCell.Tab.0.bottom" timestamp="1580188037220">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="641" height="303" key="GridCell.Tab.0.bottom/-54.-1057.1920.1057/0.23.1792.1097@0.23.1792.1097" timestamp="1579704133280" />
-    <state width="641" height="303" key="GridCell.Tab.0.center" timestamp="1579704133279">
+    <state width="1750" height="303" key="GridCell.Tab.0.bottom/0.23.1792.1097@0.23.1792.1097" timestamp="1580188037220" />
+    <state width="1413" height="303" key="GridCell.Tab.0.bottom/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023105821" />
+    <state width="1750" height="303" key="GridCell.Tab.0.center" timestamp="1580188037219">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="641" height="303" key="GridCell.Tab.0.center/-54.-1057.1920.1057/0.23.1792.1097@0.23.1792.1097" timestamp="1579704133279" />
-    <state width="641" height="303" key="GridCell.Tab.0.left" timestamp="1579704133279">
+    <state width="1750" height="303" key="GridCell.Tab.0.center/0.23.1792.1097@0.23.1792.1097" timestamp="1580188037219" />
+    <state width="1413" height="303" key="GridCell.Tab.0.center/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023105820" />
+    <state width="1750" height="303" key="GridCell.Tab.0.left" timestamp="1580188037219">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="641" height="303" key="GridCell.Tab.0.left/-54.-1057.1920.1057/0.23.1792.1097@0.23.1792.1097" timestamp="1579704133279" />
-    <state width="641" height="303" key="GridCell.Tab.0.right" timestamp="1579704133280">
+    <state width="1750" height="303" key="GridCell.Tab.0.left/0.23.1792.1097@0.23.1792.1097" timestamp="1580188037219" />
+    <state width="1413" height="303" key="GridCell.Tab.0.left/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023105820" />
+    <state width="1750" height="303" key="GridCell.Tab.0.right" timestamp="1580188037220">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="641" height="303" key="GridCell.Tab.0.right/-54.-1057.1920.1057/0.23.1792.1097@0.23.1792.1097" timestamp="1579704133280" />
-    <state width="641" height="303" key="GridCell.Tab.1.bottom" timestamp="1579704133281">
+    <state width="1750" height="303" key="GridCell.Tab.0.right/0.23.1792.1097@0.23.1792.1097" timestamp="1580188037220" />
+    <state width="1413" height="303" key="GridCell.Tab.0.right/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023105821" />
+    <state width="1750" height="303" key="GridCell.Tab.1.bottom" timestamp="1580188037222">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="641" height="303" key="GridCell.Tab.1.bottom/-54.-1057.1920.1057/0.23.1792.1097@0.23.1792.1097" timestamp="1579704133281" />
-    <state width="641" height="303" key="GridCell.Tab.1.center" timestamp="1579704133281">
+    <state width="1750" height="303" key="GridCell.Tab.1.bottom/0.23.1792.1097@0.23.1792.1097" timestamp="1580188037222" />
+    <state width="1413" height="303" key="GridCell.Tab.1.bottom/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023105822" />
+    <state width="1750" height="303" key="GridCell.Tab.1.center" timestamp="1580188037221">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="641" height="303" key="GridCell.Tab.1.center/-54.-1057.1920.1057/0.23.1792.1097@0.23.1792.1097" timestamp="1579704133281" />
-    <state width="641" height="303" key="GridCell.Tab.1.left" timestamp="1579704133280">
+    <state width="1750" height="303" key="GridCell.Tab.1.center/0.23.1792.1097@0.23.1792.1097" timestamp="1580188037221" />
+    <state width="1413" height="303" key="GridCell.Tab.1.center/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023105822" />
+    <state width="1750" height="303" key="GridCell.Tab.1.left" timestamp="1580188037221">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="641" height="303" key="GridCell.Tab.1.left/-54.-1057.1920.1057/0.23.1792.1097@0.23.1792.1097" timestamp="1579704133280" />
-    <state width="641" height="303" key="GridCell.Tab.1.right" timestamp="1579704133281">
+    <state width="1750" height="303" key="GridCell.Tab.1.left/0.23.1792.1097@0.23.1792.1097" timestamp="1580188037221" />
+    <state width="1413" height="303" key="GridCell.Tab.1.left/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023105821" />
+    <state width="1750" height="303" key="GridCell.Tab.1.right" timestamp="1580188037221">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="641" height="303" key="GridCell.Tab.1.right/-54.-1057.1920.1057/0.23.1792.1097@0.23.1792.1097" timestamp="1579704133281" />
+    <state width="1750" height="303" key="GridCell.Tab.1.right/0.23.1792.1097@0.23.1792.1097" timestamp="1580188037221" />
+    <state width="1413" height="303" key="GridCell.Tab.1.right/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023105822" />
+    <state x="416" y="228" key="Registry" timestamp="1579753426410">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="416" y="228" key="Registry/0.23.1792.1097@0.23.1792.1097" timestamp="1579753426410" />
+    <state x="384" y="153" key="SettingsEditor" timestamp="1580191308498">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="384" y="153" key="SettingsEditor/0.23.1792.1097@0.23.1792.1097" timestamp="1580191308498" />
+    <state x="384" y="153" key="SettingsEditor/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023507446" />
+    <state x="1074" y="310" width="540" height="524" key="StructurePopup" timestamp="1580167812985">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="1074" y="310" width="540" height="524" key="StructurePopup/0.23.1792.1097@0.23.1792.1097" timestamp="1580167812985" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1579754525223">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.23.1792.1097@0.23.1792.1097" timestamp="1579754525223" />
+    <state x="100" y="123" width="1592" height="897" key="dock-window-1" timestamp="1579760274308">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="100" y="123" width="1592" height="897" key="dock-window-1/0.23.1792.1097@0.23.1792.1097" timestamp="1579760274308" />
+    <state x="100" y="123" width="1592" height="897" key="dock-window-2" timestamp="1579760379656">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="100" y="123" width="1592" height="897" key="dock-window-2/0.23.1792.1097@0.23.1792.1097" timestamp="1579760379656" />
+    <state x="561" y="266" key="run.anything.popup" timestamp="1579753352424">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="561" y="266" key="run.anything.popup/0.23.1792.1097@0.23.1792.1097" timestamp="1579753352424" />
+    <state x="561" y="268" width="670" height="676" key="search.everywhere.popup" timestamp="1580188010477">
+      <screen x="0" y="23" width="1792" height="1097" />
+    </state>
+    <state x="561" y="268" width="670" height="676" key="search.everywhere.popup/0.23.1792.1097@0.23.1792.1097" timestamp="1580188010477" />
+    <state x="561" y="268" width="670" height="676" key="search.everywhere.popup/1792.200.1112.747/0.23.1792.1097@0.23.1792.1097" timestamp="1580023574853" />
   </component>
 </project>

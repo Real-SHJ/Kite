@@ -12,10 +12,6 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Autowired
     SqlSession session;
 
-    public MemberRepositoryImpl() {
-        super();
-    }
-
     @Override
     public int memberInsert(Member m) {
         return session.insert("kite.member.insert", m);
@@ -41,5 +37,15 @@ public class MemberRepositoryImpl implements MemberRepository {
     public List<Member> memberList() {
         List<Member> list = session.selectList("kite.member.selectList");
         return list;
+    }
+
+    @Override
+    public Member login(Member member) {
+        return session.selectOne("kite.member.memLogin", member);
+    }
+
+    @Override
+    public void testUpdate(Member m) {
+        session.update("kite.member.tupdate",m);
     }
 }

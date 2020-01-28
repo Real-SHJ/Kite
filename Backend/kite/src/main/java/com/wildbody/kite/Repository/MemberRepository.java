@@ -15,4 +15,7 @@ public interface MemberRepository {
 
     public List<Member> memberList();
 
+    public Member login(Member member);
+
+    public void testUpdate(Member m);
 }

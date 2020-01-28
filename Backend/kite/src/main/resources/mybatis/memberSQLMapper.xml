@@ -3,25 +3,35 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kite.member">
-	<insert id="insert" parameterType="Member">
-		insert into Members
+  <insert id="insert" parameterType="Member">
+		insert into members
 		(email,pw,lastname,firstname,birthday,gender,area,job,company,image)
 		values(#{email},#{pw},#{lastname},#{firstname},#{birthday},#{gender},#{area},#{job},#{company},#{image})
 	</insert>
-	<update id="update" parameterType="Member">
-		update Members set
+  <update id="update" parameterType="Member">
+		update members set
 		email=#{email}, pw=#{pw}, lastname=#{lastname}, firstname=#{firstname}, birthday=#{birthday}, gender=#{gender}, area=#{area}, job=#{job}, company=#{company}, image=#{image}
 		where memberid=#{memberid}
 	</update>
-	<delete id="delete" parameterType="int">
-		delete from Members
+  <delete id="delete" parameterType="int">
+		delete from members
 		where memberid=#{memberid}
 	</delete>
-	<select id="selectOne" parameterType="int"
-		resultType="Member">
-		select * from Members where memberid=#{memberid}
+  <select id="selectOne" parameterType="int"
+    resultType="Member">
+		select * from members where memberid=#{memberid}
 	</select>
-	<select id="selectList" resultType="Member">
-		select * from Members
+  <select id="selectList" resultType="Member">
+		select * from members
 	</select>
+  <select id="memLogin" parameterType="Member" resultType="Member">
+		select *
+		from members
+		where	email=#{email} and pw=#{pw}
+	</select>
+	<update id="tupdate" parameterType="Member">
+		update members
+		set refreshtoken=#{refreshToken}
+		where memberid=#{memberid}
+	</update>
 </mapper>

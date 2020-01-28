@@ -23,23 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
-@RequestMapping("/api")
+@RequestMapping("/api/article")
 public class ArticleController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
     @Autowired
     ArticleService aSer;
 
-    @PostMapping("/registerarticle")
+    @PostMapping("/regist")
     @ApiOperation(value = "article 등록 서비스")
     private @ResponseBody
     ResponseEntity<Map<String, Object>> registerArticle(@RequestBody Article dto) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         try {
-            int insert = aSer.articleInsert(dto.getCompany(), dto.getTitle(), dto.getSummary(),
-                dto.getNewspaper(),
-                dto.getPublicationDate(), dto.getUrl(), dto.getImage(), dto.getContent(),
-                dto.getKeyword());
+            int insert = aSer.articleInsert(dto);
             Map<String, Object> map = new HashMap<>();
             map.put("resvalue", insert);
             map.put("message", "기사 등록 성공");
@@ -52,17 +48,13 @@ public class ArticleController {
         return resEntity;
     }
 
-    @PutMapping("/updatearticle")
+    @PutMapping("/update")
     @ApiOperation(value = "article 수정 서비스")
     private @ResponseBody
     ResponseEntity<Map<String, Object>> updateArticle(@RequestBody Article dto) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         try {
-            int update = aSer.articleUpdate(dto.getArticleid(), dto.getCompany(), dto.getTitle(),
-                dto.getSummary(),
-                dto.getNewspaper(), dto.getPublicationDate(), dto.getUrl(), dto.getImage(),
-                dto.getContent(),
-                dto.getKeyword());
+            int update = aSer.articleUpdate(dto);
             Map<String, Object> map = new HashMap<>();
             map.put("resvalue", update);
             map.put("message", "기사 수정 성공");
@@ -75,7 +67,7 @@ public class ArticleController {
         return resEntity;
     }
 
-    @PostMapping("/deletearticle/{id}")
+    @PostMapping("/delete/{id}")
     @ApiOperation(value = "id를 받아 article 삭제 서비스")
     private ResponseEntity<Map<String, Object>> deleteArticle(@PathVariable("id") String id) {
         ResponseEntity<Map<String, Object>> resEntity = null;
@@ -93,7 +85,7 @@ public class ArticleController {
         return resEntity;
     }
 
-    @GetMapping("/infoarticle/{id}")
+    @GetMapping("/info/{id}")
     @ApiOperation(value = "id를 받아 article 조회 서비스", response = Article.class)
     private ResponseEntity<Map<String, Object>> infoArticle(@PathVariable("id") String id) {
         ResponseEntity<Map<String, Object>> resEntity = null;
@@ -112,7 +104,7 @@ public class ArticleController {
         return resEntity;
     }
 
-    @GetMapping("/listarticle")
+    @GetMapping("/list")
     @ApiOperation("기사 목록 조회 서비스")
     public @ResponseBody
     ResponseEntity<Map<String, Object>> listArticle() {
