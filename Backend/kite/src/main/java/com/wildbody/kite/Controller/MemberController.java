@@ -1,11 +1,13 @@
 package com.wildbody.kite.Controller;
 
 import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.Dto.NaverMember;
 import com.wildbody.kite.Service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -142,6 +144,35 @@ public class MemberController {
             map.put("isLogin", isLogin);
         }
         ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        return ret;
+    }
+
+    @PostMapping("/naverlogin")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> naverLogin(NaverMember nMember,
+        HttpServletRequest request) {
+        ResponseEntity<Map<String, Object>> ret = null;
+        String state = request.getHeader("nstate");
+        boolean isAuth = false;
+        Map<String, Object> map = new HashMap<>();
+
+        if (state.equals(nMember.getState())) {
+            // authorization
+            isAuth = true;
+            map.put("isAuth", isAuth);
+            ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } else {
+            map.put("isAuth",isAuth);
+            ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.METHOD_NOT_ALLOWED);
+        }
+        return ret;
+    }
+
+    @PostMapping("/kakaologin")
+    public @ResponseBody
+    ResponseEntity<Map<String,Object>> kakaoLogin(){
+        ResponseEntity<Map<String,Object>> ret=null;
+
         return ret;
     }
 }
