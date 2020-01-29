@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-content>
+    <v-container class="px-2">
       <div v-for="cardNumber in cardNumbers" :key="cardNumber.id" class="my-3">
         <v-card
           class="mx-auto my-auto"
@@ -35,7 +35,7 @@
           </v-card-actions>
         </v-card>
       </div>
-    </v-content>
+    </v-container>
   </div>
 </template>
 
@@ -62,5 +62,4 @@ export default {
 </script>
 
 <style>
-
 </style>

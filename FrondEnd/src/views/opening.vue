@@ -51,72 +51,72 @@
 
 <script>
 export default {
-    name: 'opening',
-    data() {
-        return {
-            currentSlide: 0,
-            isPreviousSlide: false,
-            isFirstLoad: true,
-            slides: [
-                {
-                    headlineFirstLine: 'Company Category',
-                    headlineSecondLine: 'News Classify',
-                    sublineFirstLine: '기업별 카테고리로',
-                    sublineSecondLine: '뉴스를 분류해줍니다.',
-                    bgImg: 'https://i.postimg.cc/ZKPM9dgZ/background1.jpg',
-                    rectImg: 'https://i.postimg.cc/ZKPM9dgZ/background1.jpg',
-                },
-                {
-                    headlineFirstLine: 'My news',
-                    headlineSecondLine: 'Store, Analysis',
-                    sublineFirstLine: '나만의 기사를',
-                    sublineSecondLine: '쉽게 관리하고 분석해줍니다.',
-                    bgImg: 'https://i.postimg.cc/fyffbxbr/background2.jpg',
-                    rectImg: 'https://i.postimg.cc/fyffbxbr/background2.jpg',
-                },
-                {
-                    headlineFirstLine: 'Other People',
-                    headlineSecondLine: 'Share, comparison analysis',
-                    sublineFirstLine: '다른 사람들과',
-                    sublineSecondLine: '기사와 키워드를 공유하고 분석합니다.',
-                    bgImg: 'https://i.postimg.cc/CKnC8y1D/background3.jpg',
-                    rectImg: 'https://i.postimg.cc/CKnC8y1D/background3.jpg',
-                },
-            ],
-        };
-    },
-    mounted() {
-        const productRotatorSlide = document.getElementById('app');
-        let startX = 0;
-        let endX = 0;
-
-        productRotatorSlide.addEventListener('touchstart', (event) => {
-            startX = event.touches[0].pageX;
-        });
-
-        productRotatorSlide.addEventListener('touchmove', (event) => {
-            endX = event.touches[0].pageX;
-        });
-
-        productRotatorSlide.addEventListener('touchend', function(event) {
-            const threshold = startX - endX;
-
-            if (threshold < 150 && this.currentSlide > 0) {
-                this.currentSlide--;
-            }
-            if (threshold > -150 && this.currentSlide < this.slides.length - 1) {
-                this.currentSlide++;
-            }
-        }.bind(this));
-    },
-    methods: {
-        updateSlide(index) {
-            index < (this.currentSlide ? this.isPreviousSlide = true : this.isPreviousSlide = false);
-            this.currentSlide = index;
-            this.isFirstLoad = false;
+  name: 'opening',
+  data () {
+    return {
+      currentSlide: 0,
+      isPreviousSlide: false,
+      isFirstLoad: true,
+      slides: [
+        {
+          headlineFirstLine: 'Company Category',
+          headlineSecondLine: 'News Classify',
+          sublineFirstLine: '기업별 카테고리로',
+          sublineSecondLine: '뉴스를 분류해줍니다.',
+          bgImg: 'https://i.postimg.cc/ZKPM9dgZ/background1.jpg',
+          rectImg: 'https://i.postimg.cc/ZKPM9dgZ/background1.jpg'
         },
-    },
-};
+        {
+          headlineFirstLine: 'My news',
+          headlineSecondLine: 'Store, Analysis',
+          sublineFirstLine: '나만의 기사를',
+          sublineSecondLine: '쉽게 관리하고 분석해줍니다.',
+          bgImg: 'https://i.postimg.cc/fyffbxbr/background2.jpg',
+          rectImg: 'https://i.postimg.cc/fyffbxbr/background2.jpg'
+        },
+        {
+          headlineFirstLine: 'Other People',
+          headlineSecondLine: 'Share, comparison analysis',
+          sublineFirstLine: '다른 사람들과',
+          sublineSecondLine: '기사와 키워드를 공유하고 분석합니다.',
+          bgImg: 'https://i.postimg.cc/CKnC8y1D/background3.jpg',
+          rectImg: 'https://i.postimg.cc/CKnC8y1D/background3.jpg'
+        }
+      ]
+    }
+  },
+  mounted () {
+    const productRotatorSlide = document.getElementById('app')
+    let startX = 0
+    let endX = 0
+
+    productRotatorSlide.addEventListener('touchstart', (event) => {
+      startX = event.touches[0].pageX
+    })
+
+    productRotatorSlide.addEventListener('touchmove', (event) => {
+      endX = event.touches[0].pageX
+    })
+
+    productRotatorSlide.addEventListener('touchend', function (event) {
+      const threshold = startX - endX
+
+      if (threshold < 150 && this.currentSlide > 0) {
+        this.currentSlide--
+      }
+      if (threshold > -150 && this.currentSlide < this.slides.length - 1) {
+        this.currentSlide++
+      }
+    }.bind(this))
+  },
+  methods: {
+    updateSlide (index) {
+      index < (this.currentSlide ? this.isPreviousSlide = true : this.isPreviousSlide = false)
+      this.currentSlide = index
+      this.isFirstLoad = false
+    }
+  }
+}
 </script>
 
 <style>

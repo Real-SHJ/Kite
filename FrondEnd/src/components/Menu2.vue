@@ -1,13 +1,9 @@
 <template>
-  <div>
-    <v-container class="fill-height">
-      <v-btn class="btn_abc" color="red" light @mouseover="drawer = true">
-        <v-img
-          class="menu_img"
-          src="https://randomuser.me/api/portraits/men/78.jpg"
-        ></v-img>
-      </v-btn>
-    </v-container>
+  <v-layout class="layout">
+
+      <v-btn class="mx-2" fab dark color="teal" @mouseover="drawer = true">
+      <v-icon dark>mdi-format-list-bulleted-square</v-icon>
+    </v-btn>
 
     <v-navigation-drawer
       v-model="drawer"
@@ -30,7 +26,7 @@
       <v-list dense>
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-avatar>
-            <v-img src="item.icon"></v-img>
+            <v-img src="../assets/logo.png"></v-img>
           </v-list-item-avatar>
 
           <v-list-item-content>
@@ -39,21 +35,21 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-  </div>
+  </v-layout>
 </template>
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       drawer: null,
       items: [
-        { title: "삼성전자", icon: "../assets/samsung.png" },
-        { title: "LG전자", icon: "question_answer" }
+        { title: '삼성전자', icon: '../assets/samsung.png' },
+        { title: 'LG전자', icon: 'question_answer' }
       ]
-    };
+    }
   }
-};
+}
 </script>
 <style>
 .menu_img {
@@ -61,7 +57,7 @@ export default {
   width: 64px;
 }
 .btn_abc {
-  margin-top: 400px;
+  margin-top: 200px;
   width: 50px;
 }
 .v-overlay {
