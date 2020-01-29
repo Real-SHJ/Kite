@@ -16,7 +16,7 @@
 
 <script>
 import Header from './components/Header'
-import Menu from './components/Menu'
+import Menu from './components/Menu2'
 import Footer from './components/Footer'
 
 export default {
