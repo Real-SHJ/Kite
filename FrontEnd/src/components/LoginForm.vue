@@ -9,44 +9,24 @@
       <v-text-field
         v-model="email"
         label="E-mail"
+        :rules="emailRules"
         required
       ></v-text-field>
 
       <v-text-field
         v-model="password"
-        :counter="10"
+        :counter="20"
         label="Password"
+        :rules="passwordRules"
         required
       ></v-text-field>
 
-      <v-checkbox
-        v-model="checkbox"
-        label="Do you agree?"
-        required
-      ></v-checkbox>
-
       <v-btn
-        :disabled="!valid"
         color="primary"
         class="mr-4"
         @click="validate"
       >
-        Validate
-      </v-btn>
-
-      <v-btn
-        color="error"
-        class="mr-4"
-        @click="reset"
-      >
-        Reset Form
-      </v-btn>
-
-      <v-btn
-        color="warning"
-        @click="resetValidation"
-      >
-        Reset Validation
+        로그인
       </v-btn>
     </v-form>
   </v-container>
@@ -65,8 +45,7 @@ export default {
     emailRules: [
       (v) => !!v || 'E-mail is required',
       (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
-    ],
-    checkbox: false
+    ]
   }),
 
   methods: {
@@ -74,12 +53,6 @@ export default {
       if (this.$refs.form.validate()) {
         this.snackbar = true
       }
-    },
-    reset () {
-      this.$refs.form.reset()
-    },
-    resetValidation () {
-      this.$refs.form.resetValidation()
     }
   }
 }

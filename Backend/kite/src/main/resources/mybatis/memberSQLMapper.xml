@@ -29,9 +29,4 @@
 		from members
 		where	email=#{email} and pw=#{pw}
 	</select>
-	<update id="tupdate" parameterType="Member">
-		update members
-		set refreshtoken=#{refreshToken}
-		where memberid=#{memberid}
-	</update>
 </mapper>

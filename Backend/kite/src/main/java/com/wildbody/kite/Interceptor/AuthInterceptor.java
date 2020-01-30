@@ -66,7 +66,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             for (String val : input.get(key)) {
                 switch (key) {
                     case "id":
-                        ret.setMemberid(Integer.parseInt(val));
+                        ret.setId(Integer.parseInt(val));
                         break;
                     case "email":
                         ret.setEmail(val);

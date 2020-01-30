@@ -1,7 +1,7 @@
 <template>
-  <v-content>
+  <v-container class="d-flex ">
     <h1>여기는 상세보기 페이지입니다.</h1>
-  </v-content>
+  </v-container>
 </template>
 
 <script>

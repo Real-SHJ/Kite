@@ -1,18 +1,16 @@
 <template>
-  <v-app>
-    <div style="background-color: #F6F8FA">
-      <Header :offsetTop="offsetTop"/>
-      <Menu/>
-      <router-view/>
-      <Footer/>
-      <v-layout
-        v-scroll="onScroll"
-        align="center"
-        justify="center"
-        id="nav"
-      >
-      </v-layout>
-    </div>
+  <v-app style="background-color: #F6F8FA">
+    <Header :offsetTop="offsetTop"/>
+    <Menu/>
+    <router-view/>
+    <Footer/>
+    <v-layout
+      v-scroll="onScroll"
+      align="center"
+      justify="center"
+      id="nav"
+    >
+    </v-layout>
   </v-app>
 </template>
 

@@ -34,6 +34,7 @@ public class MemberController {
     private @ResponseBody
     ResponseEntity<Map<String, Object>> registerMember(@RequestBody Member dto) {
         ResponseEntity<Map<String, Object>> resEntity = null;
+        system.out.prinln("들어왔냐?");
         try {
             int insert = mSer
                 .memberInsert(dto);

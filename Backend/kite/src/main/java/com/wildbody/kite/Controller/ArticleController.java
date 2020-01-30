@@ -6,8 +6,6 @@ import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -119,6 +117,7 @@ public class ArticleController {
         } catch (RuntimeException e) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("message", "기사 목록 조회 실패");
+            map.put("error", e.getMessage());
             resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         }
         return resEntity;
