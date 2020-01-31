@@ -1,8 +1,8 @@
 <template>
   <v-layout class="layout">
 
-      <v-btn class="mx-2" fixed fab dark color="teal" @mouseover="drawer = true">
-      <v-icon dark>mdi-format-list-bulleted-square</v-icon>
+    <v-btn class="mx-2" fixed fab dark color="teal" @mouseover="drawer = true">
+    <v-icon dark>mdi-format-list-bulleted-square</v-icon>
     </v-btn>
 
     <v-navigation-drawer
@@ -30,13 +30,12 @@
       <v-divider></v-divider>
       <!-- 밑에 백엔드 연결할 것... -->
       <v-list dense >
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item v-for="item in info" :key="item" link>
           <v-list-item-avatar >
-            <v-img src="http://13.125.153.118:8999/img/logo/samsung.png" ></v-img>
+            <v-img src=items.item></v-img>
           </v-list-item-avatar>
-
           <v-list-item-content>
-            <v-list-item-title >{{ item.title }}</v-list-item-title>
+            <v-list-item-title >{{ item }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -55,26 +54,36 @@ export default {
       info: [],
       info2: [],
       items: [
-        { title: '삼성전자', url: 'http://13.125.153.118:8999/img/logo/samsung.png' },
-        { title: 'LG전자', url: 'http://13.125.153.118:8999/img/logo/LGElec.png' },
-        { title: 'SK텔레콤', url: 'http://13.125.153.118:8999/img/logo/SKtelecom.png' },
-        { title: 'GS칼텍스', url: 'http://13.125.153.118:8999/img/logo/GScaltex.png' },
-        { title: 'KT', url: 'http://13.125.153.118:8999/img/logo/KT.png' },
-        { title: '네이버', url: 'http://13.125.153.118:8999/img/logo/NAVER.png' },
-        { title: 'S-OIL', url: 'http://13.125.153.118:8999/img/logo/S-OIL.png' },
-        { title: 'SK하이닉스', url: 'http://13.125.153.118:8999/img/logo/SKhynix.png' },
-        { title: '현대자동차', url: 'http://13.125.153.118:8999/img/logo/HyundaiCar.png' },
-        { title: 'CJ제일제당', url: 'http://13.125.153.118:8999/img/logo/CJJJ.png' }
+        { '삼성전자': 'http://13.125.153.118:8999/img/logo/samsung.png' },
+        { 'LG전자': 'http://13.125.153.118:8999/img/logo/LGElec.png' },
+        { 'SK텔레콤': 'http://13.125.153.118:8999/img/logo/SKtelecom.png' },
+        { 'GS칼텍스': 'http://13.125.153.118:8999/img/logo/GScaltex.png' },
+        { 'KT': 'http://13.125.153.118:8999/img/logo/KT.png' },
+        { '네이버': 'http://13.125.153.118:8999/img/logo/NAVER.png' },
+        { 'S-OIL': 'http://13.125.153.118:8999/img/logo/S-OIL.png' },
+        { 'SK하이닉스': 'http://13.125.153.118:8999/img/logo/SKhynix.png' },
+        { '현대자동차': 'http://13.125.153.118:8999/img/logo/HyundaiCar.png' },
+        { 'CJ제일제당': 'http://13.125.153.118:8999/img/logo/CJJJ.png' },
+        { '국민은행': 'http://13.125.153.118:8999/img/logo/KBbank.png' },
+        { '포스코': 'http://13.125.153.118:8999/img/logo/posco.png' },
+        { '삼성SDS': 'http://13.125.153.118:8999/img/logo/samsungSDS.png' },
+        { '신한은행': 'http://13.125.153.118:8999/img/logo/sinhanbank.png' },
+        { '우리은행': 'http://13.125.153.118:8999/img/logo/wooribank.png' }
       ]
     }
   },
-  mounted: {
+  mounted () {
+    this.init()
   },
   methods: {
     init () {
+      var strArray // 시작하면 바로 정보 가져오기
       http
-        .get('http:')
-        .then(response => (this.info = response.data.resvalue))
+        .post('/member/info') // 회원 아이디 넣기
+        .then(response => {
+          strArray = response.data['company'].resvalue
+          this.info = strArray.split(',')
+        })
         .catch(() => {
           this.errored = true
         })

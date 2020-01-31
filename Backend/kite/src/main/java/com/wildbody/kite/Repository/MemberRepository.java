@@ -17,5 +17,4 @@ public interface MemberRepository {
 
     public Member login(Member member);
 
-    public void testUpdate(Member m);
 }

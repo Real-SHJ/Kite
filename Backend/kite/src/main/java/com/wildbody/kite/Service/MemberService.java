@@ -18,5 +18,4 @@ public interface MemberService {
 
 	public Member login(Member member);
 
-	public void testupdate(Member member);
 }

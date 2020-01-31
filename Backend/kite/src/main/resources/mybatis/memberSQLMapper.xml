@@ -4,9 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kite.member">
   <insert id="insert" parameterType="Member">
-		insert into members
-		(email,pw,lastname,firstname,birthday,gender,area,job,company,image)
-		values(#{email},#{pw},#{lastname},#{firstname},#{birthday},#{gender},#{area},#{job},#{company},#{image})
+		insert into members(email,pw,lastname,firstname,birthday,gender,area,job,company,image)
+		values (#{email}, #{pw}, #{lastname}, #{firstname}, #{birthday}, #{gender}, #{area}, #{job}, #{company}, #{image})
 	</insert>
   <update id="update" parameterType="Member">
 		update members set
@@ -15,7 +14,7 @@
 	</update>
   <delete id="delete" parameterType="int">
 		delete from members
-		where memberid=#{memberid}
+		where email=#{email}
 	</delete>
   <select id="selectOne" parameterType="int"
     resultType="Member">
@@ -24,7 +23,7 @@
   <select id="selectList" resultType="Member">
 		select * from members
 	</select>
-  <select id="memLogin" parameterType="Member" resultType="Member">
+  <select id="login" parameterType="Member" resultType="Member">
 		select *
 		from members
 		where	email=#{email} and pw=#{pw}
