@@ -5,7 +5,6 @@ import LoginPage from '../views/LoginPage.vue'
 import ArticleDetail from '../views/ArticleDetail.vue'
 import SignUp from '../views/SignUp.vue'
 import PersonalDataModify from '../views/PersonalDataModify.vue'
-import IndiRepository from '../views/IndiRepository.vue'
 
 Vue.use(VueRouter)
 
@@ -31,12 +30,6 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: SignUp
-  },
-
-  {
-    path: '/indirepository',
-    name: 'indirepository',
-    component: IndiRepository
   },
 
   {

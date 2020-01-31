@@ -7,7 +7,6 @@
         <router-link class="black--text" to="/loginPage">Login</router-link>|
         <router-link class="black--text" to="/signUp">SignUp</router-link>
         <router-link class="black--text" to="/personaldatamodify">PersonalDataModify</router-link>
-        <router-link class="black--text" to="/indirepository">IndiRepository</router-link>
       </div>
     </v-toolbar>
     <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg" style="height: 300px;"></v-parallax>
@@ -16,7 +15,6 @@
       <router-link class="black--text" to="/loginPage">Login</router-link>|
       <router-link class="black--text" to="/signUp">SignUp</router-link>
       <router-link class="black--text" to="/personaldatamodify">PersonalDataModify</router-link>
-      <router-link class="black--text" to="/indirepository">IndiRepository</router-link>
     </v-toolbar>
   </v-content>
 </template>
