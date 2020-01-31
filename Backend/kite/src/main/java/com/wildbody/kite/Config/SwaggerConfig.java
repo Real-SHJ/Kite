@@ -13,23 +13,24 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-	@Bean
-	public Docket postApi() {
-		return new Docket(DocumentationType.SWAGGER_2)
-		.groupName("Kite")
-		.apiInfo(info())
-		.select()
-		.apis(RequestHandlerSelectors.basePackage("com.wildbody.kite"))
-		.paths(PathSelectors.ant("/api/**"))
-		.build();
-	}
-	
-	public ApiInfo info() {
-		return new ApiInfoBuilder()
-				.title("MobileWebProject")
-				.license("SSAFY")
-				.version("0.9")
-				.build();
-	}
-	
+
+    @Bean
+    public Docket postApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+            .groupName("Kite")
+            .apiInfo(info())
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.wildbody.kite"))
+            .paths(PathSelectors.ant("/api/**"))
+            .build();
+    }
+
+    public ApiInfo info() {
+        return new ApiInfoBuilder()
+            .title("Kite's Mobile Project")
+            .license("SSAFY")
+            .version("1.0")
+            .build();
+    }
+
 }

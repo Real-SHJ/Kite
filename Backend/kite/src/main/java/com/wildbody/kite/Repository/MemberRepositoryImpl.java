@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 public class MemberRepositoryImpl implements MemberRepository {
 
     @Autowired
-    SqlSession session;
+    private SqlSession session;
 
     @Override
-    public int memberInsert(Member m) {
-        return session.insert("kite.member.insert", m);
+    public int memberInsert(Member member) {
+        return session.insert("kite.member.insert", member);
     }
 
     @Override
@@ -41,11 +41,15 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public Member login(Member member) {
-        return session.selectOne("kite.member.memLogin", member);
+
+        try {
+            member = session.selectOne("kite.member.login", member);
+            System.out.println("회원 확인");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("회원 확인 불가");
+        }
+        return member;
     }
 
-    @Override
-    public void testUpdate(Member m) {
-        session.update("kite.member.tupdate",m);
-    }
 }

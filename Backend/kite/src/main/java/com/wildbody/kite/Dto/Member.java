@@ -6,13 +6,13 @@ import lombok.Data;
 @Data
 public class Member {
 
-    private int id;
+    private int memberid;
     private String email;
     private String pw;
     private String lastname;
     private String firstname;
     private String birthday;
-    private int gender;
+    private String gender;
     private String area;
     private String job;
     private String company;

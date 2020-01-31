@@ -42,8 +42,4 @@ public class MemberServiceImpl implements MemberService {
         return repo.login(member);
     }
 
-    @Override
-    public void testupdate(Member member) {
-        repo.testUpdate(member);
-    }
 }

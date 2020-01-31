@@ -8,102 +8,86 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = {"*"}, maxAge = 6000)
+@CrossOrigin(origins = {"*"})
 @RequestMapping("/api/member")
 public class MemberController {
 
     @Autowired
-    MemberService mSer;
+    private MemberService mSer;
 
     @PostMapping("/register")
     @ApiOperation(value = "member 등록 서비스")
     private @ResponseBody
-    ResponseEntity<Map<String, Object>> registerMember(@RequestBody Member dto) {
+    ResponseEntity<Map<String, Object>> registerMember(Member member) {
         ResponseEntity<Map<String, Object>> resEntity = null;
-        system.out.prinln("들어왔냐?");
-        try {
-            int insert = mSer
-                .memberInsert(dto);
-            Map<String, Object> map = new HashMap<>();
-            map.put("resvalue", insert);
+        Map<String, Object> map = new HashMap<>();
+        int insert = mSer.memberInsert(member);
+        if (insert == 1) {
             map.put("message", "회원 가입 성공");
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            Map<String, Object> map = new HashMap<>();
+        } else {
             map.put("message", "회원 가입 실패");
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         }
+        resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         return resEntity;
     }
 
     @PutMapping("/update")
     @ApiOperation(value = "member 수정 서비스")
     private @ResponseBody
-    ResponseEntity<Map<String, Object>> updateMember(@RequestBody Member dto) {
+    ResponseEntity<Map<String, Object>> updateMember(Member member) {
         ResponseEntity<Map<String, Object>> resEntity = null;
+        Map<String, Object> map = new HashMap<>();
         try {
-            int update = mSer
-                .memberUpdate(dto);
-            Map<String, Object> map = new HashMap<>();
-            map.put("resvalue", update);
-            map.put("message", "회원정보 수정 성공");
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            int update = mSer.memberUpdate(member);
+            map.put("result", update);
+            map.put("isupdate", true);
         } catch (RuntimeException e) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("message", "회원정보 수정 실패");
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            map.put("isupdate", "회원정보 수정 실패");
         }
+        resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         return resEntity;
     }
 
-    @PostMapping("/delete/{id}")
-    @ApiOperation(value = "id를 받아 member 삭제 서비스")
-    private ResponseEntity<Map<String, Object>> deleteMember(@PathVariable("id") String id) {
-        ResponseEntity<Map<String, Object>> resEntity = null;
+    @PostMapping("/delete")
+    @ApiOperation(value = "멤버 삭제")
+    private ResponseEntity<Map<String, Object>> deleteMember(Member member) {
+        Map<String, Object> map = new HashMap<String, Object>();
         try {
-            int delete = mSer.memberDelete(id);
-            Map<String, Object> map = new HashMap<String, Object>();
+            mSer.memberDelete(member.getEmail());
             map.put("message", "회원 탈퇴 성공");
-            map.put("resvalue", delete);
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } catch (RuntimeException e) {
-            Map<String, Object> map = new HashMap<>();
             map.put("message", "회원 탈퇴 실패");
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         }
-        return resEntity;
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
     }
 
-    @GetMapping("/info/{id}")
+    @GetMapping("/info")
     @ApiOperation(value = "id를 받아 member 조회 서비스", response = Member.class)
-    private ResponseEntity<Map<String, Object>> infoMember(@PathVariable("id") String id) {
+    private ResponseEntity<Map<String, Object>> infoMember(Member member) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         Member mem = null;
+        Map<String, Object> map = new HashMap<String, Object>();
         try {
-            mem = mSer.memberInfo(id);
-            Map<String, Object> map = new HashMap<String, Object>();
+            mem = mSer.memberInfo(member.getEmail());
             map.put("message", "내 정보 조회 성공");
-            map.put("mem", mem);
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            map.put("result", mem);
         } catch (RuntimeException e) {
-            Map<String, Object> map = new HashMap<String, Object>();
             map.put("message", "내 정보 조회 실패");
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         }
+        resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         return resEntity;
     }
 
@@ -113,36 +97,30 @@ public class MemberController {
     ResponseEntity<Map<String, Object>> listMember() {
         ResponseEntity<Map<String, Object>> resEntity = null;
         List<Member> list = null;
+        Map<String, Object> map = new HashMap<String, Object>();
         try {
-            list = mSer.memberList();
-            System.out.println(list);
-            Map<String, Object> map = new HashMap<String, Object>();
             map.put("message", "회원 목록 조회 성공");
-            map.put("resvalue", list);
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            map.put("result", mSer.memberList());
         } catch (RuntimeException e) {
-            Map<String, Object> map = new HashMap<String, Object>();
             map.put("message", "회원 목록 조회 실패");
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         }
+        resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         return resEntity;
     }
 
     @PostMapping("/login")
     @ApiOperation("로그인")
     public @ResponseBody
-    ResponseEntity<Map<String, Object>> login(@RequestBody Member member) {
+    ResponseEntity<Map<String, Object>> login(Member member, HttpServletResponse response) {
         ResponseEntity<Map<String, Object>> ret = null;
-        boolean isLogin = false;
-        Member logintMem = mSer.login(member);
+        Member loginMem = mSer.login(member);
         Map<String, Object> map = new HashMap<>();
 
-        if (logintMem != null) {
-//            로그인이 되었을 때
-            map.put("isLogin", isLogin);
+        if (loginMem != null) {
+            map.put("access_token", response.getHeader("Authorization"));
+            map.put("isLogin", true);
         } else {
-//            로그인이 되지 않았을 때
-            map.put("isLogin", isLogin);
+            map.put("isLogin", false);
         }
         ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         return ret;
@@ -163,7 +141,7 @@ public class MemberController {
             map.put("isAuth", isAuth);
             ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } else {
-            map.put("isAuth",isAuth);
+            map.put("isAuth", isAuth);
             ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.METHOD_NOT_ALLOWED);
         }
         return ret;
@@ -171,8 +149,8 @@ public class MemberController {
 
     @PostMapping("/kakaologin")
     public @ResponseBody
-    ResponseEntity<Map<String,Object>> kakaoLogin(){
-        ResponseEntity<Map<String,Object>> ret=null;
+    ResponseEntity<Map<String, Object>> kakaoLogin() {
+        ResponseEntity<Map<String, Object>> ret = null;
 
         return ret;
     }
