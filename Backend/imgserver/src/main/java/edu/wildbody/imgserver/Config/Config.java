@@ -1,4 +1,4 @@
-package edu.wildbody.imgserver;
+package edu.wildbody.imgserver.Config;
 
 import java.util.Arrays;
 import java.util.List;
