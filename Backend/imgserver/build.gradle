@@ -4,8 +4,8 @@ plugins {
     id 'java'
 }
 
-group = 'edu.wildbody'
-version = '0.0.1'
+group = 'edu.wildbody.image'
+version = '0.0.2'
 sourceCompatibility = '1.8'
 
 configurations {
