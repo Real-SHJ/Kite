@@ -11,7 +11,10 @@
     "@mdi/font": "^3.6.95",
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
+<<<<<<< HEAD
+=======
     "jwt-decode": "^2.2.0",
+>>>>>>> 0b10ee72b13be3dbfab009b8dd9c8e979a3cc269
     "material-design-icons-iconfont": "^5.0.1",
     "roboto-fontface": "*",
     "vue": "^2.6.10",
