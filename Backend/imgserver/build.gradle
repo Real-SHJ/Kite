@@ -25,6 +25,8 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 }
 
 test {
