@@ -15,6 +15,6 @@ export default new Vuex.Store({
   //  위 세가지를 묶어서 하나의 모듈로 정의해 가져오는것도 가능하다.
   modules: {
     auth,
-      Open
+    Open
   }
 })
