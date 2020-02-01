@@ -21,7 +21,7 @@
             <p>{{ slide.headlineFirstLine }}</p>
             <p>{{ slide.headlineSecondLine }}</p>
           </h1>
-          <router-link to="/home" class="slide-content-cta">Start Kite News</router-link>
+          <button @click="changeOpen" class="slide-content-cta">Start Kite News</button>
         </div>
         <h2 class="slide-side-text">
           <span>{{ slide.sublineFirstLine }} / </span>
@@ -111,9 +111,12 @@ export default {
   },
   methods: {
     updateSlide (index) {
-      index < (this.currentSlide ? this.isPreviousSlide = true : this.isPreviousSlide = false)
+      index < this.currentSlide ? this.isPreviousSlide = true : this.isPreviousSlide = false
       this.currentSlide = index
       this.isFirstLoad = false
+    },
+    changeOpen () {
+      this.$store.commit('setOpen')
     }
   }
 }

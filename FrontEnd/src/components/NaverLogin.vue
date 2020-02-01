@@ -2,7 +2,7 @@
   <div id="app">
     <NaverLogin
       client-id="UmIfLWnhqmTUkrkKC3k0"
-      callback-url="http://localhost:8081/components/NaverLogin"
+      callback-url="http://localhost:8081/"
       is-popup="false"
       :callbackFunction=callbackFunction
       />

@@ -1,20 +1,40 @@
 <template>
   <v-content>
-    <v-toolbar v-if="offsetTop < 280" color="#FBFAF5" style="width: 100%; z-index: 1;">
+    <v-toolbar color="#FBFAF5" style="width: 100%; z-index: 1;">
       <div class="flex-row">
         <v-icon class="col" @click="goHome">home</v-icon>
         <span></span>
+<<<<<<< HEAD
+        <router-link class="black--text" to="/loginPage">Login</router-link> |
+        <router-link class="black--text" to="/signUp">SignUp</router-link> |
+        <router-link class="black--text" to="/personaldatamodify">PersonalDataModify</router-link> |
+        <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
+        <router-link class="black--text" to="/friendssearch">FriendsSearch</router-link> |
+        <router-link class="black--text" to="/friendsmanage">FriendsManage</router-link>
+=======
         <router-link class="black--text" to="/loginPage">Login</router-link>|
         <router-link class="black--text" to="/signUp">SignUp</router-link>
         <router-link class="black--text" to="/personaldatamodify">PersonalDataModify</router-link>
+        <router-link class="black--text" to="/indirepository">IndiRepository</router-link>
+>>>>>>> 0b10ee72b13be3dbfab009b8dd9c8e979a3cc269
       </div>
     </v-toolbar>
     <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg" style="height: 300px;"></v-parallax>
     <v-toolbar v-if="offsetTop > 280" color="#FBFAF5" class="d-flex flex-row-reverse" style="position: fixed; width: 100%; top: 0px; z-index: 1;">
       <v-icon @click="goHome">home</v-icon>
+      <router-link class="black--text" to="/loginPage">Login</router-link> |
+      <router-link class="black--text" to="/signUp">SignUp</router-link> |
+      <router-link class="black--text" to="/personaldatamodify">PersonalDataModify</router-link> |
+      <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
+      <router-link class="black--text" to="/friendssearch">FriendsSearch</router-link> |
+      <router-link class="black--text" to="/friendsmanage">FriendsManage</router-link>
+<<<<<<< HEAD
+=======
       <router-link class="black--text" to="/loginPage">Login</router-link>|
       <router-link class="black--text" to="/signUp">SignUp</router-link>
       <router-link class="black--text" to="/personaldatamodify">PersonalDataModify</router-link>
+      <router-link class="black--text" to="/indirepository">IndiRepository</router-link>
+>>>>>>> 0b10ee72b13be3dbfab009b8dd9c8e979a3cc269
     </v-toolbar>
   </v-content>
 </template>
@@ -23,7 +43,7 @@
 export default {
   data () {
     return {
-
+      isAuthenticated: this.$store.getters.isAuthenticated
     }
   },
   props: {
@@ -32,7 +52,14 @@ export default {
   methods: {
     goHome () {
       this.$router.push('/')
+    },
+    logout () {
+      this.$store.dispatch('logout')
+      this.$router.push('/')
     }
+  },
+  updated () {
+    this.isAuthenticated = this.$store.getters.isAuthenticated
   }
 }
 </script>
