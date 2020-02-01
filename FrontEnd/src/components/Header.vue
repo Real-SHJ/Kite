@@ -4,19 +4,12 @@
       <div class="flex-row">
         <v-icon class="col" @click="goHome">home</v-icon>
         <span></span>
-<<<<<<< HEAD
         <router-link class="black--text" to="/loginPage">Login</router-link> |
         <router-link class="black--text" to="/signUp">SignUp</router-link> |
         <router-link class="black--text" to="/personaldatamodify">PersonalDataModify</router-link> |
         <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
         <router-link class="black--text" to="/friendssearch">FriendsSearch</router-link> |
         <router-link class="black--text" to="/friendsmanage">FriendsManage</router-link>
-=======
-        <router-link class="black--text" to="/loginPage">Login</router-link>|
-        <router-link class="black--text" to="/signUp">SignUp</router-link>
-        <router-link class="black--text" to="/personaldatamodify">PersonalDataModify</router-link>
-        <router-link class="black--text" to="/indirepository">IndiRepository</router-link>
->>>>>>> 0b10ee72b13be3dbfab009b8dd9c8e979a3cc269
       </div>
     </v-toolbar>
     <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg" style="height: 300px;"></v-parallax>
@@ -28,13 +21,6 @@
       <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
       <router-link class="black--text" to="/friendssearch">FriendsSearch</router-link> |
       <router-link class="black--text" to="/friendsmanage">FriendsManage</router-link>
-<<<<<<< HEAD
-=======
-      <router-link class="black--text" to="/loginPage">Login</router-link>|
-      <router-link class="black--text" to="/signUp">SignUp</router-link>
-      <router-link class="black--text" to="/personaldatamodify">PersonalDataModify</router-link>
-      <router-link class="black--text" to="/indirepository">IndiRepository</router-link>
->>>>>>> 0b10ee72b13be3dbfab009b8dd9c8e979a3cc269
     </v-toolbar>
   </v-content>
 </template>

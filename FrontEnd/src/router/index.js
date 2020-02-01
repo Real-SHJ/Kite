@@ -8,6 +8,9 @@ import PersonalDataModify from '../views/PersonalDataModify.vue'
 import IndiRepository from '../views/IndiRepository.vue'
 import FriendsSearch from '../views/FriendsSearch.vue'
 import FriendsManage from '../views/FriendsManage.vue'
+import Opening from '../components/Opening.vue'
+import SelectCompany from '../views/SelectCompany.vue'
+import NaverLogin from '../components/NaverLogin.vue'
 
 Vue.use(VueRouter)
 
