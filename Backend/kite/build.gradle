@@ -65,14 +65,10 @@ dependencies {
 
 //    HttpCommon REST Template
     compile group: 'org.apache.httpcomponents', name: 'httpclient'
-<<<<<<< HEAD
-
+//    Excel Parser
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
-
-=======
 //    Live load
     compile 'org.springframework.boot:spring-boot-devtools'
->>>>>>> 3ccdd13ee0ae88444a06a118cb3dd5e780ec6fc4
 
 
 
