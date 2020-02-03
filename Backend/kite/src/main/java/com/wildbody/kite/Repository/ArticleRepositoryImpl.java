@@ -14,13 +14,23 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
 
     @Override
-    public int articleInsert(Article a) {
-        return session.insert("kite.article.insert", a);
+    public int initArticle(Article article) {
+        int cnt = 0;
+        cnt += session.insert("kite.article.insert", article);
+        cnt += session.insert("kite.article.insertKeyword", article);
+        cnt += session.insert("kite.article.insertContent", article);
+        return cnt;
+
     }
 
     @Override
-    public int articleUpdate(Article a) {
-        return session.update("kite.article.update", a);
+    public int articleInsert(Article aritcle) {
+        return session.insert("kite.article.insert", aritcle);
+    }
+
+    @Override
+    public int articleUpdate(Article aritcle) {
+        return session.update("kite.article.update", aritcle);
     }
 
     @Override

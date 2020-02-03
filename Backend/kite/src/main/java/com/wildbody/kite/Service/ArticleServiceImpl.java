@@ -12,6 +12,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleRepository repo;
 
+
+    @Override
+    public int initArticle(Article article) {
+        return repo.initArticle(article);
+    }
+
     @Override
     public int articleInsert(Article a) {
         return repo.articleInsert(a);

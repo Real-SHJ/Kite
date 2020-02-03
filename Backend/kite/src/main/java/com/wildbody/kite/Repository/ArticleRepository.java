@@ -5,9 +5,11 @@ import java.util.List;
 
 public interface ArticleRepository {
 
-    public int articleInsert(Article a);
+    int initArticle(Article article);
 
-    public int articleUpdate(Article a);
+    public int articleInsert(Article article);
+
+    public int articleUpdate(Article article);
 
     public int articleDelete(int id);
 
