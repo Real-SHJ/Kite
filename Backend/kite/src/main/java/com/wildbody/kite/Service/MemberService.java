@@ -12,7 +12,7 @@ public interface MemberService {
 
 	public int memberDelete(String id);
 
-	public Member memberInfo(String id);
+	public Member memberInfo(Member member);
 
 	public List<Member> memberList();
 

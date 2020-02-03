@@ -50,7 +50,8 @@ dependencies {
 
 //    HttpCommon REST Template
     compile group: 'org.apache.httpcomponents', name: 'httpclient'
-
+//    Live load
+    compile 'org.springframework.boot:spring-boot-devtools'
 
 
 

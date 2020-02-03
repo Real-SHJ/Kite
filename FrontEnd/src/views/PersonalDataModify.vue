@@ -205,5 +205,7 @@ export default {
 </script>
 
 <style>
-
+.v-card {
+  opacity: 0;
+}
 </style>

@@ -11,5 +11,4 @@ public class KiteSpringApplication {
     public static void main(String[] args) {
         SpringApplication.run(KiteSpringApplication.class, args);
     }
-
 }

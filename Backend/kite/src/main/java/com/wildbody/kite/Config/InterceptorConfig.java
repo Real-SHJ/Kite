@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
 
-    private static final String[] EXCLUDE_PATH = {"/api/article/**", "/api/member/register","/swagger-ui.html","/swagger**"};
+    private static final String[] EXCLUDE_PATH = {"/api/article/**", "/api/member/register","/swagger-ui.html"};
     // 우선은 멤버관련 경로로 접근하는 경우에만 체크를 해보자
     private static final String[] INCLUDE_PATH = {"/api/member/**"};
 

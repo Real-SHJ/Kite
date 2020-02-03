@@ -28,8 +28,16 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public Member memberInfo(int id) {
-        Member dto = session.selectOne("kite.member.selectOne", id);
+    public Member memberInfo(Member member) {
+        Member dto = null;
+        try {
+            dto = session.selectOne("kite.member.selectOne", member);
+            System.out.println(dto.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("에러발");
+        }
+
         return dto;
     }
 
@@ -41,15 +49,15 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public Member login(Member member) {
-
+        System.out.println(member.toString());
+        Member mm = null;
         try {
-            member = session.selectOne("kite.member.login", member);
-            System.out.println("회원 확인");
+            mm = session.selectOne("kite.member.login", member);
+            System.out.println(mm.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("회원 확인 불가");
         }
-        return member;
+        return mm;
     }
 
 }

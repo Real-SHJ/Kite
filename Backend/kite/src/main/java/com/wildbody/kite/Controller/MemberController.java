@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,18 +76,18 @@ public class MemberController {
         return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
     }
 
-    @GetMapping("/info")
+    @PostMapping("/info")
     @ApiOperation(value = "id를 받아 member 조회 서비스", response = Member.class)
     private ResponseEntity<Map<String, Object>> infoMember(Member member) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         Member mem = null;
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            mem = mSer.memberInfo(member.getEmail());
-            map.put("message", "내 정보 조회 성공");
+            mem = mSer.memberInfo(member);
+            map.put("message", "success");
             map.put("result", mem);
         } catch (RuntimeException e) {
-            map.put("message", "내 정보 조회 실패");
+            map.put("message", "fail");
         }
         resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         return resEntity;

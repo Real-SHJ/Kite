@@ -15,4 +15,6 @@ public interface JwtService {
     boolean validateToken(String jwt);
 
     boolean isExpiration(String jwt);
+
+    boolean isExpirationRefresh(String jwt);
 }

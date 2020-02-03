@@ -1,9 +1,9 @@
 <template>
-  <v-content style="background-color: #F6F8FA">
-    <div v-if="!getOpen">
+  <v-app style="background-color: #F6F8FA">
+    <v-content v-if="!getOpen">
       <Opening/>
-    </div>
-    <div v-else>
+    </v-content>
+    <v-content v-else>
       <Header :offsetTop="offsetTop"/>
       <Menu/>
       <router-view/>
@@ -15,22 +15,22 @@
         id="nav"
       >
       </v-layout>
-    </div>
-  </v-content>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
 import Header from './components/Header'
-import Menu from './components/Menu2'
+// import Menu from './components/Menu2'
 import Footer from './components/Footer'
 import Opening from './components/Opening.vue'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'index',
+  name: 'app',
   components: {
     Header,
-    Menu,
+    // Menu,
     Footer,
     Opening
   },
