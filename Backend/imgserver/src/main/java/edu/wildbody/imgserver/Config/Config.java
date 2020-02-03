@@ -33,7 +33,6 @@ public class Config implements WebMvcConfigurer {
                 .setCachePeriod(3600)
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());
-
         }
     }
 

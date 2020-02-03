@@ -19,6 +19,5 @@ public class Member {
     private String image;
     private List<Article> articleList;
     private List<String> keywordList;
-    private String refreshToken;
 
 }

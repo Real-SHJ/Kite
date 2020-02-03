@@ -16,11 +16,11 @@
 		delete from members
 		where email=#{email}
 	</delete>
-  <select id="selectOne" parameterType="int"
-    resultType="Member">
-		select * from members where memberid=#{memberid}
+  <select id="selectOne" parameterType="Member" resultType="Member">
+		select * from members
+		where email=#{email}
 	</select>
-  <select id="selectList" resultType="Member">
+	<select id="selectList" resultType="Member">
 		select * from members
 	</select>
   <select id="login" parameterType="Member" resultType="Member">

@@ -15,11 +15,11 @@ import NaverLogin from '../components/NaverLogin.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/opening',
-    name: 'opening',
-    component: Opening
-  },
+  // {
+  //   path: '/opening',
+  //   name: 'opening',
+  //   component: Opening
+  // },
   {
     path: '/',
     name: 'home',

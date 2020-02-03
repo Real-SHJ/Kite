@@ -54,50 +54,55 @@ public class JwtServiceImpl implements JwtService {
     // 우선은 액세스토큰만 검증한다
     @Override
     public boolean validateToken(String jwt) {
-        boolean ret = false;
         try {
             Jws<Claims> claims = Jwts.parser()
                 .setSigningKey(generateKey(SALT))
                 .parseClaimsJws(jwt);
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            ret = false;
         }
-        return ret;
+        return false;
     }
 
     @Override
     public boolean validateRefreshToken(String jwt) {
-        boolean ret = false;
         try {
             Jws<Claims> claims = Jwts.parser()
                 .setSigningKey(generateKey(REFSALT))
                 .parseClaimsJws(jwt);
-            ret = true;
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ret;
+        return false;
     }
 
     @Override
     public boolean isExpiration(String jwt) {
-        boolean ret = false;
+        Jws<Claims> claims;
         try {
-            Jws<Claims> claims = Jwts.parser()
+            claims = Jwts.parser()
                 .setSigningKey(generateKey(SALT))
                 .parseClaimsJws(jwt);
+        } catch (SignatureException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        // 만료시간이 현재시간보다 늦을경우
+        return !claims.getBody().getExpiration().after(new Date());
+    }
 
-            if (claims.getBody().getExpiration().after(new Date())) {
-                ret = false;
-            }
-            ret = true;
+    @Override
+    public boolean isExpirationRefresh(String jwt) {
+        Jws<Claims> claims = null;
+        try {
+            claims = Jwts.parser()
+                .setSigningKey(generateKey(REFSALT))
+                .parseClaimsJws(jwt);
         } catch (SignatureException e) {
             e.printStackTrace();
         }
-        return ret;
+        return !claims.getBody().getExpiration().after(new Date());
     }
-
 }

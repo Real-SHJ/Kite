@@ -1,8 +1,10 @@
 package com.wildbody.kite.Interceptor;
 
 import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.Dto.Token;
 import com.wildbody.kite.JWT.JwtService;
 import com.wildbody.kite.Service.MemberService;
+import com.wildbody.kite.Service.TokenService;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,60 +17,70 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @CrossOrigin(origins = {"*"})
 public class AuthInterceptor implements HandlerInterceptor {
 
-    static final String SALT = "AuthentificationSALT";
-    static final String REFSALT = "RefreshAuthentificationSALT";
     private static final String HEADER_ACCESS = "Authorization";
-    private static final String HEADER_RFRESH = "Auth_Refresh";
+
     @Autowired
     private JwtService jsvc;
     @Autowired
     private MemberService msvc;
+    @Autowired
+    private TokenService tsvc;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
         Object handler) throws Exception {
-//        왜 너냐???
-//        response.addHeader("Access-Control-Allow-Origin", "*");
-//        response.addHeader("Access-Control-Allow-Credentials", "true");
-
-        // 클라이언트에서 보내온 데이터로부터 멤버객체 생성
-        Member accessMem = setMember(request.getParameterMap());
+        String cAccessToken = request.getHeader(HEADER_ACCESS);
         System.out.println("client access");
-        accessMem = msvc.login(accessMem);
-        if (accessMem == null) {
-            System.out.println("로그인 실패");
-            return false;
-        }
+        Member accessMem = null;
+        String rtoken, atoken = null;
 
-        String atoken = request.getHeader(HEADER_ACCESS);
-        String rtoken = request.getHeader(HEADER_RFRESH);
+        if (cAccessToken == null) {
+            // access token이 없으면 등록된 유저인지 확인을 하고 accesstoken과 refreshtoken을 발급한다
+            accessMem = setMember(request.getParameterMap());
+            accessMem = msvc.login(accessMem);
+            if (accessMem == null) {
+                System.out.println("Not sign up User");
+                response.addHeader("islogin", "false");
+                response.addHeader("msg", "Don't Sign in User");
+                return false;
+            }
 
-        // 인증이 되어있는지 확인한
-        if (atoken != null && jsvc.isExpiration(atoken) && jsvc.validateToken(atoken)) {
-            // 인증이 안료되었으므로 원래 로직으로 넘어가게 한다
-            System.out.println("인증 완료!");
-            return true;
+        } else {
+//            accessToken이 있으면
+//            토큰 검증 (내가 발급했는지)
+            if (!jsvc.validateToken(cAccessToken)) {
+                response.addHeader("msg", "validation error");
+                return false;
+            } else {
+//            만료되었는지 확인
+                if (!jsvc.isExpiration(cAccessToken)) {
+//            만료가 되었으면
+//                    리프레시 토큰을 이용해 인증 후 액세스 토큰을 재발급
+                    Token accMemToken = tsvc.select(accessMem);
+                    if (!jsvc.validateToken(accMemToken.getRefreshToken())) {
+//                        리프레시 토큰 인증안됨
+                        response.addHeader("msg", "validation error");
+                        return false;
+                    } else {
+                        if (!jsvc.isExpirationRefresh(accMemToken.getRefreshToken())) {
+                            // refreshtoken 만료
+                            // refreshtoken과 accesstoken을 동시에 발급
+                            atoken = jsvc.getAccessToken(accessMem);
+                            rtoken = jsvc.getRefreshToken(accessMem);
+                            accMemToken.setRefreshToken(rtoken);
+                            tsvc.update(accMemToken);
+                        } else {
+                            // refreshtoken 만료 안됨
+                            // accesstoken만 발급
+                            atoken = jsvc.getAccessToken(accessMem);
+                        }
+                    }
+                    response.addHeader(HEADER_ACCESS, atoken);
+                }
+            }
         }
-        // 인증이 안되면?? refresh 토큰이 있는지 확인하고
-
-        if (accessMem.getRefreshToken() != null && accessMem.getRefreshToken().equals(rtoken)) {
-            // refresh token이 존재하므로 accesstoken 발급
-            response.setHeader(HEADER_ACCESS, jsvc.getAccessToken(accessMem));
-            System.out.println("토큰 재발급 완료");
-            return true;
-        }
-        // refresh토큰마저 없으면 refresh토큰과 accesstoken을 발급 받는다
-        rtoken = jsvc.getRefreshToken(accessMem);
-        atoken = jsvc.getAccessToken(accessMem);
-        // 발급받은 리프레시 토큰을 저장
-        accessMem.setRefreshToken(rtoken);
-        msvc.memberUpdate(accessMem);
-        // access token을 클라이언트에 전송
-        response.setHeader(HEADER_ACCESS, atoken);
-        System.out.println("인증 성공!");
         return true;
     }
-
 
 
     private Member setMember(Map<String, String[]> input) {

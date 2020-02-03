@@ -11,7 +11,7 @@ public interface MemberRepository {
 
     public int memberDelete(int memberid);
 
-    public Member memberInfo(int memberid);
+    public Member memberInfo(Member member);
 
     public List<Member> memberList();
 

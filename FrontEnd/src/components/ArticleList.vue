@@ -3,7 +3,7 @@
     <v-container class="px-2">
         <div v-for="cardNumber in cardNumbers" :key="cardNumber.id" class="my-3">
             <v-card
-              class="mx-auto my-10"
+              class="article-cards mx-auto my-10"
               max-width="700"
               style="height: 600px;"
             >
@@ -14,9 +14,9 @@
                   src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
                 >
                   <v-avatar
-                    class="profile"
+                    class="companyLogo"
                     color="grey"
-                    size="164"
+                    size="100"
                     tile
                   >
                     <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
@@ -33,13 +33,27 @@
                 </v-card-text>
               </div>
               <v-card-actions class="d-flex justify-end">
+                <v-dialog v-model="dialog" max-width="290">
+                  <template v-slot:activator="{ on }">
+                    <v-btn class="mx-4" color="primary" icon dark v-on="on">
+                      <v-icon size="24px">fas fa-cut</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title></v-card-title>
+                    <v-card-text class="">이 기사를 스크랩 하시겠습니까?</v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
+                      <v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
                 <v-btn
-                    v-for="icon in icons"
-                    :key="icon"
-                    class="mx-4"
-                    icon
+                  class="mx-4"
+                  icon
                 >
-                  <v-icon size="24px">{{ icon }}</v-icon>
+                  <v-icon size="24px">fas fa-share-alt</v-icon>
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -52,13 +66,9 @@
 export default {
   data () {
     return {
+      dialog: false,
       cardNumbers: [
         1, 2, 3
-      ],
-      icons: [
-        'fas fa-cut',
-        'fas fa-share-alt',
-        'far fa-times-circle'
       ]
     }
   },
@@ -71,4 +81,12 @@ export default {
 </script>
 
 <style>
+  .article-cards {
+    position: relative;
+  }
+  .companyLogo {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 </style>
