@@ -5,16 +5,17 @@
 <mapper namespace="kite.token">
   <select id="select" parameterType="Member" resultType="Token">
     select *
-    form membertoken
+    from membertoken
     where memberid=#{memberid}
   </select>
   <insert id="insert" parameterType="Token">
     insert into membertoken
-    values (memberid = #{memberid}, email=#{email}, refresh_token=#{refreshToken})
+    (memberid, email, refreshtoken)
+    values (#{memberid}, #{email}, #{refreshToken})
   </insert>
   <update id="update" parameterType="Token">
     update membertoken
-    set refresh_token=#{refreshToken}
+    set refreshtoken=#{refreshToken}
     where memberid = #{memberid}
   </update>
 </mapper>

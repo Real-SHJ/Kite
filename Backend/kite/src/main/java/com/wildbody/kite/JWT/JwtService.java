@@ -1,6 +1,6 @@
 package com.wildbody.kite.JWT;
 
-import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.DTO.Member;
 
 public interface JwtService {
 

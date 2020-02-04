@@ -2,8 +2,7 @@ package com.wildbody.kite.Service;
 
 import java.util.List;
 
-import com.wildbody.kite.Dto.Article;
-import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.DTO.Member;
 
 public interface MemberService {
 	public int memberInsert(Member member);

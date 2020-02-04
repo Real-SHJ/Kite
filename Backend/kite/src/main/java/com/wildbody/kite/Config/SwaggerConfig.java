@@ -31,7 +31,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     public ApiInfo info() {
         return new ApiInfoBuilder()
             .title("Kite's Mobile Project")
-            .license("SSAFY")
+            .license("SSAFY-Kite license")
             .version("1.0")
             .build();
     }

@@ -1,11 +1,10 @@
 package com.wildbody.kite.Service;
 
-import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.Repository.MemberRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("MemberServiceImpl")

@@ -1,6 +1,6 @@
 package com.wildbody.kite.Interceptor;
 
-import com.wildbody.kite.Dto.KakaoMember;
+import com.wildbody.kite.DTO.KakaoMember;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

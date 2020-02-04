@@ -15,7 +15,7 @@ public class LoggingConfig {
 
     //    모든 서비스에 대해 aop를 실행
 //    Logging AOP
-    @Around("execution(* com.wildbody.kite.Service..*())")
+    @Around("execution(* com.wildbody.kite..*())")
     public Object logging(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         logger.info("start - " + proceedingJoinPoint.getSignature().getDeclaringTypeName() + " / "
             + proceedingJoinPoint.getSignature().getName());

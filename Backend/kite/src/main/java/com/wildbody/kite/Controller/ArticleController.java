@@ -1,6 +1,6 @@
 package com.wildbody.kite.Controller;
 
-import com.wildbody.kite.Dto.Article;
+import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.Service.ArticleService;
 import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;

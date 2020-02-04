@@ -1,6 +1,6 @@
 package com.wildbody.kite.Service;
 
-import com.wildbody.kite.Dto.Article;
+import com.wildbody.kite.DTO.Article;
 import java.util.List;
 
 public interface ArticleService {

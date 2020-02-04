@@ -1,16 +1,17 @@
 package com.wildbody.kite.Controller;
 
-import com.wildbody.kite.Dto.Member;
-import com.wildbody.kite.Dto.NaverMember;
+import com.wildbody.kite.DTO.Member;
+import com.wildbody.kite.DTO.NaverMember;
+import com.wildbody.kite.DTO.Token;
+import com.wildbody.kite.JWT.JwtService;
 import com.wildbody.kite.Service.MemberService;
+import com.wildbody.kite.Service.TokenService;
 import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +31,29 @@ public class MemberController {
     @Autowired
     private MemberService mSer;
 
-    @PostMapping("/register")
+    @Autowired
+    private JwtService jsvc;
+
+    @Autowired
+    private TokenService tsvc;
+
+    @PostMapping("/signup")
     @ApiOperation(value = "member 등록 서비스")
     private @ResponseBody
-    ResponseEntity<Map<String, Object>> registerMember(Member member) {
+    ResponseEntity<Map<String, Object>> registerMember(Member member, HttpServletResponse response) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         Map<String, Object> map = new HashMap<>();
         int insert = mSer.memberInsert(member);
+        member = mSer.memberInfo(member);
         if (insert == 1) {
+            String token = jsvc.getAccessToken(member);
             map.put("message", "회원 가입 성공");
+            response.addHeader("Authorization", token);
+            Token aToken = new Token();
+            aToken.setMemberid(member.getMemberid());
+            aToken.setEmail(member.getEmail());
+            aToken.setRefreshToken(token);
+            tsvc.insert(aToken);
         } else {
             map.put("message", "회원 가입 실패");
         }
@@ -110,7 +125,7 @@ public class MemberController {
         return resEntity;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     @ApiOperation("로그인")
     public @ResponseBody
     ResponseEntity<Map<String, Object>> login(Member member, HttpServletResponse response) {

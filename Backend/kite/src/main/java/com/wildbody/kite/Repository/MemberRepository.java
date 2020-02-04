@@ -1,6 +1,6 @@
 package com.wildbody.kite.Repository;
 
-import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.DTO.Member;
 import java.util.List;
 
 public interface MemberRepository {
