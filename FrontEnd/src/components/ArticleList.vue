@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container class="px-2">
-        <div v-for="cardNumber in cardNumbers" :key="cardNumber.id" class="my-3">
+        <div v-for="article in articles" :key="article.id" class="my-3">
             <v-card
               class="article-cards mx-auto my-10"
               max-width="700"
@@ -22,7 +22,7 @@
                     <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
                   </v-avatar>
                 </v-img>
-                <v-card-title>Top 10 Australian beaches{{cardNumber}}</v-card-title>
+                <v-card-title>Top 10 Australian beaches{{article}}</v-card-title>
 
                 <v-card-subtitle class="pb-0 mb-5">Number 10</v-card-subtitle>
 
@@ -63,21 +63,30 @@
 </template>
 
 <script>
+import http from '../http-common'
 export default {
   data () {
     return {
       dialog: false,
-      cardNumbers: [
-        1, 2, 3
-      ]
+      articles: []
     }
   },
   methods: {
     goDetail () {
       this.$router.push('/ArticleDetail')
+    },
+    getArticle () {
+      http.get('/article/list/')
+        .then(res => {
+        // 토큰 저장
+          console.log(res)
+          this.articles = res.data.resvalue
+        })
+        .catch(err => console.log(err))
     }
   }
 }
+
 </script>
 
 <style>

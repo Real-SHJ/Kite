@@ -116,6 +116,7 @@ export default {
       this.isFirstLoad = false
     },
     changeOpen () {
+      console.log(this.$store)
       this.$store.commit('setOpen')
     }
   }

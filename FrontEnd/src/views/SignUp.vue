@@ -113,6 +113,7 @@
 
 <script>
 import http from '../http-common'
+import upload from '../http-fileupload'
 
 export default {
   name: 'personaldatamodify',
@@ -187,7 +188,22 @@ export default {
         .catch((msg) => {
           console.log(msg)
         })
-        // console.log("")
+
+      this.profileUpload()
+    },
+    profileUpload () {
+      const image = new FormData()
+      image.append('file', this.imgae)
+      upload
+        .post('/upload', image)
+        .then(res => {
+          if (res.data.isupload === true) {
+            console.log('success upload')
+          }
+        })
+        .catch(() => {
+          console.log('error occurd while upload image')
+        })
     }
   }
 }

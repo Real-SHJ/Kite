@@ -53,6 +53,7 @@ const routes = [
     name: 'friendsmanage',
     component: FriendsManage
   },
+
   {
     path: '/naver',
     name: 'naver',

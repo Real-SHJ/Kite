@@ -1,19 +1,27 @@
 <template>
   <v-content>
-    <v-toolbar color="#FBFAF5" style="width: 100%; z-index: 1;">
-      <div class="flex-row">
-        <v-icon class="col" @click="goHome">home</v-icon>
-        <span></span>
-        <router-link class="black--text" to="/loginpage">Login</router-link> |
-        <router-link class="black--text" to="/signup">SignUp</router-link> |
-        <router-link class="black--text" to="/indirepository">IndiRepository</router-link>
-      </div>
+    <v-toolbar color="#FBFAF5" class="d-flex flex-row-reverse" style="width: 100%; z-index: 1;">
+        <v-icon @click="goHome">home</v-icon>
+        <!-- <div v-if="isAuthenticated"> -->
+          | <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
+          <p @click="logout">Sign out</p> |
+        <!-- </div> -->
+        <!-- <div v-else> -->
+          | <router-link class="black--text" to="/loginpage">Sign in</router-link> |
+          <router-link class="black--text" to="/signup">Sign up</router-link> |
+        <!-- </div> -->
     </v-toolbar>
     <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg" style="height: 300px;"></v-parallax>
     <v-toolbar v-if="offsetTop > 280" color="#FBFAF5" class="d-flex flex-row-reverse" style="position: fixed; width: 100%; top: 0px; z-index: 1;">
       <v-icon @click="goHome">home</v-icon>
-      <router-link class="black--text" to="/loginPage">Login</router-link> |
-      <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
+      <!-- <div v-if="isAuthenticated"> -->
+        |  <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
+        <p @click="logout">Sign out</p> |
+      <!-- </div> -->
+      <!-- <div v-else> -->
+        | <router-link class="black--text" to="/loginpage">Sign in</router-link> |
+        <router-link class="black--text" to="/signup">Sign up</router-link> |
+      <!-- </div> -->
     </v-toolbar>
   </v-content>
 </template>
@@ -22,11 +30,11 @@
 export default {
   data () {
     return {
-      isAuthenticated: this.$store.getters.isAuthenticated
     }
   },
   props: {
-    offsetTop: Number
+    offsetTop: Number,
+    AuthenticatedCheck: Boolean
   },
   methods: {
     goHome () {
@@ -34,11 +42,9 @@ export default {
     },
     logout () {
       this.$store.dispatch('logout')
+      this.$session.remove('my-session-token')
       this.$router.push('/')
     }
-  },
-  updated () {
-    this.isAuthenticated = this.$store.getters.isAuthenticated
   }
 }
 </script>
