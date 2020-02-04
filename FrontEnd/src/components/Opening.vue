@@ -21,7 +21,7 @@
             <p>{{ slide.headlineFirstLine }}</p>
             <p>{{ slide.headlineSecondLine }}</p>
           </h1>
-          <button @click="changeOpen" class="slide-content-cta">Start Kite News</button>
+          <button @click="openToggle" class="slide-content-cta">Start Kite News</button>
         </div>
         <h2 class="slide-side-text">
           <span>{{ slide.sublineFirstLine }} / </span>
@@ -54,6 +54,7 @@ export default {
   name: 'opening',
   data () {
     return {
+      childOpen: true,
       currentSlide: 0,
       isPreviousSlide: false,
       isFirstLoad: true,
@@ -115,9 +116,8 @@ export default {
       this.currentSlide = index
       this.isFirstLoad = false
     },
-    changeOpen () {
-      console.log(this.$store)
-      this.$store.commit('setOpen')
+    openToggle () {
+      this.$emit('changeOpen', this.childOpen)
     }
   }
 }

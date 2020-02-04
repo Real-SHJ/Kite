@@ -3,23 +3,23 @@
 // mutations: state 값을 변화시키는 로직
 // actions: business 로직
 const state = {
-  open: false
-}
-
-const mutations = {
-  setOpen (state) {
-    if (state.open === false) { state.open = true } else { state.open = false }
-  }
+  isOpen: false
 }
 
 const getters = {
   getOpen (state) {
-    return state.open
+    return state.isOpen
+  }
+}
+
+const mutations = {
+  changeOpen (flag) {
+    state.isOpen = flag
   }
 }
 
 export default {
   state,
-  mutations,
-  getters
+  getters,
+  mutations
 }
