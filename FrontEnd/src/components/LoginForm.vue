@@ -66,7 +66,7 @@ export default {
         const fdata = new FormData()
         fdata.append('email', this.credential.email)
         fdata.append('pw', this.credential.pw)
-        http.post('/member/login', fdata)
+        http.post('/member/signin', fdata)
           .then(res => {
             // 토큰 저장
             const { token } = res.data.access_token

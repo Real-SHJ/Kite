@@ -4,22 +4,15 @@ import Home from '../views/Home.vue'
 import LoginPage from '../views/LoginPage.vue'
 import ArticleDetail from '../views/ArticleDetail.vue'
 import SignUp from '../views/SignUp.vue'
-import PersonalDataModify from '../views/PersonalDataModify.vue'
+import NaverLogin from '../components/NaverLogin.vue'
 import IndiRepository from '../views/IndiRepository.vue'
 import FriendsSearch from '../views/FriendsSearch.vue'
 import FriendsManage from '../views/FriendsManage.vue'
-import Opening from '../components/Opening.vue'
 import SelectCompany from '../views/SelectCompany.vue'
-import NaverLogin from '../components/NaverLogin.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/opening',
-  //   name: 'opening',
-  //   component: Opening
-  // },
   {
     path: '/',
     name: 'home',
@@ -59,12 +52,6 @@ const routes = [
     path: '/friendsmanage',
     name: 'friendsmanage',
     component: FriendsManage
-  },
-
-  {
-    path: '/personaldatamodify',
-    name: 'personaldatamodify',
-    component: PersonalDataModify
   },
   {
     path: '/naver',
