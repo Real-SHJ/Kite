@@ -17,7 +17,8 @@
 		where email=#{email}
 	</delete>
   <select id="selectOne" parameterType="Member" resultType="Member">
-		select * from members
+		select *
+		from members
 		where email=#{email}
 	</select>
 	<select id="selectList" resultType="Member">

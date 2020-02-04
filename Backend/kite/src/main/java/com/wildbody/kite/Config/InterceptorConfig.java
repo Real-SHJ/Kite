@@ -27,7 +27,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(interceptor)
-            .addPathPatterns(INCLUDE_PATH)    /* 유저 인증이 필요한 경로 */
+//            .addPathPatterns(INCLUDE_PATH)    /* 유저 인증이 필요한 경로 */
             .excludePathPatterns(EXCLUDE_PATH);     /* 유저 인증이 필요하지 않은 경로 */
 
         registry.addInterceptor(naverInterceptor)

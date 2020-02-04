@@ -29,7 +29,14 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public Member memberInfo(Member member) {
-        return session.selectOne("kite.member.selectOne", member);
+        System.out.println(member.toString());
+        member = session.selectOne("kite.member.selectOne", member);
+        try{
+            System.out.println(member.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return member;
     }
 
     @Override

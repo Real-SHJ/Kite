@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
-@CrossOrigin(origins = {"*"})
 public class AuthInterceptor implements HandlerInterceptor {
 
     private static final String HEADER_ACCESS = "Authorization";
