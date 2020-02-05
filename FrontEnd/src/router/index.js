@@ -6,8 +6,6 @@ import ArticleDetail from '../views/ArticleDetail.vue'
 import SignUp from '../views/SignUp.vue'
 import NaverLogin from '../components/NaverLogin.vue'
 import IndiRepository from '../views/IndiRepository.vue'
-import FriendsSearch from '../views/FriendsSearch.vue'
-import FriendsManage from '../views/FriendsManage.vue'
 import SelectCompany from '../views/SelectCompany.vue'
 import NaverLogin from '../components/NaverLogin.vue'
 import Analysis from '../views/Analysis.vue'
@@ -45,19 +43,6 @@ const routes = [
     name: 'indirepository',
     component: IndiRepository
   },
-
-  {
-    path: '/friendssearch',
-    name: 'friendssearch',
-    component: FriendsSearch
-  },
-
-  {
-    path: '/friendsmanage',
-    name: 'friendsmanage',
-    component: FriendsManage
-  },
-
   {
     path: '/naver',
     name: 'naver',
