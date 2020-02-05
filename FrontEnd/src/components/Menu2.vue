@@ -20,7 +20,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content >
-          <v-list-item-title >{{loggedInUser}}</v-list-item-title>
+          <v-list-item-title >{{userInfo.userName}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
@@ -45,6 +45,7 @@
 
 <script>
 import http from '../http-common'
+import { mapGetters } from 'vuex'
 // import images from '../http-images'
 export default {
   data () {
@@ -71,6 +72,9 @@ export default {
         { '우리은행': 'http://13.125.153.118:8999/img/logo/wooribank.png' }
       ]
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   mounted () {
     this.init()

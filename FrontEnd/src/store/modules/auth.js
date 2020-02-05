@@ -1,8 +1,10 @@
 const isToken = () => {
+  console.log('정우형')
   const storage = sessionStorage.getItem('vue-session-key')
   if (storage) {
-    const isToken = JSON.parse(storage).hasOwnProperty('my-session-token')
+    const isToken = JSON.parse(storage).hasOwnProperty('my-token')
     if (isToken) {
+      console.log('정우형')
       return true
     }
   }
@@ -11,7 +13,7 @@ const isToken = () => {
 
 const state = {
   token: isToken()
-    ? JSON.parse(sessionStorage.getItem('vue-session-key'))['my-session-token']
+    ? JSON.parse(sessionStorage.getItem('vue-session-key'))['my-token']
     : null
 }
 
@@ -31,9 +33,6 @@ const actions = {
 }
 
 const getters = {
-  AuthenticatedCheck (state) {
-    return !!state.token
-  },
   requestHeader (state) {
     return {
       headers: {

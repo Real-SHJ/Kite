@@ -1,28 +1,26 @@
 const state = {
-  email: null
+  email: null,
+  name: null
 }
 
 const mutations = {
-  setInfo (state, email) {
-    state.email = email
+  setInfo (state, info) {
+    state.email = info.userEmail
+    state.name = info.userName
   }
 }
 
 const actions = {
-  infoSave (options, email) {
-    options.commit('setInfo', email)
+  infoSave (options, info) {
+    options.commit('setInfo', info)
   }
 }
 
 const getters = {
-  AuthenticatedCheck (state) {
-    return !!state.token
-  },
-  requestHeader (state) {
+  userInfo (state) {
     return {
-      headers: {
-        Authorization: `JWT ${state.token}`
-      }
+      userEmail: state.email,
+      userName: state.name
     }
   }
 }

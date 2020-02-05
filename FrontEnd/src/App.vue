@@ -35,6 +35,7 @@ export default {
   },
   data () {
     return {
+      AuthenticatedCheck: this.$session.has('my-token'),
       offsetTop: 0
     }
   },

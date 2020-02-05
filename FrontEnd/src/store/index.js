@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Open from './modules/Open'
 import auth from './modules/auth'
+import memInfo from './modules/memInfo'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   //  위 세가지를 묶어서 하나의 모듈로 정의해 가져오는것도 가능하다.
   modules: {
     auth,
-    Open
+    Open,
+    memInfo
   }
 })

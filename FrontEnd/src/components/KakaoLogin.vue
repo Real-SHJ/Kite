@@ -2,12 +2,10 @@
   <div id="app">
     <KakaoLogin
       api-key="a1b690cf634876a3bd96471c5106bd7f"
-      image="kakao_login_btn_large"
+      image="kakao_login_btn"
       :on-success=onSuccess
       :on-failure=onFailure
       />
-      <input v-model="message">
-      <p>{{message}}</p>
   </div>
 </template>
 
