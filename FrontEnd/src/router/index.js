@@ -7,10 +7,10 @@ import SignUp from '../views/SignUp.vue'
 import NaverLogin from '../components/NaverLogin.vue'
 import IndiRepository from '../views/IndiRepository.vue'
 import SelectCompany from '../views/SelectCompany.vue'
-import NaverLogin from '../components/NaverLogin.vue'
 import Analysis from '../views/Analysis.vue'
 import WordCloud from '../components/WordCloud.vue'
 import ForceDirected from '../components/ForceDirected.vue'
+import following from '../views/following.vue'
 
 Vue.use(VueRouter)
 
@@ -67,6 +67,11 @@ const routes = [
     path: '/forcedirected',
     name: 'forcedirected',
     component: ForceDirected
+  },
+  {
+    path: '/following',
+    name: 'following',
+    component: following
   }
 ]
 
