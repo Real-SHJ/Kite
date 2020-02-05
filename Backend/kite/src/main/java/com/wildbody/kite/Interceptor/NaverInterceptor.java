@@ -15,7 +15,7 @@ public class NaverInterceptor implements HandlerInterceptor {
         Object handler) throws Exception {
 
         String state = request.getHeader("nstate");
-        // TODO
+
         String storedState = (String) request.getSession().getAttribute("state");
         NaverMember naverMember = nMember(request.getParameterMap());
 

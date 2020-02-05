@@ -13,7 +13,7 @@ public interface ArticleRepository {
 
     public int articleDelete(int id);
 
-    public Article articleInfo(int id);
+    public Article articleInfo(Article article);
 
     public List<Article> articleList();
 }

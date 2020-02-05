@@ -46,7 +46,7 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public Member login(Member member) {
-        return session.selectOne("kite.member.login", member);
+        return session.selectOne("kite.member.selectOne", member);
     }
 
 }

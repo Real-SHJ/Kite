@@ -10,13 +10,11 @@ import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -94,12 +92,15 @@ public class MemberController {
 
     @PostMapping("/info")
     @ApiOperation(value = "id를 받아 member 조회 서비스", response = Member.class)
-    public @ResponseBody ResponseEntity<Map<String, Object>> infoMember(Member member) {
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> infoMember(Member member) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         Map<String, Object> map = new HashMap<String, Object>();
         try {
+            member = msvc.memberInfo(member);
+            member.setPw("");
             map.put("message", "success");
-            map.put("result", msvc.memberInfo(member));
+            map.put("result", member);
         } catch (RuntimeException e) {
             map.put("message", "fail");
             e.printStackTrace();
@@ -143,24 +144,15 @@ public class MemberController {
         return ret;
     }
 
-    @PostMapping("/naverlogin")
+    @GetMapping("/naverlogin")
     public @ResponseBody
-    ResponseEntity<Map<String, Object>> naverLogin(NaverMember nMember,
-        HttpServletRequest request) {
+    ResponseEntity<Map<String, Object>> naverLogin(NaverMember naverMember) {
         ResponseEntity<Map<String, Object>> ret = null;
-        String state = request.getHeader("nstate");
-        boolean isAuth = false;
         Map<String, Object> map = new HashMap<>();
 
-        if (state.equals(nMember.getState())) {
-            // authorization
-            isAuth = true;
-            map.put("isAuth", isAuth);
-            ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-        } else {
-            map.put("isAuth", isAuth);
-            ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.METHOD_NOT_ALLOWED);
-        }
+        // naver에 정보 요청
+
+        ret = new ResponseEntity<>(map, HttpStatus.OK);
         return ret;
     }
 

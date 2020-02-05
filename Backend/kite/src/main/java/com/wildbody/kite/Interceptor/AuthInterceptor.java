@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -49,7 +50,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             atoken = jsvc.getAccessToken(accessMem);
             rtoken = jsvc.getRefreshToken(accessMem);
             accMemToken = tsvc.select(accessMem);
-            // null pointer exception error
+
             accMemToken.setRefreshToken(rtoken);
             tsvc.update(accMemToken);
             response.addHeader(HEADER_ACCESS, atoken);

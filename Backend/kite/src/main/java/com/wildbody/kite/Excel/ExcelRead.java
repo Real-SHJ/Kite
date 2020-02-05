@@ -96,9 +96,9 @@ public class ExcelRead implements ApplicationRunner {
                 }
                 try {
 
-                    svc.initArticle(
-                        new Article(0, company, title, "", newspaper, publicationDate, url, "",
-                            content, keyword));
+//                    svc.initArticle(
+//                        new Article(0, company, title, "", newspaper, publicationDate, url, "",
+//                            content, keyword));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                     System.out.println(e.getCause().toString());

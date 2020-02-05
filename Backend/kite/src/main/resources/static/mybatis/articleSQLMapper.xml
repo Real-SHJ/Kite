@@ -47,7 +47,7 @@
 	</select>
   <select id="selectList" resultType="Article">
 		select
-			articleid, company,	title, summary, newspaper, publicationDate, url, image
+			 articleid, company, title, summary, newspaper, publicationDate, url, image
 		from article
 	</select>
 </mapper>

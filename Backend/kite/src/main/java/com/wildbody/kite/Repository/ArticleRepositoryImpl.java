@@ -34,14 +34,12 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     }
 
     @Override
-    public Article articleInfo(int id) {
-        Article dto = session.selectOne("kite.article.selectOne", id);
-        return dto;
+    public Article articleInfo(Article article) {
+        return session.selectOne("kite.article.selectOne", article);
     }
 
     @Override
     public List<Article> articleList() {
-        List<Article> list = session.selectList("kite.article.selectList");
-        return list;
+        return session.selectList("kite.article.selectList");
     }
 }
