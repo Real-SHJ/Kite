@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("MemberRepositoryImpl")
+@Repository
 public class MemberRepositoryImpl implements MemberRepository {
 
     @Autowired
@@ -23,8 +23,8 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public int memberDelete(int id) {
-        return session.delete("kite.member.delete", id);
+    public int memberDelete(Member member) {
+        return session.delete("kite.member.delete", member);
     }
 
     @Override

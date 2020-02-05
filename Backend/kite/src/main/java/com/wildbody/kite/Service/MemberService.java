@@ -9,7 +9,7 @@ public interface MemberService {
 
 	public int memberUpdate(Member member);
 
-	public int memberDelete(String id);
+	public int memberDelete(Member member);
 
 	public Member memberInfo(Member member);
 

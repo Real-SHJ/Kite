@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface MemberRepository {
 
-    public int memberInsert(Member m);
+    public int memberInsert(Member member);
 
-    public int memberUpdate(Member m);
+    public int memberUpdate(Member member);
 
-    public int memberDelete(int memberid);
+    public int memberDelete(Member member);
 
     public Member memberInfo(Member member);
 

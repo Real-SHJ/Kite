@@ -15,6 +15,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     // 우선은 멤버관련 경로로 접근하는 경우에만 체크를 해보자
     private static final String[] INCLUDE_PATH = {"/api/member/**"};
 
+
     @Autowired
     private AuthInterceptor interceptor;
 
@@ -29,13 +30,13 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(interceptor)
 //            .addPathPatterns(INCLUDE_PATH)    /* 유저 인증이 필요한 경로 */
             .excludePathPatterns(EXCLUDE_PATH);     /* 유저 인증이 필요하지 않은 경로 */
-
-        registry.addInterceptor(naverInterceptor)
-            .addPathPatterns("/api/member/naverlogin")
-            .excludePathPatterns(EXCLUDE_PATH);
-
-        registry.addInterceptor(kakaoInterceptor)
-            .addPathPatterns("/api/member/kakaologin")
-            .excludePathPatterns(EXCLUDE_PATH);
+//
+//        registry.addInterceptor(naverInterceptor)
+//            .addPathPatterns("/api/member/naverlogin")
+//            .excludePathPatterns(EXCLUDE_PATH);
+//
+//        registry.addInterceptor(kakaoInterceptor)
+//            .addPathPatterns("/api/member/kakaologin")
+//            .excludePathPatterns(EXCLUDE_PATH);
     }
 }

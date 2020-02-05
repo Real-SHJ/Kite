@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-@Service("MemberServiceImpl")
+@Service
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
@@ -24,8 +24,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int memberDelete(String id) {
-        return repo.memberDelete(Integer.parseInt(id));
+    public int memberDelete(Member member) {
+        return repo.memberDelete(member);
     }
 
     @Override

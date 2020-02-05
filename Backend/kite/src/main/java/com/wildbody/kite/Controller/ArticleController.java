@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = {"*"}, maxAge = 6000)
 @RequestMapping("/api/article")
 public class ArticleController {
 
@@ -29,7 +28,7 @@ public class ArticleController {
 
     @PostMapping("/regist")
     @ApiOperation(value = "article 등록 서비스")
-    private @ResponseBody
+    public @ResponseBody
     ResponseEntity<Map<String, Object>> registerArticle(@RequestBody Article dto) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         try {
@@ -48,7 +47,7 @@ public class ArticleController {
 
     @PutMapping("/update")
     @ApiOperation(value = "article 수정 서비스")
-    private @ResponseBody
+    public @ResponseBody
     ResponseEntity<Map<String, Object>> updateArticle(@RequestBody Article dto) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         try {
@@ -67,7 +66,7 @@ public class ArticleController {
 
     @PostMapping("/delete/{id}")
     @ApiOperation(value = "id를 받아 article 삭제 서비스")
-    private ResponseEntity<Map<String, Object>> deleteArticle(@PathVariable("id") String id) {
+    public ResponseEntity<Map<String, Object>> deleteArticle(@PathVariable("id") String id) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         try {
             int delete = aSer.articleDelete(id);
@@ -85,7 +84,7 @@ public class ArticleController {
 
     @GetMapping("/info/{id}")
     @ApiOperation(value = "id를 받아 article 조회 서비스", response = Article.class)
-    private ResponseEntity<Map<String, Object>> infoArticle(@PathVariable("id") String id) {
+    public ResponseEntity<Map<String, Object>> infoArticle(@PathVariable("id") String id) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         Article article = null;
         try {

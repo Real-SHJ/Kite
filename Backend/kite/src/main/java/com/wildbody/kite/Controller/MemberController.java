@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,12 +25,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = {"*"})
 @RequestMapping("/api/member")
 public class MemberController {
 
     @Autowired
-    private MemberService mSer;
+    private MemberService msvc;
 
     @Autowired
     private JwtService jsvc;
@@ -39,12 +39,13 @@ public class MemberController {
 
     @PostMapping("/signup")
     @ApiOperation(value = "member 등록 서비스")
-    private @ResponseBody
-    ResponseEntity<Map<String, Object>> registerMember(Member member, HttpServletResponse response) {
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> registerMember(Member member,
+        HttpServletResponse response) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         Map<String, Object> map = new HashMap<>();
-        int insert = mSer.memberInsert(member);
-        member = mSer.memberInfo(member);
+        int insert = msvc.memberInsert(member);
+        member = msvc.memberInfo(member);
         if (insert == 1) {
             String token = jsvc.getAccessToken(member);
             map.put("message", "회원 가입 성공");
@@ -63,12 +64,12 @@ public class MemberController {
 
     @PutMapping("/update")
     @ApiOperation(value = "member 수정 서비스")
-    private @ResponseBody
+    public @ResponseBody
     ResponseEntity<Map<String, Object>> updateMember(Member member) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         Map<String, Object> map = new HashMap<>();
         try {
-            int update = mSer.memberUpdate(member);
+            int update = msvc.memberUpdate(member);
             map.put("result", update);
             map.put("isupdate", true);
         } catch (RuntimeException e) {
@@ -80,10 +81,10 @@ public class MemberController {
 
     @PostMapping("/delete")
     @ApiOperation(value = "멤버 삭제")
-    private ResponseEntity<Map<String, Object>> deleteMember(Member member) {
+    public ResponseEntity<Map<String, Object>> deleteMember(Member member) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            mSer.memberDelete(member.getEmail());
+            msvc.memberDelete(member);
             map.put("message", "회원 탈퇴 성공");
         } catch (RuntimeException e) {
             map.put("message", "회원 탈퇴 실패");
@@ -93,16 +94,15 @@ public class MemberController {
 
     @PostMapping("/info")
     @ApiOperation(value = "id를 받아 member 조회 서비스", response = Member.class)
-    private ResponseEntity<Map<String, Object>> infoMember(Member member) {
+    public @ResponseBody ResponseEntity<Map<String, Object>> infoMember(Member member) {
         ResponseEntity<Map<String, Object>> resEntity = null;
-        Member mem = null;
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            mem = mSer.memberInfo(member);
             map.put("message", "success");
-            map.put("result", mem);
+            map.put("result", msvc.memberInfo(member));
         } catch (RuntimeException e) {
             map.put("message", "fail");
+            e.printStackTrace();
         }
         resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         return resEntity;
@@ -117,7 +117,7 @@ public class MemberController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             map.put("message", "회원 목록 조회 성공");
-            map.put("result", mSer.memberList());
+            map.put("result", msvc.memberList());
         } catch (RuntimeException e) {
             map.put("message", "회원 목록 조회 실패");
         }
@@ -130,7 +130,7 @@ public class MemberController {
     public @ResponseBody
     ResponseEntity<Map<String, Object>> login(Member member, HttpServletResponse response) {
         ResponseEntity<Map<String, Object>> ret = null;
-        Member loginMem = mSer.login(member);
+        Member loginMem = msvc.login(member);
         Map<String, Object> map = new HashMap<>();
 
         if (loginMem != null) {
