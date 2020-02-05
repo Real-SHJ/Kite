@@ -51,6 +51,9 @@ export default {
     getOpen () {
       return this.$store.getters.getOpen
     }
+  },
+  updated () {
+    this.AuthenticatedCheck = this.$session.has('my-token')
   }
 }
 

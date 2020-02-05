@@ -44,9 +44,13 @@ export default {
     },
     logout () {
       this.$store.dispatch('logout')
+      this.$store.dispatch('infoDel')
       this.$session.destroy()
-      this.$router.push('/')
+      this.$router.push('/loginpage')
     }
+  },
+  updated () {
+    this.AuthenticatedCheck = this.$session.has('my-token')
   }
 }
 </script>

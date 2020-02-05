@@ -5,14 +5,22 @@ const state = {
 
 const mutations = {
   setInfo (state, info) {
-    state.email = info.userEmail
-    state.name = info.userName
+    if (info) {
+      state.email = info.userEmail
+      state.name = info.userName
+    } else {
+      state.email = null
+      state.name = null
+    }
   }
 }
 
 const actions = {
   infoSave (options, info) {
     options.commit('setInfo', info)
+  },
+  infoDel (options) {
+    options.commit('setInfo', null)
   }
 }
 
