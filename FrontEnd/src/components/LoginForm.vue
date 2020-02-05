@@ -41,6 +41,7 @@ import http from '../http-common'
 import router from '../router'
 import KakaoLogin from './KakaoLogin'
 import NaverLogin from './NaverLogin'
+
 export default {
   components: {
     KakaoLogin,
@@ -70,7 +71,6 @@ export default {
         this.snackbar = true
       }
     },
-
     login () {
       if (this.valid) {
         const fdata = new FormData()

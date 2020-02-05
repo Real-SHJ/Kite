@@ -10,6 +10,7 @@ import SelectCompany from '../views/SelectCompany.vue'
 import Analysis from '../views/Analysis.vue'
 import WordCloud from '../components/WordCloud.vue'
 import ForceDirected from '../components/ForceDirected.vue'
+import Empty from '../views/Empty.vue'
 import following from '../views/following.vue'
 
 Vue.use(VueRouter)
@@ -67,6 +68,11 @@ const routes = [
     path: '/forcedirected',
     name: 'forcedirected',
     component: ForceDirected
+  },
+  {
+    path: '/empty',
+    name: 'empty',
+    component: Empty
   },
   {
     path: '/following',

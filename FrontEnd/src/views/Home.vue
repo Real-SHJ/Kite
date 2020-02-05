@@ -9,7 +9,6 @@
 <script>
 import ArticleList from '../components/ArticleList.vue'
 import InfiniteLoading from 'vue-infinite-loading'
-import http from '../http-common'
 export default {
   name: 'home',
   data () {
@@ -67,7 +66,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

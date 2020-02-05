@@ -10,13 +10,20 @@
 </template>
 
 <script>
-
+import http from '../http-common'
 import KakaoLogin from 'vue-kakao-login'
 
 const onSuccess = (data) => {
   console.log(data)
   console.log('success')
-  alert(JSON.stringify(data))
+  console.log(JSON.stringify(data))
+  const dform = new FormData()
+  dform.append('data', data)
+  http
+    .post('/test/kakao', dform)
+    .then(res => {
+      console.log('성공적으로 보냈습니다!!')
+    })
 }
 const onFailure = (data) => {
   console.log(data)

@@ -1,7 +1,7 @@
 <template>
   <v-layout class="layout">
 
-    <v-btn class="mx-2" fixed fab dark color="teal" @mouseover="drawer = true">
+    <v-btn class="mx-2" fixed fab dark color="teal" @mouseover='init'>
     <v-icon dark>mdi-format-list-bulleted-square</v-icon>
     </v-btn>
 
@@ -24,15 +24,15 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-       <v-input @keyup="search" v-model="searchText" name="searchText">🔎
+       <v-input @keyup.native="search" v-model="searchText" name="searchText">🔎
          <v-text-field placeholder="검색어를 입력해주세요"></v-text-field>
        </v-input>
       <v-divider></v-divider>
       <!-- 밑에 백엔드 연결할 것... -->
       <v-list dense >
-        <v-list-item v-for="item in info" :key="item" link>
-          <v-list-item-avatar >
-            <v-img src=items.item></v-img>
+        <v-list-item v-for="item in info" :key="item" link @click="goArtCorp">
+          <v-list-item-avatar>
+            <img :src="items[item]" />
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title >{{ item }}</v-list-item-title>
@@ -50,46 +50,64 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
+      name: '',
+      email: '',
+      searchText: '',
       drawer: null,
       picture: [],
       info: [],
       info2: [],
-      items: [
-        { '삼성전자': 'http://13.125.153.118:8999/img/logo/samsung.png' },
-        { 'LG전자': 'http://13.125.153.118:8999/img/logo/LGElec.png' },
-        { 'SK텔레콤': 'http://13.125.153.118:8999/img/logo/SKtelecom.png' },
-        { 'GS칼텍스': 'http://13.125.153.118:8999/img/logo/GScaltex.png' },
-        { 'KT': 'http://13.125.153.118:8999/img/logo/KT.png' },
-        { '네이버': 'http://13.125.153.118:8999/img/logo/NAVER.png' },
-        { 'S-OIL': 'http://13.125.153.118:8999/img/logo/S-OIL.png' },
-        { 'SK하이닉스': 'http://13.125.153.118:8999/img/logo/SKhynix.png' },
-        { '현대자동차': 'http://13.125.153.118:8999/img/logo/HyundaiCar.png' },
-        { 'CJ제일제당': 'http://13.125.153.118:8999/img/logo/CJJJ.png' },
-        { '국민은행': 'http://13.125.153.118:8999/img/logo/KBbank.png' },
-        { '포스코': 'http://13.125.153.118:8999/img/logo/posco.png' },
-        { '삼성SDS': 'http://13.125.153.118:8999/img/logo/samsungSDS.png' },
-        { '신한은행': 'http://13.125.153.118:8999/img/logo/sinhanbank.png' },
-        { '우리은행': 'http://13.125.153.118:8999/img/logo/wooribank.png' }
-      ]
+      items: {
+        '삼성전자': 'http://13.125.153.118:8999/img/logo/samsung.svg',
+        'LG전자': 'http://13.125.153.118:8999/img/logo/LGElec.svg',
+        'SK텔레콤': 'http://13.125.153.118:8999/img/logo/SKtelecom.svg',
+        'GS칼텍스': 'http://13.125.153.118:8999/img/logo/GScaltex.svg',
+        'KT': 'http://13.125.153.118:8999/img/logo/KT.svg',
+        '네이버': 'http://13.125.153.118:8999/img/logo/NAVER.svg',
+        'S-OIL': 'http://13.125.153.118:8999/img/logo/SOIL.svg',
+        'SK하이닉스': 'http://13.125.153.118:8999/img/logo/SKhynix.svg',
+        '현대자동차': 'http://13.125.153.118:8999/img/logo/HyundaiCar.svg',
+        'CJ제일제당': 'http://13.125.153.118:8999/img/logo/CJJJ.svg',
+        '국민은행': 'http://13.125.153.118:8999/img/logo/KBbank.svg',
+        '포스코': 'http://13.125.153.118:8999/img/logo/posco.svg',
+        '삼성SDS': 'http://13.125.153.118:8999/img/logo/samsungSDS.svg',
+        '신한은행': 'http://13.125.153.118:8999/img/logo/sinhanbank.svg',
+        '우리은행': 'http://13.125.153.118:8999/img/logo/wooribank.png'
+      }
     }
   },
   computed: {
     ...mapGetters(['userInfo'])
   },
   mounted () {
-    this.init()
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   methods: {
     init () {
+      this.drawer = true
       var strArray // 시작하면 바로 정보 가져오기
+      const fdata = new FormData()
+      fdata.append('email', this.userInfo.userEmail)
+      fdata.append('pw', this.userInfo.userPw)
+      console.log(this.userInfo.userEmail)
       http
-        .post('/member/info') // 회원 아이디 넣기
+        .post('/member/info', fdata) // 회원 아이디 넣기
         .then(response => {
-          strArray = response.data['company'].resvalue
+          strArray = response.data.result.company
+          console.log(response)
           this.info = strArray.split(',')
+
+          for (let i = 0; i < this.info.length; i++) {
+            this.info[i] = this.info[i].replace(' ', '')
+          }
+          console.log(this.items[this.info[1]])
+          console.log(this.info[0] + this.info[1])
         })
         .catch(() => {
           this.errored = true
+          console.log(this.errored)
         })
         .finally(() => (this.loading = false))
     }
