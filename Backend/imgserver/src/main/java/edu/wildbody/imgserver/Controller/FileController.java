@@ -24,8 +24,8 @@ public class FileController {
         this.path = path;
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<Map<String, Object>> upload(@RequestPart("images") MultipartFile file) {
+    @PostMapping("/profile/upload")
+    public ResponseEntity<Map<String, Object>> profile(@RequestPart("profile") MultipartFile file) {
         String msg = null;
         boolean isupload = false;
         String filename = file.getOriginalFilename();
@@ -41,7 +41,109 @@ public class FileController {
             isupload = false;
         } else {
             try {
-                file.transferTo(new File(path, filename));
+                file.transferTo(new File(path+"profile/", filename));
+                msg = "file upload success";
+                isupload = true;
+            } catch (Exception e) {
+                // 파일 업로드 에러
+                System.out.println(e.getMessage());
+                msg = "error with file uploading";
+            }
+        }
+
+        map.put("isupload", isupload);
+        map.put("msg", msg);
+        ret = new ResponseEntity<>(map, HttpStatus.OK);
+
+        return ret;
+    }
+
+    @PostMapping("/thumbnail/upload")
+    public ResponseEntity<Map<String, Object>> thumnail(@RequestPart("thumbnail") MultipartFile file) {
+        String msg = null;
+        boolean isupload = false;
+        String filename = file.getOriginalFilename();
+        String conType = file.getContentType();
+        System.out.println("receive file : " + filename + "  " + conType);
+
+        ResponseEntity<Map<String, Object>> ret = null;
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        if (!"image".contains(file.getContentType().split("/")[0])) {
+            //에러 페이지
+            msg = "not allow file type";
+            isupload = false;
+        } else {
+            try {
+                file.transferTo(new File(path+"thumbnail/", filename));
+                msg = "file upload success";
+                isupload = true;
+            } catch (Exception e) {
+                // 파일 업로드 에러
+                System.out.println(e.getMessage());
+                msg = "error with file uploading";
+            }
+        }
+
+        map.put("isupload", isupload);
+        map.put("msg", msg);
+        ret = new ResponseEntity<>(map, HttpStatus.OK);
+
+        return ret;
+    }
+
+    @PostMapping("/article/upload")
+    public ResponseEntity<Map<String, Object>> article(@RequestPart("article") MultipartFile file) {
+        String msg = null;
+        boolean isupload = false;
+        String filename = file.getOriginalFilename();
+        String conType = file.getContentType();
+        System.out.println("receive file : " + filename + "  " + conType);
+
+        ResponseEntity<Map<String, Object>> ret = null;
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        if (!"image".contains(file.getContentType().split("/")[0])) {
+            //에러 페이지
+            msg = "not allow file type";
+            isupload = false;
+        } else {
+            try {
+                file.transferTo(new File(path+"article/", filename));
+                msg = "file upload success";
+                isupload = true;
+            } catch (Exception e) {
+                // 파일 업로드 에러
+                System.out.println(e.getMessage());
+                msg = "error with file uploading";
+            }
+        }
+
+        map.put("isupload", isupload);
+        map.put("msg", msg);
+        ret = new ResponseEntity<>(map, HttpStatus.OK);
+
+        return ret;
+    }
+
+    @PostMapping("/logo/upload")
+    public ResponseEntity<Map<String, Object>> logo(@RequestPart("logo") MultipartFile file) {
+        String msg = null;
+        boolean isupload = false;
+        String filename = file.getOriginalFilename();
+        String conType = file.getContentType();
+        System.out.println("receive file : " + filename + "  " + conType);
+
+        ResponseEntity<Map<String, Object>> ret = null;
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        if (!"image".contains(file.getContentType().split("/")[0])) {
+            //에러 페이지
+            msg = "not allow file type";
+            isupload = false;
+        } else {
+            try {
+                file.transferTo(new File(path+"logo/", filename));
                 msg = "file upload success";
                 isupload = true;
             } catch (Exception e) {

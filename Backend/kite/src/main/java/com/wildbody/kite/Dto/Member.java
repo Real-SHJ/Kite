@@ -1,4 +1,4 @@
-package com.wildbody.kite.Dto;
+package com.wildbody.kite.DTO;
 
 import java.util.List;
 import lombok.Data;
@@ -19,6 +19,5 @@ public class Member {
     private String image;
     private List<Article> articleList;
     private List<String> keywordList;
-    private String refreshToken;
 
 }

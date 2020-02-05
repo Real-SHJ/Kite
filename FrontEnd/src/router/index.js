@@ -4,22 +4,17 @@ import Home from '../views/Home.vue'
 import LoginPage from '../views/LoginPage.vue'
 import ArticleDetail from '../views/ArticleDetail.vue'
 import SignUp from '../views/SignUp.vue'
-import PersonalDataModify from '../views/PersonalDataModify.vue'
+import NaverLogin from '../components/NaverLogin.vue'
 import IndiRepository from '../views/IndiRepository.vue'
-import FriendsSearch from '../views/FriendsSearch.vue'
-import FriendsManage from '../views/FriendsManage.vue'
-import Opening from '../components/Opening.vue'
 import SelectCompany from '../views/SelectCompany.vue'
 import NaverLogin from '../components/NaverLogin.vue'
+import Analysis from '../views/Analysis.vue'
+import WordCloud from '../components/WordCloud.vue'
+import ForceDirected from '../components/ForceDirected.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/opening',
-    name: 'opening',
-    component: Opening
-  },
   {
     path: '/',
     name: 'home',
@@ -48,24 +43,6 @@ const routes = [
     name: 'indirepository',
     component: IndiRepository
   },
-
-  {
-    path: '/friendssearch',
-    name: 'friendssearch',
-    component: FriendsSearch
-  },
-
-  {
-    path: '/friendsmanage',
-    name: 'friendsmanage',
-    component: FriendsManage
-  },
-
-  {
-    path: '/personaldatamodify',
-    name: 'personaldatamodify',
-    component: PersonalDataModify
-  },
   {
     path: '/naver',
     name: 'naver',
@@ -75,6 +52,21 @@ const routes = [
     path: '/selectcompany',
     name: 'selectcompany',
     component: SelectCompany
+  },
+  {
+    path: '/analysis',
+    name: 'analysis',
+    component: Analysis
+  },
+  {
+    path: '/wordcloud',
+    name: 'wordcloud',
+    component: WordCloud
+  },
+  {
+    path: '/forcedirected',
+    name: 'forcedirected',
+    component: ForceDirected
   }
 ]
 

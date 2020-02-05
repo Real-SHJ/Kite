@@ -23,7 +23,6 @@ export default {
   },
   mounted () {
     this.init()
-    this.send()
   },
   methods: {
     init () {

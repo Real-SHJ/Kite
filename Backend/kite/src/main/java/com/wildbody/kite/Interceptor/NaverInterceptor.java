@@ -1,6 +1,6 @@
 package com.wildbody.kite.Interceptor;
 
-import com.wildbody.kite.Dto.NaverMember;
+import com.wildbody.kite.DTO.NaverMember;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,16 +1,22 @@
 package com.wildbody.kite.Service;
 
-import com.wildbody.kite.Dto.Article;
+import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.Repository.ArticleRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("ArticleServiceImpl")
+@Service
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleRepository repo;
+
+
+    @Override
+    public int initArticle(Article article) {
+        return repo.initArticle(article);
+    }
 
     @Override
     public int articleInsert(Article a) {

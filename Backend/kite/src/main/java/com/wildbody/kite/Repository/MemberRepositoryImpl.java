@@ -1,12 +1,12 @@
 package com.wildbody.kite.Repository;
 
-import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.DTO.Member;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("MemberRepositoryImpl")
+@Repository
 public class MemberRepositoryImpl implements MemberRepository {
 
     @Autowired
@@ -18,38 +18,35 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public int memberUpdate(Member m) {
-        return session.update("kite.member.update", m);
+    public int memberUpdate(Member member) {
+        return session.update("kite.member.update", member);
     }
 
     @Override
-    public int memberDelete(int id) {
-        return session.delete("kite.member.delete", id);
+    public int memberDelete(Member member) {
+        return session.delete("kite.member.delete", member);
     }
 
     @Override
-    public Member memberInfo(int id) {
-        Member dto = session.selectOne("kite.member.selectOne", id);
-        return dto;
+    public Member memberInfo(Member member) {
+        System.out.println(member.toString());
+        member = session.selectOne("kite.member.selectOne", member);
+        try{
+            System.out.println(member.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return member;
     }
 
     @Override
     public List<Member> memberList() {
-        List<Member> list = session.selectList("kite.member.selectList");
-        return list;
+        return session.selectList("kite.member.selectList");
     }
 
     @Override
     public Member login(Member member) {
-
-        try {
-            member = session.selectOne("kite.member.login", member);
-            System.out.println("회원 확인");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("회원 확인 불가");
-        }
-        return member;
+        return session.selectOne("kite.member.login", member);
     }
 
 }

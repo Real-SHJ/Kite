@@ -1,6 +1,6 @@
 package com.wildbody.kite.JWT;
 
-import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.DTO.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -46,7 +46,7 @@ public class JwtServiceImpl implements JwtService {
         try {
             return salt.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -54,50 +54,56 @@ public class JwtServiceImpl implements JwtService {
     // 우선은 액세스토큰만 검증한다
     @Override
     public boolean validateToken(String jwt) {
-        boolean ret = false;
         try {
             Jws<Claims> claims = Jwts.parser()
                 .setSigningKey(generateKey(SALT))
                 .parseClaimsJws(jwt);
-
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
-            ret = false;
+            System.out.println(e.getMessage());
         }
-        return ret;
+        return false;
     }
 
     @Override
     public boolean validateRefreshToken(String jwt) {
-        boolean ret = false;
         try {
             Jws<Claims> claims = Jwts.parser()
                 .setSigningKey(generateKey(REFSALT))
                 .parseClaimsJws(jwt);
-            ret = true;
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
-        return ret;
+        return false;
     }
 
     @Override
     public boolean isExpiration(String jwt) {
-        boolean ret = false;
+        Jws<Claims> claims;
         try {
-            Jws<Claims> claims = Jwts.parser()
+            claims = Jwts.parser()
                 .setSigningKey(generateKey(SALT))
                 .parseClaimsJws(jwt);
-
-            if (claims.getBody().getExpiration().after(new Date())) {
-                ret = false;
-            }
-            ret = true;
         } catch (SignatureException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return false;
         }
-        return ret;
+        // 만료시간이 현재시간보다 늦을경우
+        return !claims.getBody().getExpiration().after(new Date());
     }
 
+    @Override
+    public boolean isExpirationRefresh(String jwt) {
+        Jws<Claims> claims = null;
+        try {
+            claims = Jwts.parser()
+                .setSigningKey(generateKey(REFSALT))
+                .parseClaimsJws(jwt);
+        } catch (SignatureException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return !claims.getBody().getExpiration().after(new Date());
+    }
 }

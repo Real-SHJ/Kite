@@ -1,17 +1,19 @@
 package com.wildbody.kite.Service;
 
+import com.wildbody.kite.DTO.Article;
 import java.util.List;
 
-import com.wildbody.kite.Dto.Article;
+public interface ArticleService {
 
-public interface ArticleService{
-	public int articleInsert(Article a);
+    int initArticle(Article article);
 
-	public int articleUpdate(Article a);
+    int articleInsert(Article article);
 
-	public int articleDelete(String id);
+    int articleUpdate(Article article);
 
-	public Article articleInfo(String id);
+    int articleDelete(String id);
 
-	public List<Article> articleList();
+    Article articleInfo(String id);
+
+    List<Article> articleList();
 }

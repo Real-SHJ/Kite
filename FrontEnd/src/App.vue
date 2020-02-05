@@ -1,10 +1,10 @@
 <template>
-  <v-content style="background-color: #F6F8FA">
-    <div v-if="!getOpen">
-      <Opening/>
-    </div>
-    <div v-else>
-      <Header :offsetTop="offsetTop"/>
+  <v-app id="inspire" style="background-color: #F6F8FA">
+    <v-content v-if="getOpen === false">
+      <Opening @changeOpen="change"/>
+    </v-content>
+    <v-content v-else>
+      <Header :offsetTop="offsetTop" :AuthenticatedCheck="AuthenticatedCheck"/>
       <Menu/>
       <router-view/>
       <Footer/>
@@ -15,8 +15,8 @@
         id="nav"
       >
       </v-layout>
-    </div>
-  </v-content>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
@@ -24,10 +24,9 @@ import Header from './components/Header'
 import Menu from './components/Menu2'
 import Footer from './components/Footer'
 import Opening from './components/Opening.vue'
-import { mapGetters } from 'vuex'
 
 export default {
-  name: 'index',
+  name: 'app',
   components: {
     Header,
     Menu,
@@ -36,19 +35,21 @@ export default {
   },
   data () {
     return {
-      offsetTop: 0,
-      isOpen: false
+      offsetTop: 0
     }
   },
   methods: {
     onScroll (e) {
       this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
+    },
+    change (childOpen) {
+      this.$store.commit('changeOpen', childOpen)
     }
   },
   computed: {
-    ...mapGetters([
-      'getOpen'
-    ])
+    getOpen () {
+      return this.$store.getters.getOpen
+    }
   }
 }
 

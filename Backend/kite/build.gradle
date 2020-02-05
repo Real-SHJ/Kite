@@ -5,10 +5,14 @@ plugins {
 
 }
 
-group = 'com.wildbody.kite'
-version = '0.0.1'
+group = 'com.wildbody'
+version = '0.0.2'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
+
+jar{
+    archiveName 'kite-server'
+}
 
 repositories {
     jcenter()
@@ -20,7 +24,6 @@ configurations {
         extendsFrom annotationProcessor
     }
 }
-
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE")
@@ -50,7 +53,10 @@ dependencies {
 
 //    HttpCommon REST Template
     compile group: 'org.apache.httpcomponents', name: 'httpclient'
-
+//    Excel Parser
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+//    Live load
+    compile 'org.springframework.boot:spring-boot-devtools'
 
 
 

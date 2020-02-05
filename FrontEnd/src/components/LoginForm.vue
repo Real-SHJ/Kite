@@ -34,7 +34,7 @@
 
 <script>
 import http from '../http-common'
-import router from '../router'
+// import router from '../router'
 export default {
   data () {
     return {
@@ -66,20 +66,24 @@ export default {
         const fdata = new FormData()
         fdata.append('email', this.credential.email)
         fdata.append('pw', this.credential.pw)
-        http.post('/member/login', fdata)
+        http.post('/member/signin', fdata)
           .then(res => {
             // 토큰 저장
             const { token } = res.data.access_token
+            this.$session.set('my-session-token', token)
             this.$store.dispatch('login', token)
-            // 리다이렉트
-            console.log(res.data)
-            console.log(res.headers)
-            console.log(res)
             console.log('로그인 성공!!')
-            router.push('/')
+            // router.push('/')
           })
           .catch(err => console.log(err))
       }
+      const fdata2 = new FormData()
+      fdata2.append('email', this.credential.email)
+      http.post('/member/info', fdata2)
+        .then(res2 => {
+          console.log(res2.data)
+          // 리다이렉트
+        })
     }
   }
 }

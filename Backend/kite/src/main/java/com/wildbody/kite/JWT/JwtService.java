@@ -1,6 +1,6 @@
 package com.wildbody.kite.JWT;
 
-import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.DTO.Member;
 
 public interface JwtService {
 
@@ -15,4 +15,6 @@ public interface JwtService {
     boolean validateToken(String jwt);
 
     boolean isExpiration(String jwt);
+
+    boolean isExpirationRefresh(String jwt);
 }

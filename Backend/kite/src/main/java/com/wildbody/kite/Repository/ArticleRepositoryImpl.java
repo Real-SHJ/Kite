@@ -1,12 +1,12 @@
 package com.wildbody.kite.Repository;
 
-import com.wildbody.kite.Dto.Article;
+import com.wildbody.kite.DTO.Article;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("ArticleRepositoryImpl")
+@Repository
 public class ArticleRepositoryImpl implements ArticleRepository {
 
     @Autowired
@@ -14,13 +14,18 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
 
     @Override
-    public int articleInsert(Article a) {
-        return session.insert("kite.article.insert", a);
+    public int initArticle(Article article) {
+        return session.insert("kite.article.insert", article);
     }
 
     @Override
-    public int articleUpdate(Article a) {
-        return session.update("kite.article.update", a);
+    public int articleInsert(Article aritcle) {
+        return session.insert("kite.article.insert", aritcle);
+    }
+
+    @Override
+    public int articleUpdate(Article aritcle) {
+        return session.update("kite.article.update", aritcle);
     }
 
     @Override
