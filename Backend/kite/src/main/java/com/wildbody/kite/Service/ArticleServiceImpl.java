@@ -1,12 +1,12 @@
 package com.wildbody.kite.Service;
 
-import com.wildbody.kite.Dto.Article;
+import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.Repository.ArticleRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("ArticleServiceImpl")
+@Service
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
@@ -34,8 +34,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article articleInfo(String id) {
-        return repo.articleInfo(Integer.parseInt(id));
+    public Article articleInfo(Article article) {
+        return repo.articleInfo(article);
     }
 
     @Override

@@ -4,7 +4,7 @@
       <Opening @changeOpen="change"/>
     </v-content>
     <v-content v-else>
-      <Header :offsetTop="offsetTop"/>
+      <Header :offsetTop="offsetTop" :AuthenticatedCheck="AuthenticatedCheck"/>
       <Menu/>
       <router-view/>
       <Footer/>
@@ -21,7 +21,7 @@
 
 <script>
 import Header from './components/Header'
-// import Menu from './components/Menu2'
+import Menu from './components/Menu2'
 import Footer from './components/Footer'
 import Opening from './components/Opening.vue'
 
@@ -29,12 +29,13 @@ export default {
   name: 'app',
   components: {
     Header,
-    // Menu,
+    Menu,
     Footer,
     Opening
   },
   data () {
     return {
+      AuthenticatedCheck: this.$session.has('my-token'),
       offsetTop: 0
     }
   },
@@ -50,6 +51,9 @@ export default {
     getOpen () {
       return this.$store.getters.getOpen
     }
+  },
+  updated () {
+    this.AuthenticatedCheck = this.$session.has('my-token')
   }
 }
 

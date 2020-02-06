@@ -6,7 +6,7 @@ VOLUME [ "/var/lib/kite/log" ]
 EXPOSE 8080
 
 # the application's jar file
-ARG JAR_FILE=build/libs/kite-0.0.1.jar
+ARG JAR_FILE=build/libs/kite-0.0.2.jar
 
 # Add the applicatio 's jar to the container
 ADD ${JAR_FILE} kite-boot.jar

@@ -1,6 +1,6 @@
 package com.wildbody.kite.Repository;
 
-import com.wildbody.kite.Dto.Article;
+import com.wildbody.kite.DTO.Article;
 import java.util.List;
 
 public interface ArticleRepository {
@@ -13,7 +13,7 @@ public interface ArticleRepository {
 
     public int articleDelete(int id);
 
-    public Article articleInfo(int id);
+    public Article articleInfo(Article article);
 
     public List<Article> articleList();
 }

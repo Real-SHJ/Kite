@@ -1,12 +1,12 @@
 package com.wildbody.kite.Repository;
 
-import com.wildbody.kite.Dto.Article;
+import com.wildbody.kite.DTO.Article;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("ArticleRepositoryImpl")
+@Repository
 public class ArticleRepositoryImpl implements ArticleRepository {
 
     @Autowired
@@ -15,12 +15,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
     @Override
     public int initArticle(Article article) {
-        int cnt = 0;
-        cnt += session.insert("kite.article.insert", article);
-        cnt += session.insert("kite.article.insertKeyword", article);
-        cnt += session.insert("kite.article.insertContent", article);
-        return cnt;
-
+        return session.insert("kite.article.insert", article);
     }
 
     @Override
@@ -39,14 +34,12 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     }
 
     @Override
-    public Article articleInfo(int id) {
-        Article dto = session.selectOne("kite.article.selectOne", id);
-        return dto;
+    public Article articleInfo(Article article) {
+        return session.selectOne("kite.article.selectOne", article);
     }
 
     @Override
     public List<Article> articleList() {
-        List<Article> list = session.selectList("kite.article.selectList");
-        return list;
+        return session.selectList("kite.article.selectList");
     }
 }

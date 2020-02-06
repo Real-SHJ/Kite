@@ -1,15 +1,17 @@
 package com.wildbody.kite.Controller;
 
-import com.wildbody.kite.Dto.Article;
+import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.Service.ArticleService;
+import com.wildbody.kite.Service.MemberService;
 import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,20 +22,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = {"*"}, maxAge = 6000)
 @RequestMapping("/api/article")
 public class ArticleController {
 
+    static final int offset = 5;
     @Autowired
-    ArticleService aSer;
+    private ArticleService svc;
+    @Autowired
+    private MemberService msvc;
 
     @PostMapping("/regist")
     @ApiOperation(value = "article 등록 서비스")
-    private @ResponseBody
+    public @ResponseBody
     ResponseEntity<Map<String, Object>> registerArticle(@RequestBody Article dto) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         try {
-            int insert = aSer.articleInsert(dto);
+            int insert = svc.articleInsert(dto);
             Map<String, Object> map = new HashMap<>();
             map.put("resvalue", insert);
             map.put("message", "기사 등록 성공");
@@ -48,11 +52,11 @@ public class ArticleController {
 
     @PutMapping("/update")
     @ApiOperation(value = "article 수정 서비스")
-    private @ResponseBody
+    public @ResponseBody
     ResponseEntity<Map<String, Object>> updateArticle(@RequestBody Article dto) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         try {
-            int update = aSer.articleUpdate(dto);
+            int update = svc.articleUpdate(dto);
             Map<String, Object> map = new HashMap<>();
             map.put("resvalue", update);
             map.put("message", "기사 수정 성공");
@@ -67,10 +71,10 @@ public class ArticleController {
 
     @PostMapping("/delete/{id}")
     @ApiOperation(value = "id를 받아 article 삭제 서비스")
-    private ResponseEntity<Map<String, Object>> deleteArticle(@PathVariable("id") String id) {
+    public ResponseEntity<Map<String, Object>> deleteArticle(@PathVariable("id") String id) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         try {
-            int delete = aSer.articleDelete(id);
+            int delete = svc.articleDelete(id);
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("message", "기사 삭제 성공");
             map.put("resvalue", delete);
@@ -83,22 +87,27 @@ public class ArticleController {
         return resEntity;
     }
 
-    @GetMapping("/info/{id}")
+    @GetMapping("/info")
     @ApiOperation(value = "id를 받아 article 조회 서비스", response = Article.class)
-    private ResponseEntity<Map<String, Object>> infoArticle(@PathVariable("id") String id) {
+    public ResponseEntity<Map<String, Object>> infoArticle(HttpServletRequest request) {
         ResponseEntity<Map<String, Object>> resEntity = null;
-        Article article = null;
+        Map<String, Object> map = new HashMap<String, Object>();
+        String email = request.getHeader("email");
+        int pageNum = Integer.parseInt(request.getHeader("page"));
+        Member member = new Member();
+        member.setEmail(email);
         try {
-            article = aSer.articleInfo(id);
-            Map<String, Object> map = new HashMap<String, Object>();
+            // 몇칸으로 자를건지를 알아내야 한다
+            // 페이지수 * 자른 칸 수 만큼 보낸다
+            int start = 1, end = 1;
+            start =
+            end = start + offset;
             map.put("message", "기사 조회 성공");
-            map.put("article", article);
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            map.put("article", msvc.memberInfo(member).getArticleList().subList(start, end));
         } catch (RuntimeException e) {
-            Map<String, Object> map = new HashMap<String, Object>();
             map.put("message", "기사 조회 실패");
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         }
+        resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         return resEntity;
     }
 
@@ -108,18 +117,16 @@ public class ArticleController {
     ResponseEntity<Map<String, Object>> listArticle() {
         ResponseEntity<Map<String, Object>> resEntity = null;
         List<Article> list = null;
+        Map<String, Object> map = new HashMap<String, Object>();
         try {
-            list = aSer.articleList();
-            Map<String, Object> map = new HashMap<String, Object>();
             map.put("message", "기사 목록 조회 성공");
-            map.put("resvalue", list);
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            map.put("resvalue", svc.articleList());
         } catch (RuntimeException e) {
-            Map<String, Object> map = new HashMap<String, Object>();
             map.put("message", "기사 목록 조회 실패");
             map.put("error", e.getMessage());
-            resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         }
+        resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         return resEntity;
     }
+
 }

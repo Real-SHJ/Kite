@@ -31,7 +31,7 @@ public class HttpController {
             accessToken = rest
                 .getKakaoRef("vNAAT1NYq2lFzJSR61zP5JNQgXABT0svedjDUAopcBMAAAFv6g4oiw");
             ret = true;
-            map.put("Authrization", accessToken);
+            map.put("Authorization", accessToken);
             map.put("result", ret);
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,4 +41,5 @@ public class HttpController {
         resEntity = new ResponseEntity<>(map, HttpStatus.OK);
         return resEntity;
     }
+
 }

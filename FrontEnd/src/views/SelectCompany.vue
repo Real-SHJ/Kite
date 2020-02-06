@@ -134,8 +134,8 @@ transition: opacity .2s ease-in-out;
 }
 .vcard:not(.on-hover) {
 opacity: 0.75;
- }
- .clickbtn {
-   color: red !important;
- }
+}
+.clickbtn {
+  color: red !important;
+}
 </style>

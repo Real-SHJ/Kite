@@ -1,6 +1,6 @@
 package com.wildbody.kite.Interceptor;
 
-import com.wildbody.kite.Dto.NaverMember;
+import com.wildbody.kite.DTO.NaverMember;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +15,7 @@ public class NaverInterceptor implements HandlerInterceptor {
         Object handler) throws Exception {
 
         String state = request.getHeader("nstate");
-        // TODO
+
         String storedState = (String) request.getSession().getAttribute("state");
         NaverMember naverMember = nMember(request.getParameterMap());
 
