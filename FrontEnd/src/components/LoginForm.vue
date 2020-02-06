@@ -88,10 +88,11 @@ export default {
               .then(res2 => {
                 const userEmail = res2.data.result.email
                 const userName = `${res2.data.result.lastname} ${res2.data.result.firstname}`
+                const userid = res2.data.result.memberid
                 console.log(userName)
                 console.log(res2.data.result)
-                this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName })
-                this.$session.set('my-info', { userEmail: userEmail, userName: userName })
+                this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid })
+                this.$session.set('my-info', { userEmail: userEmail, userName: userName, userid: userid })
               })
             // 리다이렉트
             router.push('/')

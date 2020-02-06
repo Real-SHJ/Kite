@@ -31,9 +31,10 @@ const routes = [
   },
 
   {
-    path: '/articledetail',
+    path: '/articleDetail/:id',
     name: 'articledetail',
-    component: ArticleDetail
+    component: ArticleDetail,
+    props: true
   },
   {
     path: '/articlecorpo/:company',
