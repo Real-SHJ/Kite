@@ -1,16 +1,15 @@
 package com.wildbody.kite.Excel;
 
-import com.wildbody.kite.Dto.Article;
+import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.Service.ArticleService;
-import java.io.FileInputStream;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,16 +18,10 @@ public class ExcelRead implements ApplicationRunner {
     @Autowired
     private ArticleService svc;
 
-    private String path = null;
-
-    public ExcelRead(@Value("${custom.excel.path}") String path) {
-        this.path = path;
-    }
-
     public void execute() {
         XSSFWorkbook workbook = null;
         try {
-            workbook = new XSSFWorkbook(new FileInputStream(path + "/article_data.xlsx"));
+            workbook = new XSSFWorkbook(new ClassPathResource("static/article_data.xlsx").getInputStream());
             int rowindex = 0;
             int columnindex = 0;
             // 시트 수 (첫번째에만 존재하므로 0을 준다)
@@ -48,7 +41,7 @@ public class ExcelRead implements ApplicationRunner {
                 String keyword = "";
                 if (row != null) {
                     // 셀의 수
-                    int cells = row.getPhysicalNumberOfCells();
+                    int cells = row.getLastCellNum();
                     for (columnindex = 0; columnindex <= cells; columnindex++) {
                         // 셀값을 읽는다
                         XSSFCell cell = row.getCell(columnindex);
@@ -103,9 +96,9 @@ public class ExcelRead implements ApplicationRunner {
                 }
                 try {
 
-                    svc.initArticle(
-                        new Article(0, company, title, "", newspaper, publicationDate, url, "",
-                            content, keyword));
+//                    svc.initArticle(
+//                        new Article(0, company, title, "", newspaper, publicationDate, url, "",
+//                            content, keyword));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                     System.out.println(e.getCause().toString());
@@ -118,6 +111,6 @@ public class ExcelRead implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        this.execute();
+//        this.execute();
     }
 }

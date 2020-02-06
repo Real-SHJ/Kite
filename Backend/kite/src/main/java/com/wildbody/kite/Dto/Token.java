@@ -1,5 +1,6 @@
-package com.wildbody.kite.Dto;
+package com.wildbody.kite.DTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

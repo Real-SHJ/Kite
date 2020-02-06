@@ -1,44 +1,50 @@
-// // 로그인 로직의 상태관리하기
-// import jwtDecode from 'jwt-decode'
-// const state = {
-//   token: null
-// }
+const isToken = () => {
+  console.log('정우형')
+  const storage = sessionStorage.getItem('vue-session-key')
+  if (storage) {
+    const isToken = JSON.parse(storage).hasOwnProperty('my-token')
+    if (isToken) {
+      console.log('정우형')
+      return true
+    }
+  }
+  return false
+}
 
-// const mutations = {
-//   setToken (state, token) {
-//     state.token = token
-//   }
-// }
+const state = {
+  token: isToken()
+    ? JSON.parse(sessionStorage.getItem('vue-session-key'))['my-token']
+    : null
+}
 
-// const actions = {
-//   login (options, token) {
-//     options.commit('setToken', token) // 이걸 실행하겠다. $emit과 비슷.
-//   },
-//   logout (options) {
-//     options.commit('setToken', null)
-//   }
-// }
+const mutations = {
+  setToken (state, token) {
+    state.token = token
+  }
+}
 
-// // computed와 비슷?
-// const getters = {
-//   isAuthenticated (state) {
-//     return !!state.token
-//   },
-//   requestHeader (state) {
-//     return {
-//       headers: {
-//         Authorization: `JWT ${state.token}`
-//       }
-//     }
-//   },
-//   userId (state) {
-//     return state.token ? jwtDecode(state.token).user_id : null
-//   }
-// }
+const actions = {
+  login (options, token) {
+    options.commit('setToken', token)
+  },
+  logout (options) {
+    options.commit('setToken', null)
+  }
+}
 
-// export default {
-//   state,
-//   mutations,
-//   actions,
-//   getters
-// }
+const getters = {
+  requestHeader (state) {
+    return {
+      headers: {
+        Authorization: `JWT ${state.token}`
+      }
+    }
+  }
+}
+
+export default {
+  state,
+  mutations,
+  actions,
+  getters
+}

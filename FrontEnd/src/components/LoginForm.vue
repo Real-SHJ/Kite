@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-card>
     <v-form
       ref="form"
       v-model="valid"
@@ -29,13 +29,24 @@
         로그인
       </v-btn>
     </v-form>
-  </v-container>
+    <v-container class="d-inline-flex">
+      <KakaoLogin class="mr-4"/>
+      <NaverLogin/>
+    </v-container>
+  </v-card>
 </template>
 
 <script>
 import http from '../http-common'
 import router from '../router'
+import KakaoLogin from './KakaoLogin'
+import NaverLogin from './NaverLogin'
+
 export default {
+  components: {
+    KakaoLogin,
+    NaverLogin
+  },
   data () {
     return {
       valid: true,
@@ -60,22 +71,29 @@ export default {
         this.snackbar = true
       }
     },
-
     login () {
       if (this.valid) {
         const fdata = new FormData()
         fdata.append('email', this.credential.email)
         fdata.append('pw', this.credential.pw)
-        http.post('/member/login', fdata)
+        http.post('/member/signin', fdata)
           .then(res => {
             // 토큰 저장
-            const { token } = res.data.access_token
+            const token = res.data.access_token
+            console.log(token)
+            this.$session.set('my-token', token)
             this.$store.dispatch('login', token)
-            // 리다이렉트
-            console.log(res.data)
-            console.log(res.headers)
-            console.log(res)
             console.log('로그인 성공!!')
+            http.post('/member/info', fdata)
+              .then(res2 => {
+                const userEmail = res2.data.result.email
+                const userName = `${res2.data.result.lastname} ${res2.data.result.firstname}`
+                console.log(userName)
+                console.log(res2.data.result)
+                this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName })
+                this.$session.set('my-info', { userEmail: userEmail, userName: userName })
+              })
+            // 리다이렉트
             router.push('/')
           })
           .catch(err => console.log(err))

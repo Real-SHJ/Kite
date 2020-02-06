@@ -1,6 +1,6 @@
 package com.wildbody.kite.Service;
 
-import com.wildbody.kite.Dto.Article;
+import com.wildbody.kite.DTO.Article;
 import java.util.List;
 
 public interface ArticleService {
@@ -13,7 +13,7 @@ public interface ArticleService {
 
     int articleDelete(String id);
 
-    Article articleInfo(String id);
+    Article articleInfo(Article article);
 
     List<Article> articleList();
 }

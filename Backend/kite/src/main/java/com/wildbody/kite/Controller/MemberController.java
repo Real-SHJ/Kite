@@ -1,20 +1,20 @@
 package com.wildbody.kite.Controller;
 
-import com.wildbody.kite.Dto.Member;
-import com.wildbody.kite.Dto.NaverMember;
+import com.wildbody.kite.DTO.Member;
+import com.wildbody.kite.DTO.NaverMember;
+import com.wildbody.kite.DTO.Token;
+import com.wildbody.kite.JWT.JwtService;
 import com.wildbody.kite.Service.MemberService;
+import com.wildbody.kite.Service.TokenService;
 import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,22 +23,36 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = {"*"})
 @RequestMapping("/api/member")
 public class MemberController {
 
     @Autowired
-    private MemberService mSer;
+    private MemberService msvc;
 
-    @PostMapping("/register")
+    @Autowired
+    private JwtService jsvc;
+
+    @Autowired
+    private TokenService tsvc;
+
+    @PostMapping("/signup")
     @ApiOperation(value = "member 등록 서비스")
-    private @ResponseBody
-    ResponseEntity<Map<String, Object>> registerMember(Member member) {
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> registerMember(Member member,
+        HttpServletResponse response) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         Map<String, Object> map = new HashMap<>();
-        int insert = mSer.memberInsert(member);
+        int insert = msvc.memberInsert(member);
+        member = msvc.memberInfo(member);
         if (insert == 1) {
+            String token = jsvc.getAccessToken(member);
             map.put("message", "회원 가입 성공");
+            response.addHeader("Authorization", token);
+            Token aToken = new Token();
+            aToken.setMemberid(member.getMemberid());
+            aToken.setEmail(member.getEmail());
+            aToken.setRefreshToken(token);
+            tsvc.insert(aToken);
         } else {
             map.put("message", "회원 가입 실패");
         }
@@ -48,12 +62,12 @@ public class MemberController {
 
     @PutMapping("/update")
     @ApiOperation(value = "member 수정 서비스")
-    private @ResponseBody
+    public @ResponseBody
     ResponseEntity<Map<String, Object>> updateMember(Member member) {
         ResponseEntity<Map<String, Object>> resEntity = null;
         Map<String, Object> map = new HashMap<>();
         try {
-            int update = mSer.memberUpdate(member);
+            int update = msvc.memberUpdate(member);
             map.put("result", update);
             map.put("isupdate", true);
         } catch (RuntimeException e) {
@@ -65,10 +79,10 @@ public class MemberController {
 
     @PostMapping("/delete")
     @ApiOperation(value = "멤버 삭제")
-    private ResponseEntity<Map<String, Object>> deleteMember(Member member) {
+    public ResponseEntity<Map<String, Object>> deleteMember(Member member) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            mSer.memberDelete(member.getEmail());
+            msvc.memberDelete(member);
             map.put("message", "회원 탈퇴 성공");
         } catch (RuntimeException e) {
             map.put("message", "회원 탈퇴 실패");
@@ -78,16 +92,18 @@ public class MemberController {
 
     @PostMapping("/info")
     @ApiOperation(value = "id를 받아 member 조회 서비스", response = Member.class)
-    private ResponseEntity<Map<String, Object>> infoMember(Member member) {
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> infoMember(Member member) {
         ResponseEntity<Map<String, Object>> resEntity = null;
-        Member mem = null;
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            mem = mSer.memberInfo(member);
+            member = msvc.memberInfo(member);
+            member.setPw("");
             map.put("message", "success");
-            map.put("result", mem);
+            map.put("result", member);
         } catch (RuntimeException e) {
             map.put("message", "fail");
+            e.printStackTrace();
         }
         resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         return resEntity;
@@ -102,7 +118,7 @@ public class MemberController {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             map.put("message", "회원 목록 조회 성공");
-            map.put("result", mSer.memberList());
+            map.put("result", msvc.memberList());
         } catch (RuntimeException e) {
             map.put("message", "회원 목록 조회 실패");
         }
@@ -110,12 +126,12 @@ public class MemberController {
         return resEntity;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     @ApiOperation("로그인")
     public @ResponseBody
     ResponseEntity<Map<String, Object>> login(Member member, HttpServletResponse response) {
         ResponseEntity<Map<String, Object>> ret = null;
-        Member loginMem = mSer.login(member);
+        Member loginMem = msvc.login(member);
         Map<String, Object> map = new HashMap<>();
 
         if (loginMem != null) {
@@ -128,24 +144,15 @@ public class MemberController {
         return ret;
     }
 
-    @PostMapping("/naverlogin")
+    @GetMapping("/naverlogin")
     public @ResponseBody
-    ResponseEntity<Map<String, Object>> naverLogin(NaverMember nMember,
-        HttpServletRequest request) {
+    ResponseEntity<Map<String, Object>> naverLogin(NaverMember naverMember) {
         ResponseEntity<Map<String, Object>> ret = null;
-        String state = request.getHeader("nstate");
-        boolean isAuth = false;
         Map<String, Object> map = new HashMap<>();
 
-        if (state.equals(nMember.getState())) {
-            // authorization
-            isAuth = true;
-            map.put("isAuth", isAuth);
-            ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-        } else {
-            map.put("isAuth", isAuth);
-            ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.METHOD_NOT_ALLOWED);
-        }
+        // naver에 정보 요청
+
+        ret = new ResponseEntity<>(map, HttpStatus.OK);
         return ret;
     }
 

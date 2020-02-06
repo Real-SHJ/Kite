@@ -1,7 +1,7 @@
 package com.wildbody.kite.Service;
 
-import com.wildbody.kite.Dto.Member;
-import com.wildbody.kite.Dto.Token;
+import com.wildbody.kite.DTO.Member;
+import com.wildbody.kite.DTO.Token;
 import com.wildbody.kite.Repository.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

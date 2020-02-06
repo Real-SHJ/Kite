@@ -2,15 +2,14 @@ package com.wildbody.kite.Service;
 
 import java.util.List;
 
-import com.wildbody.kite.Dto.Article;
-import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.DTO.Member;
 
 public interface MemberService {
 	public int memberInsert(Member member);
 
 	public int memberUpdate(Member member);
 
-	public int memberDelete(String id);
+	public int memberDelete(Member member);
 
 	public Member memberInfo(Member member);
 

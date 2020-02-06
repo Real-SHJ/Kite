@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.wildbody'
-version = '0.0.1'
+version = '0.0.3'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
@@ -24,18 +24,6 @@ configurations {
         extendsFrom annotationProcessor
     }
 }
-
-sourceSets{
-    main{
-        java{
-            srcDir 'src/main/java'
-        }
-        resources {
-            srcDir 'src/main/resources'
-        }
-    }
-}
-
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE")

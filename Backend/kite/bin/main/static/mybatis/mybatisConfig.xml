@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+    <typeAlias type="com.wildbody.kite.DTO.Article" alias="Article"/>
+    <typeAlias type="com.wildbody.kite.DTO.Member" alias="Member"/>
+    <typeAlias type="com.wildbody.kite.DTO.Token" alias="Token"/>
+  </typeAliases>
+
+  <mappers>
+    <mapper resource="static/mybatis/articleSQLMapper.xml"/>
+    <mapper resource="static/mybatis/memberSQLMapper.xml"/>
+    <mapper resource="static/mybatis/tokenSQLMapper.xml"/>
+  </mappers>
+</configuration>

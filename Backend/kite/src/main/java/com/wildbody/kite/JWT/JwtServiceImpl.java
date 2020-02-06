@@ -1,6 +1,6 @@
 package com.wildbody.kite.JWT;
 
-import com.wildbody.kite.Dto.Member;
+import com.wildbody.kite.DTO.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -46,7 +46,7 @@ public class JwtServiceImpl implements JwtService {
         try {
             return salt.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -60,7 +60,7 @@ public class JwtServiceImpl implements JwtService {
                 .parseClaimsJws(jwt);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return false;
     }
@@ -73,7 +73,7 @@ public class JwtServiceImpl implements JwtService {
                 .parseClaimsJws(jwt);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return false;
     }
@@ -101,7 +101,8 @@ public class JwtServiceImpl implements JwtService {
                 .setSigningKey(generateKey(REFSALT))
                 .parseClaimsJws(jwt);
         } catch (SignatureException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return false;
         }
         return !claims.getBody().getExpiration().after(new Date());
     }

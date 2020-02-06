@@ -6,7 +6,7 @@
               <template v-for="(item, i) in items">
                 <v-col :key="i" md="4">
                   <v-hover v-slot:default="{ hover }">
-                    <v-card :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }" @click="handleClick(i)">
+                    <v-card :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }" @click="handleClick(i)" class="vcard">
                       <v-img :src="item.src" height="100px" width="287px">
                         <v-card-title class="title">
                           <v-row class="fill-height flex-column" justify="space-between">
@@ -122,20 +122,20 @@ export default {
 </script>
 
 <style>
-.v-card--reveal {
+.vcard--reveal {
   align-items: center;
   bottom: 0;
   justify-content: center;
   opacity: 1;
   position: absolute;
 }
-.v-card {
+.vcard {
 transition: opacity .2s ease-in-out;
 }
-.v-card:not(.on-hover) {
+.vcard:not(.on-hover) {
 opacity: 0.75;
- }
- .clickbtn {
-   color: red !important;
- }
+}
+.clickbtn {
+  color: red !important;
+}
 </style>

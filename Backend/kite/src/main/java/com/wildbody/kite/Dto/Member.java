@@ -1,4 +1,4 @@
-package com.wildbody.kite.Dto;
+package com.wildbody.kite.DTO;
 
 import java.util.List;
 import lombok.Data;
