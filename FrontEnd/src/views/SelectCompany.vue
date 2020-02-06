@@ -35,75 +35,95 @@ export default {
   data: () => ({
     items: [
       {
-        src: 'http://13.125.153.118:8999/img/logo/KBbank.png',
+        src: 'http://13.125.153.118:8999/img/logo/CJ_Cheiljedang.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/IBKbank.png',
+        src: 'http://13.125.153.118:8999/img/logo/Coupang.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/samsung.png',
+        src: 'http://13.125.153.118:8999/img/logo/GS_Caltex.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/samsungSDS.png',
+        src: 'http://13.125.153.118:8999/img/logo/Hana_Bank.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/sinhanbank.png',
+        src: 'http://13.125.153.118:8999/img/logo/Hyundai_Car.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/wooribank.png',
+        src: 'http://13.125.153.118:8999/img/logo/Hyundai_Mobis.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/kupang.png',
+        src: 'http://13.125.153.118:8999/img/logo/IBK_Bank.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/posco.png',
+        src: 'http://13.125.153.118:8999/img/logo/Kakao.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/HankookElec.png',
+        src: 'http://13.125.153.118:8999/img/logo/KB_Bank.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/HyundaiCar.png',
+        src: 'http://13.125.153.118:8999/img/logo/Korea_Elec.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/CJJJ.png',
+        src: 'http://13.125.153.118:8999/img/logo/KT.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/GScaltex.png',
+        src: 'http://13.125.153.118:8999/img/logo/LG_Chemi.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/KT.png',
+        src: 'http://13.125.153.118:8999/img/logo/LG_Elec.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/LGElec.png',
+        src: 'http://13.125.153.118:8999/img/logo/LG_Uplus.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/NAVER.png',
+        src: 'http://13.125.153.118:8999/img/logo/Naver.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/S-Oil.png',
+        src: 'http://13.125.153.118:8999/img/logo/Posco.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/SKhynix.png',
+        src: 'http://13.125.153.118:8999/img/logo/Samsung_Elec.svg',
         clicked: false
       },
       {
-        src: 'http://13.125.153.118:8999/img/logo/SKtelecom.png',
+        src: 'http://13.125.153.118:8999/img/logo/Samsung_SDS.svg',
+        clicked: false
+      },
+      {
+        src: 'http://13.125.153.118:8999/img/logo/Shinhan_Bank.svg',
+        clicked: false
+      },
+      {
+        src: 'http://13.125.153.118:8999/img/logo/SK_Hynix.svg',
+        clicked: false
+      },
+      {
+        src: 'http://13.125.153.118:8999/img/logo/SK_Telecom.svg',
+        clicked: false
+      },
+      {
+        src: 'http://13.125.153.118:8999/img/logo/S-Oil.svg',
+        clicked: false
+      },
+      {
+        src: 'http://13.125.153.118:8999/img/logo/Woori_Bank.svg',
         clicked: false
       }
     ]

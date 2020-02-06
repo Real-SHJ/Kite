@@ -12,6 +12,8 @@ import WordCloud from '../components/WordCloud.vue'
 import ForceDirected from '../components/ForceDirected.vue'
 import Empty from '../views/Empty.vue'
 import following from '../views/following.vue'
+import follow from '../views/follow.vue'
+import MemberList from '../views/memberlist.vue'
 
 Vue.use(VueRouter)
 
@@ -78,6 +80,16 @@ const routes = [
     path: '/following',
     name: 'following',
     component: following
+  },
+  {
+    path: '/follow',
+    name: 'follow',
+    component: follow
+  },
+  {
+    path: '/memberlist',
+    name: 'memberlist',
+    component: MemberList
   }
 ]
 

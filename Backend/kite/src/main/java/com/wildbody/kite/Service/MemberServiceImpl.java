@@ -1,5 +1,6 @@
 package com.wildbody.kite.Service;
 
+import com.wildbody.kite.DTO.Friend;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.Repository.MemberRepository;
 import java.util.List;
@@ -42,5 +43,10 @@ public class MemberServiceImpl implements MemberService {
     public Member login(Member member) {
         return repo.login(member);
     }
+
+	@Override
+	public List<Friend> friendList(int memberid) {
+		return repo.friendList(memberid);
+	}
 
 }

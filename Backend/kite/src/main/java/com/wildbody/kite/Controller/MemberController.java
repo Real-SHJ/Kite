@@ -1,5 +1,6 @@
 package com.wildbody.kite.Controller;
 
+import com.wildbody.kite.DTO.Friend;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.NaverMember;
 import com.wildbody.kite.DTO.Token;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -162,5 +164,22 @@ public class MemberController {
         ResponseEntity<Map<String, Object>> ret = null;
 
         return ret;
+    }
+    
+    @GetMapping("/friendlist/{memberid}")
+    @ApiOperation("친구 목록 조회 서비스")
+    public @ResponseBody
+    ResponseEntity<Map<String, Object>> listFriend(@PathVariable("memberid") String memberid) {
+        ResponseEntity<Map<String, Object>> resEntity = null;
+        List<Friend> list = null;
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            map.put("message", "친구 목록 조회 성공");
+            map.put("result", msvc.friendList(Integer.parseInt(memberid)));
+        } catch (RuntimeException e) {
+            map.put("message", "친구 목록 조회 실패");
+        }
+        resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        return resEntity;
     }
 }

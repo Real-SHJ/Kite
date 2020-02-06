@@ -174,7 +174,6 @@ export default {
       fdata.append('pw', this.pw)
       fdata.append('lastname', this.lastname)
       fdata.append('firstname', this.firstname)
-      // fdata.append'(//',menu2: this.menu2)
       fdata.append('birthday', bday)
       fdata.append('gender', this.gender)
       fdata.append('area', this.area)

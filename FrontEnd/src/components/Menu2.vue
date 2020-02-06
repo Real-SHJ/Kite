@@ -58,21 +58,29 @@ export default {
       info: [],
       info2: [],
       items: {
-        '삼성전자': 'http://13.125.153.118:8999/img/logo/samsung.svg',
-        'LG전자': 'http://13.125.153.118:8999/img/logo/LGElec.svg',
-        'SK텔레콤': 'http://13.125.153.118:8999/img/logo/SKtelecom.svg',
-        'GS칼텍스': 'http://13.125.153.118:8999/img/logo/GScaltex.svg',
+        'CJ제일제당': 'http://13.125.153.118:8999/img/logo/CJ_Cheiljedang.svg',
+        '쿠팡': 'http://13.125.153.118:8999/img/logo/Coupang.svg',
+        'GC칼텍스': 'http://13.125.153.118:8999/img/logo/GS_Caltex.svg',
+        '하나은행': 'http://13.125.153.118:8999/img/logo/Hana_Bank.svg',
+        '현대자동차': 'http://13.125.153.118:8999/img/logo/Hyundai_Car.svg',
+        '현대모비스': 'http://13.125.153.118:8999/img/logo/Hyundai_Mobis.svg',
+        'IBK기업은행': 'http://13.125.153.118:8999/img/logo/IBK_Bank.svg',
+        '카카오': 'http://13.125.153.118:8999/img/logo/Kakao.svg',
+        'KB국민은행': 'http://13.125.153.118:8999/img/logo/KB_Bank.svg',
+        '한국전력공사': 'http://13.125.153.118:8999/img/logo/Korea_Elec.svg',
         'KT': 'http://13.125.153.118:8999/img/logo/KT.svg',
-        '네이버': 'http://13.125.153.118:8999/img/logo/NAVER.svg',
-        'S-OIL': 'http://13.125.153.118:8999/img/logo/SOIL.svg',
-        'SK하이닉스': 'http://13.125.153.118:8999/img/logo/SKhynix.svg',
-        '현대자동차': 'http://13.125.153.118:8999/img/logo/HyundaiCar.svg',
-        'CJ제일제당': 'http://13.125.153.118:8999/img/logo/CJJJ.svg',
-        '국민은행': 'http://13.125.153.118:8999/img/logo/KBbank.svg',
-        '포스코': 'http://13.125.153.118:8999/img/logo/posco.svg',
-        '삼성SDS': 'http://13.125.153.118:8999/img/logo/samsungSDS.svg',
-        '신한은행': 'http://13.125.153.118:8999/img/logo/sinhanbank.svg',
-        '우리은행': 'http://13.125.153.118:8999/img/logo/wooribank.png'
+        'LG화학': 'http://13.125.153.118:8999/img/logo/LG_Chemi.svg',
+        'LG전자': 'http://13.125.153.118:8999/img/logo/LG_Elec.svg',
+        'LG유플러스': 'http://13.125.153.118:8999/img/logo/LG_Uplus.svg',
+        '네이버': 'http://13.125.153.118:8999/img/logo/Naver.svg',
+        '포스코': 'http://13.125.153.118:8999/img/logo/Posco.svg',
+        '삼성전자': 'http://13.125.153.118:8999/img/logo/Samsung_Elec.svg',
+        '삼성SDS': 'http://13.125.153.118:8999/img/logo/Samsung_SDS.svg',
+        '신한은행': 'http://13.125.153.118:8999/img/logo/Shinhan_Bank.svg',
+        'SK하이닉스': 'http://13.125.153.118:8999/img/logo/SK_Hynix.svg',
+        'SK텔레콤': 'http://13.125.153.118:8999/img/logo/SK_Telecom.svg',
+        'S-OIL': 'http://13.125.153.118:8999/img/logo/S-Oil.svg',
+        '우리은행': 'http://13.125.153.118:8999/img/logo/Woori_Bank.svg'
       }
     }
   },
@@ -80,9 +88,6 @@ export default {
     ...mapGetters(['userInfo'])
   },
   mounted () {
-  },
-  computed: {
-    ...mapGetters(['userInfo'])
   },
   methods: {
     init () {

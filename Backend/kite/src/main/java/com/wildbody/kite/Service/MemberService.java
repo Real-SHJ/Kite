@@ -2,6 +2,7 @@ package com.wildbody.kite.Service;
 
 import java.util.List;
 
+import com.wildbody.kite.DTO.Friend;
 import com.wildbody.kite.DTO.Member;
 
 public interface MemberService {
@@ -16,5 +17,7 @@ public interface MemberService {
 	public List<Member> memberList();
 
 	public Member login(Member member);
+	
+	public List<Friend> friendList(int memberid);
 
 }

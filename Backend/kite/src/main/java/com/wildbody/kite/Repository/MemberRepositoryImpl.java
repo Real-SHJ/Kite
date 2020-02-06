@@ -1,5 +1,6 @@
 package com.wildbody.kite.Repository;
 
+import com.wildbody.kite.DTO.Friend;
 import com.wildbody.kite.DTO.Member;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
@@ -42,6 +43,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public List<Member> memberList() {
         return session.selectList("kite.member.selectList");
+    }
+    
+    @Override
+    public List<Friend> friendList(int memberid) {
+        return session.selectList("kite.member.selectFriendList", memberid);
     }
 
     @Override
