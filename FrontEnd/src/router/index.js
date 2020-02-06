@@ -12,6 +12,7 @@ import WordCloud from '../components/WordCloud.vue'
 import ForceDirected from '../components/ForceDirected.vue'
 import Empty from '../views/Empty.vue'
 import following from '../views/following.vue'
+import ArticleCorpo from '../views/ArticleCor.vue'
 import follow from '../views/follow.vue'
 import MemberList from '../views/memberlist.vue'
 
@@ -34,7 +35,12 @@ const routes = [
     name: 'articledetail',
     component: ArticleDetail
   },
-
+  {
+    path: '/articlecorpo/:company',
+    name: 'articlecorpo',
+    component: ArticleCorpo,
+    props: true
+  },
   {
     path: '/signup',
     name: 'signup',

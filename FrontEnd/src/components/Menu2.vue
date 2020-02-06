@@ -30,9 +30,9 @@
       <v-divider></v-divider>
       <!-- 밑에 백엔드 연결할 것... -->
       <v-list dense >
-        <v-list-item v-for="item in info" :key="item" link @click="goArtCorp">
-          <v-list-item-avatar>
-            <img :src="items[item]" />
+        <v-list-item v-for="item in info" :key="item" link @click.native="goArtCorp(item)">
+          <v-list-item-avatar width="100" height="40">
+            <img :src="items[item]"/>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title >{{ item }}</v-list-item-title>
@@ -58,6 +58,20 @@ export default {
       info: [],
       info2: [],
       items: {
+        '삼성전자': 'http://13.125.153.118:8999/img/logo/Samsung_Elec.svg',
+        'LG전자': 'http://13.125.153.118:8999/img/logo/LG_Elec.svg',
+        'SK텔레콤': 'http://13.125.153.118:8999/img/logo/SK_Telecom.svg',
+        'GS칼텍스': 'http://13.125.153.118:8999/img/logo/GS_Caltex.svg',
+        'KT': 'http://13.125.153.118:8999/img/logo/KT.svg',
+        '네이버': 'http://13.125.153.118:8999/img/logo/Naver.svg',
+        'S-OIL': 'http://13.125.153.118:8999/img/logo/S-Oil.svg',
+        'SK하이닉스': 'http://13.125.153.118:8999/img/logo/SK_Hynix.svg',
+        '현대자동차': 'http://13.125.153.118:8999/img/logo/Hyundai_Car.svg',
+        'CJ제일제당': 'http://13.125.153.118:8999/img/logo/Cj_Cheiljedang.svg',
+        '국민은행': 'http://13.125.153.118:8999/img/logo/KB_Bank.svg',
+        '포스코': 'http://13.125.153.118:8999/img/logo/Posco.svg',
+        '삼성SDS': 'http://13.125.153.118:8999/img/logo/Samsung_SDS.svg',
+        '신한은행': 'http://13.125.153.118:8999/img/logo/Shinhan_Bank.svg',
         'CJ제일제당': 'http://13.125.153.118:8999/img/logo/CJ_Cheiljedang.svg',
         '쿠팡': 'http://13.125.153.118:8999/img/logo/Coupang.svg',
         'GC칼텍스': 'http://13.125.153.118:8999/img/logo/GS_Caltex.svg',
@@ -115,22 +129,26 @@ export default {
           console.log(this.errored)
         })
         .finally(() => (this.loading = false))
+    },
+    search () {
+      http
+        .get('/productinfo' + '/' + this.searchText) // rest에서 가져올 절대 주소 적기
+        .then(response => {
+          this.info = response.data.resvalue
+          this.info2 = response.data.resvalue2
+          for (let index = 0; index < this.info.length; index++) {
+            this.info[index].img = '/' + this.info[index].img
+          }
+        })
+        .catch(() => {
+          this.errored = true
+        })
+        .finally(() => (this.loading = false))
+    },
+    goArtCorp (item) {
+      alert('클릭!!!' + item)
+      this.$router.push({ name: 'articlecorpo', params: { 'company': item } })
     }
-  },
-  search () {
-    http
-      .get('/productinfo' + '/' + this.searchText) // rest에서 가져올 절대 주소 적기
-      .then(response => {
-        this.info = response.data.resvalue
-        this.info2 = response.data.resvalue2
-        for (let index = 0; index < this.info.length; index++) {
-          this.info[index].img = '/' + this.info[index].img
-        }
-      })
-      .catch(() => {
-        this.errored = true
-      })
-      .finally(() => (this.loading = false))
   }
 }
 </script>

@@ -81,6 +81,7 @@ export default {
         // 토큰 저장
           console.log(res)
           this.articles = res.data.resvalue
+          console.log('!' + this.articles[0]['company'])
         })
         .catch(err => console.log(err))
     }
