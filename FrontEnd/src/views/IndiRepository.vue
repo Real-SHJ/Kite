@@ -19,60 +19,21 @@
     </v-layout>
     <!-- ------------- 검색 기간 부분 --------------- -->
       <v-container fluid>
-          <v-row>
-            <br>검색기간
-            <v-col cols="11" sm="2">
-              <v-menu
-                v-model="menu2"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                trasition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="date_search_start"
-                    label="검색 시작일 - Calendar Click"
-                    prepend-icon="event"
-                    readonly
-                    v-on="on"
-                  > </v-text-field>
-                </template>
-                <v-date-picker v-model="date_search_start"
-                  year-icon="mdi-calendar-blank"
-                  prev-icon="mdi-skip-previous"
-                  next-icon="mdi-skip-next"
-                  @input="menu2 = false"> </v-date-picker>
-              </v-menu>
-            <v-spacer></v-spacer>
+          <v-row
+          >
+            <br>기업선택
+            <v-col cols="12" sm="2">
+             <v-overflow-btn
+                class="my-2"
+                :items="company_choice"
+                label="기업선택"
+                target="#dropdown-example"
+                ></v-overflow-btn>
             </v-col>
-            <br>~
-            <v-col cols="11" sm="2">
-              <v-menu
-                v-model="menu2"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                trasition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="date_search_end"
-                    label="검색 마지막날 - Calendar Click"
-                    prepend-icon="event"
-                    readonly
-                    v-on="on"
-                  > </v-text-field>
-                </template>
-                <v-date-picker v-model="date_search_end"
-                  year-icon="mdi-calendar-blank"
-                  prev-icon="mdi-skip-previous"
-                  next-icon="mdi-skip-next"
-                  @input="menu2 = false"> </v-date-picker>
-              </v-menu>
-            <v-spacer></v-spacer>
+            <br>검색기간
+            <v-col cols="11" sm="3">
+              <HotelDatePicker>
+              </HotelDatePicker>
             </v-col>
             <v-col
               cols="12"
@@ -168,89 +129,51 @@
                     color="basil"
                     flat
                   >
-                    <v-card-text>{{ text }}</v-card-text>
                   </v-card>
                 </v-tab-item>
               </v-tabs-items>
                 <!-- ---------- 5. 카드 내부 기사 ----------- -->
               <v-container>
                 <v-row dense>
-                  <v-col cols="12">
-                    <v-card
-                      color="#385F73"
-                      dark
-                    >
-                      <v-card-title class="headline">Unlimited music now</v-card-title>
-
-                      <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and offline.</v-card-subtitle>
-
-                      <v-card-actions>
-                        <v-btn text>Listen Now</v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-col>
-
+                    <!-- article for문 -->
+                <!-- <div v-for="article in articles" :key="article.id" class="my-3"> -->
                   <v-col
-                    v-for="(item, i) in items2"
-                    :key="i"
                     cols="12"
                   >
                     <v-card
-                      :color="item.color"
-                      dark
+                        v-for="article in articles"
+                        :key="article.id"
+                        class="mx-auto"
+                        max-width="344"
+                        outlined
                     >
-                      <div class="d-flex flex-no-wrap justify-space-between">
+                        <v-list-item three-line>
+                            <v-list-item-content>
+                                <div class="overline mb-4">{{article.company}}</div>
+                                <v-list-item-title class="headline mb-1">{{article.title}}</v-list-item-title>
+                                <v-list-item-subtitle>{{article.newspaper}}</v-list-item-subtitle>
+                            </v-list-item-content>
 
-                        <v-avatar
-                          class="ma-2"
-                          size="125"
-                          tile
-                        >
-                          <v-img :src="item.src"></v-img>
-                        </v-avatar>
-                        <div>
-                          <v-card-title
-                            {{article}}
-                          ></v-card-title>
+                            <!-- <v-list-item-avatar
+                                tile
+                                size="80"
+                                color="grey"
+                            ></v-list-item-avatar> -->
+                            <v-img
+                                height="100"
+                                width="10"
+                                :src="company_image[article.company]">
+                            </v-img>
+                        </v-list-item>
 
-                          <v-card-subtitle v-text="item.artist"></v-card-subtitle>
-                        </div>
-
-                      </div>
+                        <v-card-actions>
+                            <v-btn text>Button</v-btn>
+                            <v-btn text>Button</v-btn>
+                        </v-card-actions>
                     </v-card>
+
                   </v-col>
-
-                  <v-col
-                    v-for="(item, i) in items2"
-                    :key="i"
-                    cols="12"
-                  >
-                    <v-card
-                      :color="item.color"
-                      dark
-                    >
-                      <div class="d-flex flex-no-wrap justify-space-between">
-
-                        <v-avatar
-                          class="ma-2"
-                          size="125"
-                          tile
-                        >
-                          <v-img :src="item.src"></v-img>
-                        </v-avatar>
-                        <div>
-                          <v-card-title
-                            class="headline"
-                            v-text="item.title"
-                          ></v-card-title>
-
-                          <v-card-subtitle v-text="item.artist"></v-card-subtitle>
-                        </div>
-
-                      </div>
-                    </v-card>
-                  </v-col>
-
+                <!-- </div> -->
                 </v-row>
               </v-container>
               <!-- ---------- 5. 카드 내부 기사 ----------- -->
@@ -279,7 +202,7 @@
 <!-- <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script> -->
 
 <script>
-// import wordcloud from 'vue-wordcloud'
+import http from '../http-common'
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
@@ -287,11 +210,59 @@ import * as am4plugins_forceDirected from "@amcharts/amcharts4/plugins/forceDire
 import am4themes_kelly from "@amcharts/amcharts4/themes/kelly";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
+import HotelDatePicker from 'vue-hotel-datepicker'
+
 am4core.useTheme(am4themes_kelly);
 am4core.useTheme(am4themes_animated);
 
 export default {
   name: 'wordcloud',
+  components: {
+    HotelDatePicker
+  },
+  data () {
+    return {
+      items: [
+        '최신 뉴스', '관련 뉴스'
+      ],
+    //   text: '뉴스뉴스뉴스뉴스뉴스뉴스',
+      articles: null,
+      company_choice: ['삼성전자', 'LG전자', 'SK텔레콤', 'GS칼텍스', 'KT', '네이버', 'S-OIL', 'SK하이닉스',
+                     '현대자동차', 'CJ제일제당', '국민은행', '포스코', '삼성SDS', '신한은행', '우리은행'],
+      company_image: {
+        '삼성전자': 'http://13.125.153.118:8999/img/logo/samsung.svg',
+        'LG전자': 'http://13.125.153.118:8999/img/logo/LGElec.svg',
+        'SK텔레콤': 'http://13.125.153.118:8999/img/logo/SKtelecom.svg',
+        'GS칼텍스': 'http://13.125.153.118:8999/img/logo/GScaltex.svg',
+        'KT': 'http://13.125.153.118:8999/img/logo/KT.svg',
+        '네이버': 'http://13.125.153.118:8999/img/logo/NAVER.svg',
+        'S-OIL': 'http://13.125.153.118:8999/img/logo/SOIL.svg',
+        'SK하이닉스': 'http://13.125.153.118:8999/img/logo/SKhynix.svg',
+        '현대자동차': 'http://13.125.153.118:8999/img/logo/HyundaiCar.svg',
+        'CJ제일제당': 'http://13.125.153.118:8999/img/logo/CJJJ.svg',
+        '국민은행': 'http://13.125.153.118:8999/img/logo/KBbank.svg',
+        '포스코': 'http://13.125.153.118:8999/img/logo/posco.svg',
+        '삼성SDS': 'http://13.125.153.118:8999/img/logo/samsungSDS.svg',
+        '신한은행': 'http://13.125.153.118:8999/img/logo/sinhanbank.svg',
+        '우리은행': 'http://13.125.153.118:8999/img/logo/wooribank.png'
+      }
+    }
+  },
+  methods: {
+    wordClickHandler (name, value, vm) {
+      console.log('wordClickHandler', name, value, vm)
+    },
+    getArticle () {
+      http.get('article/list/')
+        .then(res => {
+          //토큰 저장
+          console.log(res.data.resvalue)
+          this.articles = res.data.resvalue
+          console.log(this.articles)
+        })
+        .catch(err => console.log(err))
+    }
+  },
   mounted() {
         var chart = am4core.create("chartdiv_keyword", am4plugins_wordCloud.WordCloud);
         chart.fontFamily = "Courier New";
@@ -919,67 +890,15 @@ export default {
                 }
             ]
         }
-        ];
+        ]
+        this.getArticle()
         // ----------------------  연관 관계 그래프 부분 ---------------------------  //
     },
     beforeDestroy() {
         if (this.chart) {
             this.chart.dispose();
         }
-    },
-  components: {
-    // wordcloud
-  },
-  methods: {
-    wordClickHandler (name, value, vm) {
-      console.log('wordClickHandler', name, value, vm)
-    },
-    getArticle () {
-      http.get('article/list/')
-        .then(res => {
-          //토큰 저장
-            console.log(res)
-            this.articles = res.data.resvalue
-        })
-        .catch(err => console.log(err))
     }
-  },
-  data () {
-    return {
-      items: [
-        '최신 뉴스', '관련 뉴스'
-      ],
-      text: '뉴스뉴스뉴스뉴스뉴스뉴스',
-      items2: [
-        {
-          color: '#1F7087',
-          src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-          title: 'Supermodel',
-          artist: 'Foster the People'
-        },
-        {
-          color: '#952175',
-          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-          title: 'Halcyon Days',
-          artist: 'Ellie Goulding'
-        },
-        {
-          color: '#1F7087',
-          src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-          title: 'Supermodel',
-          artist: 'Foster the People'
-        },
-        {
-          color: '#952175',
-          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-          title: 'Halcyon Days',
-          artist: 'Ellie Goulding'
-        },
-      ],
-      articles: []
-    },
-    this.getArticle()
-  }
 }
 </script>
 
