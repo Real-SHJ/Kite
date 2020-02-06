@@ -49,15 +49,25 @@
 </template>
 
 <script>
+import http from '../http-common'
 export default {
+  props: {
+    id: Number
+  },
   data () {
     return {
       dialog: false,
       detail: 'yes'
     }
   },
-
-  components: {
+  methods: {
+    getarticle () {
+      http.get(`/article/selectone/${this.id}`)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => console.log(err))
+    }
   }
 }
 </script>

@@ -1,12 +1,13 @@
 <template>
   <v-content>
     <h1>여기는 메인 페이지입니다...</h1>
-    <ArticleList/>
-    <InfiniteLoading @infinite="infiniteHandler"></InfiniteLoading>
+    <ArticleList :articles="articles" />
+    <InfiniteLoading @infinite="infiniteHandler"/>
   </v-content>
 </template>
 
 <script>
+import http from '../http-common'
 import ArticleList from '../components/ArticleList.vue'
 import InfiniteLoading from 'vue-infinite-loading'
 export default {
@@ -15,7 +16,8 @@ export default {
     return {
       limit: 0,
       auth: [],
-      articles: []
+      articles: [],
+      page: 0
     }
   },
   components: {
@@ -58,9 +60,20 @@ export default {
     },
     send () {
       http
-        .get('/test/callback/' + this.auth[0] + '/' + this.auth[1])
-        .then(res => {
-          console.log(res.data)
+        .get('/article/info', {
+          headers: {
+            page: 1
+          }
+        })
+        .then(({ data }) => {
+          console.log(data)
+          if (data.length) {
+            this.page += 1
+            this.articles.push(...data)
+            $state.loaded()
+          } else {
+            $state.complete()
+          }
         })
     }
   }

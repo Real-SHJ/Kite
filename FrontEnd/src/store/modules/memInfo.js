@@ -1,6 +1,7 @@
 const state = {
   email: null,
-  name: null
+  name: null,
+  userid: null
 }
 
 const mutations = {
@@ -8,9 +9,11 @@ const mutations = {
     if (info) {
       state.email = info.userEmail
       state.name = info.userName
+      state.userid = info.userid
     } else {
       state.email = null
       state.name = null
+      state.userid = null
     }
   }
 }
@@ -28,7 +31,8 @@ const getters = {
   userInfo (state) {
     return {
       userEmail: state.email,
-      userName: state.name
+      userName: state.name,
+      userid: state.userid
     }
   }
 }

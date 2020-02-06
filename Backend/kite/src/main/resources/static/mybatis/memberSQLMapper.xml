@@ -38,4 +38,7 @@
 		from members
 		where	email=#{email} and pw=#{pw}
 	</select>
+	<select id="selectFriendList" parameterType="int" resultType="Friend">
+		select friendid from friend where memberid = #{memberid};
+	</select>
 </mapper>

@@ -131,7 +131,7 @@ export default {
       area: '',
       job: '',
       company: '',
-      imgae: null,
+      image: null,
       countries: ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla', 'Antigua &amp; Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia &amp; Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Cape Verde', 'Cayman Islands', 'Chad', 'Chile', 'China', 'Colombia', 'Congo', 'Cook Islands', 'Costa Rica', 'Cote D Ivoire', 'Croatia', 'Cruise Ship', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Polynesia', 'French West Indies', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kuwait', 'Kyrgyz Republic', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reunion', 'Romania', 'Russia', 'Rwanda', 'Saint Pierre &amp; Miquelon', 'Samoa', 'San Marino', 'Satellite', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'St Kitts &amp; Nevis', 'St Lucia', 'St Vincent', 'St. Lucia', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', "Timor L'Este", 'Togo', 'Tonga', 'Trinidad &amp; Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks &amp; Caicos', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam', 'Virgin Islands (US)', 'Yemen', 'Zambia', 'Zimbabwe'],
       errorMessages: '',
       address: null,
@@ -162,6 +162,9 @@ export default {
   watch: {
     name () {
       this.errorMessages = ''
+    },
+    image: function () {
+      console.log(this.image)
     }
   },
 
@@ -169,18 +172,18 @@ export default {
     addMem () {
       let fdata = new FormData()
       let bday = this.birthday.replace('-', '')
+      let ext = this.email + '.' + this.image[0].name.split('.')[1]
       fdata.append('memberid', this.memberid)
       fdata.append('email', this.email)
       fdata.append('pw', this.pw)
       fdata.append('lastname', this.lastname)
       fdata.append('firstname', this.firstname)
-      // fdata.append'(//',menu2: this.menu2)
       fdata.append('birthday', bday)
       fdata.append('gender', this.gender)
       fdata.append('area', this.area)
       fdata.append('job', this.job)
       fdata.append('company', this.company)
-      fdata.append('image', this.image)
+      fdata.append('image', ext)
       http.post('/member/signup', fdata)
         .then((response) => {
           console.log(response)
@@ -188,14 +191,23 @@ export default {
         .catch((msg) => {
           console.log(msg)
         })
-
-      this.profileUpload()
+        .finally(() => {
+          this.profileUpload(this.image[0], ext)
+        })
+      console.log('프로필 전')
+      // this.profileUpload()
+      console.log('프로필 후후후')
     },
-    profileUpload () {
+    profileUpload (profileImage, ext) {
       const image = new FormData()
-      image.append('file', this.imgae)
+      // profileImage.name = ext
+      console.log(profileImage)
+      console.log(profileImage.name)
+      image.append('profile', profileImage)
+      image.append('imageName', ext)
+      console.log(image)
       upload
-        .post('/upload', image)
+        .post('/profile/upload', image)
         .then(res => {
           if (res.data.isupload === true) {
             console.log('success upload')
