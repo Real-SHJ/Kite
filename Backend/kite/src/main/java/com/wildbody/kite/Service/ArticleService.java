@@ -16,4 +16,6 @@ public interface ArticleService {
     Article articleInfo(Article article);
 
     List<Article> articleList();
+
+    Article oneArticle(int articleid);
 }

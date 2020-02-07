@@ -1,6 +1,5 @@
 package com.wildbody.kite.Excel;
 
-import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.Service.ArticleService;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -21,7 +20,8 @@ public class ExcelRead implements ApplicationRunner {
     public void execute() {
         XSSFWorkbook workbook = null;
         try {
-            workbook = new XSSFWorkbook(new ClassPathResource("static/article_data.xlsx").getInputStream());
+            workbook = new XSSFWorkbook(
+                new ClassPathResource("static/article_data.xlsx").getInputStream());
             int rowindex = 0;
             int columnindex = 0;
             // 시트 수 (첫번째에만 존재하므로 0을 준다)

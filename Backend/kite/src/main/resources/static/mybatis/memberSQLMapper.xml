@@ -3,20 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kite.member">
-  <insert id="insert" parameterType="Member">
-		insert into
-			members(email,pw,lastname,firstname,birthday,gender,area,job,company,image)
-		values
-			(#{email}, #{pw}, #{lastname}, #{firstname}, #{birthday}, #{gender}, #{area}, #{job}, #{company}, #{image})
-	</insert>
-  <update id="update" parameterType="Member">
-		update
-			members
-		set
-			email=#{email}, pw=#{pw}, lastname=#{lastname}, firstname=#{firstname}, birthday=#{birthday}, gender=#{gender}, area=#{area}, job=#{job}, company=#{company}, image=#{image}
-		where
-			memberid=#{memberid}
-	</update>
   <delete id="delete" parameterType="Member">
 		delete
 		from
@@ -24,16 +10,22 @@
 		where
 			email=#{email}
 	</delete>
+  <insert id="insert" parameterType="Member">
+		insert into
+			members(email,pw,lastname,firstname,birthday,gender,area,job,company,image)
+		values
+			(#{email}, #{pw}, #{lastname}, #{firstname}, #{birthday}, #{gender}, #{area}, #{job}, #{company}, #{image})
+	</insert>
   <select id="selectOne" parameterType="Member" resultType="Member">
 		select *
 		from members
 		where email=#{email}
 	</select>
-	<select id="selectList" resultType="Member">
+  <select id="selectList" resultType="Member">
 		select *
 		from members
 	</select>
-  <select id="login" parameterType="Member" resultType="Member">
+	<select id="login" parameterType="Member" resultType="Member">
 		select *
 		from members
 		where	email=#{email} and pw=#{pw}
@@ -41,4 +33,23 @@
 	<select id="selectFriendList" parameterType="int" resultType="Friend">
 		select friendid from friend where memberid = #{memberid};
 	</select>
+	<update id="update" parameterType="Member">
+		update
+		members
+		set
+		email=#{email}, pw=#{pw}, lastname=#{lastname}, firstname=#{firstname}, birthday=#{birthday}, gender=#{gender}, area=#{area}, job=#{job}, company=#{company}, image=#{image}
+		where
+		memberid=#{memberid}
+	</update>
+	<insert id="scrap" parameterType="hashmap">
+		insert into member_article
+		<choose>
+			<when test="keyword != null">
+				values(memberid=#{memberid}, articleid=#{articleid}, keyword=#{keyword})
+			</when>
+			<otherwise>
+				values(memberid=#{memberid}, articleid=#{articleid})
+			</otherwise>
+		</choose>
+	</insert>
 </mapper>

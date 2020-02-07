@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class NaverMember {
+
     private String accesstoken;
     private String state;
 }

@@ -10,7 +10,7 @@ version = '0.0.3'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
-jar{
+jar {
     archiveName 'kite-server'
 }
 
@@ -57,7 +57,6 @@ dependencies {
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
 //    Live load
     compile 'org.springframework.boot:spring-boot-devtools'
-
 
 
 }

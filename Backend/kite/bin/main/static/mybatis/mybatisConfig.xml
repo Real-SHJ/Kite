@@ -4,10 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   <typeAliases>
-    <typeAlias type="com.wildbody.kite.DTO.Article" alias="Article"/>
-    <typeAlias type="com.wildbody.kite.DTO.Member" alias="Member"/>
-    <typeAlias type="com.wildbody.kite.DTO.Token" alias="Token"/>
-    <typeAlias type="com.wildbody.kite.DTO.Friend" alias="Friend"/>
+    <typeAlias alias="Article" type="com.wildbody.kite.DTO.Article"/>
+    <typeAlias alias="Member" type="com.wildbody.kite.DTO.Member"/>
+    <typeAlias alias="Token" type="com.wildbody.kite.DTO.Token"/>
+    <typeAlias alias="Friend" type="com.wildbody.kite.DTO.Friend"/>
   </typeAliases>
 
   <mappers>
@@ -15,4 +15,5 @@
     <mapper resource="static/mybatis/memberSQLMapper.xml"/>
     <mapper resource="static/mybatis/tokenSQLMapper.xml"/>
   </mappers>
+
 </configuration>

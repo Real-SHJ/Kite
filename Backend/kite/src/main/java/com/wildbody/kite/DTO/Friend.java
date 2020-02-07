@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class Friend {
-	private int friendid;
+
+    private int friendid;
 }

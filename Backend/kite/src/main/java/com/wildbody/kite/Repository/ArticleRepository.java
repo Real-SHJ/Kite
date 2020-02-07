@@ -7,13 +7,15 @@ public interface ArticleRepository {
 
     int initArticle(Article article);
 
-    public int articleInsert(Article article);
+    int articleInsert(Article article);
 
-    public int articleUpdate(Article article);
+    int articleUpdate(Article article);
 
-    public int articleDelete(int id);
+    int articleDelete(int id);
 
-    public Article articleInfo(Article article);
+    Article articleInfo(Article article);
 
-    public List<Article> articleList();
+    List<Article> articleList();
+
+    Article oneArticle(int articleid);
 }

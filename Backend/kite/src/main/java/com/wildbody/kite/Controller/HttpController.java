@@ -35,7 +35,7 @@ public class HttpController {
             map.put("result", ret);
         } catch (IOException e) {
             e.printStackTrace();
-            map.put("result",ret);
+            map.put("result", ret);
         }
 
         resEntity = new ResponseEntity<>(map, HttpStatus.OK);

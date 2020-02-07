@@ -3,12 +3,31 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kite.article">
+  <delete id="delete" parameterType="int">
+		delete from article
+		where
+			articleid=#{articleid}
+	</delete>
   <insert id="insert" parameterType="Article">
       insert into article
       	(company, title, content, summary, keyword, newspaper, publicationDate, url, image)
       values
       	(#{company}, #{title}, #{content}, #{summary}, #{keyword}, #{newspaper}, #{publicationDate}, #{url}, #{image});
    </insert>
+  <select id="selectOne" parameterType="int"
+    resultType="Article">
+		select
+			articleid, company, title, summary, newspaper, publicationDate, url, image
+		from
+			article
+		where
+			articleid=#{articleid}
+	</select>
+  <select id="selectList" resultType="Article">
+		select
+			articleid, company, content, image, keyword, newspaper, publicationDate, summary, title, url
+		from article
+	</select>
   <update id="update" parameterType="Article">
 		update
 			article
@@ -31,23 +50,7 @@
 		where
 			articleid=#{articleid};
 	</update>
-  <delete id="delete" parameterType="int">
-		delete from article
-		where
-			articleid=#{articleid}
-	</delete>
-  <select id="selectOne" parameterType="int"
-    resultType="Article">
-		select
-			articleid, company, title, summary, newspaper, publicationDate, url, image
-		from
-			article
-		where
-			articleid=#{articleid}
-	</select>
-  <select id="selectList" resultType="Article">
-		select
-			articleid, company, content, image, keyword, newspaper, publicationDate, summary, title, url
-		from article
+  <select id="oneArticle" parameterType="int" resultType="Article">
+		select * from article where articleid=#{articleid};
 	</select>
 </mapper>

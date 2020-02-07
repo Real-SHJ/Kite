@@ -36,7 +36,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
             .build();
     }
 
-//   ↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-ui의 cors에러를 해결
+    //   ↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-ui의 cors에러를 해결
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
@@ -49,7 +49,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedMethods("GET","POST","PUT","DELETE");
+            .allowedMethods("GET", "POST", "PUT", "DELETE");
     }
 //    ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 }

@@ -99,9 +99,8 @@ public class ArticleController {
         try {
             // 몇칸으로 자를건지를 알아내야 한다
             // 페이지수 * 자른 칸 수 만큼 보낸다
-            int start = 1, end = 1;
-            start =
-            end = start + offset;
+            int start = (pageNum - 1) * offset;
+            int end = start + offset;
             map.put("message", "기사 조회 성공");
             map.put("article", msvc.memberInfo(member).getArticleList().subList(start, end));
         } catch (RuntimeException e) {
@@ -125,8 +124,26 @@ public class ArticleController {
             map.put("message", "기사 목록 조회 실패");
             map.put("error", e.getMessage());
         }
-        resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-        return resEntity;
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+    }
+
+    // likeArticle : 멤버가 관심기업으로 등록한 회사들의 기사만 출력해줌
+    public ResponseEntity<Map<String, Object>> likeArticle() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+    }
+
+    // oneArticle : articleid에 맞은 기사 하나만 출력
+    @GetMapping("/onearticle/{articleid}")
+    public ResponseEntity<Map<String, Object>> oneArticle(@PathVariable String articleid) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+    }
+
+    //  companyArticle : 기업의 기사만 출력
+    public ResponseEntity<Map<String, Object>> companyArticle() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
     }
 
 }
