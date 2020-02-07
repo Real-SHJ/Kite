@@ -25,15 +25,15 @@
 		select *
 		from members
 	</select>
-	<select id="login" parameterType="Member" resultType="Member">
+  <select id="login" parameterType="Member" resultType="Member">
 		select *
 		from members
 		where	email=#{email} and pw=#{pw}
 	</select>
-	<select id="selectFriendList" parameterType="int" resultType="Friend">
+  <select id="selectFriendList" parameterType="int" resultType="Friend">
 		select friendid from friend where memberid = #{memberid};
 	</select>
-	<update id="update" parameterType="Member">
+  <update id="update" parameterType="Member">
 		update
 		members
 		set
@@ -41,17 +41,23 @@
 		where
 		memberid=#{memberid}
 	</update>
-	<insert id="scrap" parameterType="hashmap">
-		insert into
-		<choose>
-			<when test="keyword != null">
-				member_article(memberid, articleid, keyword)
-				values(#{memberid}, #{articleid},#{keyword})
-			</when>
-			<otherwise>
-				member_article(memberid, articleid)
-				values(#{memberid}, #{articleid})
-			</otherwise>
-		</choose>
+  <update id="scrapUpdate" parameterType="hashmap">
+		update member_article
+		set articleid=#{articles}
+		where memberid = #{memberid}
+	</update>
+	<insert id="scrapInsert" parameterType="hashmap">
+		insert into member_article(memberid, articleid)
+		values (#{memberid},#{articles})
 	</insert>
+  <select id="getscrap" parameterType="Member" resultType="String">
+		select articleid
+		from member_article
+		where memberid=#{memberid}
+	</select>
+	<select id="scrapcounter" parameterType="Member" resultType="int">
+		select count(memberid)
+		from member_article
+		where memberid=#{memberid}
+	</select>
 </mapper>

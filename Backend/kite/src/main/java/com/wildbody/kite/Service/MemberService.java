@@ -21,6 +21,9 @@ public interface MemberService {
 
     List<Friend> friendList(int memberid);
 
-    int scrapArticle(Member member, Article article);
+    int scrapArticle(Member member, String articles);
 
+    int delScrap();
+
+    String getMyScrap(Member member);
 }

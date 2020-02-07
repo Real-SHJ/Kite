@@ -1,21 +1,23 @@
 package com.wildbody.kite.Controller;
 
 import com.wildbody.kite.DTO.Article;
-import com.wildbody.kite.DTO.Friend;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.NaverMember;
 import com.wildbody.kite.DTO.Token;
 import com.wildbody.kite.JWT.JwtService;
+import com.wildbody.kite.Service.ArticleService;
 import com.wildbody.kite.Service.MemberService;
 import com.wildbody.kite.Service.TokenService;
 import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +35,8 @@ public class MemberController {
   @Autowired private JwtService jsvc;
 
   @Autowired private TokenService tsvc;
+
+  @Autowired private ArticleService asvc;
 
   @PostMapping("/signup")
   @ApiOperation(value = "member 등록 서비스")
@@ -171,12 +175,65 @@ public class MemberController {
   }
 
   @GetMapping("/scrap")
+  @ApiOperation("스크랩")
   public @ResponseBody ResponseEntity<Map<String, Object>> scrapArticle(
       Member member, Article article) {
-    System.out.println("scrap dlkfjalkdjflajl");
     Map<String, Object> map = new HashMap<>();
+    member = msvc.memberInfo(member);
+    StringBuilder sb = new StringBuilder();
+    String scrpas = msvc.getMyScrap(member);
+    String articles = "";
+    if (scrpas != null) {
+      for (String val : scrpas.split(",")) {
+        if (!val.equals("" + article.getArticleid())) sb.append(val).append(",");
+      }
+    }
+    if (sb.length() > 1) articles = sb.toString() + "" + article.getArticleid();
+    else articles = "" + article.getArticleid();
+
     try {
-      map.put("result", msvc.scrapArticle(member, article));
+      map.put("result", msvc.scrapArticle(member, articles));
+      map.put("msg", true);
+    } catch (Exception e) {
+      e.printStackTrace();
+      map.put("msg", false);
+    }
+
+    return new ResponseEntity<>(map, HttpStatus.OK);
+  }
+
+  @DeleteMapping("/delscrap")
+  @ApiOperation("스크랩 삭제")
+  public @ResponseBody ResponseEntity<Map<String, Object>> delScrap(HttpServletRequest request) {
+    Map<String, Object> map = new HashMap<>();
+    String delid = request.getHeader("articleid");
+    Member member = new Member();
+    member.setEmail(request.getHeader("email"));
+    member = msvc.memberInfo(member);
+    try {
+      StringBuilder articles = new StringBuilder();
+      for (String val : msvc.getMyScrap(member).split(",")) {
+        if (!val.equals(delid)) articles.append(val).append(",");
+      }
+      if (articles.length() > 0) articles.deleteCharAt(articles.length() - 1);
+      msvc.scrapArticle(member, articles.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+      map.put("msg", false);
+    }
+
+    return new ResponseEntity<>(map, HttpStatus.OK);
+  }
+
+  @GetMapping("/getscrap")
+  @ApiOperation("스크랩한 기사만 가져온")
+  public @ResponseBody ResponseEntity<Map<String, Object>> showScraps(Member member) {
+    Map<String, Object> map = new HashMap<>();
+    member = msvc.memberInfo(member);
+    try {
+      for (String comp : member.getCompany().split(",")) {
+        map.put(comp, asvc.infi(comp));
+      }
       map.put("msg", true);
     } catch (Exception e) {
       e.printStackTrace();
