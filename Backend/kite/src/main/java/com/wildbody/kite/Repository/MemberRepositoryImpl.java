@@ -1,5 +1,7 @@
 package com.wildbody.kite.Repository;
 
+
+import com.wildbody.kite.DTO.Friend;
 import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
 import java.util.HashMap;
@@ -46,7 +48,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 		map.put("memberid", member.getMemberid());
 		map.put("articleid", article.getArticleid());
 		map.put("keyword", article.getKeyword());
-		System.out.println("repository====================================");
 		int ret = 0;
 		try {
 			session.insert("kite.member.scrap", map);
@@ -56,6 +57,24 @@ public class MemberRepositoryImpl implements MemberRepository {
 		return ret;
 	}
 
+  @Override
+  public int scrapArticle(Member member, String articles) {
+    Map<String, Object> map = new HashMap<>();
+    map.put("memberid", member.getMemberid());
+    map.put("articles", articles);
+    int cnt = session.selectOne("kite.member.scrapcounter", member);
+    if (cnt > 0) {
+      return session.update("kite.member.scrapUpdate", map);
+    } else {
+      return session.insert("kite.member.scrapInsert", map);
+    }
+  }
+
+  @Override
+  public String getMyScrap(Member member) {
+    return session.selectOne("kite.member.getscrap", member);
+  }
+  
 	@Override
 	public Member login(Member member) {
 		return session.selectOne("kite.member.selectOne", member);
