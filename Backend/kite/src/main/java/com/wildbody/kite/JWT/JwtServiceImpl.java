@@ -46,7 +46,7 @@ public class JwtServiceImpl implements JwtService {
         try {
             return salt.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
         }
         return null;
     }
@@ -60,7 +60,7 @@ public class JwtServiceImpl implements JwtService {
                 .parseClaimsJws(jwt);
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
         }
         return false;
     }
@@ -73,7 +73,7 @@ public class JwtServiceImpl implements JwtService {
                 .parseClaimsJws(jwt);
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
         }
         return false;
     }
@@ -86,7 +86,7 @@ public class JwtServiceImpl implements JwtService {
                 .setSigningKey(generateKey(SALT))
                 .parseClaimsJws(jwt);
         } catch (SignatureException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
             return false;
         }
         // 만료시간이 현재시간보다 늦을경우
@@ -101,7 +101,7 @@ public class JwtServiceImpl implements JwtService {
                 .setSigningKey(generateKey(REFSALT))
                 .parseClaimsJws(jwt);
         } catch (SignatureException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
             return false;
         }
         return !claims.getBody().getExpiration().after(new Date());

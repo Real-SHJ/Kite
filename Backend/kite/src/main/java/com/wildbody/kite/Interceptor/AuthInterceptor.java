@@ -65,6 +65,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (!jsvc.isExpiration(cAccessToken)) {
           //            만료가 안되었으면
           //                    리프레시 토큰을 이용해 인증 후 액세스 토큰을 재발급
+//          ! null
           accessMem = msvc.memberInfo(accessMem);
           accMemToken = tsvc.select(accessMem);
           rtoken = accMemToken.getRefreshToken();
