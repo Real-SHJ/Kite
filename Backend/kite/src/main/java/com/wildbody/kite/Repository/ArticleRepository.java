@@ -18,4 +18,6 @@ public interface ArticleRepository {
     List<Article> articleList();
 
     Article oneArticle(int articleid);
+
+    List<Article> infi(String company);
 }
