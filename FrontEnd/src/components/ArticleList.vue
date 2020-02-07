@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import http from '../http-common'
 // import http from '../http-common'
 import ScrapDialog from '../components/ScrapDialog.vue'
 export default {
@@ -57,26 +56,26 @@ export default {
   },
   data () {
     return {
-      dialog: false,
-      articles: []
+      test: [1, 2, 3]
     }
   },
   methods: {
-    goDetail () {
-      this.$router.push('/ArticleDetail')
-    },
-    getArticle () {
-      http.get('/article/list/')
-        .then(res => {
-        // 토큰 저장
-          console.log(res)
-          this.articles = res.data.resvalue
-        })
-        .catch(err => console.log(err))
+    goDetail (article) {
+      this.$router.push({ path: `/articleDetail/${article.articleid}` })
     }
+    // getArticle () {
+    //   http.get('/article/list/')
+    //     .then(res => {
+    //     // 토큰 저장
+    //       // console.log(res)
+    //       this.articles = res.data.resvalue
+    //       // console.log(this.articles)
+    //     })
+    //     .catch(err => console.log(err))
+    // }
   },
   mounted () {
-    this.getArticle()
+    // this.getArticle()
   }
 }
 
