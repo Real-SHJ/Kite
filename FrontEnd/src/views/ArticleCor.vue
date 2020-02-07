@@ -1,18 +1,4 @@
 <template>
-<v-content>
-  <h1>회사별 기사 페이지</h1>
-</v-content>
-</template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style>
-
-</style>
   <v-content>
     <h1>여기는 메인 {{company}} 페이지입니다...</h1>
     <MyArticleCor :com="company"/>

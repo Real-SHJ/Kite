@@ -19,60 +19,6 @@
     </v-layout>
     <!-- ------------- 검색 기간 부분 --------------- -->
       <v-container fluid>
-          <v-row>
-            <br>검색기간
-            <v-col cols="11" sm="2">
-              <v-menu
-                v-model="menu2"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                trasition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="date_search_start"
-                    label="검색 시작일 - Calendar Click"
-                    prepend-icon="event"
-                    readonly
-                    v-on="on"
-                  > </v-text-field>
-                </template>
-                <v-date-picker v-model="date_search_start"
-                  year-icon="mdi-calendar-blank"
-                  prev-icon="mdi-skip-previous"
-                  next-icon="mdi-skip-next"
-                  @input="menu2 = false"> </v-date-picker>
-              </v-menu>
-            <v-spacer></v-spacer>
-            </v-col>
-            <br>~
-            <v-col cols="11" sm="2">
-              <v-menu
-                v-model="menu2"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                trasition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="date_search_end"
-                    label="검색 마지막날 - Calendar Click"
-                    prepend-icon="event"
-                    readonly
-                    v-on="on"
-                  > </v-text-field>
-                </template>
-                <v-date-picker v-model="date_search_end"
-                  year-icon="mdi-calendar-blank"
-                  prev-icon="mdi-skip-previous"
-                  next-icon="mdi-skip-next"
-                  @input="menu2 = false"> </v-date-picker>
-              </v-menu>
-            <v-spacer></v-spacer>
           <v-row
           >
             <br>기업선택
@@ -183,7 +129,6 @@
                     color="basil"
                     flat
                   >
-                    <v-card-text>{{ text }}</v-card-text>
                   </v-card>
                 </v-tab-item>
               </v-tabs-items>
@@ -953,60 +898,7 @@ export default {
         if (this.chart) {
             this.chart.dispose();
         }
-    },
-  components: {
-    // wordcloud
-  },
-  methods: {
-    wordClickHandler (name, value, vm) {
-      console.log('wordClickHandler', name, value, vm)
-    },
-    getArticle () {
-      http.get('article/list/')
-        .then(res => {
-          //토큰 저장
-            console.log(res)
-            this.articles = res.data.resvalue
-        })
-        .catch(err => console.log(err))
     }
-  },
-  data () {
-    return {
-      items: [
-        '최신 뉴스', '관련 뉴스'
-      ],
-      text: '뉴스뉴스뉴스뉴스뉴스뉴스',
-      items2: [
-        {
-          color: '#1F7087',
-          src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-          title: 'Supermodel',
-          artist: 'Foster the People'
-        },
-        {
-          color: '#952175',
-          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-          title: 'Halcyon Days',
-          artist: 'Ellie Goulding'
-        },
-        {
-          color: '#1F7087',
-          src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-          title: 'Supermodel',
-          artist: 'Foster the People'
-        },
-        {
-          color: '#952175',
-          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-          title: 'Halcyon Days',
-          artist: 'Ellie Goulding'
-        },
-      ],
-      articles: []
-    },
-    this.getArticle()
-  }
 }
 </script>
 
