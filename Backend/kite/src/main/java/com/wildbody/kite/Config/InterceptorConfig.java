@@ -18,7 +18,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
     "/api/member/naverlogin",
     "/api/member/kakaologin",
     "/api/member/list",
-    "/api/member/friendlist"
+    "/api/member/friendlist/**",
+    "/api/member/requestlist/**",
+    "/api/member/responselist/**"
   };
 
   private static final String[] INCLUDE_PATH = {"/api/member/**"};

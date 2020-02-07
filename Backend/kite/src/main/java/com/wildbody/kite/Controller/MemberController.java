@@ -242,4 +242,46 @@ public class MemberController {
 
     return new ResponseEntity<>(map, HttpStatus.OK);
   }
+
+  @GetMapping("/friendlist/{memberid}")
+  @ApiOperation("친구 목록 조회 서비스")
+  public @ResponseBody ResponseEntity<Map<String, Object>> listFriend(@PathVariable("memberid") String memberid) {
+    Map<String, Object> map = new HashMap<String, Object>();
+    try {
+      map.put("message", "친구 목록 조회 성공");
+      List<Integer> list = msvc.friendList(Integer.parseInt(memberid));
+      map.put("result", list);
+    } catch (RuntimeException e) {
+      map.put("message", "친구 목록 조회 실패");
+    }
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+  }
+
+  @GetMapping("/requestlist/{memberid}")
+  @ApiOperation("친구 요청 목록 조회 서비스")
+  public @ResponseBody ResponseEntity<Map<String, Object>> listRequest(@PathVariable("memberid") String memberid) {
+    Map<String, Object> map = new HashMap<String, Object>();
+    try {
+      map.put("message", "친구 요청 목록 조회 성공");
+      List<Integer> list = msvc.requestList(Integer.parseInt(memberid));
+      map.put("result", list);
+    } catch (RuntimeException e) {
+      map.put("message", "친구 요청 목록 조회 실패");
+    }
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+  }
+
+  @GetMapping("/responselist/{memberid}")
+  @ApiOperation("친구 응답 목록 조회 서비스")
+  public @ResponseBody ResponseEntity<Map<String, Object>> listResponse(@PathVariable("memberid") String memberid) {
+    Map<String, Object> map = new HashMap<String, Object>();
+    try {
+      map.put("message", "친구 응답 목록 조회 성공");
+      List<Integer> list = msvc.responseList(Integer.parseInt(memberid));
+      map.put("result", list);
+    } catch (RuntimeException e) {
+      map.put("message", "친구 응답 목록 조회 실패");
+    }
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+  }
 }

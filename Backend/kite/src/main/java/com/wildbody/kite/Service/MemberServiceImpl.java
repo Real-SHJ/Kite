@@ -1,13 +1,11 @@
 package com.wildbody.kite.Service;
 
 import com.wildbody.kite.DTO.Article;
-import com.wildbody.kite.DTO.Friend;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.Repository.MemberRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -46,23 +44,36 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Friend> friendList(int memberid) {
-        return repo.friendList(memberid);
+    public int scrapArticle(Member member, Article article) {
+        return repo.scrapArticle(member, article);
     }
 
     @Override
     public int scrapArticle(Member member, String articles) {
-        return repo.scrapArticle(member,articles);
+        return repo.scrapArticle(member, articles);
     }
 
     @Override
     public int delScrap() {
-            return 0;
+        // TODO
+        return 0;
     }
 
     @Override
     public String getMyScrap(Member member) {
         return repo.getMyScrap(member);
+
+    public List<Integer> friendList(int memberid) {
+        return repo.friendList(memberid);
     }
 
+    @Override
+    public List<Integer> requestList(int memberid) {
+        return repo.requestList(memberid);
+    }
+
+    @Override
+    public List<Integer> responseList(int memberid) {
+        return repo.responseList(memberid);
+    }
 }

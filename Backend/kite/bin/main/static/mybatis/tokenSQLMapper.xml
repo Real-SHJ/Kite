@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kite.token">
+  <insert id="insert" parameterType="Token">
+    insert into membertoken
+    (memberid, email, refreshtoken)
+    values (#{memberid}, #{email}, #{refreshToken})
+  </insert>
+  <select id="select" parameterType="Member" resultType="Token">
+    select *
+    from membertoken
+    where memberid=#{memberid}
+  </select>
+  <update id="update" parameterType="Token">
+    update membertoken
+    set refreshtoken=#{refreshToken}
+    where memberid = #{memberid}
+  </update>
+</mapper>

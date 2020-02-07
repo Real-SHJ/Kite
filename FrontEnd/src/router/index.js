@@ -14,7 +14,7 @@ import Empty from '../views/Empty.vue'
 import following from '../views/following.vue'
 import ArticleCorpo from '../views/ArticleCor.vue'
 import follow from '../views/follow.vue'
-import MemberList from '../views/memberlist.vue'
+import FriendList from '../views/FriendList.vue'
 
 Vue.use(VueRouter)
 
@@ -94,9 +94,9 @@ const routes = [
     component: follow
   },
   {
-    path: '/memberlist',
-    name: 'memberlist',
-    component: MemberList
+    path: '/friendlist',
+    name: 'friendlist',
+    component: FriendList
   }
 ]
 
