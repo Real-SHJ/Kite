@@ -42,13 +42,15 @@
 		memberid=#{memberid}
 	</update>
 	<insert id="scrap" parameterType="hashmap">
-		insert into member_article
+		insert into
 		<choose>
 			<when test="keyword != null">
-				values(memberid=#{memberid}, articleid=#{articleid}, keyword=#{keyword})
+				member_article(memberid, articleid, keyword)
+				values(#{memberid}, #{articleid},#{keyword})
 			</when>
 			<otherwise>
-				values(memberid=#{memberid}, articleid=#{articleid})
+				member_article(memberid, articleid)
+				values(#{memberid}, #{articleid})
 			</otherwise>
 		</choose>
 	</insert>

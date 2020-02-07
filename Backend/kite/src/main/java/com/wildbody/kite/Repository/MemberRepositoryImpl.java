@@ -32,14 +32,7 @@ public class MemberRepositoryImpl implements MemberRepository {
 
   @Override
   public Member memberInfo(Member member) {
-    System.out.println(member.toString());
-    member = session.selectOne("kite.member.selectOne", member);
-    try {
-      System.out.println(member.toString());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return member;
+    return session.selectOne("kite.member.selectOne", member);
   }
 
   @Override
@@ -59,8 +52,13 @@ public class MemberRepositoryImpl implements MemberRepository {
     map.put("articleid", article.getArticleid());
     map.put("keyword", article.getKeyword());
     System.out.println("repository====================================");
-    System.out.println(map.toString());
-    return session.insert("kite.member.scrap", map);
+    int ret = 0;
+    try {
+      session.insert("kite.member.scrap", map);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return ret;
   }
 
   @Override

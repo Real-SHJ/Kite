@@ -135,8 +135,7 @@ public class MemberController {
     } else {
       map.put("isLogin", false);
     }
-    ret = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    return ret;
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
   }
 
   @GetMapping("/naverlogin")
@@ -161,8 +160,6 @@ public class MemberController {
   @ApiOperation("친구 목록 조회 서비스")
   public @ResponseBody ResponseEntity<Map<String, Object>> listFriend(
       @PathVariable("memberid") String memberid) {
-    ResponseEntity<Map<String, Object>> resEntity = null;
-    List<Friend> list = null;
     Map<String, Object> map = new HashMap<String, Object>();
     try {
       map.put("message", "친구 목록 조회 성공");
@@ -170,14 +167,13 @@ public class MemberController {
     } catch (RuntimeException e) {
       map.put("message", "친구 목록 조회 실패");
     }
-    resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    return resEntity;
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
   }
 
   @GetMapping("/scrap")
   public @ResponseBody ResponseEntity<Map<String, Object>> scrapArticle(
       Member member, Article article) {
-
+    System.out.println("scrap dlkfjalkdjflajl");
     Map<String, Object> map = new HashMap<>();
     try {
       map.put("result", msvc.scrapArticle(member, article));
