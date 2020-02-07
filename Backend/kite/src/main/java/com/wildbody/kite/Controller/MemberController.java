@@ -1,7 +1,6 @@
 package com.wildbody.kite.Controller;
 
 import com.wildbody.kite.DTO.Article;
-import com.wildbody.kite.DTO.Friend;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.NaverMember;
 import com.wildbody.kite.DTO.Token;
@@ -28,161 +27,193 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/member")
 public class MemberController {
 
-  @Autowired private MemberService msvc;
+	@Autowired
+	private MemberService msvc;
 
-  @Autowired private JwtService jsvc;
+	@Autowired
+	private JwtService jsvc;
 
-  @Autowired private TokenService tsvc;
+	@Autowired
+	private TokenService tsvc;
 
-  @PostMapping("/signup")
-  @ApiOperation(value = "member 등록 서비스")
-  public @ResponseBody ResponseEntity<Map<String, Object>> registerMember(
-      Member member, HttpServletResponse response) {
-    ResponseEntity<Map<String, Object>> resEntity = null;
-    Map<String, Object> map = new HashMap<>();
-    int insert = msvc.memberInsert(member);
-    member = msvc.memberInfo(member);
-    if (insert == 1) {
-      String token = jsvc.getAccessToken(member);
-      map.put("message", "회원 가입 성공");
-      response.addHeader("Authorization", token);
-      Token aToken = new Token();
-      aToken.setMemberid(member.getMemberid());
-      aToken.setEmail(member.getEmail());
-      aToken.setRefreshToken(token);
-      tsvc.insert(aToken);
-    } else {
-      map.put("message", "회원 가입 실패");
-    }
-    resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    return resEntity;
-  }
+	@PostMapping("/signup")
+	@ApiOperation(value = "member 등록 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> registerMember(Member member,
+			HttpServletResponse response) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		int insert = msvc.memberInsert(member);
+		member = msvc.memberInfo(member);
+		if (insert == 1) {
+			String token = jsvc.getAccessToken(member);
+			map.put("message", "회원 가입 성공");
+			response.addHeader("Authorization", token);
+			Token aToken = new Token();
+			aToken.setMemberid(member.getMemberid());
+			aToken.setEmail(member.getEmail());
+			aToken.setRefreshToken(token);
+			tsvc.insert(aToken);
+		} else {
+			map.put("message", "회원 가입 실패");
+		}
+		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		return resEntity;
+	}
 
-  @PutMapping("/update")
-  @ApiOperation(value = "member 수정 서비스")
-  public @ResponseBody ResponseEntity<Map<String, Object>> updateMember(Member member) {
-    ResponseEntity<Map<String, Object>> resEntity = null;
-    Map<String, Object> map = new HashMap<>();
-    try {
-      int update = msvc.memberUpdate(member);
-      map.put("result", update);
-      map.put("isupdate", true);
-    } catch (RuntimeException e) {
-      map.put("isupdate", "회원정보 수정 실패");
-    }
-    resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    return resEntity;
-  }
+	@PutMapping("/update")
+	@ApiOperation(value = "member 수정 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> updateMember(Member member) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			int update = msvc.memberUpdate(member);
+			map.put("result", update);
+			map.put("isupdate", true);
+		} catch (RuntimeException e) {
+			map.put("isupdate", "회원정보 수정 실패");
+		}
+		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		return resEntity;
+	}
 
-  @PostMapping("/delete")
-  @ApiOperation(value = "멤버 삭제")
-  public ResponseEntity<Map<String, Object>> deleteMember(Member member) {
-    Map<String, Object> map = new HashMap<String, Object>();
-    try {
-      msvc.memberDelete(member);
-      map.put("message", "회원 탈퇴 성공");
-    } catch (RuntimeException e) {
-      map.put("message", "회원 탈퇴 실패");
-    }
-    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-  }
+	@PostMapping("/delete")
+	@ApiOperation(value = "멤버 삭제")
+	public ResponseEntity<Map<String, Object>> deleteMember(Member member) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			msvc.memberDelete(member);
+			map.put("message", "회원 탈퇴 성공");
+		} catch (RuntimeException e) {
+			map.put("message", "회원 탈퇴 실패");
+		}
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
 
-  @PostMapping("/info")
-  @ApiOperation(value = "id를 받아 member 조회 서비스", response = Member.class)
-  public @ResponseBody ResponseEntity<Map<String, Object>> infoMember(Member member) {
-    ResponseEntity<Map<String, Object>> resEntity = null;
-    Map<String, Object> map = new HashMap<String, Object>();
-    try {
-      member = msvc.memberInfo(member);
-      member.setPw("");
-      map.put("message", "success");
-      map.put("result", member);
-    } catch (RuntimeException e) {
-      map.put("message", "fail");
-      e.printStackTrace();
-    }
-    resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    return resEntity;
-  }
+	@PostMapping("/info")
+	@ApiOperation(value = "id를 받아 member 조회 서비스", response = Member.class)
+	public @ResponseBody ResponseEntity<Map<String, Object>> infoMember(Member member) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			member = msvc.memberInfo(member);
+			member.setPw("");
+			map.put("message", "success");
+			map.put("result", member);
+		} catch (RuntimeException e) {
+			map.put("message", "fail");
+			e.printStackTrace();
+		}
+		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		return resEntity;
+	}
 
-  @GetMapping("/list")
-  @ApiOperation("회원 목록 조회 서비스")
-  public @ResponseBody ResponseEntity<Map<String, Object>> listMember() {
-    ResponseEntity<Map<String, Object>> resEntity = null;
-    List<Member> list = null;
-    Map<String, Object> map = new HashMap<String, Object>();
-    try {
-      map.put("message", "회원 목록 조회 성공");
-      map.put("result", msvc.memberList());
-    } catch (RuntimeException e) {
-      map.put("message", "회원 목록 조회 실패");
-    }
-    resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    return resEntity;
-  }
+	@GetMapping("/list")
+	@ApiOperation("회원 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> listMember() {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		List<Member> list = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			map.put("message", "회원 목록 조회 성공");
+			list = msvc.memberList();
+			map.put("result", list);
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println(list.get(i));
+			}
+		} catch (RuntimeException e) {
+			map.put("message", "회원 목록 조회 실패");
+		}
+		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		return resEntity;
+	}
 
-  @PostMapping("/signin")
-  @ApiOperation("로그인")
-  public @ResponseBody ResponseEntity<Map<String, Object>> login(
-      Member member, HttpServletResponse response) {
-    ResponseEntity<Map<String, Object>> ret = null;
-    Member loginMem = msvc.login(member);
-    Map<String, Object> map = new HashMap<>();
+	@PostMapping("/signin")
+	@ApiOperation("로그인")
+	public @ResponseBody ResponseEntity<Map<String, Object>> login(Member member, HttpServletResponse response) {
+		ResponseEntity<Map<String, Object>> ret = null;
+		Member loginMem = msvc.login(member);
+		Map<String, Object> map = new HashMap<>();
 
-    if (loginMem != null) {
-      map.put("access_token", response.getHeader("Authorization"));
-      map.put("isLogin", true);
-    } else {
-      map.put("isLogin", false);
-    }
-    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-  }
+		if (loginMem != null) {
+			map.put("access_token", response.getHeader("Authorization"));
+			map.put("isLogin", true);
+		} else {
+			map.put("isLogin", false);
+		}
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
 
-  @GetMapping("/naverlogin")
-  public @ResponseBody ResponseEntity<Map<String, Object>> naverLogin(NaverMember naverMember) {
-    ResponseEntity<Map<String, Object>> ret = null;
-    Map<String, Object> map = new HashMap<>();
+	@GetMapping("/naverlogin")
+	public @ResponseBody ResponseEntity<Map<String, Object>> naverLogin(NaverMember naverMember) {
+		ResponseEntity<Map<String, Object>> ret = null;
+		Map<String, Object> map = new HashMap<>();
 
-    // naver에 정보 요청
+		// naver에 정보 요청
 
-    ret = new ResponseEntity<>(map, HttpStatus.OK);
-    return ret;
-  }
+		ret = new ResponseEntity<>(map, HttpStatus.OK);
+		return ret;
+	}
 
-  @PostMapping("/kakaologin")
-  public @ResponseBody ResponseEntity<Map<String, Object>> kakaoLogin() {
-    ResponseEntity<Map<String, Object>> ret = null;
+	@PostMapping("/kakaologin")
+	public @ResponseBody ResponseEntity<Map<String, Object>> kakaoLogin() {
+		ResponseEntity<Map<String, Object>> ret = null;
 
-    return ret;
-  }
+		return ret;
+	}
 
-  @GetMapping("/friendlist/{memberid}")
-  @ApiOperation("친구 목록 조회 서비스")
-  public @ResponseBody ResponseEntity<Map<String, Object>> listFriend(
-      @PathVariable("memberid") String memberid) {
-    Map<String, Object> map = new HashMap<String, Object>();
-    try {
-      map.put("message", "친구 목록 조회 성공");
-      map.put("result", msvc.friendList(Integer.parseInt(memberid)));
-    } catch (RuntimeException e) {
-      map.put("message", "친구 목록 조회 실패");
-    }
-    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-  }
+	@GetMapping("/scrap")
+	public @ResponseBody ResponseEntity<Map<String, Object>> scrapArticle(Member member, Article article) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			map.put("result", msvc.scrapArticle(member, article));
+			map.put("msg", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("msg", false);
+		}
 
-  @GetMapping("/scrap")
-  public @ResponseBody ResponseEntity<Map<String, Object>> scrapArticle(
-      Member member, Article article) {
-    System.out.println("scrap dlkfjalkdjflajl");
-    Map<String, Object> map = new HashMap<>();
-    try {
-      map.put("result", msvc.scrapArticle(member, article));
-      map.put("msg", true);
-    } catch (Exception e) {
-      e.printStackTrace();
-      map.put("msg", false);
-    }
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
 
-    return new ResponseEntity<>(map, HttpStatus.OK);
-  }
+	@GetMapping("/friendlist/{memberid}")
+	@ApiOperation("친구 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> listFriend(@PathVariable("memberid") String memberid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			map.put("message", "친구 목록 조회 성공");
+			List<Integer> list = msvc.friendList(Integer.parseInt(memberid));
+			map.put("result", list);
+		} catch (RuntimeException e) {
+			map.put("message", "친구 목록 조회 실패");
+		}
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+
+	@GetMapping("/requestlist/{memberid}")
+	@ApiOperation("친구 요청 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> listRequest(@PathVariable("memberid") String memberid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			map.put("message", "친구 요청 목록 조회 성공");
+			List<Integer> list = msvc.requestList(Integer.parseInt(memberid));
+			map.put("result", list);
+		} catch (RuntimeException e) {
+			map.put("message", "친구 요청 목록 조회 실패");
+		}
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+
+	@GetMapping("/responselist/{memberid}")
+	@ApiOperation("친구 응답 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> listResponse(@PathVariable("memberid") String memberid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			map.put("message", "친구 응답 목록 조회 성공");
+			List<Integer> list = msvc.responseList(Integer.parseInt(memberid));
+			map.put("result", list);
+		} catch (RuntimeException e) {
+			map.put("message", "친구 응답 목록 조회 실패");
+		}
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
 }

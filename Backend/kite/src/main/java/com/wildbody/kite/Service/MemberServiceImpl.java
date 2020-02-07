@@ -1,7 +1,6 @@
 package com.wildbody.kite.Service;
 
 import com.wildbody.kite.DTO.Article;
-import com.wildbody.kite.DTO.Friend;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.Repository.MemberRepository;
 import java.util.List;
@@ -46,13 +45,22 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Friend> friendList(int memberid) {
-        return repo.friendList(memberid);
-    }
-
-    @Override
     public int scrapArticle(Member member, Article article) {
         return repo.scrapArticle(member,article);
     }
 
+    @Override
+    public List<Integer> friendList(int memberid) {
+        return repo.friendList(memberid);
+    }
+
+	@Override
+	public List<Integer> requestList(int memberid) {
+		return repo.requestList(memberid);
+	}
+
+	@Override
+	public List<Integer> responseList(int memberid) {
+		return repo.responseList(memberid);
+	}
 }
