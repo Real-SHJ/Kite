@@ -48,4 +48,9 @@ public class ArticleServiceImpl implements ArticleService {
         return repo.oneArticle(articleid);
     }
 
+    @Override
+    public List<Article> infi(String company) {
+        return repo.infi(company);
+    }
+
 }

@@ -53,4 +53,9 @@
   <select id="oneArticle" parameterType="int" resultType="Article">
 		select * from article where articleid=#{articleid};
 	</select>
+	<select id="infi" parameterType="string" resultType="Article">
+		select *
+		from article
+		where company = #{company}
+	</select>
 </mapper>

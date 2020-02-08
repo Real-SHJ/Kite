@@ -6,24 +6,29 @@ import java.util.List;
 
 public interface MemberService {
 
-	public int memberInsert(Member member);
+	int memberInsert(Member member);
 
-	public int memberUpdate(Member member);
+	int memberUpdate(Member member);
 
-	public int memberDelete(Member member);
+	int memberDelete(Member member);
 
-	public Member memberInfo(Member member);
+	Member memberInfo(Member member);
 
-	public List<Member> memberList();
+	List<Member> memberList();
 
-	public Member login(Member member);
+	Member login(Member member);
 
-	public int scrapArticle(Member member, Article article);
-    
-    public List<Integer> friendList(int memberid);
+	int scrapArticle(Member member, Article article);
 
-	public List<Integer> requestList(int memberid);
+	List<Integer> friendList(int memberid);
 
-	public List<Integer> responseList(int memberid);
+	int scrapArticle(Member member, String articles);
 
+	List<Integer> requestList(int memberid);
+
+	List<Integer> responseList(int memberid);
+
+	int delScrap();
+
+	String getMyScrap(Member member);
 }

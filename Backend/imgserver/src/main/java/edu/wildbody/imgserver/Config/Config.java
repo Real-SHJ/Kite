@@ -25,7 +25,7 @@ public class Config implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        List<String> imagesFolders = Arrays.asList("logo", "profile", "thumbnail");
+        List<String> imagesFolders = Arrays.asList("logo", "profile", "thumbnail","tmp");
 
         for (String imageFolder : imagesFolders) {
             registry.addResourceHandler("/img/" + imageFolder + "/**")
