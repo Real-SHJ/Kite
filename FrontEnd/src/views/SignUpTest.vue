@@ -1,14 +1,80 @@
 <template>
-  <v-content>
-  <v-container fluid fill-height>
-    <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md4>
-        <v-card class="elevation-12">
-          <v-toolbar dark color="teal darken-1">
-            <v-toolbar-title >개인 정보 관리 </v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
-          <v-card-text>
+  <v-app>
+      <v-content>
+          <v-container class="fill-height" fluid>
+              <v-row align="center" justify="center">
+                  <v-col cols="12" sm="8" md="8">
+                      <v-card class="elevation-12">
+                          <v-window v-model="step">
+                            <v-window-item :value="1">
+                                <v-row>
+                                    <v-col cols="12" md="8">
+                                        <v-card-text class="mt-12">
+                                            <h1 class="text-center display-2 teal--text text--accent-3">Sign in to Kite</h1>
+                                            <div class="text-center" mt-4>
+                                                <v-btn class="mx-2" fab color="black" outlined="">
+                                                    <v-icon>fab fa-facebook-f</v-icon>
+                                                </v-btn>
+                                                <v-btn class="mx-2" fab color="black" outlined="">
+                                                    <v-icon>fab fa-google-g</v-icon>
+                                                </v-btn>
+                                                <v-btn class="mx-2" fab color="black" outlined="">
+                                                    <v-icon>fab fa-linkedin-in</v-icon>
+                                                </v-btn>
+                                            </div>
+                                            <h4 class="text-center mlt-4">Ensure your email for registration</h4>
+                                            <v-form>
+                                                <v-text-field
+                                                    label="Email"
+                                                    name="Email"
+                                                    prepend-icon="email"
+                                                    type="text"
+                                                    v-model="credential.email"
+                                                    :rules="credential.emailRules"
+                                                    color="teal accent-3"
+                                                    />
+                                                <v-text-field
+                                                    id="password"
+                                                    label="Password"
+                                                    name="Password"
+                                                    v-model="credential.pw"
+                                                    :rules="credential.pwRules"
+                                                    prepend-icon="lock"
+                                                    type="password"
+                                                    color="teal accent-3"
+                                                />
+
+                                            </v-form>
+                                            <h3 class="text-center mt-3">Forget your password ?</h3>
+                                            </v-card-text>
+                                                <div class="text-center mt-3">
+                                                    <v-btn @click="login" rounded color="tea1 accent-3" dark>SIGN IN </v-btn>
+                                                </div>
+                                    </v-col>
+                                    <v-col cols="12" md="4" class="teal accent-3">
+                                        <v-card-text class="white--text mt-12">
+                                            <h1 class="text-center display-1">Hello, Friends !</h1>
+                                            <h5 class="text-center">Enter your personel details and start journay with us </h5>
+                                        </v-card-text>
+                                        <div class="text-center">
+                                            <v-btn rounded outlined="" dark @click="step++">SIGN UP</v-btn>
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </v-window-item>
+                            <v-window-item :value="2">
+                                <v-row class="fill-height">
+                                    <v-col cols="12" md="4" class="teal accent-3">
+                                        <v-card-text class="white--text mt-12">
+                                            <h1 class="text-center display-1">Welcome Back !!! </h1>
+                                            <h5 class="text-center">To Keep connected with us please login with your personnel info </h5>
+                                        </v-card-text>
+                                        <div class="text-center">
+                                            <v-btn rounded outlined dark @click="step--">SIGN IN</v-btn>
+                                        </div>
+                                    </v-col>
+                                    <v-col cols="12" md="8">
+                                        <v-card-text>
             <form>
               <v-text-field
                 v-model="email"
@@ -91,21 +157,28 @@
                 > </v-text-field>
 
               <V-file-input multiple label="Profile Image" v-model="image"></V-file-input>
-
-              <router-link to="/loginpage"><v-btn @click="addMem" color="blue">submit</v-btn></router-link>
+            <div class="text-center mt-3">
+              <v-btn @click="addMem"  color="blue">submit</v-btn>
               <v-btn @click="clear" color="grey lighten-3">clear</v-btn>
+            </div>
             </form>
           </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
-  </v-content>
+                                    </v-col>
+                                </v-row>
+                            </v-window-item>
+                          </v-window>
+                      </v-card>
+                  </v-col>
+              </v-row>
+          </v-container>
+      </v-content>
+  </v-app>
 </template>
 
 <script>
 import http from '../http-common'
 import upload from '../http-fileupload'
+import router from '../router'
 
 export default {
   name: 'SignUp',
@@ -129,11 +202,26 @@ export default {
       address: null,
       submit: '',
       clear: '',
-      fulladdress: ''
-      // country: ''
+      fulladdress: '',
+      step: 1,
+      valid: true,
+      credential: {
+        pw: '',
+        pwRules: [
+          (v) => !!v || 'password is required',
+          (v) => (v && v.length <= 10) || 'password must be less than 10 characters'
+        ],
+        email: '',
+        emailRules: [
+          (v) => !!v || 'E-mail is required',
+          (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        ]
+      }
     }
   },
-
+  props: {
+    source: String
+  },
   conponents: {
     // DaumPostcode
   },
@@ -165,6 +253,7 @@ export default {
       let fdata = new FormData()
       let bday = this.birthday.replace('-', '')
       let ext = this.email + '.' + this.image[0].name.split('.')[1]
+      this.step--
       fdata.append('memberid', this.memberid)
       fdata.append('email', this.email)
       fdata.append('pw', this.pw)
@@ -209,6 +298,36 @@ export default {
         .catch(() => {
           console.log('error occurd while upload image')
         })
+    },
+    login () {
+      if (this.valid) {
+        const fdata = new FormData()
+        fdata.append('email', this.credential.email)
+        fdata.append('pw', this.credential.pw)
+        http.post('/member/signin', fdata)
+          .then(res => {
+            // 토큰 저장
+            const token = res.data.access_token
+            console.log(token)
+            this.$session.set('my-token', token)
+            this.$store.dispatch('login', token)
+            console.log('로그인 성공!!')
+            http.post('/member/info', fdata)
+              .then(res2 => {
+                console.log(res2)
+                const userEmail = res2.data.result.email
+                const userName = `${res2.data.result.lastname} ${res2.data.result.firstname}`
+                const userid = res2.data.result.memberid
+                console.log(userName)
+                console.log(res2.data.result)
+                this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid })
+                this.$session.set('my-info', { userEmail: userEmail, userName: userName, userid: userid })
+              })
+            // 리다이렉트
+            router.push('/')
+          })
+          .catch(err => console.log(err))
+      }
     }
   }
 }

@@ -10,6 +10,7 @@
         <div v-else>
           <router-link class="black--text" to="/loginpage">Sign in</router-link> |
           <router-link class="black--text" to="/signup">Sign up</router-link>
+          <router-link class="black--text" to="/signuptest">SignUpTest</router-link>
         </div>
     </v-toolbar>
     <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg" style="height: 300px;"></v-parallax>
