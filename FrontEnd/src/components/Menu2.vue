@@ -67,7 +67,7 @@ export default {
         'S-OIL': 'http://13.125.153.118:8999/img/logo/S-Oil.svg',
         'SK하이닉스': 'http://13.125.153.118:8999/img/logo/SK_Hynix.svg',
         '현대자동차': 'http://13.125.153.118:8999/img/logo/Hyundai_Car.svg',
-        'CJ제일제당': 'http://13.125.153.118:8999/img/logo/Cj_Cheiljedang.svg',
+        'CJ제일제당': 'http://13.125.153.118:8999/img/logo/CJ_Cheiljedang.svg',
         '국민은행': 'http://13.125.153.118:8999/img/logo/KB_Bank.svg',
         '포스코': 'http://13.125.153.118:8999/img/logo/Posco.svg',
         '삼성SDS': 'http://13.125.153.118:8999/img/logo/Samsung_SDS.svg',

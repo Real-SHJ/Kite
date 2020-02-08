@@ -24,8 +24,8 @@
                 <v-list-item-content>
                     <v-list-item-title v-text="item.name"></v-list-item-title>
                 </v-list-item-content>
-                <v-btn class="ma-2" v-if="!item.isFollow" small outlined color="indigo" @click="handleClick(i)">팔로잉</v-btn>
-                <v-btn class="ma-2" v-else small outlined color="red" @click="handleClick(i)">팔로잉 취소</v-btn>
+                <v-btn class="ma-2" v-if="!item.isFollow" small outlined color="indigo" @click="handleClick(i)">친구 요청</v-btn>
+                <v-btn class="ma-2" v-else small outlined color="red" @click="handleClick(i)">요청 취소</v-btn>
             </v-list-item>
         </v-list>
     </v-card>

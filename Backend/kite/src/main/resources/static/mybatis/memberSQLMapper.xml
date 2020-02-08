@@ -30,9 +30,6 @@
 		from members
 		where	email=#{email} and pw=#{pw}
 	</select>
-	<select id="selectFriendList" parameterType="int" resultType="Friend">
-		select friendid from friend where memberid = #{memberid};
-	</select>
 	<update id="update" parameterType="Member">
 		update
 		members
@@ -54,4 +51,13 @@
 			</otherwise>
 		</choose>
 	</insert>
+	<select id="selectFriendList" parameterType="int" resultType="int">
+		select friendid from friend where memberid = #{memberid};
+	</select>
+	<select id="selectRequestList" parameterType="int" resultType="int">
+		select responseid from friendwait where requestid = #{memberid};
+	</select>
+	<select id="selectResponseList" parameterType="int" resultType="int">
+		select requestid from friendwait where responseid = #{memberid};
+	</select>
 </mapper>

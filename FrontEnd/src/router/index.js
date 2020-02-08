@@ -15,6 +15,8 @@ import following from '../views/following.vue'
 import ArticleCorpo from '../views/ArticleCor.vue'
 import follow from '../views/follow.vue'
 import MemberList from '../views/memberlist.vue'
+import SignUpTest from '../views/SignUpTest.vue'
+import FriendList from '../views/FriendList.vue'
 
 Vue.use(VueRouter)
 
@@ -49,10 +51,17 @@ const routes = [
   },
 
   {
+    path: '/signuptest',
+    name: 'signuptest',
+    component: SignUpTest
+  },
+
+  {
     path: '/indirepository',
     name: 'indirepository',
     component: IndiRepository
   },
+
   {
     path: '/naver',
     name: 'naver',
@@ -94,9 +103,9 @@ const routes = [
     component: follow
   },
   {
-    path: '/memberlist',
-    name: 'memberlist',
-    component: MemberList
+    path: '/friendlist',
+    name: 'friendlist',
+    component: FriendList
   }
 ]
 
