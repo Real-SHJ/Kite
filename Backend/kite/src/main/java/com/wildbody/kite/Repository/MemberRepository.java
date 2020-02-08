@@ -21,9 +21,7 @@ public interface MemberRepository {
   int scrapArticle(Member member, String articles);
 
   String getMyScrap(Member member);
-
-  int scrapArticle(Member member, Article article);
-
+  
   List<Integer> friendList(int memberid);
 
   List<Integer> requestList(int memberid);
