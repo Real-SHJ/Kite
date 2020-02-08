@@ -160,20 +160,6 @@ public class MemberController {
     return ret;
   }
 
-  @GetMapping("/friendlist/{memberid}")
-  @ApiOperation("친구 목록 조회 서비스")
-  public @ResponseBody ResponseEntity<Map<String, Object>> listFriend(
-      @PathVariable("memberid") String memberid) {
-    Map<String, Object> map = new HashMap<String, Object>();
-    try {
-      map.put("message", "친구 목록 조회 성공");
-      map.put("result", msvc.friendList(Integer.parseInt(memberid)));
-    } catch (RuntimeException e) {
-      map.put("message", "친구 목록 조회 실패");
-    }
-    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-  }
-
   @GetMapping("/scrap")
   @ApiOperation("스크랩")
   public @ResponseBody ResponseEntity<Map<String, Object>> scrapArticle(
@@ -245,7 +231,8 @@ public class MemberController {
 
   @GetMapping("/friendlist/{memberid}")
   @ApiOperation("친구 목록 조회 서비스")
-  public @ResponseBody ResponseEntity<Map<String, Object>> listFriend(@PathVariable("memberid") String memberid) {
+  public @ResponseBody ResponseEntity<Map<String, Object>> listFriend(
+      @PathVariable("memberid") String memberid) {
     Map<String, Object> map = new HashMap<String, Object>();
     try {
       map.put("message", "친구 목록 조회 성공");
@@ -259,7 +246,8 @@ public class MemberController {
 
   @GetMapping("/requestlist/{memberid}")
   @ApiOperation("친구 요청 목록 조회 서비스")
-  public @ResponseBody ResponseEntity<Map<String, Object>> listRequest(@PathVariable("memberid") String memberid) {
+  public @ResponseBody ResponseEntity<Map<String, Object>> listRequest(
+      @PathVariable("memberid") String memberid) {
     Map<String, Object> map = new HashMap<String, Object>();
     try {
       map.put("message", "친구 요청 목록 조회 성공");
@@ -273,7 +261,8 @@ public class MemberController {
 
   @GetMapping("/responselist/{memberid}")
   @ApiOperation("친구 응답 목록 조회 서비스")
-  public @ResponseBody ResponseEntity<Map<String, Object>> listResponse(@PathVariable("memberid") String memberid) {
+  public @ResponseBody ResponseEntity<Map<String, Object>> listResponse(
+      @PathVariable("memberid") String memberid) {
     Map<String, Object> map = new HashMap<String, Object>();
     try {
       map.put("message", "친구 응답 목록 조회 성공");
