@@ -33,12 +33,7 @@
       </div>
       <v-card-actions class="d-flex justify-end">
         <ScrapDialog :article="article"/>
-        <v-btn
-          class="mx-4"
-          icon
-        >
-          <v-icon size="24px">fas fa-share-alt</v-icon>
-        </v-btn>
+        <ShareDialog :article="article"/>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -47,12 +42,14 @@
 <script>
 // import http from '../http-common'
 import ScrapDialog from '../components/ScrapDialog.vue'
+import ShareDialog from '../components/ShareDialog.vue'
 export default {
   props: {
     articles: Array
   },
   components: {
-    ScrapDialog
+    ScrapDialog,
+    ShareDialog
   },
   data () {
     return {

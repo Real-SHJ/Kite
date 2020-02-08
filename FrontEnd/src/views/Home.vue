@@ -14,10 +14,12 @@ export default {
   name: 'home',
   data () {
     return {
+      AuthenticatedCheck: this.$session.has('my-token'),
       limit: 0,
       auth: [],
+      myArticles: [],
       articles: [],
-      page: 0
+      page: 1
     }
   },
   components: {
@@ -26,25 +28,50 @@ export default {
   },
   mounted () {
     this.init()
+    this.AuthenticatedCheck = this.$session.has('my-token')
+  },
+  updated () {
+    this.AuthenticatedCheck = this.$session.has('my-token')
   },
   methods: {
     infiniteHandler ($state) {
-      http
-        .get('/article/info', {
-          headers: {
-            page: 1
+      setTimeout(() => {
+        if (this.AuthenticatedCheck) {
+          const fdata = new FormData()
+          const email = this.$session.get('my-info').userEmail
+          fdata.append('email', email)
+          console.log(email)
+          const headers = {
+            email: email
           }
-        })
-        .then(({ data }) => {
-          console.log(data)
-          if (data.length) {
-            this.page += 1
-            this.articles.push(...data)
-            $state.loaded()
-          } else {
-            $state.complete()
-          }
-        })
+          console.log(`/article/infiloading/${this.page}`)
+          http
+            .get(`/article/infiloading/${this.page}`, { headers })
+            .then(({ data }) => {
+              console.log(data.result)
+              if (data.result.length) {
+                this.page += 1
+                const tempArticle = data.result
+                for (var article of tempArticle) {
+                  this.myArticles.push(article)
+                }
+                console.log(this.myArticles)
+                this.articles = this.myArticles
+                $state.loaded()
+              } else {
+                $state.complete()
+              }
+            })
+        } else {
+          http
+            .get('/article/list')
+            .then(res => {
+              console.log(res.data.resvalue)
+              this.articles = res.data.resvalue.slice(0, 5)
+            })
+            .catch(err => console.log(err))
+        }
+      }, 1000)
     }
   }
 }
