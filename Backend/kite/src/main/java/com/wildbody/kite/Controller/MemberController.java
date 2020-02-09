@@ -215,10 +215,6 @@ public class MemberController {
     Map<String, Object> map = new HashMap<>();
     List<Article> list = new ArrayList<>();
     try {
-      //      * 관심기업의 기사만 가져오게 함
-      //      for (String comp : member.getCompany().split(",")) {
-      //        map.put(comp, asvc.infi(comp));
-      //      }
       for (String articleid : msvc.getMyScrap(msvc.memberInfo(member)).split(",")) {
         list.add(asvc.oneArticle(Integer.parseInt(articleid)));
       }
@@ -226,6 +222,23 @@ public class MemberController {
       map.put("msg", true);
     } catch (Exception e) {
       e.printStackTrace();
+      map.put("msg", false);
+    }
+
+    return new ResponseEntity<>(map, HttpStatus.OK);
+  }
+
+  @GetMapping("/likecomp")
+  @ApiOperation("관시기업 기사만 가져온다")
+  public @ResponseBody ResponseEntity<Map<String, Object>> likeCompanyArticle(Member member) {
+    HashMap<String, Object> map = new HashMap<>();
+    member = msvc.memberInfo(member);
+    try {
+      for(String comp : member.getCompany().split(",")){
+        map.put(comp,asvc.infi(comp));
+      }
+      map.put("msg", true);
+    } catch (Exception e) {
       map.put("msg", false);
     }
 
