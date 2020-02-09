@@ -65,7 +65,7 @@ public class ExcelRead implements ApplicationRunner {
             }
             switch (columnindex) {
               case 0:
-                article.setCompany(value);
+                article.setCompany(value.trim());
                 break;
               case 2:
                 article.setPublicationDate(value);
@@ -105,6 +105,6 @@ public class ExcelRead implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
-    this.execute();
+    //    this.execute();
   }
 }

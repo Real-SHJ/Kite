@@ -18,8 +18,6 @@ public interface MemberService {
 
 	Member login(Member member);
 
-	int scrapArticle(Member member, Article article);
-
 	List<Integer> friendList(int memberid);
 
 	int scrapArticle(Member member, String articles);

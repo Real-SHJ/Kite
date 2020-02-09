@@ -43,11 +43,6 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public int scrapArticle(Member member, Article article) {
-    return repo.scrapArticle(member, article);
-  }
-
-  @Override
   public int scrapArticle(Member member, String articles) {
     return repo.scrapArticle(member, articles);
   }
