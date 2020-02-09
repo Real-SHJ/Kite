@@ -9,10 +9,10 @@ import com.wildbody.kite.Service.ArticleService;
 import com.wildbody.kite.Service.MemberService;
 import com.wildbody.kite.Service.TokenService;
 import io.swagger.annotations.ApiOperation;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -190,16 +190,14 @@ public class MemberController {
 
   @DeleteMapping("/delscrap")
   @ApiOperation("스크랩 삭제")
-  public @ResponseBody ResponseEntity<Map<String, Object>> delScrap(HttpServletRequest request) {
+  public @ResponseBody ResponseEntity<Map<String, Object>> delScrap(
+      Member member, Article article) {
     Map<String, Object> map = new HashMap<>();
-    String delid = request.getHeader("articleid");
-    Member member = new Member();
-    member.setEmail(request.getHeader("email"));
     member = msvc.memberInfo(member);
     try {
       StringBuilder articles = new StringBuilder();
       for (String val : msvc.getMyScrap(member).split(",")) {
-        if (!val.equals(delid)) articles.append(val).append(",");
+        if (!val.equals("" + article.getArticleid())) articles.append(val).append(",");
       }
       if (articles.length() > 0) articles.deleteCharAt(articles.length() - 1);
       msvc.scrapArticle(member, articles.toString());
@@ -215,11 +213,16 @@ public class MemberController {
   @ApiOperation("스크랩한 기사만 가져온")
   public @ResponseBody ResponseEntity<Map<String, Object>> showScraps(Member member) {
     Map<String, Object> map = new HashMap<>();
-    member = msvc.memberInfo(member);
+    List<Article> list = new ArrayList<>();
     try {
-      for (String comp : member.getCompany().split(",")) {
-        map.put(comp, asvc.infi(comp));
+      //      * 관심기업의 기사만 가져오게 함
+      //      for (String comp : member.getCompany().split(",")) {
+      //        map.put(comp, asvc.infi(comp));
+      //      }
+      for (String articleid : msvc.getMyScrap(msvc.memberInfo(member)).split(",")) {
+        list.add(asvc.oneArticle(Integer.parseInt(articleid)));
       }
+      map.put("result", list);
       map.put("msg", true);
     } catch (Exception e) {
       e.printStackTrace();
