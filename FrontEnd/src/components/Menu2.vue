@@ -15,8 +15,7 @@
     >
       <v-list-item>
         <v-list-item-avatar>
-          <!-- info.img를 추가 v-img에다가 "https:// /api/list-->
-          <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+          <v-img :src="`http://13.125.153.118:8999/img/profile/${userInfo.userImage}`"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-content >

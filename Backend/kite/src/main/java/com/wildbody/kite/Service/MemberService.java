@@ -1,32 +1,44 @@
 package com.wildbody.kite.Service;
 
-import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
+
 import java.util.List;
 
 public interface MemberService {
 
-	int memberInsert(Member member);
+	public int memberInsert(Member member);
 
-	int memberUpdate(Member member);
+	public int memberUpdate(Member member);
 
-	int memberDelete(Member member);
+	public int memberDelete(Member member);
 
-	Member memberInfo(Member member);
+	public Member memberInfo(Member member);
 
-	List<Member> memberList();
+	public List<Member> memberList();
 
-	Member login(Member member);
+	public Member login(Member member);
 
-	List<Integer> friendList(int memberid);
+	public int delScrap();
 
-	int scrapArticle(Member member, String articles);
+	public String getMyScrap(Member member);
 
-	List<Integer> requestList(int memberid);
+	public int scrapArticle(Member member, String articles);
 
-	List<Integer> responseList(int memberid);
+	public List<Member> myMemberList(int memberid);
 
-	int delScrap();
+	public List<Member> friendList(int memberid);
 
-	String getMyScrap(Member member);
+	public List<Member> requestList(int memberid);
+
+	public List<Member> responseList(int memberid);
+	
+	public List<Member> noRelationList(int memberid);
+	
+	public int friendWaitInsert(int requestid, int responseid);
+
+	public int friendWaitDelete(int requestid, int responseid);
+
+	public int friendInsert(int memberid, int friendid);
+
+	public int friendDelete(int memberid, int friendid);
 }

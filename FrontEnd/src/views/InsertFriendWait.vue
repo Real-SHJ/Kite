@@ -4,7 +4,7 @@
         <v-toolbar color="indigo" dark>
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-        <v-toolbar-title>friend</v-toolbar-title>
+        <v-toolbar-title>insertfriendwait</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -17,7 +17,7 @@
         </v-btn>
         </v-toolbar>
         <v-list>
-            <v-list-item  v-for="(item, i) in flist" :key="i">
+            <v-list-item  v-for="(item, i) in nrlist" :key="i">
                 <v-list-item-avatar>
                     <img v-if="item.image === 'null'" src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"/>
                     <v-img v-else :src="`http://13.125.153.118:8999/img/profile/${item.image}`"></v-img>
@@ -25,8 +25,7 @@
                 <v-list-item-content>
                     <v-list-item-title v-text="item.lastname + ' ' + item.firstname"></v-list-item-title>
                 </v-list-item-content>
-                <v-btn class="ma-2" small outlined color="green">친구</v-btn>
-                <v-btn class="ma-2" small outlined color="red" @click="insertfriend(item.memberid)">친구 제거</v-btn>
+                <v-btn class="ma-2" small outlined color="indigo" @click="insertfriendwait(item.memberid)">친구 요청</v-btn>
             </v-list-item>
         </v-list>
     </v-card>
@@ -37,17 +36,18 @@
 import router from '../router'
 import http from '../http-common'
 export default {
-  name: 'friendlist',
+  name: 'insertfriendwait',
   data () {
     return {
       memberid: this.$session.get('my-info').userid,
-      flist: []
+      requestid: this.$session.get('my-info').userid,
+      nrlist: []
     }
   },
   methods: {
-    insertfriend: function (friendid) {
+    insertfriendwait: function (responseid) {
       http
-        .post('/member/insertfriend' + '/' + this.memberid + '/' + friendid)
+        .post('/member/insertfriendwait' + '/' + this.requestid + '/' + responseid)
         .then(
           response => {
             console.log(response.data.message)
@@ -55,17 +55,17 @@ export default {
         )
         .catch(err => console.log(err))
         .finally(
-          router.push('/friendlist')
+          router.push('/insertfriendwait')
         )
     },
     getFriendList () {
       http
-        .get('/member/friendlist' + '/' + this.memberid)
+        .get('/member/norelationlist' + '/' + this.memberid)
         .then(
           response => {
-            this.flist = response.data.flist
+            this.nrlist = response.data.nrlist
             console.log(response.data.message)
-            console.log(this.flist)
+            console.log(this.nrlist)
           }
         )
         .catch(err => console.log(err))
