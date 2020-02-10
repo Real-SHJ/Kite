@@ -8,11 +8,13 @@ import com.wildbody.kite.JWT.JwtService;
 import com.wildbody.kite.Service.ArticleService;
 import com.wildbody.kite.Service.MemberService;
 import com.wildbody.kite.Service.TokenService;
+import com.wildbody.kite.Util.DateUtil;
 import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,8 +60,7 @@ public class MemberController {
     } else {
       map.put("message", "회원 가입 실패");
     }
-    resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    return resEntity;
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
   }
 
   @PutMapping("/update")
@@ -74,8 +75,7 @@ public class MemberController {
     } catch (RuntimeException e) {
       map.put("isupdate", "회원정보 수정 실패");
     }
-    resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    return resEntity;
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
   }
 
   @PostMapping("/delete")
@@ -105,8 +105,7 @@ public class MemberController {
       map.put("message", "fail");
       e.printStackTrace();
     }
-    resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    return resEntity;
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
   }
 
   @GetMapping("/list")
@@ -121,8 +120,7 @@ public class MemberController {
     } catch (RuntimeException e) {
       map.put("message", "회원 목록 조회 실패");
     }
-    resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    return resEntity;
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
   }
 
   @PostMapping("/signin")
@@ -149,22 +147,27 @@ public class MemberController {
 
     // naver에 정보 요청
 
-    ret = new ResponseEntity<>(map, HttpStatus.OK);
-    return ret;
+    return new ResponseEntity<>(map, HttpStatus.OK);
   }
 
   @PostMapping("/kakaologin")
   public @ResponseBody ResponseEntity<Map<String, Object>> kakaoLogin() {
     ResponseEntity<Map<String, Object>> ret = null;
+    Map<String, Object> map = new HashMap<>();
 
-    return ret;
+    return new ResponseEntity<>(map, HttpStatus.OK);
   }
 
-  @GetMapping("/scrap")
+  @PostMapping("/scrap")
   @ApiOperation("스크랩")
   public @ResponseBody ResponseEntity<Map<String, Object>> scrapArticle(
       Member member, Article article) {
     Map<String, Object> map = new HashMap<>();
+    if (article.getArticleid() > asvc.articleList().size()) {
+      map.put("result", "out of range");
+      map.put("msg", false);
+      return new ResponseEntity<>(map, HttpStatus.OK);
+    }
     member = msvc.memberInfo(member);
     StringBuilder sb = new StringBuilder();
     String scrpas = msvc.getMyScrap(member);
@@ -184,7 +187,6 @@ public class MemberController {
       e.printStackTrace();
       map.put("msg", false);
     }
-
     return new ResponseEntity<>(map, HttpStatus.OK);
   }
 
@@ -208,17 +210,33 @@ public class MemberController {
 
     return new ResponseEntity<>(map, HttpStatus.OK);
   }
-
-  @GetMapping("/getscrap")
-  @ApiOperation("스크랩한 기사만 가져온")
-  public @ResponseBody ResponseEntity<Map<String, Object>> showScraps(Member member) {
+  // todo 인피니티 로딩으로 바꾸자
+  //  기사날짜로 검색, 검색기간, 기업명
+  @PostMapping("/getscrap/{page}")
+  @ApiOperation("스크랩한 기사만 가져온다")
+  public @ResponseBody ResponseEntity<Map<String, Object>> showScraps(
+      Member member, Article article, HttpServletRequest request, @PathVariable int page) {
     Map<String, Object> map = new HashMap<>();
     List<Article> list = new ArrayList<>();
+    String start = request.getHeader("start"), end = request.getHeader("end");
+    String company = article.getCompany();
     try {
-      for (String articleid : msvc.getMyScrap(msvc.memberInfo(member)).split(",")) {
-        list.add(asvc.oneArticle(Integer.parseInt(articleid)));
+      if (company == null) {
+        for (String articleid : msvc.getMyScrap(msvc.memberInfo(member)).split(",")) {
+          list.add(asvc.oneArticle(Integer.parseInt(articleid)));
+        }
+      } else {
+        for (String articleid : msvc.getMyScrap(msvc.memberInfo(member)).split(",")) {
+          Article a = asvc.oneArticle(Integer.parseInt(articleid));
+          if (a.getCompany().trim().equals(company.trim())) list.add(a);
+        }
       }
-      map.put("result", list);
+      if (start != null || end != null) {
+        list = DateUtil.getInstance().getMatchedList(list, start, end);
+      }
+
+      // 잘라서 보내준다
+      map.put("result", DateUtil.getInstance().makeInfi(page, list));
       map.put("msg", true);
     } catch (Exception e) {
       e.printStackTrace();
@@ -234,8 +252,8 @@ public class MemberController {
     HashMap<String, Object> map = new HashMap<>();
     member = msvc.memberInfo(member);
     try {
-      for(String comp : member.getCompany().split(",")){
-        map.put(comp,asvc.infi(comp));
+      for (String comp : member.getCompany().split(",")) {
+        map.put(comp, asvc.infi(comp));
       }
       map.put("msg", true);
     } catch (Exception e) {
