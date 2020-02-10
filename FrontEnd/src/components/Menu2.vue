@@ -15,8 +15,7 @@
     >
       <v-list-item>
         <v-list-item-avatar>
-          <!-- info.img를 추가 v-img에다가 "https:// /api/list-->
-          <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+          <v-img :src="`http://13.125.153.118:8999/img/profile/${userInfo.userImage}`"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-content >
@@ -30,12 +29,13 @@
       <v-divider></v-divider>
       <!-- 밑에 백엔드 연결할 것... -->
       <v-list dense >
-        <v-list-item v-for="item in info" :key="item" link @click.native="goArtCorp(item)">
+        <v-list-item v-for="item in info" :key="item" link>
           <v-list-item-avatar width="100" height="40">
             <img :src="items[item]"/>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title >{{ item }}</v-list-item-title>
+            <!-- <v-list-item-title >{{ item }}</v-list-item-title> -->
+            <router-link :to="`/articlecorpo/${item}`">{{item}}</router-link>
           </v-list-item-content>
         </v-list-item>
       </v-list>

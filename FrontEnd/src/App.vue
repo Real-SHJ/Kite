@@ -45,6 +45,17 @@ export default {
     },
     change (childOpen) {
       this.$store.commit('changeOpen', childOpen)
+    },
+    isLogin () {
+      setTimeout(() => {
+        if (this.AuthenticatedCheck) {
+          const userEmail = this.$session.get('my-info').userEmail
+          const userName = this.$session.get('my-info').userName
+          const userid = this.$session.get('my-info').userid
+          console.log(userName)
+          this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid })
+        }
+      }, 1000)
     }
   },
   computed: {
@@ -54,6 +65,11 @@ export default {
   },
   updated () {
     this.AuthenticatedCheck = this.$session.has('my-token')
+  },
+  mounted () {
+    console.log(this.AuthenticatedCheck)
+    this.AuthenticatedCheck = this.$session.has('my-token')
+    this.isLogin()
   }
 }
 

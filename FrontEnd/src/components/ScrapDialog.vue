@@ -10,8 +10,8 @@
     <v-card-text class="">이 기사를 스크랩 하시겠습니까?</v-card-text>
     <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="scrapArticle">Disagree</v-btn>
-        <v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
+        <v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
+        <v-btn color="green darken-1" text @click="scrapArticle">Agree</v-btn>
     </v-card-actions>
     </v-card>
   </v-dialog>
@@ -25,17 +25,20 @@ export default {
   },
   data () {
     return {
+      useremail: this.$session.get('my-info').userEmail,
       dialog: false
     }
   },
   methods: {
     scrapArticle () {
       this.dialog = false
+      console.log(this.useremail)
+      console.log(this.article.articleid)
       const fdata = new FormData()
-      fdata.article('memberid', 1)
-      fdata.article('articleid', this.article.articleid)
+      fdata.append('email', this.useremail)
+      fdata.append('articleid', this.article.articleid)
       http
-        .post('/member/scraparticle', fdata)
+        .post('/member/scrap', fdata)
         .then(res => {
           console.log(res)
         })

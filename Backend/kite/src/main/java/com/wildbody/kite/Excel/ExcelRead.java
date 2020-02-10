@@ -68,7 +68,12 @@ public class ExcelRead implements ApplicationRunner {
                 article.setCompany(value.trim());
                 break;
               case 2:
-                article.setPublicationDate(value);
+                article.setPublicationDate(
+                    value.substring(0, 4)
+                        + "-"
+                        + value.substring(4, 6)
+                        + "-"
+                        + value.substring(6));
                 break;
               case 3:
                 article.setNewspaper(value);
@@ -105,6 +110,6 @@ public class ExcelRead implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
-        this.execute();
+//    this.execute();
   }
 }

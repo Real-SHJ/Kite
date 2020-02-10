@@ -11,12 +11,14 @@ import Analysis from '../views/Analysis.vue'
 import WordCloud from '../components/WordCloud.vue'
 import ForceDirected from '../components/ForceDirected.vue'
 import Empty from '../views/Empty.vue'
-import following from '../views/following.vue'
 import ArticleCorpo from '../views/ArticleCor.vue'
-import follow from '../views/follow.vue'
-import MemberList from '../views/memberlist.vue'
 import SignUpTest from '../views/SignUpTest.vue'
+import Request from '../views/Request.vue'
+import Response from '../views/Response.vue'
 import FriendList from '../views/FriendList.vue'
+import AllMyArticles from '../views/AllMyArticles.vue'
+import MyArticles from '../views/MyArticles.vue'
+import InsertFriendWait from '../views/InsertFriendWait.vue'
 
 Vue.use(VueRouter)
 
@@ -59,7 +61,11 @@ const routes = [
   {
     path: '/indirepository',
     name: 'indirepository',
-    component: IndiRepository
+    component: IndiRepository,
+    children: [
+      { path: '', component: AllMyArticles },
+      { path: ':company', component: MyArticles, props: true }
+    ]
   },
 
   {
@@ -93,19 +99,24 @@ const routes = [
     component: Empty
   },
   {
-    path: '/following',
-    name: 'following',
-    component: following
+    path: '/request',
+    name: 'request',
+    component: Request
   },
   {
-    path: '/follow',
-    name: 'follow',
-    component: follow
+    path: '/response',
+    name: 'response',
+    component: Response
   },
   {
     path: '/friendlist',
     name: 'friendlist',
     component: FriendList
+  },
+  {
+    path: '/insertfriendwait',
+    name: 'insertfriendwait',
+    component: InsertFriendWait
   }
 ]
 
