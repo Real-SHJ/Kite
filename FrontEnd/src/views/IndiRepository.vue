@@ -32,7 +32,7 @@
             </v-col>
             <br>검색기간
             <v-col cols="11" sm="3">
-              <HotelDatePicker>
+              <HotelDatePicker @update="setDate">
               </HotelDatePicker>
             </v-col>
             <v-col
@@ -223,6 +223,7 @@ export default {
   },
   data () {
     return {
+        dateRange: '',
       items: [
         '최신 뉴스', '관련 뉴스'
       ],
@@ -256,23 +257,24 @@ export default {
         'LG화학': 'http://13.125.153.118:8999/img/logo/LG_Chemi.svg',
         'LG유플러스': 'http://13.125.153.118:8999/img/logo/LG_Uplus.svg',
         '우리은행': 'http://13.125.153.118:8999/img/logo/Woori_Bank.svg'
-      }
+      },
+      dateRange: ''
     }
   },
   methods: {
     wordClickHandler (name, value, vm) {
       console.log('wordClickHandler', name, value, vm)
     },
-    getArticle () {
-      http.get('article/list/')
-        .then(res => {
-          //토큰 저장
-          console.log(res.data.resvalue)
-          this.articles = res.data.resvalue
-          console.log(this.articles)
-        })
-        .catch(err => console.log(err))
-    },
+    // getArticle () {
+    //   http.get('article/list/')
+    //     .then(res => {
+    //       //토큰 저장
+    //       console.log(res.data.resvalue)
+    //       this.articles = res.data.resvalue
+    //       console.log(this.articles)
+    //     })
+    //     .catch(err => console.log(err))
+    // },
     infiniteHandler ($state) {
           const fdata = new FormData()
           const email = this.$session.get('my-info').userEmail
@@ -281,9 +283,10 @@ export default {
           const headers = {
             email: email
           }
-          console.log(`/article/infiloading/${this.page}`)
+          console.log(`/member/getscrap/${this.page}`)
           http
-            .get(`/article/infiloading/${this.page}`, { headers })
+            // .get(`/member/getscrap/${this.page}`, { headers })
+            .post(`/member/getscrap/${this.page}`, fdata)
             .then(({ data }) => {
               console.log(data.result)
               if (data.result.length) {
@@ -299,6 +302,10 @@ export default {
                 $state.complete()
               }
             })
+    },
+    setDate(newDate) {
+        this.dateRange = newDate
+        console.log(dateRange)
     }
   },
   mounted() {
