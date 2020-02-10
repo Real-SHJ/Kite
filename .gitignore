@@ -349,4 +349,7 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
+
+### ETC ###
+**/bin/**
 # End of https://www.gitignore.io/api/vue,java,vuejs,macos,maven,gradle,windows,java-web,intellij,code-java,intellij+all,intellij+iml,visualstudiocode
