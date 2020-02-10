@@ -14,7 +14,7 @@
         </div>
     </v-toolbar>
     <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg" style="height: 300px;"></v-parallax>
-    <v-toolbar v-if="offsetTop > 280" color="#FBFAF5" class="d-flex flex-row-reverse" style="position: fixed; width: 100%; top: 0px; z-index: 1;">
+    <v-toolbar v-if="offsetTop > 280" color="#FBFAF5" id="pop-up-toolbar" class="d-flex flex-row-reverse" style="">
       <v-icon @click="goHome">home</v-icon>
       <div v-if="AuthenticatedCheck">
       <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
@@ -57,4 +57,11 @@ export default {
 </script>
 
 <style>
+#pop-up-toolbar {
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  opacity: 0.8;
+  z-index: 1;
+}
 </style>

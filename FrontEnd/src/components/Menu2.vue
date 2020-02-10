@@ -29,13 +29,13 @@
       <v-divider></v-divider>
       <!-- 밑에 백엔드 연결할 것... -->
       <v-list dense >
-        <v-list-item v-for="item in info" :key="item" link>
+        <v-list-item v-for="item in info" :key="item" link @click="goArtCorp(item)">
           <v-list-item-avatar width="100" height="40">
             <img :src="items[item]"/>
           </v-list-item-avatar>
           <v-list-item-content>
-            <!-- <v-list-item-title >{{ item }}</v-list-item-title> -->
-            <router-link :to="`/articlecorpo/${item}`">{{item}}</router-link>
+            <v-list-item-title >{{ item }}</v-list-item-title>
+            <!-- <router-link :to="`/articlecorpo/${item}`">{{item}}</router-link> -->
           </v-list-item-content>
         </v-list-item>
       </v-list>

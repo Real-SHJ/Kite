@@ -106,7 +106,7 @@
         <v-flex xs12 sm4 md4>
           <v-container fluid>
             <v-card color="basil">
-              <InfiniteLoading @infinite="infiniteHandler"/>
+              <InfiniteLoading :identifier="company" @infinite="infiniteHandler"/>
               <v-tabs
                 v-model="tab"
                 background-color="transparent"
@@ -223,12 +223,14 @@ export default {
   },
   data () {
     return {
+        page: 1,
+        company: null,
         dateRange: '',
+        articles: [],
       items: [
         '최신 뉴스', '관련 뉴스'
       ],
     //   text: '뉴스뉴스뉴스뉴스뉴스뉴스',
-      articles: null,
       company_choice: ['삼성전자', 'LG전자', 'SK텔레콤', 'GS칼텍스', 'KT', '네이버', 'S-OIL', 'SK하이닉스',
                      '현대자동차', 'CJ제일제당', '국민은행', '포스코', '삼성SDS', '신한은행', '우리은행'],
       company_image: {
@@ -257,8 +259,7 @@ export default {
         'LG화학': 'http://13.125.153.118:8999/img/logo/LG_Chemi.svg',
         'LG유플러스': 'http://13.125.153.118:8999/img/logo/LG_Uplus.svg',
         '우리은행': 'http://13.125.153.118:8999/img/logo/Woori_Bank.svg'
-      },
-      dateRange: ''
+      }
     }
   },
   methods: {
@@ -279,11 +280,12 @@ export default {
           const fdata = new FormData()
           const email = this.$session.get('my-info').userEmail
           fdata.append('email', email)
-          console.log(email)
-          const headers = {
-            email: email
-          }
-          console.log(`/member/getscrap/${this.page}`)
+          fdata.append('company', this.company)
+        //   console.log(email)
+        //   const headers = {
+        //     email: email
+        //   }
+        //   console.log(`/member/getscrap/${this.page}`)
           http
             // .get(`/member/getscrap/${this.page}`, { headers })
             .post(`/member/getscrap/${this.page}`, fdata)
@@ -293,10 +295,9 @@ export default {
                 this.page += 1
                 const tempArticle = data.result
                 for (var article of tempArticle) {
-                  this.myArticles.push(article)
+                  this.articles.push(article)
                 }
-                console.log(this.myArticles)
-                this.articles = this.myArticles
+                console.log(this.articles)
                 $state.loaded()
               } else {
                 $state.complete()
@@ -306,6 +307,14 @@ export default {
     setDate(newDate) {
         this.dateRange = newDate
         console.log(dateRange)
+    }
+  },
+  watch: {
+    company: {
+      handler () {
+        this.articles = []
+        this.page = 1
+      }
     }
   },
   mounted() {
