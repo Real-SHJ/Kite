@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kite.member">
-	<delete id="delete" parameterType="Member">
+  <delete id="delete" parameterType="Member">
 		delete
 		from
 			members
 		where
 			email=#{email}
 	</delete>
-	<insert id="insert" parameterType="Member">
+  <insert id="insert" parameterType="Member">
 		insert into
 			members(email,pw,lastname,firstname,birthday,gender,area,job,company,image)
 		values
 			(#{email}, #{pw}, #{lastname}, #{firstname}, #{birthday}, #{gender}, #{area}, #{job}, #{company}, #{image})
 	</insert>
-	<select id="selectOne" parameterType="Member" resultType="Member">
+  <select id="selectOne" parameterType="Member" resultType="Member">
 		select *
 		from members
 		where email=#{email}
 	</select>
-	<select id="selectList" resultType="Member">
+  <select id="selectList" resultType="Member">
 		select *
 		from members
 	</select>
-	<select id="login" parameterType="Member" resultType="Member">
+  <select id="login" parameterType="Member" resultType="Member">
 		select *
 		from members
 		where	email=#{email} and pw=#{pw}
 	</select>
-	<select id="selectFriendList" parameterType="int" resultType="Friend">
-		select friendid from friend where memberid = #{memberid};
-	</select>
-	<update id="update" parameterType="Member">
+  <update id="update" parameterType="Member">
 		update
 		members
 		set
@@ -39,32 +37,32 @@
 		where
 		memberid=#{memberid}
 	</update>
-	<update id="scrapUpdate" parameterType="hashmap">
+  <update id="scrapUpdate" parameterType="hashmap">
 		update member_article
 		set articleid=#{articles}
 		where memberid = #{memberid}
 	</update>
-	<insert id="scrapInsert" parameterType="hashmap">
+  <insert id="scrapInsert" parameterType="hashmap">
 		insert into member_article(memberid, articleid)
 		values (#{memberid},#{articles})
 	</insert>
-	<select id="getscrap" parameterType="Member" resultType="String">
+  <select id="getscrap" parameterType="Member" resultType="String">
 		select articleid
 		from member_article
 		where memberid=#{memberid}
 	</select>
-	<select id="scrapcounter" parameterType="Member" resultType="int">
+  <select id="scrapcounter" parameterType="Member" resultType="int">
 		select count(memberid)
 		from member_article
 		where memberid=#{memberid}
 		</select>
-	<select id="selectFriendList" parameterType="int" resultType="int">
+  <select id="selectFriendList" parameterType="int" resultType="int">
 		select friendid from friend where memberid = #{memberid};
 	</select>
-	<select id="selectRequestList" parameterType="int" resultType="int">
+  <select id="selectRequestList" parameterType="int" resultType="int">
 		select responseid from friendwait where requestid = #{memberid};
 	</select>
-	<select id="selectResponseList" parameterType="int" resultType="int">
+  <select id="selectResponseList" parameterType="int" resultType="int">
 		select requestid from friendwait where responseid = #{memberid};
 	</select>
 </mapper>
