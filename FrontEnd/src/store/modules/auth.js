@@ -2,9 +2,9 @@ const isToken = () => {
   console.log('정우형')
   const storage = sessionStorage.getItem('vue-session-key')
   if (storage) {
-    const isToken = JSON.parse(storage).hasOwnProperty('my-token')
-    if (isToken) {
-      console.log('정우형')
+    const isLogin = JSON.parse(storage).hasOwnProperty('my-info')
+    if (isLogin) {
+      console.log('굿')
       return true
     }
   }

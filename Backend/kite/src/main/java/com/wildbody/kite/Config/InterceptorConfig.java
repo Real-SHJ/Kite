@@ -20,7 +20,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
     "/api/member/list",
     "/api/member/friendlist/**",
     "/api/member/requestlist/**",
-    "/api/member/responselist/**"
+    "/api/member/responselist/**",
+    "/api/member/norelationlist/**"
   };
 
   private static final String[] INCLUDE_PATH = {"/api/member/**"};

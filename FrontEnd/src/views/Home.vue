@@ -1,6 +1,7 @@
 <template>
   <v-content>
     <h1>여기는 메인 페이지입니다...</h1>
+    <!-- <Menu/> -->
     <ArticleList :articles="articles" />
     <InfiniteLoading @infinite="infiniteHandler"/>
   </v-content>
@@ -9,6 +10,7 @@
 <script>
 import http from '../http-common'
 import ArticleList from '../components/ArticleList.vue'
+// import Menu from '../components/Menu2'
 import InfiniteLoading from 'vue-infinite-loading'
 export default {
   name: 'home',
@@ -23,6 +25,7 @@ export default {
     }
   },
   components: {
+    // Menu,
     ArticleList,
     InfiniteLoading
   },
@@ -41,12 +44,13 @@ export default {
           const email = this.$session.get('my-info').userEmail
           fdata.append('email', email)
           console.log(email)
-          const headers = {
-            email: email
-          }
+          // const headers = {
+          //   email: email
+          // }
           console.log(`/article/infiloading/${this.page}`)
           http
-            .get(`/article/infiloading/${this.page}`, { headers })
+            // .get(`/article/infiloading/${this.page}`, { headers })
+            .post(`/article/infiloading/${this.page}`, fdata)
             .then(({ data }) => {
               console.log(data.result)
               if (data.result.length) {

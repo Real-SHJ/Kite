@@ -164,7 +164,10 @@ export default {
     addMem () {
       let fdata = new FormData()
       let bday = this.birthday.replace('-', '')
-      let ext = this.email + '.' + this.image[0].name.split('.')[1]
+      let ext = 'tmp.jpeg'
+      if (this.image !== null) {
+        ext = this.email + '.' + this.image[0].name.split('.')[1]
+      }
       fdata.append('memberid', this.memberid)
       fdata.append('email', this.email)
       fdata.append('pw', this.pw)

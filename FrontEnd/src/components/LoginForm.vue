@@ -89,10 +89,11 @@ export default {
                 const userEmail = res2.data.result.email
                 const userName = `${res2.data.result.lastname} ${res2.data.result.firstname}`
                 const userid = res2.data.result.memberid
+                const userImage = res2.data.result.image
                 console.log(userName)
                 console.log(res2.data.result)
-                this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid })
-                this.$session.set('my-info', { userEmail: userEmail, userName: userName, userid: userid })
+                this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid, userImage: userImage })
+                this.$session.set('my-info', { userEmail: userEmail, userName: userName, userid: userid, userImage: userImage })
               })
             // 리다이렉트
             router.push('/')
