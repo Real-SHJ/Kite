@@ -53,4 +53,5 @@ public class ArticleServiceImpl implements ArticleService {
         return repo.infi(company);
     }
 
+
 }
