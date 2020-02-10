@@ -4,6 +4,7 @@ import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.Service.ArticleService;
 import com.wildbody.kite.Service.MemberService;
+import com.wildbody.kite.Util.DateUtil;
 import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -135,10 +136,10 @@ public class ArticleController {
     Map<String, Object> map = new HashMap<String, Object>();
     try {
       map.put("result", svc.oneArticle(Integer.parseInt(articleid)));
-      map.put("msg",true);
+      map.put("msg", true);
     } catch (Exception e) {
       e.printStackTrace();
-      map.put("msg",false);
+      map.put("msg", false);
     }
     return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
   }
@@ -150,19 +151,15 @@ public class ArticleController {
     return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
   }
 
-  @GetMapping("/infiloading/{page}")
+  @PostMapping("/infiloading/{page}")
   @ApiOperation("Infinite Loading")
   public @ResponseBody ResponseEntity<Map<String, Object>> infiniteLoading(
-      @PathVariable String page, HttpServletRequest request) {
+      @PathVariable int page, Member member, Article article) {
     Map<String, Object> map = new HashMap<String, Object>();
-    String email = request.getHeader("email");
-    String company = request.getHeader("company");
-    Member member = new Member();
-    member.setEmail(email);
-    member = msvc.memberInfo(member);
     List<Article> list = new ArrayList<>();
-    int pageNum = Integer.parseInt(page);
-
+    member = msvc.memberInfo(member);
+    String company = article.getCompany();
+    System.out.println(company);
     try {
       if (company == null) {
         for (String comp : member.getCompany().split(",")) {
@@ -171,18 +168,7 @@ public class ArticleController {
       } else {
         list.addAll(svc.infi(company));
       }
-      if (pageNum == 0) {
-        map.put("result", list);
-      } else {
-        int start = (pageNum - 1) * offset;
-        int end = start + offset;
-        int size = list.size();
-        if (end > size - 1) {
-          map.put("result", list.subList(start, size - 1));
-        } else {
-          map.put("result", list.subList(start, end));
-        }
-      }
+      map.put("result", DateUtil.getInstance().makeInfi(page, list));
       map.put("msg", true);
     } catch (Exception e) {
       e.printStackTrace();
