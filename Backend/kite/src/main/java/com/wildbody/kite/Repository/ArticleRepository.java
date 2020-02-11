@@ -13,7 +13,7 @@ public interface ArticleRepository {
 
     int articleDelete(int id);
 
-    Article articleInfo(Article article);
+    Article articleInfo(int articleid);
 
     List<Article> articleList();
 

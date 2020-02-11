@@ -86,26 +86,20 @@ public class ArticleController {
     return resEntity;
   }
 
-  @GetMapping("/info")
+  @GetMapping("/info/{articleid}")
   @ApiOperation(value = "id를 받아 article 조회 서비스", response = Article.class)
-  public ResponseEntity<Map<String, Object>> infoArticle(HttpServletRequest request) {
-    ResponseEntity<Map<String, Object>> resEntity = null;
-    Map<String, Object> map = new HashMap<String, Object>();
-    String email = request.getHeader("email");
-    int pageNum = Integer.parseInt(request.getHeader("page"));
-    Member member = new Member();
-    member.setEmail(email);
-    try {
-      // 몇칸으로 자를건지를 알아내야 한다
-      // 페이지수 * 자른 칸 수 만큼 보낸다
-      int start = (pageNum - 1) * offset;
-      int end = start + offset;
-      map.put("message", "기사 조회 성공");
-      map.put("article", msvc.memberInfo(member).getArticleList().subList(start, end));
-    } catch (RuntimeException e) {
-      map.put("message", "기사 조회 실패");
-    }
-    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+  public ResponseEntity<Map<String, Object>> infoArticle(@PathVariable("articleid") String articleid) {
+	  ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			map.put("message", "기사 조회 성공");
+			Article article = svc.articleInfo(Integer.parseInt(articleid));
+			map.put("article", article);
+		} catch (RuntimeException e) {
+			map.put("message", "기사 조회 실패");
+		}
+		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		return resEntity;
   }
 
   @GetMapping("/list")
