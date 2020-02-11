@@ -1,35 +1,18 @@
 <template>
-    <v-content>
-      <v-card max-width="500" class="mx-auto">
-        <v-toolbar color="indigo" dark>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-        <v-toolbar-title>friend</v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <v-btn icon>
-            <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-btn icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-        </v-toolbar>
-        <v-list>
-            <v-list-item  v-for="(item, i) in flist" :key="i">
-                <v-list-item-avatar>
-                    <img v-if="item.image === 'null'" src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"/>
-                    <v-img v-else :src="`http://13.125.153.118:8999/img/profile/${item.image}`"></v-img>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                    <v-list-item-title v-text="item.lastname + ' ' + item.firstname"></v-list-item-title>
-                </v-list-item-content>
-                <v-btn class="ma-2" small outlined color="green">친구</v-btn>
-                <v-btn class="ma-2" small outlined color="red" @click="insertfriend(item.memberid)">친구 제거</v-btn>
-            </v-list-item>
-        </v-list>
-    </v-card>
+  <v-content>
+    <v-list>
+        <v-list-item  v-for="(item, i) in flist" :key="i">
+            <v-list-item-avatar>
+                <img v-if="item.image === 'null'" src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"/>
+                <v-img v-else :src="`http://13.125.153.118:8999/img/profile/${item.image}`"></v-img>
+            </v-list-item-avatar>
+            <v-list-item-content>
+                <v-list-item-title v-text="item.lastname + ' ' + item.firstname"></v-list-item-title>
+            </v-list-item-content>
+            <v-btn class="ma-2" small outlined color="green">친구</v-btn>
+            <v-btn class="ma-2" small outlined color="red" @click="deletefriend(item.memberid)">친구 제거</v-btn>
+        </v-list-item>
+    </v-list>
   </v-content>
 </template>
 
@@ -45,9 +28,9 @@ export default {
     }
   },
   methods: {
-    insertfriend: function (friendid) {
+    deletefriend: function (friendid) {
       http
-        .post('/member/insertfriend' + '/' + this.memberid + '/' + friendid)
+        .post('/member/deletefriend' + '/' + this.memberid + '/' + friendid)
         .then(
           response => {
             console.log(response.data.message)
@@ -55,7 +38,7 @@ export default {
         )
         .catch(err => console.log(err))
         .finally(
-          router.push('/friendlist')
+          router.push('/friend')
         )
     },
     getFriendList () {

@@ -93,9 +93,7 @@ public class MemberRepositoryImpl implements MemberRepository {
 		Map<String, Object> map = new HashMap<>();
 		map.put("requestid", requestid);
 		map.put("responseid", responseid);
-		int insert =  session.insert("kite.member.insertFriendWait", map);
-		System.out.println(insert);
-		return insert;
+		return session.insert("kite.member.insertFriendWait", map);
 	}
 
 	@Override
@@ -108,10 +106,17 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public int friendInsert(int memberid, int friendid) {
+		System.out.println("repo test: mid:" + memberid + ",fid:"+friendid);
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberid", memberid);
 		map.put("friendid", friendid);
-		return session.insert("kite.member.insertFriend", map);
+		int insert =  session.insert("kite.member.insertFriend", map);
+		map = new HashMap<>();
+		map.put("memberid", friendid);
+		map.put("friendid", memberid);
+		insert +=  session.insert("kite.member.insertFriend", map);
+		System.out.println("repo test:" + insert);
+		return insert;
 	}
 
 	@Override

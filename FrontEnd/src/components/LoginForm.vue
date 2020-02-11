@@ -89,7 +89,7 @@ export default {
                 const userEmail = res2.data.result.email
                 const userName = `${res2.data.result.lastname} ${res2.data.result.firstname}`
                 const userid = res2.data.result.memberid
-                const userImage = res2.data.result.image
+                const userImage = 'http://13.125.153.118:8999/img/profile/' + res2.data.result.image
                 console.log(userName)
                 console.log(res2.data.result)
                 this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid, userImage: userImage })

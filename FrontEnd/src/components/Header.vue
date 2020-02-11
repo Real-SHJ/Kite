@@ -4,7 +4,8 @@
         <v-icon @click="goHome">home</v-icon>
         <div v-if="AuthenticatedCheck">
         <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
-        <router-link class="black--text" to="/analysis">Analysis</router-link>
+        <router-link class="black--text" to="/analysis">Analysis</router-link> |
+        <router-link class="black--text" to="/friend">친구관리</router-link>
           <p @click="logout">Sign out</p>
         </div>
         <div v-else>
@@ -18,7 +19,8 @@
       <v-icon @click="goHome">home</v-icon>
       <div v-if="AuthenticatedCheck">
       <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
-      <router-link class="black--text" to="/analysis">Analysis</router-link>
+      <router-link class="black--text" to="/analysis">Analysis</router-link> |
+      <router-link class="black--text" to="/friend">친구관리</router-link>
         <p @click="logout">Sign out</p>
       </div>
       <div v-else>

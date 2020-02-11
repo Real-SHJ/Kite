@@ -105,8 +105,7 @@
 		requestid = #{requestid} and responseid = #{responseid};
 	</delete>
 	<insert id="insertFriend" parameterType="hashmap">
-		insert into friend (memberid, friendid) values(#{memberid},#{friendid});
-		insert into friend (memberid, friendid) values(#{friendid},#{memberid});
+		insert into friend(memberid, friendid) values(#{memberid},#{friendid});
 	</insert>
 	<delete id="deleteFriend" parameterType="hashmap">
 		delete from friend where
