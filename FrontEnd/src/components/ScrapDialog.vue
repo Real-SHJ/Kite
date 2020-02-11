@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="dialog" max-width="290">
     <template v-slot:activator="{ on }">
-    <v-btn class="mx-4" color="primary" icon dark v-on="on">
-        <v-icon size="24px">fas fa-cut</v-icon>
+    <v-btn rounded class="mx-4" color="primary" v-on="on">
+        <v-icon size="20px">fas fa-cut</v-icon>
     </v-btn>
     </template>
     <v-card>

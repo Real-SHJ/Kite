@@ -1,5 +1,55 @@
 <template>
   <v-container class="px-2">
+    <!-- <v-carousel hide-delimiters>
+      <div
+        v-for="(article,i) in articles"
+        :key="i"
+      >
+        <v-carousel-item>
+          <v-row>
+            <v-col class="p-0">
+              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
+            </v-col>
+            <v-col class="p-0">
+              <v-row class="p-0">
+                <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
+              </v-row>
+              <v-row class="p-0">
+                <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-carousel-item>
+        <v-carousel-item>
+          <v-row style="height: 50%">
+            <v-col class="p-0">
+              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
+            </v-col>
+          </v-row>
+          <v-row class="p-0">
+            <v-col class="p-0">
+                <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
+            </v-col>
+            <v-col class="p-0">
+              <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
+            </v-col>
+          </v-row>
+        </v-carousel-item>
+        <v-carousel-item>
+          <v-row style="height: 100%;">
+            <v-col cols="4" class="p-0">
+              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
+            </v-col>
+            <v-col cols="4" class="p-0">
+              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
+            </v-col>
+            <v-col cols="4" class="p-0">
+              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
+            </v-col>
+          </v-row>
+        </v-carousel-item>
+      </div>
+    </v-carousel> -->
     <v-card
       v-for="article in articles" :key="article.id"
       class="article-cards mx-auto my-10"
@@ -10,13 +60,13 @@
         <v-img
           class="white--text align-end"
           height="400px"
-          src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+          :src="`${article.url}`"
+          style="opacity: 0.7;"
         >
           <v-avatar
             class="companyLogo"
             color="grey"
             size="100"
-            tile
           >
             <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
           </v-avatar>
@@ -41,15 +91,15 @@
 
 <script>
 // import http from '../http-common'
-import ScrapDialog from '../components/ScrapDialog.vue'
-import ShareDialog from '../components/ShareDialog.vue'
+// import ScrapDialog from '../components/ScrapDialog.vue'
+// import ShareDialog from '../components/ShareDialog.vue'
 export default {
   props: {
     articles: Array
   },
   components: {
-    ScrapDialog,
-    ShareDialog
+    // ScrapDialog,
+    // ShareDialog
   },
   data () {
     return {

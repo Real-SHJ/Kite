@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire" style="background-color: #F6F8FA">
+  <v-app id="inspire" style="background-color: #FAFAFA">
     <v-content v-if="getOpen === false">
       <Opening @changeOpen="change"/>
     </v-content>
