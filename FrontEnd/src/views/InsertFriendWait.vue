@@ -1,34 +1,17 @@
 <template>
-    <v-content>
-      <v-card max-width="500" class="mx-auto">
-        <v-toolbar color="indigo" dark>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-        <v-toolbar-title>insertfriendwait</v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <v-btn icon>
-            <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-btn icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-        </v-toolbar>
-        <v-list>
-            <v-list-item  v-for="(item, i) in nrlist" :key="i">
-                <v-list-item-avatar>
-                    <img v-if="item.image === 'null'" src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"/>
-                    <v-img v-else :src="`http://13.125.153.118:8999/img/profile/${item.image}`"></v-img>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                    <v-list-item-title v-text="item.lastname + ' ' + item.firstname"></v-list-item-title>
-                </v-list-item-content>
-                <v-btn class="ma-2" small outlined color="indigo" @click="insertfriendwait(item.memberid)">친구 요청</v-btn>
-            </v-list-item>
-        </v-list>
-    </v-card>
+  <v-content>
+    <v-list>
+        <v-list-item  v-for="(item, i) in nrlist" :key="i">
+            <v-list-item-avatar>
+                <img v-if="item.image === 'null'" src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"/>
+                <v-img v-else :src="`http://13.125.153.118:8999/img/profile/${item.image}`"></v-img>
+            </v-list-item-avatar>
+            <v-list-item-content>
+                <v-list-item-title v-text="item.lastname + ' ' + item.firstname"></v-list-item-title>
+            </v-list-item-content>
+            <v-btn class="ma-2" small outlined color="indigo" @click="insertfriendwait(item.memberid)">친구 요청</v-btn>
+        </v-list-item>
+    </v-list>
   </v-content>
 </template>
 
@@ -55,7 +38,7 @@ export default {
         )
         .catch(err => console.log(err))
         .finally(
-          router.push('/insertfriendwait')
+          router.push('/friend')
         )
     },
     getFriendList () {

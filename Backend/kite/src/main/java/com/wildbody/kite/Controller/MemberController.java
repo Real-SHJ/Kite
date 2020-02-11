@@ -368,7 +368,7 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<>();
 		try {
-			System.out.println("memberid:"+memberid+",friendid:"+friendid);
+			System.out.println("친구등록: memberid:"+memberid+",friendid:"+friendid);
 			int insert = msvc.friendInsert(Integer.parseInt(memberid), Integer.parseInt(friendid));
 			System.out.println(insert);
 			map.put("message", "친구 등록 성공");

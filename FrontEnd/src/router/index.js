@@ -19,6 +19,7 @@ import FriendList from '../views/FriendList.vue'
 import AllMyArticles from '../views/AllMyArticles.vue'
 import MyArticles from '../views/MyArticles.vue'
 import InsertFriendWait from '../views/InsertFriendWait.vue'
+import Friend from '../views/Friend.vue'
 
 Vue.use(VueRouter)
 
@@ -117,6 +118,11 @@ const routes = [
     path: '/insertfriendwait',
     name: 'insertfriendwait',
     component: InsertFriendWait
+  },
+  {
+    path: '/friend',
+    name: 'friend',
+    component: Friend
   }
 ]
 
