@@ -1,7 +1,7 @@
 <template>
   <v-content>
-    <h1>여기는 메인 페이지입니다...</h1>
     <!-- <Menu/> -->
+    <MainPageHeader/>
     <ArticleList :articles="articles" />
     <!-- <InfiniteLoading @infinite="infiniteHandler"/> -->
   </v-content>
@@ -10,6 +10,7 @@
 <script>
 import http from '../http-common'
 import ArticleList from '../components/ArticleList.vue'
+import MainPageHeader from '../components/MainPageHeader.vue'
 // import Menu from '../components/Menu2'
 // import InfiniteLoading from 'vue-infinite-loading'
 export default {
@@ -26,6 +27,7 @@ export default {
   },
   components: {
     // Menu,
+    MainPageHeader,
     ArticleList
     // InfiniteLoading
   },

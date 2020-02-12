@@ -61,7 +61,6 @@
           class="white--text align-end"
           height="400px"
           :src="`${article.url}`"
-          style="opacity: 0.7;"
         >
           <v-avatar
             class="companyLogo"
@@ -83,30 +82,40 @@
       </div>
       <v-card-actions class="d-flex justify-end">
         <ScrapDialog :article="article"/>
-        <ShareDialog :article="article"/>
+        <ShareDialog :article="article" :myFriends="myFriends"/>
       </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
 <script>
-// import http from '../http-common'
-// import ScrapDialog from '../components/ScrapDialog.vue'
-// import ShareDialog from '../components/ShareDialog.vue'
+import http from '../http-common'
+import ScrapDialog from '../components/ScrapDialog.vue'
+import ShareDialog from '../components/ShareDialog.vue'
 export default {
   props: {
     articles: Array
   },
   components: {
-    // ScrapDialog,
-    // ShareDialog
+    ScrapDialog,
+    ShareDialog
   },
   data () {
     return {
-      test: [1, 2, 3]
+      myId: this.$session.get('my-info').userid,
+      test: [1, 2, 3],
+      myFriends: []
     }
   },
   methods: {
+    getMyFriends () {
+      http
+        .get(`/member/friendlist/${this.myId}`)
+        .then((res) => {
+          this.myFriends = res.data.flist
+          // console.log(this.myFriends)
+        })
+    },
     goDetail (article) {
       this.$router.push({ path: `/articleDetail/${article.articleid}` })
     }
@@ -123,6 +132,7 @@ export default {
   },
   mounted () {
     // this.getArticle()
+    this.getMyFriends()
   }
 }
 

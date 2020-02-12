@@ -11,20 +11,20 @@
     >
       <v-list>
         <v-list-item
-          v-for="item in items"
-          :key="item.title"
+          v-for="friend in myFriends"
+          :key="friend.id"
           @click="shareArticle"
         >
           <v-list-item-icon>
-          <v-icon v-if="item.icon" color="pink">mdi-star</v-icon>
+          <v-icon color="pink">mdi-star</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-          <v-list-item-title v-text="item.title"></v-list-item-title>
+          <v-list-item-title v-text="friend.email"></v-list-item-title>
           </v-list-item-content>
 
           <v-list-item-avatar>
-          <v-img :src="item.avatar"></v-img>
+          <v-img :src="friend.image"></v-img>
           </v-list-item-avatar>
         </v-list-item>
       </v-list>
@@ -36,7 +36,8 @@
 // import http from '../http-common'
 export default {
   props: {
-    article: Object
+    article: Object,
+    myFriends: Array
   },
   data () {
     return {
@@ -53,6 +54,8 @@ export default {
     shareArticle () {
       console.log('공유하겠습니다.')
     }
+  },
+  mounted () {
   }
 }
 </script>
