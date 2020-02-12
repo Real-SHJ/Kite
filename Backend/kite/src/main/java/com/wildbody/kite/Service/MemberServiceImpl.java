@@ -106,4 +106,9 @@ public class MemberServiceImpl implements MemberService {
 	public int friendDelete(int memberid, int friendid) {
 		return repo.friendDelete(memberid, friendid);
 	}
+
+	@Override
+	public int updateCompany(int memberid, String companylist) {
+		return repo.updateCompany(memberid,companylist);
+	}
 }

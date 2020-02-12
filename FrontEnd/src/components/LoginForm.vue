@@ -80,23 +80,24 @@ export default {
           .then(res => {
             // 토큰 저장
             const token = res.data.access_token
-            console.log(token)
             this.$session.set('my-token', token)
             this.$store.dispatch('login', token)
             console.log('로그인 성공!!')
+            let companylist = ''
             http.post('/member/info', fdata)
               .then(res2 => {
                 const userEmail = res2.data.result.email
                 const userName = `${res2.data.result.lastname} ${res2.data.result.firstname}`
                 const userid = res2.data.result.memberid
                 const userImage = 'http://13.125.153.118:8999/img/profile/' + res2.data.result.image
+                companylist = res2.data.result.company
                 console.log(userName)
-                console.log(res2.data.result)
+                console.log('회사목록:' + companylist)
                 this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid, userImage: userImage })
                 this.$session.set('my-info', { userEmail: userEmail, userName: userName, userid: userid, userImage: userImage })
               })
             // 리다이렉트
-            router.push('/')
+            if (companylist === null || companylist === '') { router.push('/selectcompany') } else { router.push('/') }
           })
           .catch(err => console.log(err))
       }

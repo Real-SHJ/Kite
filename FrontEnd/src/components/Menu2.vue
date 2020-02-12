@@ -15,7 +15,7 @@
     >
       <v-list-item>
         <v-list-item-avatar>
-          <v-img :src="`http://13.125.153.118:8999/img/profile/${userInfo.userImage}`"></v-img>
+          <v-img :src="`http://13.125.153.118:8999/img/profile/${userInfo.userEmail}.jpg`"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-content >
@@ -99,6 +99,7 @@ export default {
       fdata.append('email', this.userInfo.userEmail)
       fdata.append('pw', this.userInfo.userPw)
       console.log(this.userInfo.userEmail)
+      console.log(this.userInfo.userImage)
       http
         .post('/member/info', fdata) // 회원 아이디 넣기
         .then(response => {

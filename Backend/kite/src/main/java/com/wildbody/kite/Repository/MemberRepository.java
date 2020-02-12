@@ -38,4 +38,6 @@ public interface MemberRepository {
 	public int friendInsert(int memberid, int friendid);
 	
 	public int friendDelete(int memberid, int friendid);
+
+	public int updateCompany(int memberid, String companylist);
 }

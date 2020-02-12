@@ -113,7 +113,9 @@
 		delete from friend where
 		memberid = #{friendid} and friendid = #{memberid};
 	</delete>
-
+	<update id="updateCompany" parameterType="hashmap">
+		update members set company=#{companylist} where memberid=#{memberid};
+	</update>
 
 
 

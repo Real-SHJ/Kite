@@ -127,4 +127,13 @@ public class MemberRepositoryImpl implements MemberRepository {
 		return session.delete("kite.member.deleteFriend", map);
 	}
 
+	@Override
+	public int updateCompany(int memberid, String companylist) {
+		System.out.println("repo"+memberid + "," + companylist);
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberid", memberid);
+		map.put("companylist", companylist);
+		return session.update("kite.member.updateCompany", map);
+	}
+
 }
