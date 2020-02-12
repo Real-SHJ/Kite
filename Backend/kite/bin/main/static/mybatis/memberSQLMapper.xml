@@ -113,6 +113,14 @@
 		delete from friend where
 		memberid = #{friendid} and friendid = #{memberid};
 	</delete>
+	
+	<insert id="insertMessage" parameterType="Message">
+		insert into
+		message(sendid,receiveid,contents,articleid)
+		values
+		(#{sendid}, #{receiveid}, #{contents}, #{articleid})
+	</insert>
+
 	<update id="updateCompany" parameterType="hashmap">
 		update members set company=#{companylist} where memberid=#{memberid};
 	</update>

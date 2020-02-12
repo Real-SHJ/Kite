@@ -45,6 +45,7 @@ export default {
         .then((res) => {
           console.log(res)
           this.articles = res.data.resvalue
+          console.log(this.articles)
         })
     }
     // infiniteHandler ($state) {

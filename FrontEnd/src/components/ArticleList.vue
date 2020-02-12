@@ -60,14 +60,16 @@
         <v-img
           class="white--text align-end"
           height="400px"
+          :src="`${article.image}`"
+          style="opacity: 0.7;"
           :src="`${article.url}`"
         >
           <v-avatar
             class="companyLogo"
-            color="grey"
+            color="white"
             size="100"
           >
-            <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+            <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
           </v-avatar>
         </v-img>
         <v-card-title>{{article.title}}</v-card-title>

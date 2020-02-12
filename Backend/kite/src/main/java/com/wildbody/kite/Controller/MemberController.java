@@ -2,6 +2,7 @@ package com.wildbody.kite.Controller;
 
 import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
+import com.wildbody.kite.DTO.Message;
 import com.wildbody.kite.DTO.NaverMember;
 import com.wildbody.kite.DTO.Token;
 import com.wildbody.kite.JWT.JwtService;
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/api/member")
@@ -418,6 +421,25 @@ public class MemberController {
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
 	}
+
+	// ----------------아이디 2개를 받아 내 친구와 메세지 전송----------------
+	@PostMapping("/sendmessage")
+	@ApiOperation(value="친구 메시지 보내기")
+	public @ResponseBody ResponseEntity<Map<String, Object>> sendmessage(Message m){
+		ResponseEntity<Map<String, Object>> resEntity=null;
+		Map<String, Object> map=new HashMap<>();
+		try{
+			System.out.println("내ID: "+m.getSendID()+"친구ID: "+m.getReceiveID()+"기사ID: "+m.getArticleID());
+			int insert= msvc.messageInsert(m);
+			System.out.println(insert);
+			map.put("message", "메세지 저장 성공");
+		}catch(RuntimeException e) {
+			map.put("message", "메세지 저장 실패")
+		}
+		resEntity=new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
+		return resEntity;
+	}
+
 
 	@PutMapping("/updatecompany/{memberid}/{companylist}")
 	@ApiOperation(value = "관심 기업 수정 서비스")

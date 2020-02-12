@@ -15,5 +15,5 @@ public class Article {
     private String image;
     private String content;
     private String keyword;
-
+    private String logo;
 }
