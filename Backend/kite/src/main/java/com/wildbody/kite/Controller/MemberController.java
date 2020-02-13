@@ -2,8 +2,6 @@ package com.wildbody.kite.Controller;
 
 import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
-import com.wildbody.kite.DTO.Message;
-import com.wildbody.kite.DTO.NaverMember;
 import com.wildbody.kite.DTO.Token;
 import com.wildbody.kite.JWT.JwtService;
 import com.wildbody.kite.Service.ArticleService;
@@ -28,7 +26,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -214,7 +211,7 @@ public class MemberController {
 			} else {
 				for (String articleid : msvc.getMyScrap(msvc.memberInfo(member)).split(",")) {
 					Article a = asvc.oneArticle(Integer.parseInt(articleid));
-					if (a.getCompany().trim().equals(company.trim()))
+					if (a.getCompany().equals(company))
 						list.add(a);
 				}
 			}

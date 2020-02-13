@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +25,61 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/article")
 public class ArticleController {
-  static final String imgUrl="http://13.125.153.118:8999/img";
-  static Map<String,String> background_img=new HashMap<>();
-  static Map<String,String> logo_img=new HashMap<>();
-  static final int offset = 5;
+  static final String imgUrl = "http://13.125.153.118:8999/img";
+  static Map<String, String> background_img = new HashMap<>();
+  static Map<String, String> logo_img = new HashMap<>();
   @Autowired private ArticleService svc;
   @Autowired private MemberService msvc;
+
+  public ArticleController() {
+    input_img();
+    input_logo();
+  }
+
+  public static void input_logo() {
+    logo_img.put("삼성전자", "/logo/Samsung_Elec.svg");
+    logo_img.put("LG전자", "/logo/LG_Elec.svg");
+    logo_img.put("SK텔레콤", "/logo/SK_Telecom.svg");
+    logo_img.put("GS칼텍스", "/logo/GS_Caltex.svg");
+    logo_img.put("KT", "/logo/KT.svg");
+    logo_img.put("네이버", "/logo/Naver.svg");
+    logo_img.put("S-OIL", "/logo/S-Oil.svg");
+    logo_img.put("SK하이닉스", "/logo/SK_Hynix.svg");
+    logo_img.put("현대자동차", "/logo/Hyundai_Car.svg");
+    logo_img.put("CJ제일제당", "/logo/CJ_Cheiljedang.svg");
+    logo_img.put("국민은행", "/logo/KB_Bank.svg");
+    logo_img.put("포스코", "/logo/Posco.svg");
+    logo_img.put("삼성SDS", "/logo/Samsung_SDS.svg");
+    logo_img.put("신한은행", "/logo/Shinhan_Bank.svg");
+    logo_img.put("쿠팡", "/logo/Coupang.svg");
+    logo_img.put("하나은행", "/logo/Hana_Bank.svg");
+    logo_img.put("현대모비스", "/logo/Hyundai_Mobis.svg");
+    logo_img.put("IBK기업은행", "/logo/IBK_Bank.svg");
+    logo_img.put("카카오", "/logo/Kakao.svg");
+    logo_img.put("한국전력공사", "/logo/Korea_Elec.svg");
+    logo_img.put("LG화학", "/logo/LG_Chemi.svg");
+    logo_img.put("LG유플러스", "/logo/LG_Uplus.svg");
+    logo_img.put("우리은행", "/logo/Woori_Bank.svg");
+  }
+
+  public static void input_img() {
+    background_img.put("삼성전자", "/tmp/samsung.jpg");
+    background_img.put("LG전자", "/tmp/lg.jpg");
+    background_img.put("SK텔레콤", "/tmp/sk.jpg");
+    background_img.put("GS칼텍스", "/tmp/gs.jpg");
+    background_img.put("KT", "/tmp/kt.jpg");
+    background_img.put("네이버", "/tmp/naver.jpg");
+    background_img.put("S-OIL", "/tmp/soil.jpg");
+    background_img.put("SK하이닉스", "/tmp/sk.jpg");
+    background_img.put("현대자동차", "/tmp/Hyundai.jpg");
+    background_img.put("CJ제일제당", "/tmp/cj.jpg");
+    background_img.put("포스코", "/tmp/posco.jpg");
+    background_img.put("삼성SDS", "/samsung.jpg");
+    background_img.put("현대모비스", "/tmp/Hyundai.jpg");
+    background_img.put("카카오", "/tmp/kakao.jpg");
+    background_img.put("LG화학", "/tmp/lg.jpg");
+    background_img.put("LG유플러스", "/tmp/lg.jpg");
+  }
 
   @PostMapping("/regist")
   @ApiOperation(value = "article 등록 서비스")
@@ -90,35 +138,38 @@ public class ArticleController {
 
   @GetMapping("/info/{articleid}")
   @ApiOperation(value = "id를 받아 article 조회 서비스", response = Article.class)
-  public ResponseEntity<Map<String, Object>> infoArticle(@PathVariable("articleid") String articleid) {
-	  ResponseEntity<Map<String, Object>> resEntity = null;
-		Map<String, Object> map = new HashMap<String, Object>();
-		try {
-			map.put("message", "기사 조회 성공");
-			Article article = svc.articleInfo(Integer.parseInt(articleid));
-			map.put("article", article);
-		} catch (RuntimeException e) {
-			map.put("message", "기사 조회 실패");
-		}
-		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		return resEntity;
+  public ResponseEntity<Map<String, Object>> infoArticle(
+      @PathVariable("articleid") String articleid) {
+    ResponseEntity<Map<String, Object>> resEntity = null;
+    Map<String, Object> map = new HashMap<String, Object>();
+    try {
+      map.put("message", "기사 조회 성공");
+      Article article = svc.articleInfo(Integer.parseInt(articleid));
+      map.put("article", article);
+    } catch (RuntimeException e) {
+      map.put("message", "기사 조회 실패");
+    }
+    resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+    return resEntity;
   }
+
+  //  companyArticle : 기업의 기사만 출력
 
   @GetMapping("/list")
   @ApiOperation("기사 목록 조회 서비스")
   public @ResponseBody ResponseEntity<Map<String, Object>> listArticle() {
-    //------------------------------------------
-    
+    // ------------------------------------------
+
     ResponseEntity<Map<String, Object>> resEntity = null;
     List<Article> list = null;
     Map<String, Object> map = new HashMap<String, Object>();
     try {
-      list=svc.articleList();
-      for(Article ar:list){
-        if(background_img.containsKey(ar.getCompany())){
-          ar.setImage(imgUrl+background_img.get(ar.getCompany()));
-          ar.setLogo(imgUrl+logo_img.get(ar.getCompany()));
-          System.out.println(imgUrl+background_img.get(ar.getCompany()));
+      list = svc.articleList();
+      for (Article ar : list) {
+        if (background_img.containsKey(ar.getCompany())) {
+          ar.setImage(imgUrl + background_img.get(ar.getCompany()));
+          ar.setLogo(imgUrl + logo_img.get(ar.getCompany()));
+          System.out.println(imgUrl + background_img.get(ar.getCompany()));
         }
       }
       map.put("message", "기사 목록 조회 성공");
@@ -150,8 +201,6 @@ public class ArticleController {
     return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
   }
 
-  //  companyArticle : 기업의 기사만 출력
-
   public ResponseEntity<Map<String, Object>> companyArticle() {
     Map<String, Object> map = new HashMap<String, Object>();
     return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
@@ -182,54 +231,5 @@ public class ArticleController {
       map.put("msg", false);
     }
     return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-  }
-
-  public ArticleController(){
-    input_img();
-    input_logo();
-  }
-  public static void input_logo(){
-    logo_img.put("삼성전자", "/logo/Samsung_Elec.svg");
-    logo_img.put("LG전자", "/logo/LG_Elec.svg");
-    logo_img.put("SK텔레콤", "/logo/SK_Telecom.svg");
-    logo_img.put("GS칼텍스", "/logo/GS_Caltex.svg");
-    logo_img.put("KT", "/logo/KT.svg");
-    logo_img.put("네이버", "/logo/Naver.svg");
-    logo_img.put("S-OIL", "/logo/S-Oil.svg");
-    logo_img.put("SK하이닉스", "/logo/SK_Hynix.svg");
-    logo_img.put("현대자동차", "/logo/Hyundai_Car.svg");
-    logo_img.put("CJ제일제당", "/logo/CJ_Cheiljedang.svg");
-    logo_img.put("국민은행", "/logo/KB_Bank.svg");
-    logo_img.put("포스코", "/logo/Posco.svg");
-    logo_img.put("삼성SDS", "/logo/Samsung_SDS.svg");
-    logo_img.put("신한은행", "/logo/Shinhan_Bank.svg");
-    logo_img.put("쿠팡", "/logo/Coupang.svg");
-    logo_img.put("하나은행", "/logo/Hana_Bank.svg");
-    logo_img.put("현대모비스", "/logo/Hyundai_Mobis.svg");
-    logo_img.put("IBK기업은행", "/logo/IBK_Bank.svg");
-    logo_img.put("현대모비스", "/logo/Hyundai_Mobis.svg");
-    logo_img.put("카카오", "/logo/Kakao.svg");
-    logo_img.put("한국전력공사", "/logo/Korea_Elec.svg");
-    logo_img.put("LG화학", "/logo/LG_Chemi.svg");
-    logo_img.put("LG유플러스", "/logo/LG_Uplus.svg");
-    logo_img.put("우리은행", "/logo/Woori_Bank.svg");
-  }
-  public static void input_img(){
-    background_img.put("삼성전자", "/tmp/samsung.jpg");
-    background_img.put("LG전자", "/tmp/lg.jpg");
-    background_img.put("SK텔레콤", "/tmp/sk.jpg");
-    background_img.put("GS칼텍스", "/tmp/gs.jpg");
-    background_img.put("KT", "/tmp/kt.jpg");
-    background_img.put("네이버", "/tmp/naver.jpg");
-    background_img.put("S-OIL", "/tmp/soil.jpg");
-    background_img.put("SK하이닉스", "/tmp/sk.jpg");
-    background_img.put("현대자동차", "/tmp/Hyundai.jpg");
-    background_img.put("CJ제일제당", "/tmp/cj.jpg");
-    background_img.put("포스코", "/tmp/posco.jpg");
-    background_img.put("삼성SDS", "/samsung.jpg");
-    background_img.put("현대모비스", "/tmp/Hyundai.jpg");
-    background_img.put("카카오", "/tmp/kakao.jpg");
-    background_img.put("LG화학", "/tmp/lg.jpg");
-    background_img.put("LG유플러스", "/tmp/lg.jpg");
   }
 }
