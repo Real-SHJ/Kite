@@ -60,8 +60,6 @@
         <v-img
           class="white--text align-end"
           height="400px"
-          :src="`${article.image}`"
-          style="opacity: 0.7;"
           :src="`${article.url}`"
         >
           <v-avatar
