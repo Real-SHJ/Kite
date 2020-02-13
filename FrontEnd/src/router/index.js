@@ -20,6 +20,7 @@ import AllMyArticles from '../views/AllMyArticles.vue'
 import MyArticles from '../views/MyArticles.vue'
 import InsertFriendWait from '../views/InsertFriendWait.vue'
 import Friend from '../views/Friend.vue'
+import Test from '../views/Test.vue'
 
 Vue.use(VueRouter)
 
@@ -123,6 +124,11 @@ const routes = [
     path: '/friend',
     name: 'friend',
     component: Friend
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: Test
   }
 ]
 

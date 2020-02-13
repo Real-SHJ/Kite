@@ -1,5 +1,55 @@
 <template>
   <v-container class="px-2">
+    <!-- <v-carousel hide-delimiters>
+      <div
+        v-for="(article,i) in articles"
+        :key="i"
+      >
+        <v-carousel-item>
+          <v-row>
+            <v-col class="p-0">
+              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
+            </v-col>
+            <v-col class="p-0">
+              <v-row class="p-0">
+                <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
+              </v-row>
+              <v-row class="p-0">
+                <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-carousel-item>
+        <v-carousel-item>
+          <v-row style="height: 50%">
+            <v-col class="p-0">
+              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
+            </v-col>
+          </v-row>
+          <v-row class="p-0">
+            <v-col class="p-0">
+                <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
+            </v-col>
+            <v-col class="p-0">
+              <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
+            </v-col>
+          </v-row>
+        </v-carousel-item>
+        <v-carousel-item>
+          <v-row style="height: 100%;">
+            <v-col cols="4" class="p-0">
+              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
+            </v-col>
+            <v-col cols="4" class="p-0">
+              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
+            </v-col>
+            <v-col cols="4" class="p-0">
+              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
+            </v-col>
+          </v-row>
+        </v-carousel-item>
+      </div>
+    </v-carousel> -->
     <v-card
       v-for="article in articles" :key="article.id"
       class="article-cards mx-auto my-10"
@@ -10,15 +60,14 @@
         <v-img
           class="white--text align-end"
           height="400px"
-          src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+          :src="`${article.url}`"
         >
           <v-avatar
             class="companyLogo"
-            color="grey"
+            color="white"
             size="100"
-            tile
           >
-            <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+            <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
           </v-avatar>
         </v-img>
         <v-card-title>{{article.title}}</v-card-title>
@@ -33,14 +82,14 @@
       </div>
       <v-card-actions class="d-flex justify-end">
         <ScrapDialog :article="article"/>
-        <ShareDialog :article="article"/>
+        <ShareDialog :article="article" :myFriends="myFriends"/>
       </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
 <script>
-// import http from '../http-common'
+import http from '../http-common'
 import ScrapDialog from '../components/ScrapDialog.vue'
 import ShareDialog from '../components/ShareDialog.vue'
 export default {
@@ -53,10 +102,20 @@ export default {
   },
   data () {
     return {
-      test: [1, 2, 3]
+      myId: this.$session.get('my-info').userid,
+      test: [1, 2, 3],
+      myFriends: []
     }
   },
   methods: {
+    getMyFriends () {
+      http
+        .get(`/member/friendlist/${this.myId}`)
+        .then((res) => {
+          this.myFriends = res.data.flist
+          // console.log(this.myFriends)
+        })
+    },
     goDetail (article) {
       this.$router.push({ path: `/articleDetail/${article.articleid}` })
     }
@@ -73,6 +132,7 @@ export default {
   },
   mounted () {
     // this.getArticle()
+    this.getMyFriends()
   }
 }
 

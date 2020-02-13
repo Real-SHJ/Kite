@@ -1,6 +1,6 @@
 <template>
 <v-content>
-    <!-- <InfiniteLoading @infinite="infiniteHandler"/> -->
+    <InfiniteLoading @infinite="infiniteHandler"/>
     <v-layout justify-center row wrap>
         <v-flex xs11 style="text-align: right;">
             <h1 class="display-2 font-weight-thin mb=3"> Friends Search </h1>
@@ -335,17 +335,17 @@ import * as am4plugins_forceDirected from "@amcharts/amcharts4/plugins/forceDire
 import am4themes_kelly from "@amcharts/amcharts4/themes/kelly";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-// import InfiniteLoading from 'vue-infinite-loading'
+import InfiniteLoading from 'vue-infinite-loading'
 import HotelDatePicker from 'vue-hotel-datepicker'
 
 am4core.useTheme(am4themes_kelly);
 am4core.useTheme(am4themes_animated);
 
 export default {
-  name: 'home',
+  name: 'wordcloud',
   components: {
-    HotelDatePicker
-    // InfiniteLoading
+    HotelDatePicker,
+    InfiniteLoading
   },
   data () {
     return {
@@ -423,35 +423,35 @@ export default {
         })
         .catch(err => console.log(err))
     },
-    // infiniteHandler ($state) {
-    //       const fdata = new FormData()
-    //       const email = this.$session.get('my-info').userEmail
-    //       console.log(email)
-    //       fdata.append('email', email)
-    //       fdata.append('company', this.company)
-    //     //   console.log(email)
-    //     //   const headers = {
-    //     //     email: email
-    //     //   }
-    //     //   console.log(`/member/getscrap/${this.page}`)
-    //       http
-    //         // .get(`/member/getscrap/${this.page}`, { headers })
-    //         .post(`/member/getscrap/${this.page}`, fdata)
-    //         .then(({ data }) => {
-    //           console.log(data.result)
-    //           if (data.result.length) {
-    //             this.page += 1
-    //             const tempArticle = data.result
-    //             for (var article of tempArticle) {
-    //               this.articles.push(article)
-    //             }
-    //             console.log(this.articles)
-    //             $state.loaded()
-    //           } else {
-    //             $state.complete()
-    //           }
-    //         })
-    // },
+    infiniteHandler ($state) {
+          const fdata = new FormData()
+          const email = this.$session.get('my-info').userEmail
+          console.log(email)
+          fdata.append('email', email)
+          fdata.append('company', this.company)
+        //   console.log(email)
+        //   const headers = {
+        //     email: email
+        //   }
+        //   console.log(`/member/getscrap/${this.page}`)
+          http
+            // .get(`/member/getscrap/${this.page}`, { headers })
+            .post(`/member/getscrap/${this.page}`, fdata)
+            .then(({ data }) => {
+              console.log(data.result)
+              if (data.result.length) {
+                this.page += 1
+                const tempArticle = data.result
+                for (var article of tempArticle) {
+                  this.articles.push(article)
+                }
+                console.log(this.articles)
+                $state.loaded()
+              } else {
+                $state.complete()
+              }
+            })
+    },
     setDate(newDate) {
         this.dateRange = newDate
         console.log(dateRange)

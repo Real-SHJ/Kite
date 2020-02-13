@@ -17,7 +17,7 @@
   <select id="selectOne" parameterType="int"
     resultType="Article">
 		select
-			articleid, company, title, summary, newspaper, publicationDate, url, image
+			*
 		from
 			article
 		where

@@ -34,8 +34,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article articleInfo(Article article) {
-        return repo.articleInfo(article);
+    public Article articleInfo(int articleid) {
+        return repo.articleInfo(articleid);
     }
 
     @Override

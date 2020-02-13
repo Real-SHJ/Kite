@@ -1,6 +1,7 @@
 package com.wildbody.kite.Service;
 
 import com.wildbody.kite.DTO.Member;
+import com.wildbody.kite.DTO.Message;
 import com.wildbody.kite.Repository.MemberRepository;
 
 import java.util.HashMap;
@@ -105,5 +106,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int friendDelete(int memberid, int friendid) {
 		return repo.friendDelete(memberid, friendid);
+	}
+
+	@Override
+
+	public int messageInsert(Message m) {
+		// TODO Auto-generated method stub
+		return repo.messageInsert(m);
+	}
+
+	public int updateCompany(int memberid, String companylist) {
+		return repo.updateCompany(memberid,companylist);
 	}
 }

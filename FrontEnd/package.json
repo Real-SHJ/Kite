@@ -23,6 +23,7 @@
     "vue-kakao-login": "^1.0.5",
     "vue-mj-daterangepicker": "^0.1.10",
     "vue-naver-login": "^1.0.4",
+    "vue-responsive-dash": "^0.3.11",
     "vue-router": "^3.1.3",
     "vue-session": "^1.0.0",
     "vue-wordcloud": "^1.1.1",

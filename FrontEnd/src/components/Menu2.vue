@@ -15,7 +15,7 @@
     >
       <v-list-item>
         <v-list-item-avatar>
-          <v-img :src="`http://13.125.153.118:8999/img/profile/${userInfo.userImage}`"></v-img>
+          <v-img :src="`http://13.125.153.118:8999/img/profile/${userInfo.userEmail}.jpg`"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-content >
@@ -23,8 +23,8 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-       <v-input @keyup.native="search" v-model="searchText" name="searchText">🔎
-         <v-text-field placeholder="검색어를 입력해주세요"></v-text-field>
+       <v-input>🔎
+         <input @keyup="search" type="text" v-model="searchText"  name="searchText" class="form-control" placeholder="검색어를 입력하세요." value="{param.searchText}">
        </v-input>
       <v-divider></v-divider>
       <!-- 밑에 백엔드 연결할 것... -->
@@ -73,7 +73,6 @@ export default {
         '삼성SDS': 'http://13.125.153.118:8999/img/logo/Samsung_SDS.svg',
         '신한은행': 'http://13.125.153.118:8999/img/logo/Shinhan_Bank.svg',
         '쿠팡': 'http://13.125.153.118:8999/img/logo/Coupang.svg',
-        'GC칼텍스': 'http://13.125.153.118:8999/img/logo/GS_Caltex.svg',
         '하나은행': 'http://13.125.153.118:8999/img/logo/Hana_Bank.svg',
         '현대모비스': 'http://13.125.153.118:8999/img/logo/Hyundai_Mobis.svg',
         'IBK기업은행': 'http://13.125.153.118:8999/img/logo/IBK_Bank.svg',
@@ -99,6 +98,7 @@ export default {
       fdata.append('email', this.userInfo.userEmail)
       fdata.append('pw', this.userInfo.userPw)
       console.log(this.userInfo.userEmail)
+      console.log(this.userInfo.userImage)
       http
         .post('/member/info', fdata) // 회원 아이디 넣기
         .then(response => {
@@ -109,7 +109,7 @@ export default {
           for (let i = 0; i < this.info.length; i++) {
             this.info[i] = this.info[i].replace(' ', '')
           }
-          console.log(this.items[this.info[1]])
+          console.log(this.items[this.info[1]]) // this.info에 회사명이 들어가있다.
           console.log(this.info[0] + this.info[1])
         })
         .catch(() => {
@@ -119,20 +119,28 @@ export default {
         .finally(() => (this.loading = false))
     },
     search () {
-      http
-        .get('/productinfo' + '/' + this.searchText) // rest에서 가져올 절대 주소 적기
-        .then(response => {
-          this.info = response.data.resvalue
-          this.info2 = response.data.resvalue2
-          for (let index = 0; index < this.info.length; index++) {
-            this.info[index].img = '/' + this.info[index].img
+      // 전부 들어간 회사명을 다로 저장해 둔다.
+      console.log('!!' + this.searchText)
+      if (this.searchText === '') {
+        // 빈칸이 있는경우
+        this.init()
+        console.log('빈칸빈칸@##')
+      } else {
+        // 글자가 들어가있는 경우
+        this.info2 = []
+        console.log('@@' + this.searchText)
+        for (let i = 0; i < this.info.length; i++) {
+          if (this.info[i].match(this.searchText)) {
+            console.log(this.info[i])
+            this.info2.push(this.info[i])
           }
+        }
+        this.info2 = this.info.filter(item => {
+          return item.indexOf(this.searchText) > -1
         })
-        .catch(() => {
-          this.errored = true
-          console.log(this.errored)
-        })
-        .finally(() => (this.loading = false))
+        this.info = []
+        this.info = this.info2.valueOf()
+      }
     },
     goArtCorp (item) {
       alert('클릭!!!' + item)

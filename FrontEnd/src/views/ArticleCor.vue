@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <h1>여기는 {{company}} 페이지입니다...</h1>
+    <MainPageHeader/>
     <!-- <MyArticleCor :com="company"/> -->
     <ArticleList :articles="articles" />
     <InfiniteLoading :identifier="company" @infinite="infiniteHandler"></InfiniteLoading>
@@ -12,6 +12,7 @@ import http from '../http-common'
 // import MyArticleCor from '../components/MyArticleCor.vue'
 import InfiniteLoading from 'vue-infinite-loading'
 import ArticleList from '../components/ArticleList.vue'
+import MainPageHeader from '../components/MainPageHeader.vue'
 export default {
   name: 'home',
   props: {
@@ -28,6 +29,7 @@ export default {
   },
   components: {
     // MyArticleCor
+    MainPageHeader,
     InfiniteLoading,
     ArticleList
   },

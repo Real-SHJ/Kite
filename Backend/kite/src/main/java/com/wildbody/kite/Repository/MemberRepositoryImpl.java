@@ -1,6 +1,8 @@
 package com.wildbody.kite.Repository;
 
 import com.wildbody.kite.DTO.Member;
+import com.wildbody.kite.DTO.Message;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +91,7 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public int friendWaitInsert(int requestid, int responseid) {
-		System.out.println("req:"+requestid+",res:"+responseid);
+		System.out.println("req:" + requestid + ",res:" + responseid);
 		Map<String, Object> map = new HashMap<>();
 		map.put("requestid", requestid);
 		map.put("responseid", responseid);
@@ -106,15 +108,15 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public int friendInsert(int memberid, int friendid) {
-		System.out.println("repo test: mid:" + memberid + ",fid:"+friendid);
+		System.out.println("repo test: mid:" + memberid + ",fid:" + friendid);
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberid", memberid);
 		map.put("friendid", friendid);
-		int insert =  session.insert("kite.member.insertFriend", map);
+		int insert = session.insert("kite.member.insertFriend", map);
 		map = new HashMap<>();
 		map.put("memberid", friendid);
 		map.put("friendid", memberid);
-		insert +=  session.insert("kite.member.insertFriend", map);
+		insert += session.insert("kite.member.insertFriend", map);
 		System.out.println("repo test:" + insert);
 		return insert;
 	}
@@ -125,6 +127,21 @@ public class MemberRepositoryImpl implements MemberRepository {
 		map.put("memberid", memberid);
 		map.put("friendid", friendid);
 		return session.delete("kite.member.deleteFriend", map);
+	}
+
+	// ------------------------------메세지-----------------------
+	@Override
+	public int messageInsert(Message m) {
+		return session.insert("kite.member.insertMessage", m);
+	}
+
+	@Override
+	public int updateCompany(int memberid, String companylist) {
+		System.out.println("repo"+memberid + "," + companylist);
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberid", memberid);
+		map.put("companylist", companylist);
+		return session.update("kite.member.updateCompany", map);
 	}
 
 }

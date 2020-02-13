@@ -32,8 +32,8 @@ public class ArticleRepositoryImpl implements ArticleRepository {
   }
 
   @Override
-  public Article articleInfo(Article article) {
-    return session.selectOne("kite.article.selectOne", article);
+  public Article articleInfo(int articleid) {
+    return session.selectOne("kite.article.selectOne", articleid);
   }
 
   @Override
