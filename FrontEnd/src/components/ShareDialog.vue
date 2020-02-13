@@ -9,6 +9,8 @@
       max-width="500"
       class="mx-auto"
     >
+    <br>
+    <p class="text-center">친구를 선택해주세요.</p>
       <v-list>
         <v-list-item
           v-for="friend in myFriends"
@@ -24,7 +26,7 @@
           </v-list-item-content>
 
           <v-list-item-avatar>
-          <v-img :src="friend.image"></v-img>
+          <!-- <v-img :src="friend.image"></v-img> -->
           </v-list-item-avatar>
         </v-list-item>
       </v-list>

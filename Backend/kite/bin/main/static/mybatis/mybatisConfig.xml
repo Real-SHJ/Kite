@@ -8,6 +8,7 @@
     <typeAlias alias="Member" type="com.wildbody.kite.DTO.Member"/>
     <typeAlias alias="Token" type="com.wildbody.kite.DTO.Token"/>
     <typeAlias alias="Message" type="com.wildbody.kite.DTO.Message"/>
+    <typeAlias alias="MemberArticle" type="com.wildbody.kite.DTO.MemberArticle"/>
   </typeAliases>
 
   <mappers>

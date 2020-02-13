@@ -1,6 +1,10 @@
 <template>
-  <v-container class="d-flex ">
-    <h1>여기는 상세보기 페이지입니다.</h1>
+  <v-container class="">
+    <h1 v-if="article">{{article.title}}</h1>
+    <br>
+    <br>
+    <br>
+    <div v-if="article" v-html="article.content"></div>
     <v-dialog v-model="dialog" max-width="290">
       <template v-slot:activator="{ on }">
         <v-btn
@@ -52,22 +56,29 @@
 import http from '../http-common'
 export default {
   props: {
-    id: Number
+    id: String
   },
   data () {
     return {
       dialog: false,
-      detail: 'yes'
+      article: null
     }
   },
   methods: {
     getarticle () {
-      http.get(`/article/selectone/${this.id}`)
+      console.log(this.id)
+      http.get(`/article/onearticle/${this.id}`)
         .then(res => {
           console.log(res)
+          console.log(res.data.article)
+          this.article = res.data.article
+          console.log(this.article)
         })
         .catch(err => console.log(err))
     }
+  },
+  mounted () {
+    this.getarticle()
   }
 }
 </script>

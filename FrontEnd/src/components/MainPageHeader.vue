@@ -26,5 +26,31 @@ export default {
 </script>
 
 <style>
-
+#pop-up-toolbar {
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  opacity: 0.8;
+  z-index: 1;
+}
+.header-text {
+    font-family: "Nanum Myeongjo",sans-serif;
+}
+.header-title {
+  margin-top: 0;
+  font-size: 40px;
+  font-weight: 400;
+  color: #1a1a1a;
+  text-align: left;
+  letter-spacing: -.05em;
+}
+.header-body {
+    padding-bottom: 16px;
+    margin-top: -3px;
+    font-size: 32px;
+    line-height: 46px;
+    font-family: "Nanum Myeongjo",sans-serif;
+    color: #cacaca;
+    letter-spacing: -.05em;
+}
 </style>

@@ -27,11 +27,12 @@
       </div>
 
     </div>
-    <p style="float:right">Highlight</p>
-    <v-btn @click="initMouse()" style="float:right">
+    <v-btn @click="save()">저장</v-btn>
+    <p>Highlight</p>
+    <v-btn @click="initMouse()">
         Off
     </v-btn>
-    <v-btn @click="changeMouse()" style="float:right">
+    <v-btn @click="changeMouse()">
         On
     </v-btn>
     <v-spacer></v-spacer>
@@ -58,7 +59,7 @@ export default {
     },
     getArticle () {
       http
-        .get('/article/info/12')
+        .get('/article/onearticle/15')
         .then(
           response => {
             this.article = response.data.article.content
@@ -101,6 +102,20 @@ export default {
       if (_node) _node = _node.childNodes[0]
       _range.deleteContents()
       _range.insertNode(_node)
+    },
+    save () {
+      var content = document.querySelector(`#my`)
+      console.log(content.outerHTML)
+      http
+        .get('/member/test/' + this.company)
+        .then(
+          response => {
+            console.log(response.data.message)
+          }
+        )
+        .catch(err => console.log(err))
+        .finally(
+        )
     }
   },
   data () {
@@ -108,7 +123,8 @@ export default {
       spanIndex: 0,
       article: '',
       type: 'hex',
-      hex: '#FFFF00'
+      hex: '#FFFF00',
+      company: '삼성전자'
     }
   },
   mounted () {

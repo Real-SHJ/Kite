@@ -1,32 +1,57 @@
 <template>
   <v-content>
     <v-toolbar color="#FBFAF5" class="" style="width: 100%; z-index: 1;">
-        <v-icon @click="goHome" style="margin-right: 1100px; margin-left: 20px;">home</v-icon>
-        <div v-if="AuthenticatedCheck">
-        <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
-        <router-link class="black--text" to="/analysis">Analysis</router-link> |
-        <router-link class="black--text" to="/friend">친구관리</router-link>
-          <span @click="logout">Sign out</span>
-        </div>
-        <div v-else>
-          <router-link class="black--text" to="/loginpage">Sign in</router-link> |
-          <router-link class="black--text" to="/signup">Sign up</router-link>
-          <router-link class="black--text" to="/signuptest">SignUpTest</router-link>
-        </div>
+      <v-row>
+        <v-col cols="3">
+          <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
+        </v-col>
+        <v-col cols="5"></v-col>
+        <v-col class="d-flex align-center flex-row-reverse">
+            <span class="toolbar-btn" @click="goIndiRepo">개인저장소</span>
+            <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
+            <span class="toolbar-btn" @click="goFriend">친구관리</span>
+            <span class="toolbar-btn" @click="goSelectCom">관심기업추가</span>
+          <div v-if="AuthenticatedCheck">
+            <!-- <router-link class="black--text" to="/indirepository">개인저장소</router-link> |
+            <router-link class="black--text" to="/analysis">분석데이터</router-link> |
+            <router-link class="black--text" to="/friend">친구관리</router-link> |
+            <router-link class="black--text" to="/selectcompany">관심기업 추가</router-link> | -->
+            <span class="toolbar-btn" @click="logout">로그아웃</span>
+          </div>
+          <div v-else>
+            <span class="toolbar-btn" @click="goStart">Start</span>
+            <!-- <router-link class="black--text" to="/signup">로그인</router-link> -->
+          </div>
+        </v-col>
+      </v-row>
     </v-toolbar>
-    <v-toolbar v-if="offsetTop > 280" color="#FBFAF5" id="pop-up-toolbar" class="d-flex flex-row-reverse" style="">
-      <v-icon @click="goHome">home</v-icon>
-      <div v-if="AuthenticatedCheck">
-      <router-link class="black--text" to="/indirepository">IndiRepository</router-link> |
-      <router-link class="black--text" to="/analysis">Analysis</router-link> |
-      <router-link class="black--text" to="/friend">친구관리</router-link>
-        <p @click="logout">Sign out</p>
-      </div>
-      <div v-else>
-        <router-link class="black--text" to="/loginpage">Sign in</router-link> |
-        <router-link class="black--text" to="/signup">Sign up</router-link>
-      </div>
-    </v-toolbar>
+    <v-lazy>
+      <v-toolbar v-if="offsetTop > 350" color="#FBFAF5" id="pop-up-toolbar" class="" style="">
+        <v-row>
+          <v-col cols="3">
+            <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
+          </v-col>
+          <v-col cols="5"></v-col>
+          <v-col class="d-flex align-center flex-row-reverse">
+            <span class="toolbar-btn" @click="goIndiRepo">개인저장소</span>
+            <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
+            <span class="toolbar-btn" @click="goFriend">친구관리</span>
+            <span class="toolbar-btn" @click="goSelectCom">관심기업추가</span>
+            <div class="float-right" v-if="AuthenticatedCheck">
+              <!-- <router-link class="black--text" to="/indirepository">개인저장소</router-link> |
+              <router-link class="black--text" to="/analysis">분석데이터</router-link> |
+              <router-link class="black--text" to="/friend">친구관리</router-link> |
+              <router-link class="black--text" to="/selectcompany">관심기업 추가</router-link> | -->
+              <span class="toolbar-btn" @click="logout">로그아웃</span>
+            </div>
+            <div class="float-right" v-else>
+              <span class="toolbar-btn" @click="goStart">Start</span>
+              <!-- <router-link class="black--text" to="/signup">로그인</router-link> -->
+            </div>
+          </v-col>
+        </v-row>
+      </v-toolbar>
+    </v-lazy>
   </v-content>
 </template>
 
@@ -44,11 +69,46 @@ export default {
     goHome () {
       this.$router.push('/')
     },
+    goIndiRepo () {
+      if (this.AuthenticatedCheck) {
+        this.$router.push('/indirepository')
+      } else {
+        alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
+        this.$router.push('/signup')
+      }
+    },
+    goAnalysis () {
+      if (this.AuthenticatedCheck) {
+        this.$router.push('/analysis')
+      } else {
+        alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
+        this.$router.push('/signup')
+      }
+    },
+    goFriend () {
+      if (this.AuthenticatedCheck) {
+        this.$router.push('/friend')
+      } else {
+        alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
+        this.$router.push('/signup')
+      }
+    },
+    goSelectCom () {
+      if (this.AuthenticatedCheck) {
+        this.$router.push('/selectcompany')
+      } else {
+        alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
+        this.$router.push('/signup')
+      }
+    },
+    goStart () {
+      this.$router.push('/signup')
+    },
     logout () {
       this.$store.dispatch('logout')
       this.$store.dispatch('infoDel')
       this.$session.destroy()
-      this.$router.push('/loginpage')
+      this.$router.push('/signup')
     }
   },
   updated () {
@@ -57,7 +117,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.toolbar-btn:hover {
+  cursor: pointer;
+  font-size: 150%;
+}
+.toolbar-btn {
+  font-size: 130%;
+  margin-right: 10px;
+  /* font-weight: bold; */
+  font-family: 'Nanum Gothic', sans-serif;
+}
 #pop-up-toolbar {
   position: fixed;
   width: 100%;
@@ -65,24 +135,14 @@ export default {
   opacity: 0.8;
   z-index: 1;
 }
-.header-text {
-    font-family: "Nanum Myeongjo",sans-serif;
+@font-face {
+  font-family: 'LogoFont'; /* 폰트 패밀리 이름 주기*/
+  src: url('../fonts/BLKCHCRY.TTF'); /*폰트 파일 주소*/
 }
-.header-title {
-  margin-top: 0;
+#homebtn { /* 위에서 font-face로 지정해놓은 font-family를 적용*/
+  font-family:'LogoFont' !important;
+  background-color: #FBFAF5;
+  color: #585022;
   font-size: 40px;
-  font-weight: 400;
-  color: #1a1a1a;
-  text-align: left;
-  letter-spacing: -.05em;
-}
-.header-body {
-    padding-bottom: 16px;
-    margin-top: -3px;
-    font-size: 32px;
-    line-height: 46px;
-    font-family: "Nanum Myeongjo",sans-serif;
-    color: #cacaca;
-    letter-spacing: -.05em;
 }
 </style>

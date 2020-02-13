@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import http from '../http-common'
 export default {
   name: 'selectcompany',
@@ -158,12 +159,26 @@ export default {
       memberid: this.$session.get('my-info').userid
     }
   },
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
+  mounted () {
+    this.loadCompany()
+  },
   methods: {
     handleClick: function (index) {
       var items = this.items
       for (let i = 0; i < items.length; i++) {
         if (i === index) {
           if (items[i].clicked === false) { items[i].clicked = true } else items[i].clicked = false
+        }
+      }
+    },
+    loadCompany: function () {
+      let companylist = this.userInfo.companylist.split(',')
+      for (let i = 0; i < this.items.length; i++) {
+        for (let j = 0; j < companylist.length; j++) {
+          if (this.items[i].name === companylist[j]) this.items[i].clicked = true
         }
       }
     },
@@ -180,6 +195,8 @@ export default {
           }
         }
       }
+      this.$store.dispatch('infoSave', { userEmail: this.$session.get('my-info').userEmail, userName: this.$session.get('my-info').userName, userid: this.$session.get('my-info').userid, userImage: this.$session.get('my-info').userImage, companylist: companylist })
+      this.$session.set('my-info', { userEmail: this.$session.get('my-info').userEmail, userName: this.$session.get('my-info').userName, userid: this.$session.get('my-info').userid, userImage: this.$session.get('my-info').userImage, companylist: companylist })
       console.log(companylist)
       http
         .put('/member/updatecompany' + '/' + this.memberid + '/' + companylist)

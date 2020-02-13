@@ -25,7 +25,7 @@ export default {
   },
   data () {
     return {
-      useremail: this.$session.get('my-info').userEmail,
+      useremail: null,
       dialog: false
     }
   },
@@ -43,7 +43,15 @@ export default {
           console.log(res)
         })
         .catch(err => console.log(err))
+    },
+    emailCheck () {
+      if (this.$session.has('my-info')) {
+        this.useremail = this.$session.get('my-info').userEmail
+      }
     }
+  },
+  mounted () {
+    this.emailCheck()
   }
 }
 </script>

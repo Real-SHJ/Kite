@@ -37,10 +37,10 @@
     </v-content>
 </template>
 <script>
-import Request from './Request.vue'
-import Response from './Response.vue'
-import FriendList from './FriendList.vue'
-import InsertFriendWait from './InsertFriendWait.vue'
+import Request from '../components/Request.vue'
+import Response from '../components/Response.vue'
+import FriendList from '../components/FriendList.vue'
+import InsertFriendWait from '../components/InsertFriendWait.vue'
 export default {
   name: 'friend',
   components: {

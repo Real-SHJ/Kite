@@ -1,6 +1,8 @@
 package com.wildbody.kite.Service;
 
+import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
+import com.wildbody.kite.DTO.MemberArticle;
 import com.wildbody.kite.DTO.Message;
 
 import java.util.List;
@@ -46,4 +48,13 @@ public interface MemberService {
 	public int messageInsert(Message m);
 	
 	public int updateCompany(int memberid, String companylist);
+	
+	public int insertMemberArticle(MemberArticle ma);
+	
+	public List<Article> selectMyArticleList(MemberArticle ma);
+	
+	public List<Article> selectMyCompanyArticleList(MemberArticle ma);
+	
+	public int deleteMyArticle(MemberArticle ma);
+
 }

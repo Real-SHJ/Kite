@@ -55,16 +55,16 @@
       class="article-cards mx-auto my-10"
       max-width="700"
       style="height: 600px;"
+      id = "mycard"
     >
       <div @click="goDetail(article)">
         <v-img
-          class="white--text align-end"
+          class="align-end"
           height="400px"
           :src="`${article.url}`"
         >
           <v-avatar
             class="companyLogo"
-            color="white"
             size="100"
           >
             <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
@@ -74,7 +74,7 @@
 
         <v-card-subtitle class="pb-0 mb-5">Number 10</v-card-subtitle>
 
-        <v-card-text class="text--primary">
+        <v-card-text>
           <div>Whitehaven Beach</div>
 
           <div>Whitsunday Island, Whitsunday Islands</div>
@@ -102,19 +102,32 @@ export default {
   },
   data () {
     return {
-      myId: this.$session.get('my-info').userid,
+      myId: null,
       test: [1, 2, 3],
       myFriends: []
     }
   },
   methods: {
+    userIdCheck () {
+      if (this.$session.has('my-info')) {
+        console.log('니니니닌')
+        console.log(this.$session.get('my-info').userid)
+        this.myId = this.$session.get('my-info').userid
+        console.log(this.myId)
+      }
+    },
     getMyFriends () {
-      http
-        .get(`/member/friendlist/${this.myId}`)
-        .then((res) => {
-          this.myFriends = res.data.flist
-          // console.log(this.myFriends)
-        })
+      setTimeout(() => {
+        if (this.myId) {
+          http
+            .get(`/member/friendlist/${this.myId}`)
+            .then((res) => {
+              console.log(res)
+              this.myFriends = res.data.flist
+              console.log(this.myFriends)
+            })
+        }
+      }, 1000)
     },
     goDetail (article) {
       this.$router.push({ path: `/articleDetail/${article.articleid}` })
@@ -131,8 +144,11 @@ export default {
     // }
   },
   mounted () {
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!')
+    console.log(this.myId)
     // this.getArticle()
     this.getMyFriends()
+    this.userIdCheck()
   }
 }
 
@@ -146,5 +162,9 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+  }
+  #mycard {
+    background-color: #3A3B3C;
+    color: #F1F1F1 !important;
   }
 </style>

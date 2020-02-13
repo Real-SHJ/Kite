@@ -1,6 +1,7 @@
 package com.wildbody.kite.Service;
 
 import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.MemberArticle;
 import com.wildbody.kite.Repository.ArticleRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article articleInfo(int articleid) {
-        return repo.articleInfo(articleid);
-    }
-
-    @Override
     public List<Article> articleList() {
         return repo.articleList();
     }
@@ -52,6 +48,4 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> infi(String company) {
         return repo.infi(company);
     }
-
-
 }

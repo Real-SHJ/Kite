@@ -1,26 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import LoginPage from '../views/LoginPage.vue'
+import Analysis from '../views/Analysis.vue'
+import ArticleCorpo from '../views/ArticleCor.vue'
 import ArticleDetail from '../views/ArticleDetail.vue'
-import SignUp from '../views/SignUp.vue'
+import Empty from '../views/Empty.vue'
+import Friend from '../views/Friend.vue'
+import ForceDirected from '../components/ForceDirected.vue'
 import NaverLogin from '../components/NaverLogin.vue'
 import IndiRepository from '../views/IndiRepository.vue'
 import SelectCompany from '../views/SelectCompany.vue'
-import Analysis from '../views/Analysis.vue'
+import SignUp from '../views/SignUp.vue'
 import WordCloud from '../components/WordCloud.vue'
-import ForceDirected from '../components/ForceDirected.vue'
-import Empty from '../views/Empty.vue'
-import ArticleCorpo from '../views/ArticleCor.vue'
-import SignUpTest from '../views/SignUpTest.vue'
-import Request from '../views/Request.vue'
-import Response from '../views/Response.vue'
-import FriendList from '../views/FriendList.vue'
-import AllMyArticles from '../views/AllMyArticles.vue'
-import MyArticles from '../views/MyArticles.vue'
-import InsertFriendWait from '../views/InsertFriendWait.vue'
-import Friend from '../views/Friend.vue'
 import Test from '../views/Test.vue'
+import IndiRepo from '../views/IndiRepo.vue'
 
 Vue.use(VueRouter)
 
@@ -30,17 +23,17 @@ const routes = [
     name: 'home',
     component: Home
   },
+
   {
-    path: '/loginpage',
-    name: 'loginpage',
-    component: LoginPage
+    path: '/indirepo',
+    name: 'indirepo',
+    component: IndiRepo
   },
 
   {
-    path: '/articleDetail/:id',
-    name: 'articledetail',
-    component: ArticleDetail,
-    props: true
+    path: '/analysis',
+    name: 'analysis',
+    component: Analysis
   },
   {
     path: '/articlecorpo/:company',
@@ -49,27 +42,31 @@ const routes = [
     props: true
   },
   {
-    path: '/signup',
-    name: 'signup',
-    component: SignUp
+    path: '/articleDetail/:id',
+    name: 'articledetail',
+    component: ArticleDetail,
+    props: true
   },
-
   {
-    path: '/signuptest',
-    name: 'signuptest',
-    component: SignUpTest
+    path: '/empty',
+    name: 'empty',
+    component: Empty
   },
-
+  {
+    path: '/friend',
+    name: 'friend',
+    component: Friend
+  },
+  {
+    path: '/forcedirected',
+    name: 'forcedirected',
+    component: ForceDirected
+  },
   {
     path: '/indirepository',
     name: 'indirepository',
-    component: IndiRepository,
-    children: [
-      { path: '', component: AllMyArticles },
-      { path: ':company', component: MyArticles, props: true }
-    ]
+    component: IndiRepository
   },
-
   {
     path: '/naver',
     name: 'naver',
@@ -81,49 +78,14 @@ const routes = [
     component: SelectCompany
   },
   {
-    path: '/analysis',
-    name: 'analysis',
-    component: Analysis
+    path: '/signup',
+    name: 'signup',
+    component: SignUp
   },
   {
     path: '/wordcloud',
     name: 'wordcloud',
     component: WordCloud
-  },
-  {
-    path: '/forcedirected',
-    name: 'forcedirected',
-    component: ForceDirected
-  },
-  {
-    path: '/empty',
-    name: 'empty',
-    component: Empty
-  },
-  {
-    path: '/request',
-    name: 'request',
-    component: Request
-  },
-  {
-    path: '/response',
-    name: 'response',
-    component: Response
-  },
-  {
-    path: '/friendlist',
-    name: 'friendlist',
-    component: FriendList
-  },
-  {
-    path: '/insertfriendwait',
-    name: 'insertfriendwait',
-    component: InsertFriendWait
-  },
-  {
-    path: '/friend',
-    name: 'friend',
-    component: Friend
   },
   {
     path: '/test',

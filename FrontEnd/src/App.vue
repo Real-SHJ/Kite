@@ -5,7 +5,7 @@
     </v-content>
     <v-content v-else>
       <Header :offsetTop="offsetTop" :AuthenticatedCheck="AuthenticatedCheck"/>
-      <Menu/>
+      <LeftMenu/>
       <router-view/>
       <Footer/>
       <v-layout
@@ -21,7 +21,7 @@
 
 <script>
 import Header from './components/Header'
-import Menu from './components/Menu2'
+import LeftMenu from './components/LeftMenu'
 import Footer from './components/Footer'
 import Opening from './components/Opening.vue'
 
@@ -29,14 +29,15 @@ export default {
   name: 'app',
   components: {
     Header,
-    Menu,
+    LeftMenu,
     Footer,
     Opening
   },
   data () {
     return {
       AuthenticatedCheck: this.$session.has('my-token'),
-      offsetTop: 0
+      offsetTop: 0,
+      getOpen: false
     }
   },
   methods: {
@@ -44,7 +45,8 @@ export default {
       this.offsetTop = window.pageYOffset || document.documentElement.scrollTop
     },
     change (childOpen) {
-      this.$store.commit('changeOpen', childOpen)
+      this.$session.set('changeOpen', childOpen)
+      this.getOpen = childOpen
     },
     isLogin () {
       setTimeout(() => {
@@ -56,11 +58,11 @@ export default {
           this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid })
         }
       }, 1000)
-    }
-  },
-  computed: {
-    getOpen () {
-      return this.$store.getters.getOpen
+    },
+    openCheck () {
+      if (this.$session.has('changeOpen')) {
+        this.getOpen = this.$session.get('changeOpen')
+      }
     }
   },
   updated () {
@@ -69,6 +71,7 @@ export default {
   mounted () {
     console.log(this.AuthenticatedCheck)
     this.AuthenticatedCheck = this.$session.has('my-token')
+    this.openCheck()
     this.isLogin()
   }
 }
@@ -76,4 +79,11 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: 'MainFont'; /* 폰트 패밀리 이름 주기*/
+  src: url('./fonts/IropkeBatangM.woff'); /*폰트 파일 주소*/
+}
+#inspire { /* 위에서 font-face로 지정해놓은 font-family를 적용*/
+  font-family:'MainFont';
+}
 </style>

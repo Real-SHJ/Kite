@@ -15,7 +15,7 @@
     >
       <v-list-item>
         <v-list-item-avatar>
-          <v-img :src="`http://13.125.153.118:8999/img/profile/${userInfo.userEmail}.jpg`"></v-img>
+          <v-img :src="`http://13.125.153.118:8999/img/profile/${userInfo.userImage}`"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-content >
@@ -23,7 +23,8 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-       <v-input>🔎
+       <v-input>
+         <v-icon>search</v-icon>
          <input @keyup="search" type="text" v-model="searchText"  name="searchText" class="form-control" placeholder="검색어를 입력하세요." value="{param.searchText}">
        </v-input>
       <v-divider></v-divider>
@@ -44,10 +45,10 @@
 </template>
 
 <script>
-import http from '../http-common'
 import { mapGetters } from 'vuex'
-// import images from '../http-images'
+
 export default {
+  name: 'leftmenu',
   data () {
     return {
       name: '',
@@ -88,35 +89,14 @@ export default {
   computed: {
     ...mapGetters(['userInfo'])
   },
-  mounted () {
-  },
   methods: {
     init () {
       this.drawer = true
-      var strArray // 시작하면 바로 정보 가져오기
-      const fdata = new FormData()
-      fdata.append('email', this.userInfo.userEmail)
-      fdata.append('pw', this.userInfo.userPw)
-      console.log(this.userInfo.userEmail)
-      console.log(this.userInfo.userImage)
-      http
-        .post('/member/info', fdata) // 회원 아이디 넣기
-        .then(response => {
-          strArray = response.data.result.company
-          console.log(response)
-          this.info = strArray.split(',')
-
-          for (let i = 0; i < this.info.length; i++) {
-            this.info[i] = this.info[i].replace(' ', '')
-          }
-          console.log(this.items[this.info[1]]) // this.info에 회사명이 들어가있다.
-          console.log(this.info[0] + this.info[1])
-        })
-        .catch(() => {
-          this.errored = true
-          console.log(this.errored)
-        })
-        .finally(() => (this.loading = false))
+      let companylist = null
+      console.log('leftmenu userImage:' + this.userInfo.userImage)
+      companylist = this.userInfo.companylist
+      console.log('leftmemu companylist:' + companylist)
+      this.info = companylist.split(',')
     },
     search () {
       // 전부 들어간 회사명을 다로 저장해 둔다.
