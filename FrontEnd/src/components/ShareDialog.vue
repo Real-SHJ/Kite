@@ -12,7 +12,8 @@
     <br>
     <p class="text-center">친구를 선택해주세요.</p>
       <v-list>
-        <v-list-item
+        <FriendToShare v-for="friend in myFriends" :key="friend.id" @shareReq="friendPlus" @cancelReq="friendPop" :friend="friend"/>
+        <!-- <v-list-item
           v-for="friend in myFriends"
           :key="friend.id"
           @click="shareArticle(friend)"
@@ -26,9 +27,9 @@
           </v-list-item-content>
 
           <v-list-item-avatar>
-          <!-- <v-img :src="friend.image"></v-img> -->
+          <v-img :src="friend.image"></v-img>
           </v-list-item-avatar>
-        </v-list-item>
+        </v-list-item> -->
       </v-list>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -40,11 +41,15 @@
 </template>
 
 <script>
+import FriendToShare from '../components/FriendToShare.vue'
 import http from '../http-common'
 export default {
   props: {
     article: Object,
     myFriends: Array
+  },
+  components: {
+    FriendToShare
   },
   data () {
     return {
@@ -54,10 +59,21 @@ export default {
         { title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
         { title: 'Cindy Baker', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
       ],
-      dialog: false
+      dialog: false,
+      shareTarget: []
     }
   },
   methods: {
+    friendPlus (memberid) {
+      this.shareTarget.push(memberid)
+      console.log(this.shareTarget)
+    },
+    friendPop (memberid) {
+      this.shareTarget = this.shareTarget.filter(target => {
+        return target !== memberid
+      })
+      console.log(this.shareTarget)
+    },
     shareArticle (friend) {
       if (this.$session.has('my-info')) {
         console.log('공유하겠습니다.')
