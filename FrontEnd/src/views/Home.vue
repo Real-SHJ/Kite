@@ -44,8 +44,8 @@ export default {
         .get('article/list')
         .then((res) => {
           console.log(res)
-          this.articles = res.data.resvalue
-          console.log(this.articles)
+          this.articles = res.data.result
+          console.log(this.articles[0])
         })
     }
     // infiniteHandler ($state) {

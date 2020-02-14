@@ -1,6 +1,8 @@
 package com.wildbody.kite.Service;
 
+import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
+import com.wildbody.kite.DTO.MemberArticle;
 import com.wildbody.kite.DTO.Message;
 import com.wildbody.kite.Repository.MemberRepository;
 
@@ -109,7 +111,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-
 	public int messageInsert(Message m) {
 		// TODO Auto-generated method stub
 		return repo.messageInsert(m);
@@ -122,7 +123,27 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	public int updateCompany(int memberid, String companylist) {
-		return repo.updateCompany(memberid,companylist);
+		return repo.updateCompany(memberid, companylist);
+	}
+
+	@Override
+	public int insertMemberArticle(MemberArticle ma) {
+		return repo.insertMemberArticle(ma);
+	}
+
+	@Override
+	public List<Article> selectMyArticleList(int memberid) {
+		return repo.selectMyArticleList(memberid);
+	}
+
+	@Override
+	public List<Article> selectMyCompanyArticleList(MemberArticle ma) {
+		return repo.selectMyCompanyArticleList(ma);
+	}
+
+	@Override
+	public int deleteMyArticle(MemberArticle ma) {
+		return repo.deleteMyArticle(ma);
 	}
 
 	

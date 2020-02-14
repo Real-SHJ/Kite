@@ -5,19 +5,19 @@ import java.util.List;
 
 public interface ArticleService {
 
-  int initArticle(Article article);
+	public int initArticle(Article article);
 
-  int articleInsert(Article article);
+	public int articleInsert(Article article);
 
-  int articleUpdate(Article article);
+	public int articleUpdate(Article article);
 
-  int articleDelete(String id);
+	public int articleDelete(String id);
 
-  Article articleInfo(int articleid);
+	public Article articleInfo(int articleid);
 
-  List<Article> articleList();
+	public List<Article> articleList();
 
-  Article oneArticle(int articleid);
+	public Article oneArticle(int articleid);
 
-  List<Article> infi(String company);
+	public List<Article> infi(String company);
 }

@@ -1,33 +1,24 @@
 <template>
 <v-content>
+    <div style="position: relative; height: 400px;">
+      <div style="background-color: black; opacity: 0.1; position: absolute; width: 100%; height: 400px; z-index: 5;"></div>
+      <img src="https://ranzetta.typepad.com/.a/6a00d8341c070353ef022ad386ccb6200d-pi" alt="" style="width: 100%; height: 100%; position: absolute;">
+      <!-- <img src="https://wac-cdn.atlassian.com/dam/jcr:bc1f15f9-3b2e-4c30-9313-0ebd6175f18c/File%20Cabinet@2x.png?cdnVersion=812" alt="" style="width: 10%; height: 10%; position: absolute;"> -->
+    </div>
     <v-layout justify-center row wrap>
-        <v-flex xs11 style="text-align: right;">
-            <h1 class="display-2 font-weight-thin mb=3"> Friends Search </h1>
-            <!-- <h4 class="subheading">Find what your missing</h4> -->
-        </v-flex>
-
-        <v-flex xs11>
-            <v-layout align-center justify-end="" row wrap>
-                <v-flex xs2>
-                    <v-form >
-                        <v-text-field outline label="Search for firends" append-icon="search">
-                        </v-text-field>
-                    </v-form>
-                </v-flex>
-            </v-layout>
-        </v-flex>
     </v-layout>
     <!-- ------------- 검색 기간 부분 --------------- -->
       <v-container fluid>
-          <v-row
+          <v-row class="py-10"
           >
-            <br>기업선택
+          <br>기업선택
             <v-col cols="12" sm="2">
              <v-overflow-btn
                 class="my-2"
                 :items="company_choice"
                 label="기업선택"
                 target="#dropdown-example"
+                v-model="choice_company"
                 ></v-overflow-btn>
             </v-col>
             <br>검색기간
@@ -74,7 +65,8 @@
 
                 </v-btn>
               </v-btn-toggle>
-              <v-btn depressed large color="pink white--text">검색</v-btn>
+              <v-btn depressed large color="pink white--text" @click="scrapreq">검색</v-btn>
+              <v-btn depressed large color="blue white--text" @click="scrapchoice">전체조회</v-btn>
             </v-col>
           </v-row>
           </v-container>
@@ -100,7 +92,7 @@
                                     :src="company_image[article.company]"/>
                             </v-avatar>
                             <div class="headline mb-4">{{ article.title }}</div>
-                            <div class="subheading">{{ article.content }}</div>
+                            <div class="subheading" v-html="article.content"> </div>
                             <div class="subheading">{{ article.newspaper }}</div>
                         </v-card-text>
                     </v-card>
@@ -256,6 +248,7 @@ export default {
       page: 1,
       pagination_page: 1,
       company: null,
+      choice_company: null,
       dateRange: '',
       articles: [],
       team: [
@@ -331,30 +324,34 @@ export default {
     },
     scrapreq () {
           const fdata = new FormData()
-          const email = this.$session.get('my-info').userEmail
+          const memberid = this.$session.get('my-info').userid
+        //   const email = this.$session.get('my-info').userEmail
           console.log("기범아 찍혔다니까")
-          console.log(email)
-          fdata.append('email', email)
-        //   fdata.append('company', this.company)
-          console.log(email)
-        //   const headers = {
-        //     email: email
-        //   }
-        //   console.log(`/member/getscrap/${this.page}`)
+          console.log(memberid)
+          console.log(`/member/getScrap/${memberid}/${this.choice_company}`)
           http
-            // .get(`/member/getscrap/${this.page}`, { headers })
-            .post(`/member/getscrap/${this.page}`, fdata)
-            .then(({ data }) => {
-              console.log(data.result)
-              if (data.result.length) {
-                this.page += 1
-                const tempArticle = data.result
-                for (var article of tempArticle) {
-                  this.articles.push(article)
-                }
-                console.log(this.articles)
-              } else {
-              }
+            .get(`/member/getScrap/${memberid}/${this.choice_company}`)
+            // .post(`/member/getScrap/${this.page}`, fdata)
+            .then((res) => {
+              console.log(res.data)
+              this.articles = res.data.result
+              console.log("들어왔다 데이터")
+              console.log(this.articles[0])
+            })
+    },
+    scrapchoice () {
+        //기업 선택해서 그 기업의 스크랩한 기사 조회
+        console.log(this.choice_company)
+        const memberid = this.$session.get('my-info').userid
+            http
+            .get(`/member/getScrap/${memberid}`)
+            // .post(`/member/getScrap/${this.page}`, fdata)
+            .then((res) => {
+              console.log(res.data)
+              this.articles = res.data.result
+              console.log("들어왔다 데이터222")
+              console.log(this.articles[0])
+              console.log("삼성전자만 들어왔니?")
             })
     },
     setDate(newDate) {
@@ -375,7 +372,9 @@ export default {
   },
   mounted() {
         // this.getArticle()
-        this.scrapreq()
+        console.log(this.company_choice)
+        // this.scrapreq()
+        this.scrapchoice()
         var chart = am4core.create("chartdiv_keyword", am4plugins_wordCloud.WordCloud);
         chart.fontFamily = "Courier New";
         var series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());

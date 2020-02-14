@@ -15,7 +15,7 @@
         <v-list-item
           v-for="friend in myFriends"
           :key="friend.id"
-          @click="shareArticle"
+          @click="shareArticle(friend)"
         >
           <v-list-item-icon>
           <v-icon color="pink">mdi-star</v-icon>
@@ -30,12 +30,17 @@
           </v-list-item-avatar>
         </v-list-item>
       </v-list>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green darken-1" text @click="dialog = false">cancel</v-btn>
+        <v-btn color="green darken-1" text>보내기</v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-// import http from '../http-common'
+import http from '../http-common'
 export default {
   props: {
     article: Object,
@@ -53,8 +58,22 @@ export default {
     }
   },
   methods: {
-    shareArticle () {
-      console.log('공유하겠습니다.')
+    shareArticle (friend) {
+      if (this.$session.has('my-info')) {
+        console.log('공유하겠습니다.')
+        const fdata = new FormData()
+        fdata.append('sendid', this.$session.get('my-info').userid)
+        fdata.append('receiveid', friend.memberid)
+        fdata.append('articleid', this.article.articleid)
+        http
+          .post(`/member/sendmessage/`, fdata)
+          .then((res) => {
+            console.log(res)
+          })
+      } else {
+        alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
+        this.$router.push('/signup')
+      }
     }
   },
   mounted () {

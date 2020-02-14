@@ -10,31 +10,31 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class KakaoInterceptor implements HandlerInterceptor {
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-        Object handler) throws Exception {
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
 
-        KakaoMember kmem = getKakaoMember(request.getParameterMap());
-        // 만료시간 체크 어떻게?
+		KakaoMember kmem = getKakaoMember(request.getParameterMap());
+		// 만료시간 체크 어떻게?
 
-        return false;
-    }
+		return false;
+	}
 
-    private KakaoMember getKakaoMember(Map<String, String[]> map) {
-        KakaoMember ret = new KakaoMember();
+	private KakaoMember getKakaoMember(Map<String, String[]> map) {
+		KakaoMember ret = new KakaoMember();
 
-        for (String key : map.keySet()) {
-            for (String val : map.get(key)) {
-                switch (key) {
-                    case "accesstoken":
-                        ret.setAccesstoken(val);
-                        break;
-                    case "refreshtoken":
-                        ret.setRefreshtoken(val);
-                }
-            }
-        }
+		for (String key : map.keySet()) {
+			for (String val : map.get(key)) {
+				switch (key) {
+				case "accesstoken":
+					ret.setAccesstoken(val);
+					break;
+				case "refreshtoken":
+					ret.setRefreshtoken(val);
+				}
+			}
+		}
 
-        return ret;
-    }
+		return ret;
+	}
 }

@@ -3,9 +3,10 @@ package com.wildbody.kite.DTO;
 import lombok.Data;
 
 @Data
-public class Token {
+public class MemberArticle {
 
 	private int memberid;
-	private String email;
-	private String refreshToken;
+	private int articleid;
+	private String company;
+
 }

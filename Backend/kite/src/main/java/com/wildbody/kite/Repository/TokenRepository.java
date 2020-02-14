@@ -5,9 +5,9 @@ import com.wildbody.kite.DTO.Token;
 
 public interface TokenRepository {
 
-    Token select(Member member);
+	public Token select(Member member);
 
-    int insert(Token token);
+	public int insert(Token token);
 
-    void update(Token token);
+	public void update(Token token);
 }

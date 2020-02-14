@@ -9,21 +9,21 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TokenRepositoryImpl implements TokenRepository {
 
-    @Autowired
-    private SqlSession session;
+	@Autowired
+	private SqlSession session;
 
-    @Override
-    public Token select(Member member) {
-        return session.selectOne("kite.token.select", member);
-    }
+	@Override
+	public Token select(Member member) {
+		return session.selectOne("kite.token.select", member);
+	}
 
-    @Override
-    public int insert(Token token) {
-        return session.insert("kite.token.insert", token);
-    }
+	@Override
+	public int insert(Token token) {
+		return session.insert("kite.token.insert", token);
+	}
 
-    @Override
-    public void update(Token token) {
-        session.update("kite.token.update", token);
-    }
+	@Override
+	public void update(Token token) {
+		session.update("kite.token.update", token);
+	}
 }

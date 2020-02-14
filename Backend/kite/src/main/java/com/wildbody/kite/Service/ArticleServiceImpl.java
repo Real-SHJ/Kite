@@ -12,7 +12,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleRepository repo;
 
-
     @Override
     public int initArticle(Article article) {
         return repo.initArticle(article);
@@ -52,6 +51,4 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> infi(String company) {
         return repo.infi(company);
     }
-
-
 }

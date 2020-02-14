@@ -59,10 +59,10 @@ export default {
     },
     getArticle () {
       http
-        .get('/article/onearticle/15')
+        .get('/article/onearticle/1')
         .then(
           response => {
-            this.article = response.data.article.content
+            this.article = response.data.result.content
           }
         )
         .catch(err => console.log(err))
@@ -106,16 +106,6 @@ export default {
     save () {
       var content = document.querySelector(`#my`)
       console.log(content.outerHTML)
-      http
-        .get('/member/test/' + this.company)
-        .then(
-          response => {
-            console.log(response.data.message)
-          }
-        )
-        .catch(err => console.log(err))
-        .finally(
-        )
     }
   },
   data () {

@@ -11,27 +11,25 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class RestfulConfig {
 
-    @Value("${restTemplate.factory.readTimeout}")
-    private int READ_TIMEOUT;
-    @Value("${restTemplate.factory.connectTimeout}")
-    private int CONNECT_TIMEOUT;
-    @Value("${restTemplate.httpClient.maxConnTotal}")
-    private int MAX_CONN_TOTAL;
-    @Value("${restTemplate.httpClient.maxConnRoute}")
-    private int MAX_CONN_PER_ROUTE;
+	@Value("${restTemplate.factory.readTimeout}")
+	private int READ_TIMEOUT;
+	@Value("${restTemplate.factory.connectTimeout}")
+	private int CONNECT_TIMEOUT;
+	@Value("${restTemplate.httpClient.maxConnTotal}")
+	private int MAX_CONN_TOTAL;
+	@Value("${restTemplate.httpClient.maxConnRoute}")
+	private int MAX_CONN_PER_ROUTE;
 
-    @Bean
-    public RestTemplate restTemplate() {
-        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-        factory.setReadTimeout(READ_TIMEOUT);
-        factory.setConnectTimeout(CONNECT_TIMEOUT);
+	@Bean
+	public RestTemplate restTemplate() {
+		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+		factory.setReadTimeout(READ_TIMEOUT);
+		factory.setConnectTimeout(CONNECT_TIMEOUT);
 
-        HttpClient httpClient = HttpClientBuilder.create()
-            .setMaxConnTotal(MAX_CONN_TOTAL)
-            .setMaxConnPerRoute(MAX_CONN_PER_ROUTE)
-            .build();
+		HttpClient httpClient = HttpClientBuilder.create().setMaxConnTotal(MAX_CONN_TOTAL)
+				.setMaxConnPerRoute(MAX_CONN_PER_ROUTE).build();
 
-        factory.setHttpClient(httpClient);
-        return new RestTemplate(factory);
-    }
+		factory.setHttpClient(httpClient);
+		return new RestTemplate(factory);
+	}
 }

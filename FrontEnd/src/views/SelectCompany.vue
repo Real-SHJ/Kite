@@ -146,7 +146,7 @@ export default {
           clicked: false
         },
         {
-          name: 'S-Oil',
+          name: 'S-OIL',
           src: 'http://13.125.153.118:8999/img/logo/S-Oil.svg',
           clicked: false
         },

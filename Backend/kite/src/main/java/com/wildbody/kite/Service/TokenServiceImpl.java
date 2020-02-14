@@ -9,21 +9,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-    @Autowired
-    private TokenRepository repo;
+	@Autowired
+	private TokenRepository repo;
 
-    @Override
-    public Token select(Member member) {
-        return repo.select(member);
-    }
+	@Override
+	public Token select(Member member) {
+		return repo.select(member);
+	}
 
-    @Override
-    public int insert(Token token) {
-        return repo.insert(token);
-    }
+	@Override
+	public int insert(Token token) {
+		return repo.insert(token);
+	}
 
-    @Override
-    public void update(Token token) {
-        repo.update(token);
-    }
+	@Override
+	public void update(Token token) {
+		repo.update(token);
+	}
 }

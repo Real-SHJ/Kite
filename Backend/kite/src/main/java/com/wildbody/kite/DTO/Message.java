@@ -1,6 +1,7 @@
 package com.wildbody.kite.DTO;
 
 import lombok.Data;
+
 //-------------------Message 보내는 DTO
 @Data
 public class Message{
@@ -9,4 +10,3 @@ public class Message{
     private int receiveid;
     private int articleid;
 }
-

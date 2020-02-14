@@ -2,10 +2,10 @@
   <v-content>
     <v-toolbar color="#FBFAF5" class="" style="width: 100%; z-index: 1;">
       <v-row>
-        <v-col cols="3">
+        <v-col cols="1">
           <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
         </v-col>
-        <v-col cols="5"></v-col>
+        <!-- <v-col cols="1"></v-col> -->
         <v-col class="d-flex align-center flex-row-reverse">
             <span class="toolbar-btn" @click="goIndiRepo">개인저장소</span>
             <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
@@ -28,10 +28,10 @@
     <v-lazy>
       <v-toolbar v-if="offsetTop > 350" color="#FBFAF5" id="pop-up-toolbar" class="" style="">
         <v-row>
-          <v-col cols="3">
+          <v-col cols="1">
             <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
           </v-col>
-          <v-col cols="5"></v-col>
+          <!-- <v-col cols="3"></v-col> -->
           <v-col class="d-flex align-center flex-row-reverse">
             <span class="toolbar-btn" @click="goIndiRepo">개인저장소</span>
             <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
@@ -71,7 +71,7 @@ export default {
     },
     goIndiRepo () {
       if (this.AuthenticatedCheck) {
-        this.$router.push('/indirepository')
+        this.$router.push('/indirepo')
       } else {
         alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
         this.$router.push('/signup')
@@ -132,7 +132,7 @@ export default {
   position: fixed;
   width: 100%;
   top: 0px;
-  opacity: 0.8;
+  opacity: 0.9;
   z-index: 1;
 }
 @font-face {
