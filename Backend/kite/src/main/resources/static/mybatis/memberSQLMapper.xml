@@ -116,10 +116,14 @@
 
 	<insert id="insertMessage" parameterType="Message">
 		insert into
-		message(sendid,receiveid,contents,articleid)
+		message(sno,sendid,receiveid,articleid)
 		values
-		(#{sendid}, #{receiveid}, #{contents}, #{articleid})
+		(#{sno},#{sendid}, #{receiveid}, #{articleid})
 	</insert>
+
+	<select id="selectMessage" parameterType="int" resultType="Message">
+		select * from message where receiveid=#{sendid};
+	</select>
 
 	<update id="updateCompany" parameterType="hashmap">
 		update members set company=#{companylist} where memberid=#{memberid};

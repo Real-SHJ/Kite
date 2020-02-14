@@ -127,7 +127,7 @@ public class ArticleController {
         }
       }
       map.put("message", "기사 목록 조회 성공");
-      map.put("resvalue", list);
+      map.put("result", list);
     } catch (RuntimeException e) {
       map.put("message", "기사 목록 조회 실패");
       map.put("error", e.getMessage());

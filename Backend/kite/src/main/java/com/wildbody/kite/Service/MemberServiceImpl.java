@@ -115,7 +115,15 @@ public class MemberServiceImpl implements MemberService {
 		return repo.messageInsert(m);
 	}
 
+	@Override
+	public List<Message> messageList(int memberid) {
+		// TODO Auto-generated method stub
+		return repo.messageList(memberid);
+	}
+
 	public int updateCompany(int memberid, String companylist) {
 		return repo.updateCompany(memberid,companylist);
 	}
+
+	
 }

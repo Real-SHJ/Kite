@@ -136,6 +136,12 @@ public class MemberRepositoryImpl implements MemberRepository {
 	}
 
 	@Override
+	public List<Message> messageList(int memberid) {
+		// TODO Auto-generated method stub
+		return session.selectList("kite.member.selectMessage", memberid);
+	}
+
+	@Override
 	public int updateCompany(int memberid, String companylist) {
 		System.out.println("repo"+memberid + "," + companylist);
 		Map<String, Object> map = new HashMap<>();
@@ -143,5 +149,7 @@ public class MemberRepositoryImpl implements MemberRepository {
 		map.put("companylist", companylist);
 		return session.update("kite.member.updateCompany", map);
 	}
+
+	
 
 }

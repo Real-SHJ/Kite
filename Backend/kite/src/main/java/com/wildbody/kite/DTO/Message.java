@@ -4,9 +4,9 @@ import lombok.Data;
 //-------------------Message 보내는 DTO
 @Data
 public class Message{
-    private int sendID;
-    private int receiveID;
-    private String mContents;
-    private int articleID;
+    private int sno;
+    private int sendid;
+    private int receiveid;
+    private int articleid;
 }
 

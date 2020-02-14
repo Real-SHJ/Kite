@@ -44,6 +44,6 @@ public interface MemberService {
 	public int friendDelete(int memberid, int friendid);
 
 	public int messageInsert(Message m);
-	
+	public List<Message> messageList(int memberid);
 	public int updateCompany(int memberid, String companylist);
 }

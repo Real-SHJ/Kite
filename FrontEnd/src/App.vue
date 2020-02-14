@@ -5,7 +5,7 @@
     </v-content>
     <v-content v-else>
       <Header :offsetTop="offsetTop" :AuthenticatedCheck="AuthenticatedCheck"/>
-      <LeftMenu/>
+      <LeftMenu v-if="AuthenticatedCheck"/>
       <router-view/>
       <Footer/>
       <v-layout
