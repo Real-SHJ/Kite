@@ -2,6 +2,7 @@ package com.wildbody.kite.Controller;
 
 import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
+import com.wildbody.kite.DTO.MemberArticle;
 import com.wildbody.kite.DTO.Message;
 import com.wildbody.kite.DTO.NaverMember;
 import com.wildbody.kite.DTO.Token;
@@ -30,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 @RequestMapping("/api/member")
@@ -424,22 +424,21 @@ public class MemberController {
 
 	// ----------------아이디 2개를 받아 내 친구와 메세지 전송----------------
 	@PostMapping("/sendmessage")
-	@ApiOperation(value="친구 메시지 보내기")
-	public @ResponseBody ResponseEntity<Map<String, Object>> sendmessage(Message m){
-		ResponseEntity<Map<String, Object>> resEntity=null;
-		Map<String, Object> map=new HashMap<>();
-		try{
-			System.out.println("내ID: "+m.getSendID()+"친구ID: "+m.getReceiveID()+"기사ID: "+m.getArticleID());
-			int insert= msvc.messageInsert(m);
+	@ApiOperation(value = "친구 메시지 보내기")
+	public @ResponseBody ResponseEntity<Map<String, Object>> sendmessage(Message m) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			System.out.println("내ID: " + m.getSendID() + "친구ID: " + m.getReceiveID() + "기사ID: " + m.getArticleID());
+			int insert = msvc.messageInsert(m);
 			System.out.println(insert);
 			map.put("message", "메세지 저장 성공");
-		}catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			map.put("message", "메세지 저장 실패");
 		}
-		resEntity=new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
+		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
 	}
-
 
 	@PutMapping("/updatecompany/{memberid}/{companylist}")
 	@ApiOperation(value = "관심 기업 수정 서비스")
@@ -450,7 +449,7 @@ public class MemberController {
 		try {
 			int update = msvc.updateCompany(Integer.parseInt(memberid), companylist);
 			Map<String, Object> map = new HashMap<>();
-			map.put("resvalue", update);
+			map.put("result", update);
 			map.put("message", "관심 기업 수정 성공");
 			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		} catch (RuntimeException e) {
@@ -458,6 +457,75 @@ public class MemberController {
 			map.put("message", "관심 기업 수정 실패");
 			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		}
+		return resEntity;
+	}
+
+	@PostMapping("/insertscrap")
+	@ApiOperation(value = "내 기사 스크랩 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> insertMemberArticle(MemberArticle ma) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		System.out.println("스크랩한다~~~~~~~" + ma.getMemberid() + "," + ma.getArticleid());
+		try {
+			int insert = msvc.insertMemberArticle(ma);
+			map.put("result", insert);
+			map.put("message", "스크랩 성공");
+		} catch (Exception e) {
+			map.put("message", "스크랩 실패");
+		}
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
+
+	@GetMapping("/getScrap/{memberid}")
+	@ApiOperation(value = "내 스크랩 기사 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> selectMyArticleList(@PathVariable String memberid) {
+		System.out.println("스크랩기업요청들어왔다." + memberid);
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			List<Article> list = msvc.selectMyArticleList(Integer.parseInt(memberid));
+			map.put("result", list);
+			map.put("message", "기사 목록 조회 성공");
+		} catch (Exception e) {
+			map.put("message", "기사 목록 조회 실패");
+		}
+		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
+		return resEntity;
+	}
+
+	@GetMapping("/getScrap/{memberid}/{company}")
+	@ApiOperation(value = "내 스크랩 기사 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> selectMyArticleList(@PathVariable String memberid, @PathVariable String company) {
+		System.out.println("스크랩기업요청들어왔다." + memberid + "," + company);
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			MemberArticle ma = new MemberArticle();
+			ma.setMemberid(Integer.parseInt(memberid));
+			ma.setCompany(company);
+			List<Article> list = msvc.selectMyCompanyArticleList(ma);
+			map.put("result", list);
+			map.put("message", "기사 목록 조회 성공");
+		} catch (Exception e) {
+			map.put("message", "기사 목록 조회 실패");
+		}
+		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
+		return resEntity;
+	}
+
+	@DeleteMapping("/deletescrap")
+	@ApiOperation(value = "스크랩 기사 삭제 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> deleteMyArticle(MemberArticle ma) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			int delete = msvc.deleteMyArticle(ma);
+			map.put("resvalue", delete);
+			map.put("message", "삭제 성공");
+		} catch (Exception e) {
+			map.put("message", "삭제 실패");
+		}
+		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
 		return resEntity;
 	}
 }

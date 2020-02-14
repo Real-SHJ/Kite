@@ -25,33 +25,33 @@ export default {
   },
   data () {
     return {
-      useremail: null,
+      userid: null,
       dialog: false
     }
   },
   methods: {
     scrapArticle () {
       this.dialog = false
-      console.log(this.useremail)
+      console.log(this.userid)
       console.log(this.article.articleid)
       const fdata = new FormData()
-      fdata.append('email', this.useremail)
+      fdata.append('memberid', this.userid)
       fdata.append('articleid', this.article.articleid)
       http
-        .post('/member/scrap', fdata)
+        .post('/member/insertscrap', fdata)
         .then(res => {
-          console.log(res)
+          console.log(res.data.message)
         })
         .catch(err => console.log(err))
     },
-    emailCheck () {
+    useridCheck () {
       if (this.$session.has('my-info')) {
-        this.useremail = this.$session.get('my-info').userEmail
+        this.userid = this.$session.get('my-info').userid
       }
     }
   },
   mounted () {
-    this.emailCheck()
+    this.useridCheck()
   }
 }
 </script>

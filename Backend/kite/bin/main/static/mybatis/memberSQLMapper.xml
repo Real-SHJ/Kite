@@ -98,19 +98,24 @@
 		);
 	</select>
 	<insert id="insertFriendWait" parameterType="hashmap">
-		insert into friendwait(requestid, responseid) values(#{requestid}, #{responseid});
+		insert into
+		friendwait(requestid, responseid) values(#{requestid}, #{responseid});
 	</insert>
 	<delete id="deleteFriendWait" parameterType="hashmap">
-		delete from friendwait where
-		requestid = #{requestid} and responseid = #{responseid};
+		delete from
+		friendwait where
+		requestid = #{requestid} and responseid =
+		#{responseid};
 	</delete>
 	<insert id="insertFriend" parameterType="hashmap">
-		insert into friend(memberid, friendid) values(#{memberid},#{friendid});
+		insert into
+		friend(memberid, friendid) values(#{memberid},#{friendid});
 	</insert>
 	<delete id="deleteFriend" parameterType="hashmap">
 		delete from friend where
 		memberid = #{memberid} and friendid = #{friendid};
-		delete from friend where
+		delete from friend
+		where
 		memberid = #{friendid} and friendid = #{memberid};
 	</delete>
 
@@ -118,14 +123,41 @@
 		insert into
 		message(sendid,receiveid,contents,articleid)
 		values
-		(#{sendid}, #{receiveid}, #{contents}, #{articleid})
+		(#{sendid},
+		#{receiveid}, #{contents}, #{articleid})
 	</insert>
 
 	<update id="updateCompany" parameterType="hashmap">
-		update members set company=#{companylist} where memberid=#{memberid};
+		update members set
+		company=#{companylist} where memberid=#{memberid};
 	</update>
 
-
+	<select id="selectArticleCompany" parameterType="int"
+		resultType="string">
+		select company from article where articleid=#{articleid}
+	</select>
+	<insert id="insertMemberArticle" parameterType="MemberArticle">
+		insert into
+		member_article(memberid, articleid, company) values (#{memberid},
+		#{articleid}, #{company})
+	</insert>
+	<select id="selectMyArticleList" parameterType="int"
+		resultType="Article">
+		select * from article where articleid in (select
+		articleid
+		from member_article where memberid=#{memberid})
+	</select>
+	<select id="selectMyCompanyArticleList"
+		parameterType="MemberArticle" resultType="Article">
+		select * from article where
+		articleid in (select articleid from member_article where memberid=
+		#{memberid} and company=#{company})
+	</select>
+	<delete id="deleteMyArticle" parameterType="MemberArticle">
+		delete from
+		member_article where memberid = #{memberid} and articleid =
+		#{articleid};
+	</delete>
 
 
 

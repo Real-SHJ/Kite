@@ -61,7 +61,7 @@
         <v-img
           class="align-end"
           height="400px"
-          :src="`${article.url}`"
+          :src="`${article.image}`"
         >
           <v-avatar
             class="companyLogo"

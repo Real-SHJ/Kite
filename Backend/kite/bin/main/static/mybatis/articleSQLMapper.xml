@@ -3,62 +3,68 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kite.article">
-  <delete id="delete" parameterType="int">
+	<delete id="delete" parameterType="int">
 		delete from article
 		where
-			articleid=#{articleid}
+		articleid=#{articleid}
 	</delete>
-  <insert id="insert" parameterType="Article">
-      insert into article
-      	(company, title, content, summary, keyword, newspaper, publicationDate, url, image)
-      values
-      	(#{company}, #{title}, #{content}, #{summary}, #{keyword}, #{newspaper}, #{publicationDate}, #{url}, #{image});
-   </insert>
-  <select id="selectOne" parameterType="int"
-    resultType="Article">
+	<insert id="insert" parameterType="Article">
+		insert into article
+		(company, title, content, summary, keyword, newspaper, publicationDate, url,
+		image)
+		values
+		(#{company}, #{title}, #{content}, #{summary}, #{keyword}, #{newspaper},
+		#{publicationDate}, #{url}, #{image});
+	</insert>
+	<select id="selectOne" parameterType="int" resultType="Article">
 		select
-			*
+		*
 		from
-			article
+		article
 		where
-			articleid=#{articleid}
+		articleid=#{articleid}
 	</select>
-  <select id="selectList" resultType="Article">
+	<select id="selectList" resultType="Article">
 		select
-			articleid, company, content, image, keyword, newspaper, publicationDate, summary, title, url
+		articleid, company, content, image, keyword, newspaper, publicationDate,
+		summary, title, url
 		from article order by publicationDate
 	</select>
-  <update id="update" parameterType="Article">
+	<update id="update" parameterType="Article">
 		update
-			article
+		article
 		set
-			company=#{company}, title=#{title}, summary=#{summary},	newspaper=#{newspaper}, publicationDate=#{publicationDate},	url=#{url}, image=#{image}
+		company=#{company}, title=#{title}, summary=#{summary}, newspaper=#{newspaper},
+		publicationDate=#{publicationDate}, url=#{url}, image=#{image}
 		where
-			articleid=#{articleid}
+		articleid=#{articleid}
 	</update>
-  <update id="updateAContent" parameterType="Article">
-		update article_content set
+	<update id="updateAContent" parameterType="Article">
+		update article_content
+		set
 		content=#{content}
 		where
 		articleid=#{articleid};
 	</update>
-  <update id="updateAKeyword" parameterType="Article">
+	<update id="updateAKeyword" parameterType="Article">
 		update
-			article_keyword
+		article_keyword
 		set
-			keyword=#{keyword}
+		keyword=#{keyword}
 		where
-			articleid=#{articleid};
+		articleid=#{articleid};
 	</update>
-  <select id="oneArticle" parameterType="int" resultType="Article">
-		select * from article where articleid=#{articleid};
+	<select id="oneArticle" parameterType="int" resultType="Article">
+		select *
+		from article where articleid=#{articleid};
 	</select>
-  <select id="infi" parameterType="string" resultType="Article">
+	<select id="infi" parameterType="string" resultType="Article">
 		select *
 		from article
 		where company = #{company}
 	</select>
-  <select id="countarticle" parameterType="String" resultType="int">
+	<select id="countarticle" parameterType="String"
+		resultType="int">
 		select count (articleid)
 		from article;
 	</select>

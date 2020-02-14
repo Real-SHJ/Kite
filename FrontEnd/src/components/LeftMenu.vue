@@ -1,8 +1,11 @@
 <template>
   <v-layout class="layout">
 
-    <v-btn class="mx-2" fixed fab dark color="teal" @mouseover='init'>
+    <v-btn class="mx-2" fixed fab dark color="green" @mouseover='init'>
     <v-icon dark>mdi-format-list-bulleted-square</v-icon>
+      <!-- <v-list-item-avatar>
+          <v-img src="../../src/assets/hamburger.png" @mouseover='init'></v-img>
+        </v-list-item-avatar> -->
     </v-btn>
 
     <v-navigation-drawer

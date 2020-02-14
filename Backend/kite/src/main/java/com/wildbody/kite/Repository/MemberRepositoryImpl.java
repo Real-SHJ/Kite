@@ -1,6 +1,8 @@
 package com.wildbody.kite.Repository;
 
+import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
+import com.wildbody.kite.DTO.MemberArticle;
 import com.wildbody.kite.DTO.Message;
 
 import java.util.HashMap;
@@ -137,11 +139,36 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public int updateCompany(int memberid, String companylist) {
-		System.out.println("repo"+memberid + "," + companylist);
+		System.out.println("repo" + memberid + "," + companylist);
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberid", memberid);
 		map.put("companylist", companylist);
 		return session.update("kite.member.updateCompany", map);
 	}
 
+	@Override
+	public String selectArticleCompany(int articleid) {
+		return session.selectOne("kite.member.selectArticleCompany", articleid);
+	}
+
+	@Override
+	public int insertMemberArticle(MemberArticle ma) {
+		ma.setCompany(selectArticleCompany(ma.getArticleid()));
+		return session.insert("kite.member.insertMemberArticle", ma);
+	}
+
+	@Override
+	public List<Article> selectMyArticleList(int memberid) {
+		return session.selectList("kite.member.selectMyArticleList", memberid);
+	}
+
+	@Override
+	public List<Article> selectMyCompanyArticleList(MemberArticle ma) {
+		return session.selectList("kite.member.selectMyCompanyArticleList", ma);
+	}
+
+	@Override
+	public int deleteMyArticle(MemberArticle ma) {
+		return session.delete("kite.member.deleteMyArticle", ma);
+	}
 }

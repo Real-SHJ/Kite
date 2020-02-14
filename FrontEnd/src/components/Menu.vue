@@ -16,7 +16,7 @@
       </dl>
     </div>
   </transition>
-  <img id='menu_btn' @click='enter' src='../assets/logo.png'>
+  <img id='menu_btn' @click='enter' src='../assets/hamburger.png'>
   </v-content>
 </template>
 

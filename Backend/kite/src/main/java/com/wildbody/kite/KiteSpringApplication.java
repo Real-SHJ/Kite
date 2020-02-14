@@ -8,7 +8,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy
 public class KiteSpringApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(KiteSpringApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(KiteSpringApplication.class, args);
+	}
 }

@@ -10,40 +10,40 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class NaverInterceptor implements HandlerInterceptor {
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-        Object handler) throws Exception {
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
 
-        String state = request.getHeader("nstate");
+		String state = request.getHeader("nstate");
 
-        String storedState = (String) request.getSession().getAttribute("state");
-        NaverMember naverMember = nMember(request.getParameterMap());
+		String storedState = (String) request.getSession().getAttribute("state");
+		NaverMember naverMember = nMember(request.getParameterMap());
 
-        if (naverMember.getAccesstoken() != null && naverMember.getState() != null && state
-            .equals(naverMember.getState())) {
-            return true;
-        }
+		if (naverMember.getAccesstoken() != null && naverMember.getState() != null
+				&& state.equals(naverMember.getState())) {
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    private NaverMember nMember(Map<String, String[]> map) {
-        NaverMember naverMember = new NaverMember();
+	private NaverMember nMember(Map<String, String[]> map) {
+		NaverMember naverMember = new NaverMember();
 
-        for (String key : map.keySet()) {
-            for (String val : map.get(key)) {
-                switch (key) {
-                    case "accesstoken":
-                        naverMember.setAccesstoken(val);
-                        break;
-                    case "state":
-                        naverMember.setState(val);
-                        break;
-                }
-            }
-        }
+		for (String key : map.keySet()) {
+			for (String val : map.get(key)) {
+				switch (key) {
+				case "accesstoken":
+					naverMember.setAccesstoken(val);
+					break;
+				case "state":
+					naverMember.setState(val);
+					break;
+				}
+			}
+		}
 
-        return naverMember;
-    }
+		return naverMember;
+	}
 
 }

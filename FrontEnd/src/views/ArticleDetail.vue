@@ -70,8 +70,8 @@ export default {
       http.get(`/article/onearticle/${this.id}`)
         .then(res => {
           console.log(res)
-          console.log(res.data.article)
-          this.article = res.data.article
+          console.log(res.data.result)
+          this.article = res.data.result
           console.log(this.article)
         })
         .catch(err => console.log(err))
