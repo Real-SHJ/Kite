@@ -5,18 +5,20 @@ import java.util.List;
 
 public interface ArticleRepository {
 
-	public int initArticle(Article article);
+    int initArticle(Article article);
 
-	public int articleInsert(Article article);
+    int articleInsert(Article article);
 
-	public int articleUpdate(Article article);
+    int articleUpdate(Article article);
 
-	public int articleDelete(int id);
+    int articleDelete(int id);
 
-	public List<Article> articleList();
+    Article articleInfo(int articleid);
 
-	public Article oneArticle(int articleid);
+    List<Article> articleList();
 
-	public List<Article> infi(String company);
+    Article oneArticle(int articleid);
+
+    List<Article> infi(String company);
 
 }

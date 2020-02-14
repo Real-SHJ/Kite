@@ -124,19 +124,14 @@
 	<update id="updateCompany" parameterType="hashmap">
 		update members set company=#{companylist} where memberid=#{memberid};
 	</update>
-	<select id="selectArticleCompany" parameterType="int" resultType="string">
-		select company from article where articleid=#{articleid}
-	</select>
-	<insert id="insertMemberArticle" parameterType="MemberArticle">
-		insert into member_article(memberid, articleid, company) values (#{memberid}, #{articleid}, #{company})
-	</insert>
-	<select id="selectMyArticleList" parameterType="MemberArticle" resultType="Article">
-		select * from article where #{articleid} in (select articleid from member_article where memberid=#{memberid})
-	</select>
-	<select id="selectMyCompanyArticleList" parameterType="MemberArticle" resultType="Article">
-		select * from article where #{articleid} in (select articleid from member_article where memberid= #{memberid} and company=#{company})
-	</select>
-	<delete id="deleteMyArticle" parameterType="MemberArticle">
-		delete from member_article where memberid = #{memberid} and articleid = #{articleid};
-	</delete>
+
+
+
+
+
+
+
+
+
+
 </mapper>

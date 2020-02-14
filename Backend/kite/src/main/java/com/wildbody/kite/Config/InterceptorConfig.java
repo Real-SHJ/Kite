@@ -1,8 +1,8 @@
 package com.wildbody.kite.Config;
 
 import com.wildbody.kite.Interceptor.AuthInterceptor;
-//import com.wildbody.kite.Interceptor.KakaoInterceptor;
-//import com.wildbody.kite.Interceptor.NaverInterceptor;
+import com.wildbody.kite.Interceptor.KakaoInterceptor;
+import com.wildbody.kite.Interceptor.NaverInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -28,9 +28,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
   @Autowired private AuthInterceptor interceptor;
 
-//  @Autowired private NaverInterceptor naverInterceptor;
-//
-//  @Autowired private KakaoInterceptor kakaoInterceptor;
+  @Autowired private NaverInterceptor naverInterceptor;
+
+  @Autowired private KakaoInterceptor kakaoInterceptor;
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {

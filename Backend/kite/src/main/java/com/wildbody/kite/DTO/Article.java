@@ -3,7 +3,7 @@ package com.wildbody.kite.DTO;
 import lombok.Data;
 
 @Data
-public class Article {
+public class Article{
 
     private int articleid;
     private String company;
@@ -16,4 +16,7 @@ public class Article {
     private String content;
     private String keyword;
     private String logo;
+    private int year;
+    private int month;
+    private int day;
 }

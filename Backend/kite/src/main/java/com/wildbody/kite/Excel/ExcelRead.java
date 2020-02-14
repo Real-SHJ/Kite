@@ -90,6 +90,9 @@ public class ExcelRead implements ApplicationRunner {
               case 19:
                 article.setContent(value);
                 break;
+              case 20:
+                article.setUrl(value);
+                break;
             }
           }
         }
@@ -107,6 +110,6 @@ public class ExcelRead implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
-    this.execute();
+//    this.execute();
   }
 }

@@ -1,8 +1,6 @@
 package com.wildbody.kite.Repository;
 
-import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
-import com.wildbody.kite.DTO.MemberArticle;
 import com.wildbody.kite.DTO.Message;
 
 import java.util.List;
@@ -46,14 +44,4 @@ public interface MemberRepository {
 	public int messageInsert(Message m);
 
 	public int updateCompany(int memberid, String companylist);
-	
-	public String selectArticleCompany(int articleid);
-	
-	public int insertMemberArticle(MemberArticle ma);
-	
-	public List<Article> selectMyArticleList(MemberArticle ma);
-	
-	public List<Article> selectMyCompanyArticleList(MemberArticle ma);
-	
-	public int deleteMyArticle(MemberArticle ma);
 }
