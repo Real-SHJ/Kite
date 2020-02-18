@@ -1,8 +1,10 @@
 package com.wildbody.kite.Controller;
 
 import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.Check;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.MemberArticle;
+import com.wildbody.kite.DTO.MemberKeyword;
 import com.wildbody.kite.DTO.Message;
 import com.wildbody.kite.DTO.NaverMember;
 import com.wildbody.kite.DTO.Token;
@@ -137,7 +139,6 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> ret = null;
 		Member loginMem = msvc.login(member);
 		Map<String, Object> map = new HashMap<>();
-
 		if (loginMem != null) {
 			map.put("access_token", response.getHeader("Authorization"));
 			map.put("isLogin", true);
@@ -165,99 +166,6 @@ public class MemberController {
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
 
-	@PostMapping("/scrap")
-	@ApiOperation("스크랩")
-	public @ResponseBody ResponseEntity<Map<String, Object>> scrapArticle(Member member, Article article) {
-		Map<String, Object> map = new HashMap<>();
-		if (article.getArticleid() > asvc.articleList().size()) {
-			map.put("result", "out of range");
-			map.put("msg", false);
-			return new ResponseEntity<>(map, HttpStatus.OK);
-		}
-		member = msvc.memberInfo(member);
-		StringBuilder sb = new StringBuilder();
-		String scrpas = msvc.getMyScrap(member);
-		String articles = "";
-		if (scrpas != null) {
-			for (String val : scrpas.split(",")) {
-				if (!val.equals("" + article.getArticleid()))
-					sb.append(val).append(",");
-			}
-		}
-		if (sb.length() > 1)
-			articles = sb.toString() + "" + article.getArticleid();
-		else
-			articles = "" + article.getArticleid();
-
-		try {
-			map.put("result", msvc.scrapArticle(member, articles));
-			map.put("msg", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			map.put("msg", false);
-		}
-		return new ResponseEntity<>(map, HttpStatus.OK);
-	}
-
-	@DeleteMapping("/delscrap")
-	@ApiOperation("스크랩 삭제")
-	public @ResponseBody ResponseEntity<Map<String, Object>> delScrap(Member member, Article article) {
-		Map<String, Object> map = new HashMap<>();
-		member = msvc.memberInfo(member);
-		try {
-			StringBuilder articles = new StringBuilder();
-			for (String val : msvc.getMyScrap(member).split(",")) {
-				if (!val.equals("" + article.getArticleid()))
-					articles.append(val).append(",");
-			}
-			if (articles.length() > 0)
-				articles.deleteCharAt(articles.length() - 1);
-			msvc.scrapArticle(member, articles.toString());
-		} catch (Exception e) {
-			e.printStackTrace();
-			map.put("msg", false);
-		}
-
-		return new ResponseEntity<>(map, HttpStatus.OK);
-	}
-
-	// todo 인피니티 로딩으로 바꾸자
-	// 기사날짜로 검색, 검색기간, 기업명
-	@PostMapping("/getscrap/{page}")
-	@ApiOperation("스크랩한 기사만 가져온다")
-	public @ResponseBody ResponseEntity<Map<String, Object>> showScraps(Member member, Article article,
-			HttpServletRequest request, @PathVariable int page) {
-		Map<String, Object> map = new HashMap<>();
-		List<Article> list = new ArrayList<>();
-		String start = request.getHeader("start"), end = request.getHeader("end");
-		String company = article.getCompany();
-		try {
-			if (company == null) {
-				for (String articleid : msvc.getMyScrap(msvc.memberInfo(member)).split(",")) {
-					list.add(asvc.oneArticle(Integer.parseInt(articleid)));
-				}
-			} else {
-				for (String articleid : msvc.getMyScrap(msvc.memberInfo(member)).split(",")) {
-					Article a = asvc.oneArticle(Integer.parseInt(articleid));
-					if (a.getCompany().trim().equals(company.trim()))
-						list.add(a);
-				}
-			}
-			if (start != null || end != null) {
-				list = DateUtil.getInstance().getMatchedList(list, start, end);
-			}
-
-			// 잘라서 보내준다
-			map.put("result", DateUtil.getInstance().makeInfi(page, list));
-			map.put("msg", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			map.put("msg", false);
-		}
-
-		return new ResponseEntity<>(map, HttpStatus.OK);
-	}
-
 	@GetMapping("/likecomp")
 	@ApiOperation("관시기업 기사만 가져온다")
 	public @ResponseBody ResponseEntity<Map<String, Object>> likeCompanyArticle(Member member) {
@@ -274,41 +182,39 @@ public class MemberController {
 
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
-
-	@GetMapping("/friendlist/{memberid}")
-	@ApiOperation("친구 목록 조회 서비스")
-	public @ResponseBody ResponseEntity<Map<String, Object>> listFriend(@PathVariable("memberid") String memberid) {
+	
+	@GetMapping("/relationlist/{memberid}")
+	@ApiOperation(" 회원 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> listRelation(@PathVariable("memberid") String memberid) {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			map.put("message", "친구 목록 조회 성공");
-			System.out.println("memberid:" + memberid);
-			List<Member> flist = msvc.friendList(Integer.parseInt(memberid));
-			for (int i = 0; i < flist.size(); i++) {
-				System.out.println(flist.get(i));
-			}
-			map.put("flist", flist);
-		} catch (RuntimeException e) {
-			map.put("message", "친구 목록 조회 실패");
-		}
-		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-		return resEntity;
-	}
-
-	@GetMapping("/requestlist/{memberid}")
-	@ApiOperation("친구 요청 목록 조회 서비스")
-	public @ResponseBody ResponseEntity<Map<String, Object>> listRequest(@PathVariable("memberid") String memberid) {
-		ResponseEntity<Map<String, Object>> resEntity = null;
-		Map<String, Object> map = new HashMap<String, Object>();
-		try {
-			map.put("message", "친구 요청 목록 조회 성공");
+			List<Member> list = new ArrayList<>();
+			map.put("message", "회원 목록 조회 성공");
+			List<Check> checklist = new ArrayList<>();
+			List<Member> nrlist = msvc.noRelationList(Integer.parseInt(memberid));
 			List<Member> rqlist = msvc.requestList(Integer.parseInt(memberid));
-			for (int i = 0; i < rqlist.size(); i++) {
-				System.out.println(rqlist.get(i));
+			for (Member member : nrlist) {
+				Check check = new Check();
+				check.setMemberid(member.getMemberid());
+				check.setCheck(true);
+				checklist.add(check);
 			}
-			map.put("rqlist", rqlist);
+			for (Member member : rqlist) {
+				Check check = new Check();
+				check.setMemberid(member.getMemberid());
+				check.setCheck(false);
+				checklist.add(check);
+			}
+			list.addAll(nrlist);
+			list.addAll(rqlist);
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println(list.get(i));
+			}
+			map.put("list", list);
+			map.put("checklist", checklist);
 		} catch (RuntimeException e) {
-			map.put("message", "친구 목록 조회 실패");
+			map.put("message", "회원 목록 조회 실패");
 		}
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
@@ -333,20 +239,21 @@ public class MemberController {
 		return resEntity;
 	}
 
-	@GetMapping("/norelationlist/{memberid}")
-	@ApiOperation("관계 없는 회원 목록 조회 서비스")
-	public @ResponseBody ResponseEntity<Map<String, Object>> listNoRelation(@PathVariable("memberid") String memberid) {
+	@GetMapping("/friendlist/{memberid}")
+	@ApiOperation("친구 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> listFriend(@PathVariable("memberid") String memberid) {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			map.put("message", "관계 없는 회원 목록 조회 성공");
-			List<Member> nrlist = msvc.noRelationList(Integer.parseInt(memberid));
-			for (int i = 0; i < nrlist.size(); i++) {
-				System.out.println(nrlist.get(i));
+			map.put("message", "친구 목록 조회 성공");
+			System.out.println("memberid:" + memberid);
+			List<Member> flist = msvc.friendList(Integer.parseInt(memberid));
+			for (int i = 0; i < flist.size(); i++) {
+				System.out.println(flist.get(i));
 			}
-			map.put("nrlist", nrlist);
+			map.put("flist", flist);
 		} catch (RuntimeException e) {
-			map.put("message", "관계 없는 회원 목록 조회 실패");
+			map.put("message", "친구 목록 조회 실패");
 		}
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
@@ -431,8 +338,14 @@ public class MemberController {
 		Map<String, Object> map=new HashMap<>();
 		try{
 			System.out.println("내IDff: "+m.getSendid()+"친구ID: "+m.getReceiveid()+"기사ID: "+m.getArticleid());
-			int insert= msvc.messageInsert(m);
-			System.out.println(insert);
+			List<Integer> tmp=m.getReceivelist();
+			for(int i=0;i<tmp.size();i++){
+				m.setReceiveid(tmp.get(i));
+				int insert= msvc.messageInsert(m);
+				System.out.println(insert);
+			} 
+			
+			
 			map.put("message", "메세지 저장 성공");
 		}catch(RuntimeException e) {
 			System.out.println(e.getMessage());
@@ -450,10 +363,22 @@ public class MemberController {
 		try {
 			map.put("message", "공유 요청 목록 조회 성공");
 			List<Message> mlist = msvc.messageList(Integer.parseInt(memberid)); //여기수정
+			//receiveid:내 공유함 아이디 , sendid: 다른사람이 나에게 보낸 id
+			List<Integer> sno=new ArrayList<>();
+			List<Member> mblist=new ArrayList<>();
+			List<Article> alist=new ArrayList<>();
 			for (int i = 0; i < mlist.size(); i++) {
 				System.out.println(mlist.get(i));
+				int sn=mlist.get(i).getSno();
+				Member tmp=msvc.selectid(mlist.get(i).getSendid());
+				Article atmp=asvc.oneArticle(mlist.get(i).getArticleid());
+				sno.add(mlist.get(i).getSno());
+				mblist.add(tmp);
+				alist.add(atmp);
 			}
-			map.put("mlist", mlist);
+			map.put("SNO", sno);
+			map.put("memberlist", mblist);
+			map.put("articlelist", alist);
 		} catch (RuntimeException e) {
 			map.put("message", "관계 없는 회원 목록 조회 실패");
 		}
@@ -461,7 +386,25 @@ public class MemberController {
 		return resEntity;
 	}
 
-	//------------------------------------------------------------
+	@PutMapping("/updatecompany/{memberid}")
+	@ApiOperation(value = "관심 기업 수정 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> updateCompany(@PathVariable String memberid) {
+		System.out.println("관심기업 리스트 비어있다.");
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		try {
+			int update = msvc.updateCompany(Integer.parseInt(memberid), "");
+			Map<String, Object> map = new HashMap<>();
+			map.put("result", update);
+			map.put("message", "관심 기업 수정 성공");
+			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("message", "관심 기업 수정 실패");
+			resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		}
+		return resEntity;
+	}
+	
 	@PutMapping("/updatecompany/{memberid}/{companylist}")
 	@ApiOperation(value = "관심 기업 수정 서비스")
 	public @ResponseBody ResponseEntity<Map<String, Object>> updateCompany(@PathVariable String memberid,
@@ -482,26 +425,40 @@ public class MemberController {
 		return resEntity;
 	}
 
+	@DeleteMapping("/deleteMessage/{sno}")
+	@ApiOperation(value = "내 메세지 삭제")
+	public @ResponseBody ResponseEntity<Map<String, Object>> deleteMessage(@PathVariable int sno) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			int delete = msvc.deleteMessage(sno);
+			map.put("resvalue", delete);
+			map.put("message", "삭제 성공");
+		} catch (Exception e) {
+			map.put("message", "삭제 실패");
+		}
+		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
+		return resEntity;
+	}
+	
 	@PostMapping("/insertscrap")
 	@ApiOperation(value = "내 기사 스크랩 서비스")
 	public @ResponseBody ResponseEntity<Map<String, Object>> insertMemberArticle(MemberArticle ma) {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<>();
-		System.out.println("스크랩한다~~~~~~~" + ma.getMemberid() + "," + ma.getArticleid());
 		try {
 			int insert = msvc.insertMemberArticle(ma);
 			map.put("result", insert);
 			map.put("message", "스크랩 성공");
 		} catch (Exception e) {
-			map.put("message", "스크랩 실패");
+			map.put("message", "이미 스크랩한 기사입니다.");
 		}
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
-
+	
 	@GetMapping("/getScrap/{memberid}")
 	@ApiOperation(value = "내 스크랩 기사 목록 조회 서비스")
 	public @ResponseBody ResponseEntity<Map<String, Object>> selectMyArticleList(@PathVariable String memberid) {
-		System.out.println("스크랩기업요청들어왔다." + memberid);
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<>();
 		try {
@@ -546,6 +503,53 @@ public class MemberController {
 			map.put("message", "삭제 성공");
 		} catch (Exception e) {
 			map.put("message", "삭제 실패");
+		}
+		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	@PutMapping("/savecontent")
+	@ApiOperation(value = "스크랩 기사 내용 수정 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> saveContent(MemberArticle ma) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			System.out.println("저장 요청 들어왔다:" + ma);
+			int update = msvc.saveContent(ma);
+			map.put("result", update);
+			map.put("message", "스크랩 기사 내용 수정 성공");
+		} catch (RuntimeException e) {
+			map.put("message", "스크랩 기사 내용 수정 실패");
+		}
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getkeyword/{memberid}")
+	@ApiOperation(value = "내 키워드 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> selectMemberKeywordList(@PathVariable String memberid) {
+		System.out.println("키워드요청들어왔다:" + memberid);
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			Map<String, Integer> list = msvc.selectMemberKeywordList(Integer.parseInt(memberid));
+			List<String> li1 = new ArrayList<String>(list.keySet());
+			List<Integer> li2 = new ArrayList<Integer>(list.values());
+			List<MemberKeyword> result = new ArrayList<>();
+			for (int i = 0; i < li1.size(); i++) {
+				System.out.println(li1.get(i) + "," + li2.get(i));
+				MemberKeyword mk = new MemberKeyword();
+				mk.setMemberid(Integer.parseInt(memberid));
+				mk.setKeyword(li1.get(i));
+				mk.setCount(li2.get(i));
+				result.add(mk);
+			}
+			for (int i = 0; i < result.size(); i++) {
+				System.out.println(result.get(i));
+			}
+			map.put("result", result);
+			map.put("message", "내 키워드 목록 조회 성공");
+		} catch (Exception e) {
+			map.put("message", "내 키워드 목록 조회 실패");
 		}
 		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
 		return resEntity;

@@ -1,32 +1,44 @@
 <template>
   <v-content>
-    <v-toolbar color="#FBFAF5" class="" style="width: 100%; z-index: 1;">
+    <v-toolbar color="" light="" class="" style="width: 100%; z-index: 1; ">
+    <!-- <v-toolbar color="#cecece" opacity="0.1" class="" style="width: 100%; z-index: 1;"> -->
       <v-row>
         <v-col cols="1">
           <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
         </v-col>
-        <!-- <v-col cols="1"></v-col> -->
         <v-col class="d-flex align-center flex-row-reverse">
             <span class="toolbar-btn" @click="goIndiRepo">개인저장소</span>
             <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
-            <span class="toolbar-btn" @click="goFriend">친구관리</span>
             <span class="toolbar-btn" @click="goSelectCom">관심기업추가</span>
           <div v-if="AuthenticatedCheck">
-            <!-- <router-link class="black--text" to="/indirepository">개인저장소</router-link> |
-            <router-link class="black--text" to="/analysis">분석데이터</router-link> |
-            <router-link class="black--text" to="/friend">친구관리</router-link> |
-            <router-link class="black--text" to="/selectcompany">관심기업 추가</router-link> | -->
             <span class="toolbar-btn" @click="logout">로그아웃</span>
+            <Friend/>
           </div>
           <div v-else>
             <span class="toolbar-btn" @click="goStart">Start</span>
-            <!-- <router-link class="black--text" to="/signup">로그인</router-link> -->
+            <v-snackbar
+              v-model="snackbar"
+              color="red"
+              :timeout="timeout"
+              :bottom="true"
+              :right="true"
+            >
+              {{ text }}
+              <v-btn
+                color="white"
+                text
+                @click="snackbar = false"
+              >
+                FAIL
+              </v-btn>
+            </v-snackbar>
           </div>
         </v-col>
       </v-row>
     </v-toolbar>
     <v-lazy>
-      <v-toolbar v-if="offsetTop > 350" color="#FBFAF5" id="pop-up-toolbar" class="" style="">
+      <!-- <v-toolbar v-if="offsetTop > 350" color="#FBFAF5" id="pop-up-toolbar" class="" style="opacity: 0.8;"> -->
+      <v-toolbar v-if="offsetTop > 350" dark="" id="pop-up-toolbar" class="" style="opacity: 0.8;">
         <v-row>
           <v-col cols="1">
             <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
@@ -37,6 +49,28 @@
             <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
             <span class="toolbar-btn" @click="goFriend">친구관리</span>
             <span class="toolbar-btn" @click="goSelectCom">관심기업추가</span>
+            <v-snackbar
+                v-model="snackbar"
+                color="red"
+                :timeout="timeout"
+                :bottom="true"
+                :right="true"
+              >
+                {{ text }}
+                <!-- <v-btn
+                  color="blue"
+                  text
+                  @click="addMem"
+                >
+                </v-btn> -->
+                <v-btn
+                  color="white"
+                  text
+                  @click="snackbar = false"
+                >
+                  FAIL
+                </v-btn>
+              </v-snackbar>
             <div class="float-right" v-if="AuthenticatedCheck">
               <!-- <router-link class="black--text" to="/indirepository">개인저장소</router-link> |
               <router-link class="black--text" to="/analysis">분석데이터</router-link> |
@@ -56,9 +90,16 @@
 </template>
 
 <script>
+import Friend from './Friend.vue'
 export default {
+  components: {
+    Friend
+  },
   data () {
     return {
+      snackbar: false,
+      text: '로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.',
+      timeout: 1000
     }
   },
   props: {
@@ -73,32 +114,44 @@ export default {
       if (this.AuthenticatedCheck) {
         this.$router.push('/indirepo')
       } else {
-        alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
-        this.$router.push('/signup')
+        // alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
+        this.snackbar = true
+        setTimeout(() => {
+          this.$router.push('/signup')
+        }, this.timeout)
       }
     },
     goAnalysis () {
       if (this.AuthenticatedCheck) {
         this.$router.push('/analysis')
       } else {
-        alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
-        this.$router.push('/signup')
+        // alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
+        this.snackbar = true
+        setTimeout(() => {
+          this.$router.push('/signup')
+        }, this.timeout)
       }
     },
     goFriend () {
       if (this.AuthenticatedCheck) {
         this.$router.push('/friend')
       } else {
-        alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
-        this.$router.push('/signup')
+        // alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
+        this.snackbar = true
+        setTimeout(() => {
+          this.$router.push('/signup')
+        }, this.timeout)
       }
     },
     goSelectCom () {
       if (this.AuthenticatedCheck) {
         this.$router.push('/selectcompany')
       } else {
-        alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
-        this.$router.push('/signup')
+        // alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
+        this.snackbar = true
+        setTimeout(() => {
+          this.$router.push('/signup')
+        }, this.timeout)
       }
     },
     goStart () {
@@ -120,13 +173,18 @@ export default {
 <style scoped>
 .toolbar-btn:hover {
   cursor: pointer;
-  font-size: 150%;
+  font-size: 200%;
+  /* text-decoration: underline; */
+  /* text-decoration-color: rgb(255, 147, 97); */
+  /* color: rgb(255, 147, 97); */
+  color: #ffd900;
 }
 .toolbar-btn {
-  font-size: 130%;
+  font-size: 170%;
   margin-right: 10px;
+  /* font-size: 25px; */
   /* font-weight: bold; */
-  font-family: 'Nanum Gothic', sans-serif;
+  /* font-family: 'Nanum Gothic', sans-serif; */
 }
 #pop-up-toolbar {
   position: fixed;
@@ -135,14 +193,14 @@ export default {
   opacity: 0.9;
   z-index: 1;
 }
-@font-face {
-  font-family: 'LogoFont'; /* 폰트 패밀리 이름 주기*/
-  src: url('../fonts/BLKCHCRY.TTF'); /*폰트 파일 주소*/
-}
-#homebtn { /* 위에서 font-face로 지정해놓은 font-family를 적용*/
-  font-family:'LogoFont' !important;
-  background-color: #FBFAF5;
-  color: #585022;
+/* @font-face {
+  font-family: 'LogoFont';
+  src: url('../fonts/BLKCHCRY.TTF');
+} */
+#homebtn {
+  /* font-family:'LogoFont' !important; */
+  background-color: #ffffff;
+  color: #000000;
   font-size: 40px;
 }
 </style>

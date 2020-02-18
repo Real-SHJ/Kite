@@ -4,21 +4,23 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="Article"
-			type="com.wildbody.kite.DTO.Article" />
-		<typeAlias alias="Member"
-			type="com.wildbody.kite.DTO.Member" />
+		<typeAlias alias="Article" type="com.wildbody.kite.DTO.Article" />
+		<typeAlias alias="Member" type="com.wildbody.kite.DTO.Member" />
 		<typeAlias alias="Token" type="com.wildbody.kite.DTO.Token" />
-		<typeAlias alias="Message"
-			type="com.wildbody.kite.DTO.Message" />
-		<typeAlias alias="MemberArticle"
-			type="com.wildbody.kite.DTO.MemberArticle" />
+		<typeAlias alias="Message" type="com.wildbody.kite.DTO.Message" />
+		<typeAlias alias="MemberArticle" type="com.wildbody.kite.DTO.MemberArticle" />
+		<typeAlias alias="MyArticle" type="com.wildbody.kite.DTO.MyArticle"/>
+		<typeAlias alias="Analysis" type="com.wildbody.kite.DTO.Analysis" />
+		<typeAlias alias="MemberKeyword" type="com.wildbody.kite.DTO.MemberKeyword" />
+		<typeAlias alias="ArticleKeyword" type="com.wildbody.kite.DTO.ArticleKeyword" />
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="static/mybatis/articleSQLMapper.xml" />
 		<mapper resource="static/mybatis/memberSQLMapper.xml" />
 		<mapper resource="static/mybatis/tokenSQLMapper.xml" />
+		<mapper resource="static/mybatis/searchSQLMapper.xml" />
+		<mapper resource="static/mybatis/keywordSQLMapper.xml" />
 	</mappers>
 
 </configuration>

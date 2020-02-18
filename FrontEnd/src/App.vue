@@ -1,13 +1,14 @@
 <template>
-  <v-app id="inspire" style="background-color: #FAFAFA">
-    <v-content v-if="getOpen === false">
+  <!-- <v-app id="inspire" style="background-color: #FAFAFA"> -->
+  <v-app id="inspire" style="background-color: #fffafa">
+    <!-- <v-content v-if="getOpen === false">
       <Opening @changeOpen="change"/>
-    </v-content>
-    <v-content v-else>
+    </v-content> -->
+    <!-- <v-content v-else> -->
       <Header :offsetTop="offsetTop" :AuthenticatedCheck="AuthenticatedCheck"/>
       <LeftMenu v-if="AuthenticatedCheck"/>
       <router-view/>
-      <Footer/>
+      <!-- <Footer/> -->
       <v-layout
         v-scroll="onScroll"
         align="center"
@@ -15,23 +16,24 @@
         id="nav"
       >
       </v-layout>
-    </v-content>
+    <!-- </v-content> -->
   </v-app>
 </template>
 
 <script>
 import Header from './components/Header'
 import LeftMenu from './components/LeftMenu'
-import Footer from './components/Footer'
+// import Footer from './components/Footer''
 import Opening from './components/Opening.vue'
+// import Opening from './components/Opening2'
 
 export default {
   name: 'app',
   components: {
     Header,
-    LeftMenu,
-    Footer,
-    Opening
+    LeftMenu
+    // Footer,
+    // Opening
   },
   data () {
     return {
@@ -54,8 +56,11 @@ export default {
           const userEmail = this.$session.get('my-info').userEmail
           const userName = this.$session.get('my-info').userName
           const userid = this.$session.get('my-info').userid
-          console.log(userName)
-          this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid })
+          const userImage = this.$session.get('my-info').userImage
+          const companylist = this.$session.get('my-info').companylist
+          this.$store.dispatch('infoSave', {
+            userEmail: userEmail, userName: userName, userid: userid, userImage: userImage, companylist: companylist
+          })
         }
       }, 1000)
     },

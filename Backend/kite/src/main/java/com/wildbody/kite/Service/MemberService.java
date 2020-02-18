@@ -3,9 +3,11 @@ package com.wildbody.kite.Service;
 import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.MemberArticle;
+import com.wildbody.kite.DTO.MemberKeyword;
 import com.wildbody.kite.DTO.Message;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MemberService {
 
@@ -16,6 +18,10 @@ public interface MemberService {
 	public int memberDelete(Member member);
 
 	public Member memberInfo(Member member);
+	
+	public Member selectid(int id);
+	
+	public int deleteMessage(int id);
 
 	public List<Member> memberList();
 
@@ -58,4 +64,8 @@ public interface MemberService {
 	public List<Article> selectMyCompanyArticleList(MemberArticle ma);
 
 	public int deleteMyArticle(MemberArticle ma);
+	
+	public int saveContent(MemberArticle ma);
+	
+	public Map<String, Integer> selectMemberKeywordList(int memberid);
 }

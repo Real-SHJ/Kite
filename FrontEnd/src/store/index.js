@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Open from './modules/Open'
 import auth from './modules/auth'
 import memInfo from './modules/memInfo'
+import color from './modules/color'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -16,6 +17,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     Open,
-    memInfo
+    memInfo,
+    color
   }
 })

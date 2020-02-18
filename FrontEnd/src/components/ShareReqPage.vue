@@ -1,0 +1,162 @@
+<template>
+  <v-content>
+    <v-card height="600">
+      <v-list>
+        <p class="share-req-title text-center mt-4" style="font-size: 35px;">공유 요청 목록</p>
+          <v-list-item
+            three-line
+            v-for="(myreq, index) in calData"
+            :key="index"
+            class="mx-3"
+          >
+            <v-list-item-avatar>
+              <img :src="`http://13.125.153.118:8999/img/profile/${myreq.member.image}`" alt="">
+            </v-list-item-avatar>
+              <!-- <p>{{ myreq.member.image }}</p> -->
+            <v-list-item-content class="text-center">
+              <p>{{myreq.member.lastname}}{{myreq.member.firstname}}</p>
+              <v-list-item-subtitle>{{myreq.member.email}}</v-list-item-subtitle>
+            </v-list-item-content>
+            <ShareReqs :article="myreq.article"/>
+          <v-col class="d-flex flex-row-reverse mr-2">
+            <v-icon ripple @click="reqAccept(myreq)">
+              save
+            </v-icon>
+            <v-icon ripple @click="reqDelete(myreq.sno)">
+              delete
+            </v-icon>
+          </v-col>
+        </v-list-item>
+        <!-- <v-card
+          v-for="(myreq, index) in calData"
+          :key="index"
+          class="mx-3 my-1"
+        >
+        <v-row>
+          <v-col
+            class="ml-2"
+            cols="2"
+          >
+            <v-card-title>{{ myreq.member.lastname }}{{ myreq.member.firstname }}</v-card-title>
+          </v-col>
+          <v-col
+            cols="8"
+          >
+            <ShareReqs :article="myreq.article"/>
+          </v-col>
+          <v-col class="d-flex flex-row-reverse mr-2">
+            <v-icon ripple @click="reqAccept(myreq)">
+              save
+            </v-icon>
+            <v-icon ripple @click="reqDelete(myreq.sno)">
+              delete
+            </v-icon>
+          </v-col>
+        </v-row>
+        </v-card> -->
+      </v-list>
+    <v-pagination
+      v-model="curPageNum"
+      :length="numOfPages">
+    </v-pagination>
+    </v-card>
+  </v-content>
+</template>
+
+<script>
+import ShareReqs from './ShareReqs.vue'
+import http from '../http-common'
+export default {
+  name: 'sharereqpage',
+  data () {
+    return {
+      reqListData: [],
+      dataPerPage: 5,
+      curPageNum: 1
+    }
+  },
+  components: {
+    ShareReqs
+  },
+  computed: {
+    startOffset () {
+      return ((this.curPageNum - 1) * this.dataPerPage)
+    },
+    endOffset () {
+      return (this.startOffset + this.dataPerPage)
+    },
+    numOfPages () {
+      return Math.ceil(this.reqListData.length / this.dataPerPage)
+    },
+    calData () {
+      return this.reqListData.slice(this.startOffset, this.endOffset)
+    }
+  },
+  methods: {
+  //   scrapToMy () {
+  //     console.log('공유를 받아주마!!!!')
+  //     http
+  //       .post()
+  //       .then((res) => {
+  //         console.log(res)
+  //       })
+  //   },
+    getReqList () {
+      console.log('!!!!!!!!!!!!!!!')
+      http
+        // .get(`/member/messagelist/${this.$session.get('my-info').userid}`)
+        .get(`/member/messagelist/7`)
+        .then((res) => {
+          console.log('공유요청~~~~~~~~~~~~~~!!')
+          console.log(res.data)
+          console.log(res.data.memberlist.length)
+          const memberlist = res.data.memberlist
+          const articlelist = res.data.articlelist
+          const sno = res.data.SNO
+          for (let idx = 0; idx < res.data.memberlist.length; idx++) {
+            this.reqListData.push({ sno: sno[idx], member: memberlist[idx], article: articlelist[idx] })
+          }
+          console.log(this.reqListData)
+        })
+    },
+    reqAccept (myreq) {
+      const fdata = new FormData()
+      fdata.append('memberid', this.$session.get('my-info').userid)
+      console.log(this.$session.get('my-info').userid)
+      console.log(myreq.article.articleid)
+      fdata.append('articleid', myreq.article.articleid)
+      http
+        .post('/member/insertscrap', fdata)
+        .then(res => {
+          console.log(res.data.message)
+        })
+        .catch(err => console.log(err))
+      http
+        .delete(`/member/deleteMessage/${myreq.sno}`)
+        .then((res) => {
+          console.log(res)
+          this.reqListData = this.reqListData.filter(target => {
+            return target.sno !== myreq.sno
+          })
+        })
+    },
+    reqDelete (sno) {
+      http
+        .delete(`/member/deleteMessage/${sno}`)
+        .then((res) => {
+          console.log(res)
+          this.reqListData = this.reqListData.filter(target => {
+            return target.sno !== sno
+          })
+        })
+    }
+  },
+  mounted () {
+    this.getReqList()
+  }
+}
+</script>
+
+<style>
+
+</style>

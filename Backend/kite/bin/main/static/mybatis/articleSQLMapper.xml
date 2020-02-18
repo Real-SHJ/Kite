@@ -58,12 +58,18 @@
 		select *
 		from article where articleid=#{articleid};
 	</select>
+	<select id="oneScrapArticle" parameterType="MemberArticle" resultType="string">
+		select content from member_article where memberid=#{memberid} and articleid=#{articleid};
+	</select>
+	<select id="getIndex" parameterType="MemberArticle" resultType="int">
+		select spanindex from member_article where memberid=#{memberid} and articleid=#{articleid};
+	</select>
 	<select id="infi" parameterType="string" resultType="Article">
 		select *
 		from article
 		where company = #{company}
 	</select>
-	<select id="countarticle" parameterType="String"
+	<select id="countarticle" parameterType="string"
 		resultType="int">
 		select count (articleid)
 		from article;

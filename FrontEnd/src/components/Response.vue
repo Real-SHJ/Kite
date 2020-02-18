@@ -1,23 +1,48 @@
 <template>
-  <v-content>
-    <v-list>
-        <v-list-item  v-for="(item, i) in rslist" :key="i">
-            <v-list-item-avatar>
-                <img v-if="item.image === 'null'" src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"/>
-                <v-img v-else :src="`http://13.125.153.118:8999/img/profile/${item.image}`"></v-img>
-            </v-list-item-avatar>
-            <v-list-item-content>
-                <v-list-item-title v-text="item.lastname + ' ' + item.firstname"></v-list-item-title>
-            </v-list-item-content>
-            <v-btn class="ma-2" small outlined color="indigo" @click="insertfriend(item.memberid)">수락</v-btn>
-            <v-btn class="ma-2" small outlined color="red" @click="deletefriendwait(item.memberid)">거절</v-btn>
-        </v-list-item>
-    </v-list>
-  </v-content>
+  <v-list>
+    <div v-if="rslist.length !== 0">
+      <v-list-item  v-for="(item, i) in rslist" :key="i">
+        <v-list-item-avatar>
+          <img v-if="item.image === 'null'" src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"/>
+          <v-img v-else :src="`http://13.125.153.118:8999/img/profile/${item.image}`"></v-img>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title v-text="item.lastname + ' ' + item.firstname"></v-list-item-title>
+        </v-list-item-content>
+        <v-btn class="ma-2" small outlined color="indigo" @click="insertfriend(item)">수락</v-btn>
+        <v-btn class="ma-2" small outlined color="red" @click="deletefriendwait(item)">거절</v-btn>
+      </v-list-item>
+    </div>
+    <div v-else>
+      <p class="my-3" style="font-size: 15px;">요청이 없습니다...</p>
+    </div>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      :top="true"
+      :right="true"
+      color="success"
+    >
+      {{ text }}
+      <!-- <v-btn
+        color="blue"
+        text
+        @click="addMem"
+      >
+      </v-btn> -->
+      <v-btn
+        color="white"
+        text
+        @click="snackbar = false"
+      >
+        SUCCESS
+      </v-btn>
+    </v-snackbar>
+  </v-list>
 </template>
 
 <script>
-import router from '../router'
+// import router from '../router'
 import http from '../http-common'
 export default {
   name: 'responselist',
@@ -25,49 +50,57 @@ export default {
     return {
       memberid: this.$session.get('my-info').userid,
       requestid: this.$session.get('my-info').userid,
-      rslist: []
+      rslist: [],
+      snackbar: false,
+      text: '친구가 성공적으로 등록되었습니다.',
+      timeout: 2000
     }
   },
   methods: {
-    deletefriendwait: function (responseid) {
-      let requestid = responseid
-      responseid = this.requestid
+    deletefriendwait: function (response) {
+      let requestid = response.memberid
+      const userid = this.requestid
       http
-        .delete('/member/deletefriendwait' + '/' + requestid + '/' + responseid)
+        .delete('/member/deletefriendwait' + '/' + requestid + '/' + userid)
         .then(
           response => {
             console.log(response.data.message)
+            const target = this.rslist.indexOf(response)
+            this.rslist.splice(target, 1)
           }
         )
         .catch(err => console.log(err))
         .finally(
-          router.push('/friend')
+          // router.push('/friend')
         )
     },
-    insertfriend: function (friendid) {
-      let requestid = friendid
-      let responseid = this.requestid
+    insertfriend: function (friend) {
+      let requestid = friend.memberid
+      let userid = this.requestid
       http
-        .delete('/member/deletefriendwait' + '/' + requestid + '/' + responseid)
+        .delete('/member/deletefriendwait' + '/' + requestid + '/' + userid)
         .then(
           response => {
             console.log(response.data.message)
+            const target = this.rslist.indexOf(response)
+            this.rslist.splice(target, 1)
           },
           http
-            .post('/member/insertfriend' + '/' + this.memberid + '/' + friendid)
+            .post('/member/insertfriend' + '/' + this.memberid + '/' + requestid)
             .then(
               response => {
+                this.snackbar = true
                 console.log(response.data.message)
               }
             )
             .catch(err => console.log(err))
             .finally(
-              router.push('/friend')
+              // router.push('/friend')
             )
         )
         .catch(err => console.log(err))
         .finally(
-          router.push('/friend')
+          // router.push('/friend')
         )
     },
     getFriendList () {
@@ -76,6 +109,7 @@ export default {
         .then(
           response => {
             this.rslist = response.data.rslist
+            console.log(this.rslist.length)
           }
         )
         .catch(err => console.log(err))

@@ -4,6 +4,28 @@
       <v-btn color="black" style="float:right" class="white--text" @click="saveCompany()">
         관심 기업 저장
       </v-btn>
+        <v-snackbar
+          v-model="snackbar"
+          color="green"
+          :timeout="timeout"
+          :top="true"
+          :right="true"
+        >
+          {{ text }}
+          <!-- <v-btn
+            color="blue"
+            text
+            @click="addMem"
+          >
+          </v-btn> -->
+          <v-btn
+            color="white"
+            text
+            @click="snackbar = false"
+          >
+            SUCCESS
+          </v-btn>
+        </v-snackbar>
       <v-container class="pa-1">
           <v-row class="fill-height" align="center" justify="center">
             <template v-for="(item, i) in items">
@@ -39,6 +61,9 @@ export default {
   name: 'selectcompany',
   data () {
     return {
+      snackbar: false,
+      text: '관심기업이 저장되었습니다.',
+      timeout: 1000,
       items: [
         {
           name: 'CJ제일제당',
@@ -155,8 +180,7 @@ export default {
           src: 'http://13.125.153.118:8999/img/logo/Woori_Bank.svg',
           clicked: false
         }
-      ],
-      memberid: this.$session.get('my-info').userid
+      ]
     }
   },
   computed: {
@@ -175,14 +199,17 @@ export default {
       }
     },
     loadCompany: function () {
-      let companylist = this.userInfo.companylist.split(',')
-      for (let i = 0; i < this.items.length; i++) {
-        for (let j = 0; j < companylist.length; j++) {
-          if (this.items[i].name === companylist[j]) this.items[i].clicked = true
+      setTimeout(() => {
+        let companylist = this.$session.get('my-info').companylist.split(',')
+        for (let i = 0; i < this.items.length; i++) {
+          for (let j = 0; j < companylist.length; j++) {
+            if (this.items[i].name === companylist[j]) this.items[i].clicked = true
+          }
         }
-      }
+      }, 1000)
     },
     saveCompany: function () {
+      this.snackbar = true
       let companylist = ''
       var items = this.items
       for (let i = 0; i < items.length; i++) {
@@ -199,7 +226,7 @@ export default {
       this.$session.set('my-info', { userEmail: this.$session.get('my-info').userEmail, userName: this.$session.get('my-info').userName, userid: this.$session.get('my-info').userid, userImage: this.$session.get('my-info').userImage, companylist: companylist })
       console.log(companylist)
       http
-        .put('/member/updatecompany' + '/' + this.memberid + '/' + companylist)
+        .put('/member/updatecompany' + '/' + this.$session.get('my-info').userid + '/' + companylist)
         .then(
           response => {
             console.log(response.data.message)

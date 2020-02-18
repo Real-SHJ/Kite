@@ -99,6 +99,26 @@ public class ArticleController {
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
 	}
+	
+	@GetMapping("/onescraparticle/{memberid}/{articleid}")
+	@ApiOperation(value = "memberid와 articleid에 맞은 기사 하나만 출력", response = Article.class)
+	public ResponseEntity<Map<String, Object>> oneScarpArticle(@PathVariable String memberid, @PathVariable String articleid) {
+		System.out.println("스크랩 기사 1개 요청 들어왓따." + memberid + "," + articleid);
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			Article article = svc.oneScarpArticle(Integer.parseInt(memberid), Integer.parseInt(articleid));
+			int spanIndex = svc.getIndex(Integer.parseInt(memberid), Integer.parseInt(articleid));
+			System.out.println("idx:" + spanIndex);
+			map.put("article", article);
+			map.put("spanIndex", spanIndex);
+			map.put("message", "기사 1개 조회 성공");
+		} catch (Exception e) {
+			map.put("message", "기사 1개 조회 실패");
+		}
+		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		return resEntity;
+	}
 
 	@GetMapping("/list")
 	@ApiOperation(value = "기사 목록 조회 서비스")
@@ -111,10 +131,8 @@ public class ArticleController {
 				if (background_img.containsKey(ar.getCompany())) {
 					int index = background_img.get(ar.getCompany()).size();
 					int random_index = (int) (Math.random() * index);
-					System.out.println("랜덤인덱스:" + random_index);
 					ar.setImage(imgUrl + background_img.get(ar.getCompany()).get(random_index));
 					ar.setLogo(imgUrl + logo_img.get(ar.getCompany()));
-					System.out.println(imgUrl + background_img.get(ar.getCompany()));
 				}
 			}
 			map.put("result", list);
@@ -132,16 +150,24 @@ public class ArticleController {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Article> list = new ArrayList<>();
-		member = msvc.memberInfo(member);
-		String company = article.getCompany();
+		member = msvc.memberInfo(member); // 멤버의 회사 정보가 들어온다.
+		String company = article.getCompany(); //회사 string 을 받아서 
 		System.out.println(company);
 		try {
-			if (company == null) {
+			if (company == null) { //로그인이 안되어있을 때
 				for (String comp : member.getCompany().split(",")) {
 					list.addAll(svc.infi(comp));
+					for (Article ar : list) {
+						if (background_img.containsKey(ar.getCompany())) {
+							int index = background_img.get(ar.getCompany()).size();
+							int random_index = (int) (Math.random() * index);
+							ar.setImage(imgUrl + background_img.get(ar.getCompany()).get(random_index));
+							ar.setLogo(imgUrl + logo_img.get(ar.getCompany()));
+						}
+					}
 				}
-			} else {
-				list.addAll(svc.infi(company));
+			} else { //로그인 되었을 때
+				list.addAll(svc.infi(company)); //회사별 기사
 			}
 			map.put("result", DateUtil.getInstance().makeInfi(page, list));
 			map.put("message", "인피니티 로딩 성공");
@@ -149,6 +175,22 @@ public class ArticleController {
 			e.printStackTrace();
 			map.put("result", new ArrayList<>());
 			map.put("message", "인피니티 로딩 실패");
+		}
+		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	@GetMapping("/mykeywordarticle/{memberid}/{keyword}")
+	@ApiOperation(value = "memberid와 keyword에 맞은 기사들을 출력", response = Article.class)
+	public ResponseEntity<Map<String, Object>> myKeywordArticle(@PathVariable String memberid, @PathVariable String keyword) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			List<Article> keywordarticles = svc.myKeywordArticle(Integer.parseInt(memberid), keyword);
+			map.put("result", keywordarticles);
+			map.put("message", "내 키워드 기사 조회 성공");
+		} catch (Exception e) {
+			map.put("message", "내 키워드 기사 조회  실패");
 		}
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kite.keyword">	
+	<insert id="insertMemberKeyword" parameterType="java.util.List">
+		insert into
+		member_keyword(memberid,articleid,keyword,count)
+		values
+		<foreach item="item" index="index" collection="list" separator=",">
+			( #{item.memberid}, #{item.articleid}, #{item.keyword}, #{item.count} )
+		</foreach>
+	</insert>
+	<select id="selectMemberKeyword" parameterType="int" resultType="MemberKeyword">
+		select * from member_keyword where memberid=#{memberid}
+	</select>
+	<delete id="deleteMemberKeyword" parameterType="map">
+		delete from member_keyword where memberid=#{memberid} and articleid=#{articleid}
+	</delete>
+	<select id="mykeywordarticle" parameterType="map" resultType="Article">
+		select * from article where articleid in
+		(select articleid from member_keyword where memberid=#{memberid} and keyword=#{keyword})
+	</select>
+</mapper>

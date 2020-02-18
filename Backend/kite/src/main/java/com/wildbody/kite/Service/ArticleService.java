@@ -1,6 +1,8 @@
 package com.wildbody.kite.Service;
 
 import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.MemberArticle;
+
 import java.util.List;
 
 public interface ArticleService {
@@ -18,6 +20,12 @@ public interface ArticleService {
 	public List<Article> articleList();
 
 	public Article oneArticle(int articleid);
+	
+	public Article oneScarpArticle(int memberid, int articleid);
+	
+    public int getIndex(int memberid, int articleid);
 
 	public List<Article> infi(String company);
+	
+	public List<Article> myKeywordArticle(int memberid, String keyword);
 }

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="px-2">
+  <v-flex>
     <!-- <v-carousel hide-delimiters>
       <div
         v-for="(article,i) in articles"
@@ -50,42 +50,67 @@
         </v-carousel-item>
       </div>
     </v-carousel> -->
-    <v-card
-      v-for="article in articles" :key="article.id"
-      class="article-cards mx-auto my-10"
-      max-width="700"
-      style="height: 600px;"
-      id = "mycard"
-    >
-      <div @click="goDetail(article)">
-        <v-img
-          class="align-end"
-          height="400px"
-          :src="`${article.image}`"
-        >
-          <v-avatar
-            class="companyLogo"
-            size="100"
-          >
-            <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
-          </v-avatar>
-        </v-img>
-        <v-card-title>{{article.title}}</v-card-title>
+    <v-row>
+        <div
+        class="d-flex justify-center"
+        outline
+        tile
+        v-for="(article,i) in articles" :key="article.id">
+        <v-col cols="8"></v-col>
+      <v-col class="images">
+              <v-card
+              @click='goDetail(article.articleid)'
 
-        <v-card-subtitle class="pb-0 mb-5">Number 10</v-card-subtitle>
+                  max-width="600"
+                  id = "mycard"
+                  :img = "`${article.image}`"
+                  height="400px"
+                  width="600px"
+                  tile
+              >
+                  <v-avatar
+                    class="companyLogo"
+                    size="100px"
+                  >
+                    <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
+                  </v-avatar>
+
+                  <v-row
+                  class="row"
+                    >
+                    {{article.title}}
+                  </v-row>
+
+                  <v-card-actions class="btngrp">
+                    <ScrapDialog :article="article"/>
+                    <ShareDialog :article="article" :myFriends="myFriends"/>
+                  </v-card-actions>
+            <div class="overay textwrap" style="color:white;">
+              {{article.summary}}
+            </div>
+        <!-- <v-card-title>{{article.title}}</v-card-title>
+        <v-divider class="mx-4"></v-divider>
+
+        <v-card-subtitle class="pb-0 mb-5" v-html="article.newspaper"></v-card-subtitle>
 
         <v-card-text>
-          <div>Whitehaven Beach</div>
-
-          <div>Whitsunday Island, Whitsunday Islands</div>
+          <div v-html="article.summary"></div>
         </v-card-text>
-      </div>
-      <v-card-actions class="d-flex justify-end">
-        <ScrapDialog :article="article"/>
-        <ShareDialog :article="article" :myFriends="myFriends"/>
-      </v-card-actions>
-    </v-card>
-  </v-container>
+        <v-divider class="mx-4"></v-divider> -->
+
+      <!-- <div @click="goDetail(article)">
+      </div> -->
+      </v-card>
+
+    </v-col>
+    <v-responsive
+      v-if="n === 2"
+      :key="`width-${i}`"
+    ></v-responsive>
+    </div>
+    </v-row>
+
+  </v-flex>
 </template>
 
 <script>
@@ -102,27 +127,26 @@ export default {
   },
   data () {
     return {
-      myId: null,
+      // myId: null,
       test: [1, 2, 3],
-      myFriends: []
+      myFriends: [],
+      n: 0
     }
   },
   methods: {
-    userIdCheck () {
-      if (this.$session.has('my-info')) {
-        console.log('니니니닌')
-        console.log(this.$session.get('my-info').userid)
-        this.myId = this.$session.get('my-info').userid
-        console.log(this.myId)
-      }
+    init () {
+      this.drawer = true
+      let companylist = null
+      companylist = this.userInfo.companylist
+      this.info = companylist.split(',')
     },
     getMyFriends () {
       setTimeout(() => {
-        if (this.myId) {
+        if (this.$session.has('my-info')) {
+          const myId = this.$session.get('my-info').userid
           http
-            .get(`/member/friendlist/${this.myId}`)
+            .get(`/member/friendlist/${myId}`)
             .then((res) => {
-              console.log(res)
               this.myFriends = res.data.flist
               console.log(this.myFriends)
             })
@@ -144,27 +168,73 @@ export default {
     // }
   },
   mounted () {
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!')
-    console.log(this.myId)
     // this.getArticle()
+    // this.userIdCheck()
     this.getMyFriends()
-    this.userIdCheck()
+  },
+  updated () {
   }
 }
 
 </script>
 
-<style>
-  .article-cards {
-    position: relative;
-  }
+<style scoped>
   .companyLogo {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
+    margin-right: 3%;
   }
   #mycard {
-    background-color: #3A3B3C;
-    color: #F1F1F1 !important;
+    background-color: rgba(255, 255, 255, 0.300);
+    color: #000000 !important;
+  }
+
+  .textwrap{
+    /* width: 100%; */
+    display: inline-block;
+    white-space: normal;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    line-height: 1.2;
+    height: 3.6;
+    text-align: left;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient: vertical;
+  }
+
+  .overay {
+    position: absolute;
+    bottom: 0;
+    left:0;
+    right:0;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    overflow: hidden;
+    height: 0;
+    transition: 0.3s ease;
+  }
+
+  .images:hover .overay{
+    height: 45%;
+  }
+  .row{
+    color:white;
+    font-size:1.4em;
+    margin:auto;
+    max-height:50px;
+    /* position: absolute; */
+    top: 0;
+    right:0;
+    margin-bottom: 10%;
+    z-index: inherit;
+  }
+  .btngrp{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: inherit;
   }
 </style>

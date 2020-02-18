@@ -1,7 +1,12 @@
 package com.wildbody.kite.Repository;
 
 import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.MemberArticle;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -46,9 +51,32 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 	public Article oneArticle(int articleid) {
 		return session.selectOne("kite.article.oneArticle", articleid);
 	}
+	
+	@Override
+	public Article oneScrapArticle(MemberArticle ma) {
+		Article article = oneArticle(ma.getArticleid());
+		System.out.println(article);
+		String content = session.selectOne("kite.article.oneScrapArticle", ma);
+		System.out.println(content);
+		article.setContent(content);
+		return article;
+	}
+	
+	@Override
+	public int getIndex(MemberArticle ma) {
+		return session.selectOne("kite.article.getIndex", ma);
+	}
 
 	@Override
 	public List<Article> infi(String company) {
 		return session.selectList("kite.article.infi", company);
+	}
+	
+	@Override
+	public List<Article> myKeywordArticle(int memberid, String keyword) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberid", memberid);
+		map.put("keyword", keyword);
+		return session.selectList("kite.keyword.mykeywordarticle", map);
 	}
 }

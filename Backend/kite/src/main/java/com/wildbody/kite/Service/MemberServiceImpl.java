@@ -3,15 +3,21 @@ package com.wildbody.kite.Service;
 import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.MemberArticle;
+import com.wildbody.kite.DTO.MemberKeyword;
 import com.wildbody.kite.DTO.Message;
 import com.wildbody.kite.Repository.MemberRepository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
+import kr.co.shineware.nlp.komoran.core.Komoran;
+import kr.co.shineware.nlp.komoran.model.Token;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -146,5 +152,89 @@ public class MemberServiceImpl implements MemberService {
 		return repo.deleteMyArticle(ma);
 	}
 
+	@Override
+	public int saveContent(MemberArticle ma) {
+		Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
+		List<String> list = new ArrayList<>();
+		String content = ma.getContent();
+		int temp = 0, start = 0, end = 0;
+		int str = "\">".length();
+		int str2 = "</span>".length();
+		while (true) {
+			content = content.substring(temp);
+			start = content.indexOf("\">") + str;
+			end = content.indexOf("</span>");
+			if (end - start < 0)
+				break;
+			String parseText = content.substring(start, end);
+			list.add(parseText);
+			temp = end + str2;
+		}
+		Map<String, Integer> map = new HashMap<>();
+		List<Token> select = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			List<Token> tokens = komoran.analyze(list.get(i)).getTokenList();
+			for (Token token : tokens) {
+				if (token.getPos().equals("NNP") || token.getPos().equals("NNG") || token.getPos().equals("SL")) {
+//					System.out.println(token);
+					select.add(token);
+				}
+			}
+		}
+		for (Token token : select) {
+			Integer freq = map.get(token.getMorph());
+			map.put(token.getMorph(), (freq == null) ? 1 : freq + 1);
+		}
+
+		List<MemberKeyword> mklist = new ArrayList<>();
+		for (String key : map.keySet()) {
+			Integer value = map.get(key);
+//			System.out.println(key + " : " + value);
+			MemberKeyword mk = new MemberKeyword();
+			mk.setMemberid(ma.getMemberid());
+			mk.setArticleid(ma.getArticleid());
+			mk.setKeyword(key);
+			mk.setCount(value);
+			mklist.add(mk);
+		}
+		int delete = repo.deleteMemberKeyword(ma.getMemberid(), ma.getArticleid());
+		System.out.println("삭제 몇개됐노?:" + delete);
+		int insert = repo.insertMemberKeyword(mklist);
+		System.out.println("키워드 몇개들어갔노?:" + insert);
+		return repo.saveContent(ma);
+	}
+
+//	@Override
+//	public List<MemberKeyword> selectMemberKeywordList(MemberKeyword mk) {
+//		return repo.selectMemberKeywordList(mk);
+//	}
+//
+//	@Override
+//	public int deleteMemberKeyword(MemberKeyword mk) {
+//		return repo.deleteMemberKeyword(mk);
+//	}
+
+	@Override
+	public Member selectid(int id) {
+		return repo.memberid(id);
+	}
+
+	@Override
+	public int deleteMessage(int id) {
+		return repo.deleteMessage(id);
+	}
 	
+	@Override
+	public Map<String, Integer> selectMemberKeywordList(int memberid) {
+		Map<String, Integer> map = new HashMap<>();
+		List<MemberKeyword> select = repo.selectMemberKeywordList(memberid);
+		List<MemberKeyword> result = new ArrayList<>();
+		for (MemberKeyword item : select) {
+			String keyword = item.getKeyword();
+			int count = item.getCount();
+			Integer freq = map.get(keyword);
+			map.put(keyword, (freq == null) ? count : freq + count);
+		}
+		return map;
+	}
 }

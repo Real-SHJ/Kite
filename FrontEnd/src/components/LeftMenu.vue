@@ -1,8 +1,9 @@
 <template>
   <v-layout class="layout">
 
-    <v-btn class="mx-2" fixed fab dark color="green" @mouseover='init'>
-    <v-icon dark>mdi-format-list-bulleted-square</v-icon>
+    <v-btn class="left-menu-button" dark="" fixed @mouseover='init'>
+    menu
+    <!-- <v-icon dark>mdi-format-list-bulleted-square</v-icon> -->
       <!-- <v-list-item-avatar>
           <v-img src="../../src/assets/hamburger.png" @mouseover='init'></v-img>
         </v-list-item-avatar> -->
@@ -112,12 +113,12 @@ export default {
         // 글자가 들어가있는 경우
         this.info2 = []
         console.log('@@' + this.searchText)
-        for (let i = 0; i < this.info.length; i++) {
-          if (this.info[i].match(this.searchText)) {
-            console.log(this.info[i])
-            this.info2.push(this.info[i])
-          }
-        }
+        // for (let i = 0; i < this.info.length; i++) {
+        //   if (this.info[i].match(this.searchText)) {
+        //     console.log(this.info[i])
+        //     this.info2.push(this.info[i])
+        //   }
+        // }
         this.info2 = this.info.filter(item => {
           return item.indexOf(this.searchText) > -1
         })
@@ -133,15 +134,22 @@ export default {
 }
 </script>
 <style>
-.menu_img {
+/* .menu_img {
   height: 36px;
   width: 64px;
 }
 .btn_abc {
   top: 200px;
   width: 50px;
-}
+} */
 .v-overlay {
-  opacity: 0.1;
+  opacity: 0;
+}
+.left-menu-button {
+  top: 270px;
+  left: -30px;
+  margin-top: -10px;
+  z-index: 5;
+  transform: rotate(-90deg)
 }
 </style>
