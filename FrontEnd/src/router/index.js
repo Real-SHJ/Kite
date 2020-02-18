@@ -5,15 +5,15 @@ import Analysis from '../views/Analysis.vue'
 import ArticleCorpo from '../views/ArticleCor.vue'
 import ArticleDetail from '../views/ArticleDetail.vue'
 import Empty from '../views/Empty.vue'
-import Friend from '../views/Friend.vue'
 import ForceDirected from '../components/ForceDirected.vue'
 import NaverLogin from '../components/NaverLogin.vue'
 import IndiRepository from '../views/IndiRepository.vue'
 import SelectCompany from '../views/SelectCompany.vue'
 import SignUp from '../views/SignUp.vue'
-import WordCloud from '../components/WordCloud.vue'
+import KeywordWordCloud from '../components/KeywordWordCloud.vue'
 import Test from '../views/Test.vue'
 import IndiRepo from '../views/IndiRepo.vue'
+import SearchRank from '../components/SearchRank.vue'
 
 Vue.use(VueRouter)
 
@@ -42,6 +42,12 @@ const routes = [
     props: true
   },
   {
+    path: '/test/:id',
+    name: 'test',
+    component: Test,
+    props: true
+  },
+  {
     path: '/articleDetail/:id',
     name: 'articledetail',
     component: ArticleDetail,
@@ -51,11 +57,6 @@ const routes = [
     path: '/empty',
     name: 'empty',
     component: Empty
-  },
-  {
-    path: '/friend',
-    name: 'friend',
-    component: Friend
   },
   {
     path: '/forcedirected',
@@ -83,14 +84,14 @@ const routes = [
     component: SignUp
   },
   {
-    path: '/wordcloud',
-    name: 'wordcloud',
-    component: WordCloud
+    path: '/keywordwordcloud',
+    name: 'keywordwordcloud',
+    component: KeywordWordCloud
   },
   {
-    path: '/test',
-    name: 'test',
-    component: Test
+    path: '/searchrank',
+    name: '/searchrank',
+    component: SearchRank
   }
 ]
 

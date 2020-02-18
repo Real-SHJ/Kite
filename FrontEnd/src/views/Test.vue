@@ -1,5 +1,7 @@
 <template>
   <v-content>
+    <br/>
+    <br/>
     <v-menu open-on-hover bottom origin="center center" transition="scale-transition">
       <template v-slot:activator="{ on }">
         <v-btn color="red" dark v-on="on">
@@ -14,30 +16,17 @@
       </v-row>
     </v-menu>
 
-    <!-- Trigger/Open The Modal -->
-    <button id="myBtn">Open Modal</button>
-
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
-      </div>
-
-    </div>
-    <v-btn @click="save()">저장</v-btn>
-    <p>Highlight</p>
-    <v-btn @click="initMouse()">
-        Off
-    </v-btn>
-    <v-btn @click="changeMouse()">
+    <span style="margin-left:30px;">Highlight 기능</span>
+    <v-btn @click="highlightOn()" style="margin-left:30px;">
         On
     </v-btn>
+    <v-btn @click="highlightOff()">
+        Off
+    </v-btn>
+    <v-btn @click="save()" style="margin-left:30px;">저장</v-btn>
     <v-spacer></v-spacer>
-    <p>본문 내용</p>
-    <div v-html="article" id="my"></div>
+    <br/>
+    <div v-if="article" v-html="article.content" id="maincontent"></div>
   </v-content>
 </template>
 
@@ -45,31 +34,42 @@
 import http from '../http-common'
 export default {
   name: 'test',
+  props: {
+    id: String
+  },
   methods: {
-    initMouse () {
-      document.getElementById('my').style.cursor = 'default'
-      let col = document.querySelector(`#my`)
-      col.removeEventListener('click', this.getSelectText)
-    },
-    changeMouse () {
-      document.getElementById('my').style.cursor = 'url("http://13.125.153.118:8999/img/tmp/Highlighter.png"), auto'
-      let col = document.querySelector(`#my`)
-      console.log(col)
-      col.addEventListener('click', this.getSelectText)
-    },
     getArticle () {
       http
-        .get('/article/onearticle/1')
+        .get(`/article/onescraparticle/${this.$session.get('my-info').userid}/${this.id}`)
         .then(
           response => {
-            this.article = response.data.result.content
+            this.article = response.data.article
+            this.spanIndex = response.data.spanIndex
           }
         )
         .catch(err => console.log(err))
-        .finally(
-        )
+        .finally()
     },
-    getSelectText () {
+    highlightOn () {
+      let col = document.querySelector(`#maincontent`)
+      col.style.cursor = 'url("http://13.125.153.118:8999/img/tmp/Highlighter.png"), auto'
+      col.addEventListener('click', this.actionHighlight)
+      let cols = document.querySelectorAll('.high')
+      for (let i = 0; i < cols.length; i++) {
+        let item = cols[i]
+        item.addEventListener('click', this.removeItem)
+      }
+    },
+    highlightOff () {
+      let col = document.querySelector(`#maincontent`)
+      col.removeEventListener('click', this.actionHighlight)
+      let cols = document.querySelectorAll('.high')
+      for (let i = 0; i < cols.length; i++) {
+        let item = cols[i]
+        item.removeEventListener('click', this.removeItem)
+      }
+    },
+    actionHighlight () {
       this.message = window.getSelection()
       let str = this.message.toString()
       // eslint-disable-next-line camelcase
@@ -77,7 +77,7 @@ export default {
       if (str.replace(blank_pattern, '') === '') {
         return
       }
-      this.replace(`<span id="high${this.spanIndex}" style="background-color: ${this.color}; cursor: pointer">` + this.message.toString() + '</span>')
+      this.replace(`<span class="high" style="background-color: ${this.color}; cursor: pointer">` + this.message.toString() + '</span>')
 
       let sel = window.getSelection ? window.getSelection() : document.selection
       if (sel) {
@@ -87,13 +87,17 @@ export default {
           sel.empty()
         }
       }
-      let col = document.querySelector(`#high${this.spanIndex}`)
-      console.log(col)
-      col.addEventListener('click', function () {
-        let val = col.innerHTML
-        col.replaceWith(val)
-      })
-      this.spanIndex++
+      let cols = document.querySelectorAll('.high')
+      for (let i = 0; i < cols.length; i++) {
+        let item = cols[i]
+        item.addEventListener('click', this.removeItem)
+      }
+      // let col = document.querySelector(`#high${this.spanIndex}`)
+      // col.addEventListener('click', function () {
+      //   let val = this.innerHTML
+      //   this.replaceWith(val)
+      // })
+      // this.spanIndex++
     },
     replace (text) {
       var _range = window.getSelection().getRangeAt(0)
@@ -103,48 +107,39 @@ export default {
       _range.deleteContents()
       _range.insertNode(_node)
     },
+    removeItem (e) {
+      let val = e.target.innerHTML
+      e.target.replaceWith(val)
+    },
     save () {
-      var content = document.querySelector(`#my`)
-      console.log(content.outerHTML)
+      var content = document.querySelector(`#maincontent`).innerHTML
+      let fdata = new FormData()
+      fdata.append('memberid', this.$session.get('my-info').userid)
+      fdata.append('articleid', this.id)
+      fdata.append('content', content)
+      fdata.append('spanindex', this.spanIndex)
+      http
+        .put('/member/savecontent', fdata)
+        .then(
+          response => {
+            console.log(response.data.message)
+          }
+        )
+        .catch(err => console.log(err))
+        .finally(
+        )
     }
   },
   data () {
     return {
       spanIndex: 0,
-      article: '',
+      article: null,
       type: 'hex',
-      hex: '#FFFF00',
-      company: '삼성전자'
+      hex: '#FFFF00'
     }
   },
   mounted () {
     this.getArticle()
-
-    // Get the modal
-    var modal = document.getElementById('myModal')
-
-    // Get the button that opens the modal
-    var btn = document.getElementById('myBtn')
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName('close')[0]
-
-    // When the user clicks on the button, open the modal
-    btn.onclick = function () {
-      modal.style.display = 'block'
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-      modal.style.display = 'none'
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-      if (event.target === modal) {
-        modal.style.display = 'none'
-      }
-    }
   },
   computed: {
     color: {
@@ -168,50 +163,11 @@ export default {
 </script>
 
 <style scoped>
-p {
-    font-weight: bold
-}
-#my {
+#maincontent {
     border-style: solid;
     border-width: 1px;
     border-color: blue;
     margin: 30px;
     padding: 30px;
-}
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
-}
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
 }
 </style>

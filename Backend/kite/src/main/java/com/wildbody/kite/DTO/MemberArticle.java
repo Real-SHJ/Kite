@@ -8,5 +8,7 @@ public class MemberArticle {
 	private int memberid;
 	private int articleid;
 	private String company;
+	private String content;
+	private int spanindex;
 
 }

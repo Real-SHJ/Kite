@@ -32,6 +32,7 @@
                                                     v-model="credential.email"
                                                     :rules="credential.emailRules"
                                                     color="teal accent-3"
+                                                    aria-required=""
                                                     />
                                                 <v-text-field
                                                     id="password"
@@ -45,10 +46,12 @@
                                                 />
 
                                             </v-form>
-                                            <h3 class="text-center mt-3">Forget your password ?</h3>
+                                            <h3 class="text-center">Forget your password ?</h3>
                                             </v-card-text>
-                                                <div class="text-center mt-3">
-                                                    <v-btn @click="login" rounded color="tea1 accent-3" dark>SIGN IN </v-btn>
+                                                <div class="text-center">
+                                                    <v-card-actions class="d-flex justify-center">
+                                                         <v-btn @click="login" rounded color="tea1 accent-3" dark>SIGN IN </v-btn>
+                                                    </v-card-actions>
                                                 </div>
                                     </v-col>
                                     <v-col cols="12" md="4" class="teal accent-3">
@@ -157,10 +160,43 @@
                 > </v-text-field>
 
               <V-file-input multiple label="Profile Image" v-model="image"></V-file-input>
-            <div class="text-center mt-3">
-              <v-btn @click="addMem"  color="blue">submit</v-btn>
-              <v-btn @click="clear" color="grey lighten-3">clear</v-btn>
-            </div>
+              <template >
+                <div class="text-center mt-2">
+                  <v-btn
+                    dark
+                    color="blue darken-2"
+                    @click="addMem"
+                  >
+                    SUBMIT
+                  </v-btn>
+
+                  <v-snackbar
+                    v-model="snackbar"
+                    :timeout="timeout"
+                    :top="true"
+                    :right="true"
+                    color="success"
+                  >
+                    {{ text }}
+                    <!-- <v-btn
+                      color="blue"
+                      text
+                      @click="addMem"
+                    >
+                    </v-btn> -->
+                    <v-btn
+                      color="white"
+                      text
+                      @click="snackbar = false"
+                    >
+                      SUCCESS
+                    </v-btn>
+                  </v-snackbar>
+                  <v-btn @click="clear" color="grey lighten-3">clear</v-btn>
+              <!-- <v-btn size="20px" rounded color="tea1 accent-3" dark v-on="on">SIGN IN </v-btn> -->
+                </div>
+              </template>
+              <!-- <v-btn @click="addMem"  color="blue">submit</v-btn> -->
             </form>
           </v-card-text>
                                     </v-col>
@@ -179,9 +215,13 @@
 import http from '../http-common'
 import upload from '../http-fileupload'
 import router from '../router'
+// import LoginSuccessModal from '../components/LoginSuccessModal.vue'
 
 export default {
-  name: 'SignUp',
+  name: 'signup',
+  components: {
+    // LoginSuccessModal
+  },
   data () {
     return {
       memberid: 0,
@@ -216,16 +256,16 @@ export default {
           (v) => !!v || 'E-mail is required',
           (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
         ]
-      }
+      },
+      dialog: false,
+      snackbar: false,
+      text: '회원가입에 성공하였습니다!!!',
+      timeout: 2000
     }
   },
   props: {
     source: String
   },
-  conponents: {
-    // DaumPostcode
-  },
-
   computed: {
     form () {
       return {
@@ -234,7 +274,8 @@ export default {
         city: this.city,
         state: this.state,
         zip: this.zip,
-        country: this.country
+        country: this.country,
+        companylist: null
       }
     }
   },
@@ -250,35 +291,42 @@ export default {
 
   methods: {
     addMem () {
-      let fdata = new FormData()
-      let bday = this.birthday.replace('-', '')
-      let ext = 'temp.jpg'
-      if (this.image === null) { ext = 'temg.jpg' } else { ext = this.email + '.' + this.image[0].name.split('.')[1] }
-      this.step--
-      fdata.append('memberid', this.memberid)
-      fdata.append('email', this.email)
-      fdata.append('pw', this.pw)
-      fdata.append('lastname', this.lastname)
-      fdata.append('firstname', this.firstname)
-      fdata.append('birthday', bday)
-      fdata.append('gender', this.gender)
-      fdata.append('area', this.area)
-      fdata.append('job', this.job)
-      fdata.append('company', this.company)
-      fdata.append('image', ext)
-      http.post('/member/signup', fdata)
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((msg) => {
-          console.log(msg)
-        })
-        .finally(() => {
-          this.profileUpload(this.image[0], ext)
-        })
-      console.log('프로필 전')
-      // this.profileUpload()
-      console.log('프로필 후후후')
+      // if (this.memberid.length < 8) {
+      //   alert('email 은 필수항목 입니다.')
+      // } else {
+      this.snackbar = true
+      setTimeout(() => {
+        let fdata = new FormData()
+        let bday = this.birthday.replace('-', '')
+        let ext = 'temp.jpg'
+        if (this.image === null) { ext = 'temp.jpg' } else { ext = this.email + '.' + this.image[0].name.split('.')[1] }
+        this.step--
+        fdata.append('memberid', this.memberid)
+        fdata.append('email', this.email)
+        fdata.append('pw', this.pw)
+        fdata.append('lastname', this.lastname)
+        fdata.append('firstname', this.firstname)
+        fdata.append('birthday', bday)
+        fdata.append('gender', this.gender)
+        fdata.append('area', this.area)
+        fdata.append('job', this.job)
+        fdata.append('company', this.company)
+        fdata.append('image', ext)
+        http.post('/member/signup', fdata)
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((msg) => {
+            console.log(msg)
+          })
+          .finally(() => {
+            this.profileUpload(this.image[0], ext)
+          })
+        console.log('프로필 전')
+        // this.profileUpload()
+        console.log('프로필 후후후')
+      }, this.timeout)
+      // }
     },
     profileUpload (profileImage, ext) {
       const image = new FormData()
@@ -312,28 +360,51 @@ export default {
             console.log('token: ' + token)
             this.$session.set('my-token', token)
             this.$store.dispatch('login', token)
-            let companylist = ''
             console.log('로그인 성공!!')
             http.post('/member/info', fdata)
               .then(res2 => {
+                console.log(res2.data.result.image)
                 const userEmail = res2.data.result.email
                 const userName = `${res2.data.result.lastname} ${res2.data.result.firstname}`
                 const userid = res2.data.result.memberid
                 const userImage = res2.data.result.image
-                companylist = res2.data.result.company
-                this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid, userImage: userImage, companylist: companylist })
-                this.$session.set('my-info', { userEmail: userEmail, userName: userName, userid: userid, userImage: userImage, companylist: companylist })
+                this.companylist = res2.data.result.company
+                this.$store.dispatch('infoSave', { userEmail: userEmail, userName: userName, userid: userid, userImage: userImage, companylist: this.companylist })
+                this.$session.set('my-info', { userEmail: userEmail, userName: userName, userid: userid, userImage: userImage, companylist: this.companylist })
+                console.log(this.companylist)
+                // 리다이렉트
+                if (this.companylist === '') {
+                  router.push('/selectcompany')
+                } else {
+                  console.log('홈으로 가자')
+                  router.push('/')
+                }
               })
-            // 리다이렉트
-            router.push('/')
           })
           .catch(err => console.log(err))
       }
+    },
+    test () {
+      this.$dialog.notify.info('Test notification', {
+        position: 'top-right',
+        timeout: 3000
+      })
+      this.$dialog.notify.success('Test notification', {
+        position: 'top-right',
+        timeout: 3000
+      })
+      this.$dialog.notify.warning('Test notification', {
+        position: 'top-right',
+        timeout: 3000
+      })
     }
   }
 }
 </script>
 
 <style>
-
+.login-success-msg {
+  margin-top: 100px;
+  font-size: 20px
+}
 </style>

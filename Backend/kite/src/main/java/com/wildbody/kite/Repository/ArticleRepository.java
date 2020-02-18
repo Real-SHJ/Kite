@@ -1,6 +1,8 @@
 package com.wildbody.kite.Repository;
 
 import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.MemberArticle;
+
 import java.util.List;
 
 public interface ArticleRepository {
@@ -18,7 +20,12 @@ public interface ArticleRepository {
 	public List<Article> articleList();
 
 	public Article oneArticle(int articleid);
+	
+	public Article oneScrapArticle(MemberArticle ma);
+	
+	public int getIndex(MemberArticle ma);
 
 	public List<Article> infi(String company);
 
+	public List<Article> myKeywordArticle(int memberid, String keyword);
 }

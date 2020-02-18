@@ -3,7 +3,9 @@ package com.wildbody.kite.Repository;
 import com.wildbody.kite.DTO.Article;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.MemberArticle;
+import com.wildbody.kite.DTO.MemberKeyword;
 import com.wildbody.kite.DTO.Message;
+import com.wildbody.kite.DTO.MyArticle;
 
 import java.util.HashMap;
 import java.util.List;
@@ -158,23 +160,93 @@ public class MemberRepositoryImpl implements MemberRepository {
 	}
 
 	@Override
+	public String selectArticleContent(int articleid) {
+		return session.selectOne("kite.member.selectArticleContent", articleid);
+	}
+
+	@Override
 	public int insertMemberArticle(MemberArticle ma) {
 		ma.setCompany(selectArticleCompany(ma.getArticleid()));
+		ma.setContent(selectArticleContent(ma.getArticleid()));
+		ma.setSpanindex(0);
 		return session.insert("kite.member.insertMemberArticle", ma);
 	}
 
 	@Override
 	public List<Article> selectMyArticleList(int memberid) {
-		return session.selectList("kite.member.selectMyArticleList", memberid);
+		List<Article> articlelist = session.selectList("kite.member.selectMyArticleList", memberid);
+		List<MyArticle> mylist = selectMyContentList(memberid);
+		for (int i = 0; i < articlelist.size(); i++) {
+			for (int j = 0; j < mylist.size(); j++) {
+				if (articlelist.get(i).getArticleid() == mylist.get(j).getArticleid()) {
+					articlelist.get(i).setContent(mylist.get(j).getContent());
+				}
+			}
+		}
+		return articlelist;
 	}
 
 	@Override
 	public List<Article> selectMyCompanyArticleList(MemberArticle ma) {
-		return session.selectList("kite.member.selectMyCompanyArticleList", ma);
+		List<Article> articlelist = session.selectList("kite.member.selectMyCompanyArticleList", ma);
+		List<MyArticle> mylist = selectMyCompanyContentList(ma);
+		for (int i = 0; i < articlelist.size(); i++) {
+			for (int j = 0; j < mylist.size(); j++) {
+				if (articlelist.get(i).getArticleid() == mylist.get(j).getArticleid()) {
+					articlelist.get(i).setContent(mylist.get(j).getContent());
+				}
+			}
+		}
+		return articlelist;
+	}
+
+	@Override
+	public List<MyArticle> selectMyContentList(int memberid) {
+		return session.selectList("kite.member.selectMyContentList", memberid);
+	}
+
+	@Override
+	public List<MyArticle> selectMyCompanyContentList(MemberArticle ma) {
+		return session.selectList("kite.member.selectMyCompanyContentList", ma);
 	}
 
 	@Override
 	public int deleteMyArticle(MemberArticle ma) {
 		return session.delete("kite.member.deleteMyArticle", ma);
+	}
+
+	@Override
+	public int saveContent(MemberArticle ma) {
+		return session.update("kite.member.saveContent", ma);
+	}
+
+	@Override
+	public Member memberid(int id) {
+		// TODO Auto-generated method stub
+		return session.selectOne("kite.member.selectid", id);
+	}
+
+	@Override
+	public int deleteMessage(int id) {
+		// TODO Auto-generated method stub
+		return session.delete("kite.member.deleteMessage", id);
+	}
+
+	@Override
+	public int insertMemberKeyword(List<MemberKeyword> list) {
+		return session.insert("kite.keyword.insertMemberKeyword", list);
+	}
+
+	@Override
+	public List<MemberKeyword> selectMemberKeywordList(int memberid) {
+		return session.selectList("selectMemberKeyword", memberid);
+	}
+
+	@Override
+	public int deleteMemberKeyword(int memberid, int articleid) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberid", memberid);
+		map.put("articleid", articleid);
+		return session.delete("deleteMemberKeyword", map);
 	}
 }

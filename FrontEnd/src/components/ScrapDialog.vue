@@ -26,10 +26,17 @@ export default {
   data () {
     return {
       userid: null,
-      dialog: false
+      dialog: false,
+      companylist: ''
     }
   },
   methods: {
+    // islogin () {
+    //   if (!this.$session.has('my-info')) {
+    //     alert('로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.')
+    //     this.$router.push('/signup')
+    //   }
+    // },
     scrapArticle () {
       this.dialog = false
       console.log(this.userid)
@@ -41,6 +48,7 @@ export default {
         .post('/member/insertscrap', fdata)
         .then(res => {
           console.log(res.data.message)
+          alert(res.data.message)
         })
         .catch(err => console.log(err))
     },

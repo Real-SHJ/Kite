@@ -1,109 +1,83 @@
 <template>
 <v-content>
     <div style="position: relative; height: 400px;">
-      <div style="background-color: black; opacity: 0.1; position: absolute; width: 100%; height: 400px; z-index: 5;"></div>
-      <img src="https://ranzetta.typepad.com/.a/6a00d8341c070353ef022ad386ccb6200d-pi" alt="" style="width: 100%; height: 100%; position: absolute;">
-      <!-- <img src="https://wac-cdn.atlassian.com/dam/jcr:bc1f15f9-3b2e-4c30-9313-0ebd6175f18c/File%20Cabinet@2x.png?cdnVersion=812" alt="" style="width: 10%; height: 10%; position: absolute;"> -->
+      <div style="background-color: black; opacity: 0.5; position: absolute; width: 100%; height: 400px; z-index: 1;"></div>
+      <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRLRyPE1rUST-QejeOfla8MHp6Cq-L3ttyntRfVRGdgTdLNFl0Y" alt="" style="width: 100%; height:100%; position: absolute;"> -->
+      <!-- <img src="https://images.unsplash.com/photo-1520376698361-ba5ceb38c35b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" style="width: 100%; height: 100%; position: absolute;"> -->
+      <!-- <img src="https://images.unsplash.com/photo-1546146830-2cca9512c68e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" style="width: 100%; height: 100%; position: absolute;"> -->
+      <img src="https://cdn.pixabay.com/photo/2019/04/26/00/18/notebook-4156348__480.jpg" alt="" style="width: 100%; height: 100%; position: absolute;">
+      <p class="header-title" ><strong>My Scrap Article </strong></p>
+      <!-- <v-col cols="3"> -->
+                <!-- <h1 class="text-center" id="homebtn" >My Scrap Article</h1> -->
+             <!-- </v-col> -->
     </div>
-    <v-layout justify-center row wrap>
-    </v-layout>
     <!-- ------------- 검색 기간 부분 --------------- -->
       <v-container fluid>
-          <v-row class="py-10"
-          >
-          <br>기업선택
-            <v-col cols="12" sm="2">
+          <v-row class="justify-center">
+            <h2><br>기업선택</h2>
+            <v-col sm="2">
              <v-overflow-btn
-                class="my-2"
+                class=""
                 :items="company_choice"
                 label="기업선택"
                 target="#dropdown-example"
                 v-model="choice_company"
                 ></v-overflow-btn>
             </v-col>
-            <br>검색기간
-            <v-col cols="11" sm="3">
-              <HotelDatePicker @update="setDate">
-              </HotelDatePicker>
-            </v-col>
-            <v-col
-              cols="12"
-              sm="6"
-              class="py-2"
-            >
-              <v-btn-toggle
-                v-model="text"
-                tile
-                color="deep-purple accent-3"
-                group
-              >
-                <v-btn value="all">
-                  전체
-                </v-btn>
+            <h2><br>검색기간</h2>
+            <div>
+                <br>
+                <date-picker v-model="range" :lang="lang" range></date-picker>
 
-                <v-btn value="oneday">
-                  1일
-                </v-btn>
-
-                <v-btn value="oneweek">
-                  1주
-                </v-btn>
-
-                <v-btn value="onemonth">
-                  1개월
-                </v-btn>
-
-                <v-btn value="threemonth">
-                  3개월
-                </v-btn>
-
-                <v-btn value="sixmonth">
-                  6개월
-                </v-btn>
-
-                <v-btn value="oneyears">
-
-                </v-btn>
-              </v-btn-toggle>
               <v-btn depressed large color="pink white--text" @click="scrapreq">검색</v-btn>
               <v-btn depressed large color="blue white--text" @click="scrapchoice">전체조회</v-btn>
-            </v-col>
+            </div>
           </v-row>
-          </v-container>
+        </v-container>
+          <v-divider class="mx-4"></v-divider>
     <!-- ------------- 검색 기간 부분 --------------- -->
     <!--          작업   시  작 ------------------ -->
     <div class="team">
-        <h1 class="subheading greay--text">Article</h1>
-
+        <!-- <h1 class="subheading greay--text">Article</h1> -->
+        <v-layout class="justify-center" row wrap>
+            <!-- <v-col cols="3">
+                <h1 class="text-center" id="homebtn">My Scrap Article</h1>
+             </v-col> -->
+        </v-layout>
         <v-container class="my-5">
             <v-layout row wrap>
                 <!-- <v-flex xs12 sm6 md4 lg3 v-for="person in team" :key="person.name"> -->
-                <v-flex xs12 sm6 md6 lg6 v-for="article in articles" :key="article.id">
-                    <v-card flat class="text ma-3" outlined>
-                        <v-responsive class="pt-4">
-                            <!-- image goes here -->
-                        </v-responsive>
+                    <!-- v-card-title class="text-md-center" -->
+                    <v-card flat class="mx-auto text-center" outlined v-if="articles.length === 0">
+                        <h1>개인 저장소가 비어있어요</h1><h1>기사를 스크랩해보시겠어요?</h1>
+                        <v-card-actions class="d-flex justify-end">
+                            <WouldyouScrap/>
+                        </v-card-actions>
+                    </v-card>
+                <v-flex xs12 sm6 md6 lg6 v-for="article in calData" :key="article.id">
+                    <v-card flat class="text ma-3" shaped="" raised="">
+                        <div @click="goDetail(article)">
                         <v-card-text>
-                            <!-- <div class="subheading">{{ person.name }}</div> -->
-                            <!-- <div class="subheading">{{ person.role }}</div> -->
                             <div class="subheading mb-4">{{ article.company }}</div>
                             <v-avatar class="mb-4" color="red lighten-4" size="70">
                                 <img
                                     :src="company_image[article.company]"/>
                             </v-avatar>
-                            <div class="headline mb-4">{{ article.title }}</div>
-                            <div class="subheading" v-html="article.content"> </div>
+                            <div class="headline mb-5" style="font-size: 20px;">{{ article.title }}</div>
+                            <div class="subheading mb-5" style="font-size: 20px;">{{ article.summary.slice(0, 100) }}...</div>
                             <div class="subheading">{{ article.newspaper }}</div>
                         </v-card-text>
+                        </div>
                     </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
     </div>
-    <div class="text-xs-center">
-        <v-pagination :length="15" v-model="pagination_page" :total-visible="7">
+    <div class="text-xs-center my-4">
+        <v-pagination :length="numOfPages" v-model="curPageNum" :total-visible="7">
         </v-pagination>
     </div>
+    <v-divider class="mx-4"></v-divider>
     <!-- ------------- 1. 전체 (워드 클라우드, 관련뉴스 부분) start--------------- -->
       <v-container fluid>
       <v-layout >
@@ -111,171 +85,134 @@
         <!-- ------------- 2. 워드 클라우드 부분 start --------------- -->
         <v-flex xs12 sm8 md8>
           <v-container fluid>
-            <router-link to="/wordcloud" replace>키워드</router-link>
-            <div id="chartdiv_keyword"></div>
+            <KeywordWordCloud @myKeyword="goAlert" :info ="info"/>
           </v-container>
         </v-flex>
         <!-- ------------- 2. 워드 클라우드 부분 end --------------- -->
 
-        <!-- ------------- 3. 연관 관계 그래프 부분 start ----------------- -->
-          <v-flex xs12 sm8 md8>
-          <v-container fluid>
-            <router-link to="/forcedirected" replace>연관 관계 그래프</router-link>
-            <div id="chartdiv_searching"></div>
-          </v-container>
-        </v-flex>
-        <!-- ------------- 3. 연관 관계 그래프 부분 end ----------------- -->
         </v-row>
-        <!-- ------------- 4. 최신뉴스, 관련뉴스 부분 start--------------- -->
+        <!-- ------------- 3. 내 키워드 기사 부분 start--------------- -->
         <v-flex xs12 sm4 md4>
           <v-container fluid>
             <v-card color="basil">
-              <v-tabs
-                v-model="tab"
-                background-color="transparent"
-                color="basil"
-                grow
-              >
-                <v-tab
-                  v-for="item in items"
-                  :key="item"
-                >
-                  {{ item }}
-                </v-tab>
-              </v-tabs>
-
-              <v-tabs-items v-model="tab">
-                <v-tab-item
-                  v-for="item in items"
-                  :key="item"
-                >
-                  <v-card
-                    color="basil"
-                    flat
-                  >
-                  </v-card>
-                </v-tab-item>
-              </v-tabs-items>
-                <!-- ---------- 5. 카드 내부 기사 ----------- -->
+                <!-- ---------- 4. 카드 내부 기사 ----------- -->
               <v-container>
                 <v-row dense>
                     <!-- article for문 -->
                 <!-- <div v-for="article in articles" :key="article.id" class="my-3"> -->
-                  <v-col
-                    cols="12"
-                  >
+                  <v-col cols="12">
+                    <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드를 표시해둔 기사</v-card-title>
+                    <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
                     <v-card
-                        v-for="article in articles"
+                        v-for="article in keywordarticles"
                         :key="article.id"
                         class="mx-auto"
                         max-width="344"
                         outlined
                     >
+                        <div @click="goDetail(article)">
                         <v-list-item three-line>
                             <v-list-item-content>
                                 <div class="overline mb-4">{{article.company}}</div>
                                 <v-list-item-title class="headline mb-1">{{article.title}}</v-list-item-title>
                                 <v-list-item-subtitle>{{article.newspaper}}</v-list-item-subtitle>
                             </v-list-item-content>
-
-                            <!-- <v-list-item-avatar
-                                tile
-                                size="80"
-                                color="grey"
-                            ></v-list-item-avatar> -->
                             <v-avatar color="red lighten-4" size="70">
-                                <img
-                                    :src="company_image[article.company]"/>
+                                <img :src="company_image[article.company]"/>
                             </v-avatar>
                         </v-list-item>
-
-                        <v-card-actions>
-                            <v-btn text>Button</v-btn>
-                            <v-btn text>Button</v-btn>
-                        </v-card-actions>
+                        </div>
                     </v-card>
-
                   </v-col>
                 <!-- </div> -->
                 </v-row>
               </v-container>
-              <!-- ---------- 5. 카드 내부 기사 ----------- -->
+              <!-- ---------- 4. 카드 내부 기사 ----------- -->
             </v-card>
           </v-container>
         </v-flex>
-        <!-- ------------- 4. 최신뉴스, 관련뉴스 부분 end--------------- -->
+        <!-- ------------- 3. 내 키워드 기사 부분 end--------------- -->
     <!-- ------------- 1. 전체 (워드 클라우드, 관련뉴스 부분) end --------------- -->
       </v-layout>
       </v-container>
 </v-content>
 </template>
 
-<!-- Resources - tagcloud -->
-<script src="https://www.amcharts.com/lib/4/core.js"></script>
-<script src="https://www.amcharts.com/lib/4/charts.js"></script>
-<script src="https://www.amcharts.com/lib/4/plugins/wordCloud.js"></script>
-<script src="https://www.amcharts.com/lib/4/themes/kelly.js"></script>
-<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-
-<!-- Resources - 연관 관계 그래프 -->
-<!-- <script src="https://www.amcharts.com/lib/4/core.js"></script> -->
-<!-- <script src="https://www.amcharts.com/lib/4/charts.js"></script> -->
-<script src="https://www.amcharts.com/lib/4/plugins/forceDirected.js"></script>
-<!-- <script src="https://www.amcharts.com/lib/4/themes/kelly.js"></script> -->
-<!-- <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script> -->
-
 <script>
 import http from '../http-common'
-import * as am4core from "@amcharts/amcharts4/core";
-import * as am4charts from "@amcharts/amcharts4/charts";
-import * as am4plugins_wordCloud from "@amcharts/amcharts4/plugins/wordCloud";
-import * as am4plugins_forceDirected from "@amcharts/amcharts4/plugins/forceDirected";
-import am4themes_kelly from "@amcharts/amcharts4/themes/kelly";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-
-import HotelDatePicker from 'vue-hotel-datepicker'
-
-am4core.useTheme(am4themes_kelly);
-am4core.useTheme(am4themes_animated);
+import WouldyouScrap from '../components/WouldyouScrap.vue'
+import DatePicker from 'vue2-datepicker'
+import 'vue2-datepicker/scss/index.scss'
+import KeywordWordCloud from '../components/KeywordWordCloud.vue'
 
 export default {
   name: 'indirepo',
   components: {
-    HotelDatePicker
+    WouldyouScrap,
+    DatePicker,
+    KeywordWordCloud
   },
   data () {
     return {
+      myKeyword: null,
+      keywordarticles: [],
+      info: null,
       page: 1,
-      pagination_page: 1,
+      dataPerPage: 6,
+      curPageNum: 1,
       company: null,
       choice_company: null,
-      dateRange: '',
+      date: '',
+      time: '',
+      timePickerOptions: {
+        start: '00:00',
+        step: '00:30',
+        end: '23:30'
+      },
+      datetime: '',
+      range: '',
+      shortcuts: [
+        {
+          text: 'Today',
+          onClick: () => {
+            this.range = [ new Date(), new Date() ]
+          }
+        }
+      ],
+      lang: {
+        days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'],
+        months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agu', 'Sep', 'Oct', 'Nov', 'Dec'],
+        // pickers: ['next7days ', 'next30days', 'previous7days', 'previous30days' ],
+        placeholderr: {
+          date: 'Pilih Tanggal',
+          dateRange: 'Pilih Range Tanggal'
+        }
+      },
       articles: [],
       team: [
-          { name: 'Min', role: 'Developer' },
-          { name: 'Kibeom', role: 'Developer' },
-          { name: 'TH', role: 'Developer' },
-          { name: 'HJ', role: 'Developer' },
-          { name: 'HS', role: 'Developer' }
-      ],
-      items: [
-        '최신 뉴스', '관련 뉴스'
+        { name: 'Min', role: 'Developer' },
+        { name: 'Kibeom', role: 'Developer' },
+        { name: 'TH', role: 'Developer' },
+        { name: 'HJ', role: 'Developer' },
+        { name: 'HS', role: 'Developer' }
       ],
       page_items: [],
       fields: [
-          { key: "identifier", sortable: true },
-          { key: "name", sortable: true },
-          { key: "email", sortable: true },
-          { key: "isVerified", label: "Verified", sortable: true },
-          { key: "isAdmin", label: "Verified", sortable: true },
-          { key: "action"}
+        { key: 'identifier', sortable: true },
+        { key: 'name', sortable: true },
+        { key: 'email', sortable: true },
+        { key: 'isVerified', label: 'Verified', sortable: true },
+        { key: 'isAdmin', label: 'Verified', sortable: true },
+        { key: 'action' }
       ],
-      isBusy:false,
-      totalRows:1,
-      currentPage:1,
-      perPage:15,
-      company_choice: ['삼성전자', 'LG전자', 'SK텔레콤', 'GS칼텍스', 'KT', '네이버', 'S-OIL', 'SK하이닉스',
-                     '현대자동차', 'CJ제일제당', '국민은행', '포스코', '삼성SDS', '신한은행', '우리은행'],
+      isBusy: false,
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 15,
+      //   company_choice: ['삼성전자', 'LG전자', 'SK텔레콤', 'GS칼텍스', 'KT', '네이버', 'S-OIL', 'SK하이닉스',
+      //                  '현대자동차', 'CJ제일제당', '국민은행', '포스코', '삼성SDS', '신한은행', '우리은행'],
+      companylist: [],
+      company_choice: [],
       company_image: {
         '삼성전자': 'http://13.125.153.118:8999/img/logo/Samsung_Elec.svg',
         'LG전자': 'http://13.125.153.118:8999/img/logo/LG_Elec.svg',
@@ -306,60 +243,99 @@ export default {
     }
   },
   methods: {
+    goAlert (key) {
+      alert(key)
+      this.myKeyword = key
+      this.getKeywordArticles()
+    },
+    goDetail (article) {
+      this.$router.push({ path: `/test/${article.articleid}` })
+    },
     wordClickHandler (name, value, vm) {
       console.log('wordClickHandler', name, value, vm)
     },
     getArticle () {
-        console.log('기범아 왜 안 찍히냐고')
+      console.log('기범아 왜 안 찍히냐고')
       http.get('article/list/')
         .then(res => {
-          //토큰 저장
+          // 토큰 저장
           console.log(res.data.resvalue)
           this.articles = res.data.resvalue
           console.log(this.articles)
         })
         .catch(err => console.log(err))
 
-        // this.getArticle()
+      // this.getArticle()
     },
     scrapreq () {
-          const fdata = new FormData()
-          const memberid = this.$session.get('my-info').userid
-        //   const email = this.$session.get('my-info').userEmail
-          console.log("기범아 찍혔다니까")
-          console.log(memberid)
-          console.log(`/member/getScrap/${memberid}/${this.choice_company}`)
-          http
-            .get(`/member/getScrap/${memberid}/${this.choice_company}`)
-            // .post(`/member/getScrap/${this.page}`, fdata)
-            .then((res) => {
-              console.log(res.data)
-              this.articles = res.data.result
-              console.log("들어왔다 데이터")
-              console.log(this.articles[0])
-            })
+    //   const fdata = new FormData()
+      const memberid = this.$session.get('my-info').userid
+      //   const email = this.$session.get('my-info').userEmail
+      console.log('기범아 찍혔다니까')
+      console.log(memberid)
+      console.log(`/member/getScrap/${memberid}/${this.choice_company}`)
+      http
+        .get(`/member/getScrap/${memberid}/${this.choice_company}`)
+      // .post(`/member/getScrap/${this.page}`, fdata)
+        .then((res) => {
+          console.log(res.data)
+          this.articles = res.data.result
+          console.log('들어왔다 데이터')
+          console.log(this.articles[0])
+        })
     },
     scrapchoice () {
-        //기업 선택해서 그 기업의 스크랩한 기사 조회
-        console.log(this.choice_company)
-        const memberid = this.$session.get('my-info').userid
-            http
-            .get(`/member/getScrap/${memberid}`)
-            // .post(`/member/getScrap/${this.page}`, fdata)
-            .then((res) => {
-              console.log(res.data)
-              this.articles = res.data.result
-              console.log("들어왔다 데이터222")
-              console.log(this.articles[0])
-              console.log("삼성전자만 들어왔니?")
-            })
+      // 기업 선택해서 그 기업의 스크랩한 기사 조회
+      console.log(this.choice_company)
+      // let companylist = null
+      this.company_choice = this.$session.get('my-info').companylist.split(',')
+      const memberid = this.$session.get('my-info').userid
+      http
+        .get(`/member/getScrap/${memberid}`)
+      // .post(`/member/getScrap/${this.page}`, fdata)
+        .then((res) => {
+          console.log(res.data)
+          this.articles = res.data.result
+          console.log('들어왔다 데이터222')
+          console.log(this.articles[0])
+          console.log('삼성전자만 들어왔니?')
+        })
     },
-    setDate(newDate) {
-        this.dateRange = newDate
-        console.log(dateRange)
+    setDate (newDate) {
+      this.dateRange = newDate
+      console.log(this.dateRange)
     },
-    myProvider(ctx) {
-        console.log(ctx);
+    myProvider (ctx) {
+      console.log(ctx)
+    },
+    init () {
+      const memberid = this.$session.get('my-info').userid
+      http
+        .get('/member/getkeyword' + '/' + memberid)
+        .then(
+          response => {
+            console.log(response.data.message)
+            this.info = response.data.result
+            console.log(this.info)
+          }
+        )
+        .catch(err => console.log(err))
+        .finally(
+        )
+    },
+    getKeywordArticles () {
+      http
+        .get('/article/mykeywordarticle' + '/' + this.$session.get('my-info').userid + '/' + this.myKeyword)
+        .then(
+          response => {
+            console.log(response.data.message)
+            this.keywordarticles = response.data.result
+            console.log(this.keywordarticles)
+          }
+        )
+        .catch(err => console.log(err))
+        .finally(
+        )
     }
   },
   watch: {
@@ -370,645 +346,27 @@ export default {
       }
     }
   },
-  mounted() {
-        // this.getArticle()
-        console.log(this.company_choice)
-        // this.scrapreq()
-        this.scrapchoice()
-        var chart = am4core.create("chartdiv_keyword", am4plugins_wordCloud.WordCloud);
-        chart.fontFamily = "Courier New";
-        var series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
-        series.randomness = 0.1;
-        series.rotationThreshold = 0.5;
-
-        series.data = [ {
-            "tag": "삼성전자",
-            "count": "1765836"
-        }, {
-            "tag": "삼성SDS",
-            "count": "1517355"
-        }, {
-            "tag": "현대자동차",
-            "count": "1287629"
-        }, {
-            "tag": "현대모비스",
-            "count": "1263946"
-        }, {
-            "tag": "SK하이닉스",
-            "count": "1174721"
-        }, {
-            "tag": "SK이노베이션",
-            "count": "1116769"
-        }, {
-            "tag": "SK텔레콤",
-            "count": "944983"
-        }, {
-            "tag": "LG화학",
-            "count": "805679"
-        }, {
-            "tag": "LG전자",
-            "count": "606051"
-        }, {
-            "tag": "롯데",
-            "count": "591410"
-        }, {
-            "tag": "포스코",
-            "count": "574684"
-        }, {
-            "tag": "한화",
-            "count": "550916"
-        }, {
-            "tag": "GS칼텍스",
-            "count": "479892"
-        }, {
-            "tag": "농협",
-            "count": "343092"
-        }, {
-            "tag": "현대중공업",
-            "count": "303311"
-        }, {
-            "tag": "신세계",
-            "count": "296963"
-        }, {
-            "tag": "KT",
-            "count": "288445"
-        }, {
-            "tag": "한진",
-            "count": "286823"
-        }, {
-            "tag": "CJ",
-            "count": "280079"
-        }, {
-            "tag": "두산",
-            "count": "277144"
-        }, {
-            "tag": "부영",
-            "count": "263451"
-        }, {
-            "tag": "LS",
-            "count": "257159"
-        }, {
-            "tag": "대림",
-            "count": "255661"
-        }, {
-            "tag": "미래에셋",
-            "count": "253824"
-        }, {
-            "tag": "S-oil",
-            "count": "222387"
-        }, {
-            "tag": "현대백화점",
-            "count": "219827"
-        }, {
-            "tag": "효성",
-            "count": "203121"
-        }, {
-            "tag": "한국투자금융",
-            "count": "202547"
-        }, {
-            "tag": "대우조선해양",
-            "count": "196727"
-        }, {
-            "tag": "영풍",
-            "count": "191174"
-        }, {
-            "tag": "하림",
-            "count": "188787"
-        }, {
-            "tag": "교보생명보험",
-            "count": "180742"
-        }, {
-            "tag": "금호아시아나",
-            "count": "178291"
-        }, {
-            "tag": "KT&G",
-            "count": "173278"
-        }, {
-            "tag": "코오롱",
-            "count": "154447"
-        }, {
-            "tag": "OCI",
-            "count": "153581"
-        }, {
-            "tag": "카카오",
-            "count": "147538"
-        }, {
-            "tag": "HDC",
-            "count": "147456"
-        }, {
-            "tag": "KCC",
-            "count": "145801"
-        }, {
-            "tag": "SM",
-            "count": "145685"
-        }, {
-            "tag": "대우건설",
-            "count": "139940"
-        }, {
-            "tag": "중흥건설",
-            "count": "136649"
-        }, {
-            "tag": "한국타이어",
-            "count": "130591"
-        }, {
-            "tag": "세아",
-            "count": "127680"
-        }, {
-            "tag": "태광",
-            "count": "125021"
-        }, {
-            "tag": "이랜드",
-            "count": "122559"
-        }, {
-            "tag": "셀트리온",
-            "count": "118810"
-        }, {
-            "tag": "DB",
-            "count": "115802"
-        }, {
-            "tag": "호반건설",
-            "count": "113719"
-        }, {
-            "tag": "네이버",
-            "count": "110348"
-        }, {
-            "tag": "태영",
-            "count": "109340"
-        }, {
-            "tag": "넥슨",
-            "count": "108797"
-        }, {
-            "tag": "동원",
-            "count": "108075"
-        }, {
-            "tag": "한라",
-            "count": "106936"
-        }, {
-            "tag": "아모레퍼시픽",
-            "count": "96225"
-        }, {
-            "tag": "삼천리",
-            "count": "96027"
-        }, {
-            "tag": "한국지엠",
-            "count": "94348"
-        }, {
-            "tag": "동국제강",
-            "count": "92995"
-        }, {
-            "tag": "유진",
-            "count": "92131"
-        }, {
-            "tag": "금호석유화학",
-            "count": "90327"
-        }, {
-            "tag": "하이트진로",
-            "count": "89670"
-        }, {
-            "tag": "넷마블",
-            "count": "88762"
-        }, {
-            "tag": "애경",
-            "count": "86971"
-        }, {
-            "tag": "다우키움",
-            "count": "85825"
-        }, {
-            "tag": "기업1",
-            "count": "84392"
-        }, {
-            "tag": "기업2",
-            "count": "83948"
-        }, {
-            "tag": "기업3",
-            "count": "83600"
-        }, {
-            "tag": "기업4",
-            "count": "83367"
-        }, {
-            "tag": "기업5",
-            "count": "83212"
-        }, {
-            "tag": "기업6",
-            "count": "82452"
-        }, {
-            "tag": "기업7",
-            "count": "81443"
-        }, {
-            "tag": "기업8",
-            "count": "78250"
-        }, {
-            "tag": "기업9",
-            "count": "78243"
-        }, {
-            "tag": "기업10",
-            "count": "76123"
-        }, {
-            "tag": "기업11",
-            "count": "74867"
-        }, {
-            "tag": "기업12",
-            "count": "73128"
-        }, {
-            "tag": "기업13",
-            "count": "72333"
-        }, {
-            "tag": "기업14",
-            "count": "72043"
-        }, {
-            "tag": "기업15",
-            "count": "71155"
-        }, {
-            "tag": "기업16",
-            "count": "69552"
-        }, {
-            "tag": "기업17",
-            "count": "69138"
-        }, {
-            "tag": "기업18",
-            "count": "68854"
-        }, {
-            "tag": "기업19",
-            "count": "67431"
-        }, {
-            "tag": "기업20",
-            "count": "66411"
-        }, {
-            "tag": "기업21",
-            "count": "66158"
-        }, {
-            "tag": "기업22",
-            "count": "66113"
-        }, {
-            "tag": "기업23",
-            "count": "65467"
-        }, {
-            "tag": "기업24",
-            "count": "65014"
-        }, {
-            "tag": "기업25",
-            "count": "64888"
-        }, {
-            "tag": "기업26",
-            "count": "62783"
-        }, {
-            "tag": "기업27",
-            "count": "62393"
-        }, {
-            "tag": "기업28",
-            "count": "61909"
-        }, {
-            "tag": "기업29",
-            "count": "61752"
-        }, {
-            "tag": "기업30",
-            "count": "61015"
-        }, {
-            "tag": "기업31",
-            "count": "60820"
-        }, {
-            "tag": "기업32",
-            "count": "59855"
-        }, {
-            "tag": "기업33",
-            "count": "59616"
-        }, {
-            "tag": "기업34",
-            "count": "59600"
-        }, {
-            "tag": "기업35",
-            "count": "59011"
-        }, {
-            "tag": "기업36",
-            "count": "58916"
-        }, {
-            "tag": "기업37",
-            "count": "58195"
-        }, {
-            "tag": "기업38",
-            "count": "58055"
-        }, {
-            "tag": "기업39",
-            "count": "57132"
-        }, {
-            "tag": "기업40",
-            "count": "56836"
-        }];
-
-        series.dataFields.word = "tag";
-        series.dataFields.value = "count";
-
-        series.heatRules.push({
-        "target": series.labels.template,
-        "property": "fill",
-        "min": am4core.color("#0000CC"),
-        "max": am4core.color("#CC00CC"),
-        "dataField": "value"
-        });
-
-        series.labels.template.url = "https://ko.wikipedia.org/wiki/{word}";
-        series.labels.template.urlTarget = "_blank";
-        series.labels.template.tooltipText = "{word}: {value}";
-
-        var hoverState = series.labels.template.states.create("hover");
-        hoverState.properties.fill = am4core.color("#FF0000");
-
-        // ----------------------  연관 관계 그래프 부분 ---------------------------  //
-        var chart = am4core.create("chartdiv_searching", am4plugins_forceDirected.ForceDirectedTree);
-
-        var networkSeries = chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries())
-        networkSeries.dataFields.linkWith = "linkWith";
-        networkSeries.dataFields.name = "name";
-        networkSeries.dataFields.id = "name";
-        networkSeries.dataFields.value = "value";
-        networkSeries.dataFields.children = "children";
-
-        networkSeries.nodes.template.label.text = "{name}"
-        networkSeries.fontSize = 8;
-        networkSeries.linkWithStrength = 0;
-
-        var nodeTemplate = networkSeries.nodes.template;
-        nodeTemplate.tooltipText = "{name}";
-        nodeTemplate.fillOpacity = 1;
-        nodeTemplate.label.hideOversized = true;
-        nodeTemplate.label.truncate = true;
-
-        var linkTemplate = networkSeries.links.template;
-        linkTemplate.strokeWidth = 1;
-        var linkHoverState = linkTemplate.states.create("hover");
-        linkHoverState.properties.strokeOpacity = 1;
-        linkHoverState.properties.strokeWidth = 2;
-
-        nodeTemplate.events.on("over", function (event) {
-            var dataItem = event.target.dataItem;
-            dataItem.childLinks.each(function (link) {
-                link.isHover = true;
-            })
-        })
-
-        nodeTemplate.events.on("out", function (event) {
-            var dataItem = event.target.dataItem;
-            dataItem.childLinks.each(function (link) {
-                link.isHover = false;
-            })
-        })
-
-        networkSeries.data = [
-        {
-            "name":"삼성",
-            "value":500,
-            "linkWith":[
-                "현대",
-                "SK",
-                "LG",
-                "카카오",
-                "네이버"
-
-            ],
-            "children":[
-                {
-                    "name":"삼성그룹",
-                    "value":490
-                },
-                {
-                    "name":"삼성전자",
-                    "value":490
-                },
-                {
-                    "name":"삼성SDS",
-                    "value":480
-                },
-                {
-                    "name":"이재용",
-                    "value":400
-                },
-                {
-                    "name":"반도체",
-                    "value":300
-                },
-                {
-                    "name":"갤럭시폴드",
-                    "value":300
-                },
-                {
-                    "name":"스마트폰",
-                    "value":300
-                },
-                {
-                    "name":"삼성생명",
-                    "value":200
-                },
-                {
-                    "name":"삼성물산",
-                    "value":200
-                },
-                {
-                    "name":"코스피",
-                    "value":150
-                },
-                {
-                    "name":"영업이익",
-                    "value":150
-                },
-                {
-                    "name":"에스원",
-                    "value":150
-                }
-            ]
-        },
-        {
-            "name":"현대",
-            "value":400,
-            "linkWith":[
-                "삼성",
-                "SK",
-                "영업이익",
-                "코스피"
-            ],
-            "children":[
-                {
-                    "name":"현대자동차",
-                    "value":350
-                },
-                {
-                    "name":"현대모비스",
-                    "value":350
-                },
-                {
-                    "name":"쏘나타",
-                    "value":200
-                },
-                {
-                    "name":"정의선",
-                    "value":150
-                },
-                {
-                    "name":"쏘나타 하이브리드",
-                    "value":130
-                }
-            ]
-        },
-        {
-            "name":"SK",
-            "value":300,
-            "linkWith":[
-                "삼성",
-                "현대",
-                "LG"
-            ],
-            "children":[
-                {
-                    "name":"SK 하이닉스",
-                    "value":250
-                },
-                {
-                    "name":"SK 이노베이션",
-                    "value":250
-                },
-                {
-                    "name":"SK 브로드밴드",
-                    "value":200
-                },
-                {
-                    "name":"SK 텔레콤",
-                    "value":250
-                }
-            ]
-        },
-        {
-            "name":"LG",
-            "value":200,
-            "linkWith":[
-                "삼성",
-                "SK"
-            ],
-            "children":[
-                {
-                    "name":"LG전자",
-                    "value":180
-                },
-                {
-                    "name":"LG유플러스",
-                    "value":180
-                },
-                {
-                    "name":"LG화학",
-                    "value":180
-                },
-                {
-                    "name":"V40",
-                    "value":170
-                },
-                {
-                    "name":"TV",
-                    "value":100
-                },
-                {
-                    "name":"시그니처 가전",
-                    "value":110
-                }
-            ]
-        },
-        {
-            "name":"카카오",
-            "value":158,
-            "linkWith":[
-                "Chandler",
-                "Ross",
-                "Joey",
-                "Phoebe",
-                "Mr Geller",
-                "Mrs Geller"
-            ],
-            "children":[
-                {
-                    "name":"카카오톡",
-                    "value":130
-                },
-                {
-                    "name":"헤이카카오",
-                    "value":120
-                },
-                {
-                    "name":"네오",
-                    "value":60
-                },
-                {
-                    "name":"무지",
-                    "value":60
-                },
-                {
-                    "name":"어피치",
-                    "value":60
-                },
-                {
-                    "name":"콘",
-                    "value":60
-                },
-                {
-                    "name":"라이언",
-                    "value":60
-                },
-                {
-                    "name":"제주도",
-                    "value":70
-                },
-                {
-                    "name":"다음",
-                    "value":80
-                },
-                {
-                    "name":"카카오페이",
-                    "value":3
-                }
-            ]
-        },
-        {
-            "name":"네이버",
-            "value":130,
-            "linkWith":[
-                "Phoebe",
-                "Janice",
-                "Mrs Green",
-                "Kathy",
-                "Emily",
-                "Charlie"
-            ],
-            "children":[
-                {
-                    "name":"메일",
-                    "value":80
-                },
-                {
-                    "name":"그린닷",
-                    "value":40
-                },
-                {
-                    "name":"검색",
-                    "value":90
-                },
-                {
-                    "name":"실시간검색어",
-                    "value":50
-                },
-                {
-                    "name":"음악검색",
-                    "value":40
-                },
-                {
-                    "name":"QR코드",
-                    "value":40
-                }
-            ]
-        }
-        ]
-        // ----------------------  연관 관계 그래프 부분 ---------------------------  //
+  computed: {
+    startOffset () {
+      return ((this.curPageNum - 1) * this.dataPerPage)
     },
-    beforeDestroy() {
-        if (this.chart) {
-            this.chart.dispose();
-        }
+    endOffset () {
+      return (this.startOffset + this.dataPerPage)
+    },
+    numOfPages () {
+      return Math.ceil(this.articles.length / this.dataPerPage)
+    },
+    calData () {
+      return this.articles.slice(this.startOffset, this.endOffset)
     }
+  },
+  mounted () {
+    // this.getArticle()
+    console.log(this.company_choice)
+    // this.scrapreq()
+    this.scrapchoice()
+    this.init()
+  }
 }
 </script>
 
@@ -1024,14 +382,6 @@ export default {
     width: 100%;
     border: 2px solid #42b983;
     border-radius: 5px;
-}
-#chartdiv_keyword {
-  width: 100%;
-  height: 600px;
-}
-#chartdiv_searching {
-  width: 100%;
-  height: 600px;
 }
 body
 {
@@ -1053,5 +403,22 @@ body
     width: 300px;
     height: 300px;
 
+}
+@font-face {
+  font-family: 'LogoFont'; /* 폰트 패밀리 이름 주기*/
+  src: url('../fonts/BLKCHCRY.TTF'); /*폰트 파일 주소*/
+}
+.header-title {
+  position: absolute;
+  z-index: 2;
+  top: 25%;
+  left: 31%;
+  margin-top: auto;
+  font-size: 100px;
+  /* font-weight: 400; */
+  color: #ffd900;
+  /* color: grey; */
+  text-align: left;
+  letter-spacing: -.05em;
 }
 </style>

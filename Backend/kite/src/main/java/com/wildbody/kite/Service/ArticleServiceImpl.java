@@ -1,6 +1,7 @@
 package com.wildbody.kite.Service;
 
 import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.MemberArticle;
 import com.wildbody.kite.Repository.ArticleRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +47,35 @@ public class ArticleServiceImpl implements ArticleService {
     public Article oneArticle(int articleid) {
         return repo.oneArticle(articleid);
     }
+    
+    @Override
+    public Article oneScarpArticle(int memberid, int articleid) {
+    	System.out.println("서비스:" + memberid + "," + articleid);
+    	MemberArticle ma = new MemberArticle();
+    	ma.setMemberid(memberid);
+    	ma.setArticleid(articleid);
+    	System.out.println(ma.getMemberid() + "," +ma.getArticleid());
+    	return repo.oneScrapArticle(ma);
+    }
+    
+    @Override
+    public int getIndex(int memberid, int articleid) {
+    	System.out.println("서비스:" + memberid + "," + articleid);
+    	MemberArticle ma = new MemberArticle();
+    	ma.setMemberid(memberid);
+    	ma.setArticleid(articleid);
+    	System.out.println(ma.getMemberid() + "," +ma.getArticleid());
+    	return repo.getIndex(ma);
+    }
 
     @Override
     public List<Article> infi(String company) {
         return repo.infi(company);
     }
+    
+
+	@Override
+	public List<Article> myKeywordArticle(int memberid, String keyword) {
+		return repo.myKeywordArticle(memberid, keyword);
+	}
 }

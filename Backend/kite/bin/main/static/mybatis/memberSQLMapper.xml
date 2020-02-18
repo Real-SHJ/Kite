@@ -17,6 +17,15 @@
 		#{gender}, #{area},
 		#{job}, #{company}, #{image})
 	</insert>
+	
+	<select id="selectid" parameterType="Member"
+		resultType="Member">
+		select *
+		from members
+		where memberid=#{memberid}
+	</select>
+	
+	
 	<select id="selectOne" parameterType="Member"
 		resultType="Member">
 		select *
@@ -125,11 +134,16 @@
 		values
 		(#{sno},#{sendid}, #{receiveid}, #{articleid})
 	</insert>
-
+	
+	<delete id="deleteMessage" parameterType="int">
+		delete from message where sno=#{sno};
+		
+	</delete>
+	
 	<select id="selectMessage" parameterType="int" resultType="Message">
 		select * from message where receiveid=#{sendid};
 	</select>
-
+	
 	<update id="updateCompany" parameterType="hashmap">
 		update members set
 		company=#{companylist} where memberid=#{memberid};
@@ -139,17 +153,31 @@
 		resultType="string">
 		select company from article where articleid=#{articleid}
 	</select>
+	<select id="selectArticleContent" parameterType="int"
+		resultType="string">
+		select content from article where articleid=#{articleid}
+	</select>
 	<insert id="insertMemberArticle" parameterType="MemberArticle">
 		insert into
-		member_article(memberid, articleid, company) values (#{memberid},
-		#{articleid}, #{company})
+		member_article(memberid, articleid, company, content, spanindex) values (#{memberid},
+		#{articleid}, #{company}, #{content}, #{spanindex})
 	</insert>
+	
+		<select id="selectMyContentList" parameterType="int" resultType="MyArticle">
+		select articleid, content from member_article where memberid=#{memberid};
+	</select>
+	
+	<select id="selectMyCompanyContentList" parameterType="MemberArticle" resultType="MyArticle">
+		select articleid, content from member_article where memberid=#{memberid} and company=#{company};
+	</select>
+	
 	<select id="selectMyArticleList" parameterType="int"
 		resultType="Article">
 		select * from article where articleid in (select
 		articleid
 		from member_article where memberid=#{memberid})
 	</select>
+	
 	<select id="selectMyCompanyArticleList"
 		parameterType="MemberArticle" resultType="Article">
 		select * from article where
@@ -162,11 +190,7 @@
 		#{articleid};
 	</delete>
 
-
-
-
-
-
-
-
+	<update id="saveContent" parameterType="MemberArticle">
+		update member_article set spanindex=#{spanindex}, content=#{content} where memberid=#{memberid} and articleid=#{articleid};
+	</update>
 </mapper>
