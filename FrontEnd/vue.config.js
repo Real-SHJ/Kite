@@ -2,9 +2,8 @@ module.exports = {
   'transpileDependencies': [
     'vuetify'
   ],
-  configureWebPack: {
-    devServer: {
-      port: 3000
-    }
+  'devServer': {
+    'disableHostCheck': true,
+    'port': 3000
   }
 }
