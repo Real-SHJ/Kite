@@ -7,6 +7,8 @@
     <!-- 원태희 end -->
 
     <p class="header-title" ><strong>기업 분석 데이터</strong></p>
+    <searchRank/>
+    <v-divider class="mx-4"></v-divider>
     <v-container fluid>
       <v-row class="justify-center">
         <h2><br>기업선택</h2>
@@ -22,7 +24,6 @@
       </v-row>
     </v-container>
     <v-divider class="mx-4"></v-divider>
-
     <v-container fluid>
       <v-layout >
         <v-row>
@@ -32,7 +33,6 @@
             <p v-else>기업을 선택해 주세요</p>
           </v-container>
         </v-flex>
-
         </v-row>
         <v-flex xs12 sm4 md4>
           <v-container fluid>
@@ -75,10 +75,11 @@
 <script>
 import http from '../http-common'
 import CompanyKeyword from '../components/CompanyKeyword.vue'
-
+import SearchRank from '../components/SearchRank.vue'
 export default {
   name: 'analysis',
   components: {
+    SearchRank,
     CompanyKeyword
   },
   data () {

@@ -31,7 +31,7 @@
         <v-icon class="my-3">search</v-icon>
         <input @keyup="search" type="text" v-model="searchText"  name="searchText" class="form-control" placeholder="검색어를 입력하세요." value="{param.searchText}">
         <v-divider vertical></v-divider>
-        <v-list-item-title class="text-center" @click="gohome()">전체보기</v-list-item-title>
+        <v-list-item-title style="cursor: pointer" class="text-center" @click="gohome()">전체보기</v-list-item-title>
        </div>
       <v-divider></v-divider>
       <!-- 밑에 백엔드 연결할 것... -->
@@ -42,7 +42,7 @@
             <img :src="items[item]"/>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title >{{ item }}</v-list-item-title>
+            <v-list-item-title class="ml-3">{{ item }}</v-list-item-title>
             <!-- <router-link :to="`/articlecorpo/${item}`">{{item}}</router-link> -->
           </v-list-item-content>
         </v-list-item>
