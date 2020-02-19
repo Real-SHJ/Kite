@@ -1,16 +1,16 @@
 <template>
   <v-content>
     <!-- <div style="background-color: black; height: 200px;"></div> -->
-    <div style="position: relative">
-      <div style="position: relative; width: 1600px; height: 400px;">
-        <div style="background-color: black; opacity: 0.5; position: absolute; width: 100%; height: 400px; z-index: 2;"></div>
-        <img src="https://images.unsplash.com/photo-1470790376778-a9fbc86d70e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" style="width: 100%; height: 100%; position: absolute; z-index: 1;">
-        <img src="https://images.unsplash.com/photo-1575521376071-a9b730433c8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" style="width: 100%; height: 100%; position: absolute; z-index: 1;">
+    <div style="position: relative;">
+      <div style="position: relative; width: 1431px; height: 368px;">
+        <div style="background-color: black; opacity: 0; position: absolute; width: 100%; height: 400px; z-index: 2;"></div>
+        <img src="../assets/Main_Image.png" alt="" style="width: 92%; height: 100%; position: absolute; z-index: 1;">
+        <!-- <img src="https://www.designmap.or.kr:10443/images/renew/main_background_img.jpg" alt="" style="width: 100%; height: 100%; position: absolute; z-index: 1;"> -->
       </div>
-        <p class="header-title" style="position: absolute; z-index: 2; top: 8%; left: 25%;"><strong>최신 기업 정보, KITE </strong></p>
+        <!-- <p class="header-title" style="position: absolute; z-index: 2; top: 8%; left: 25%;"><strong>최신 기업 정보, KITE </strong></p>
         <span class="header-title2" style="position: absolute; z-index: 2; top: 47%; right: 29%; ">KITE에서 나의 관심 기업 기사를 확인하세요.<br></span>
         <span class="header-title2" style="position: absolute; z-index: 2; top: 60%; right: 38% ">그리고 다시 꺼내 보세요.<br></span>
-        <span class="header-title2" style="position: absolute; z-index: 2; top: 73%; right: 40% ">손쉬운 스크랩, 공유...<br></span>
+        <span class="header-title2" style="position: absolute; z-index: 2; top: 73%; right: 40% ">손쉬운 스크랩, 공유...<br></span> -->
     </div>
       <!-- <div class="header-text my-4">
         <p class="header-title">최신 기업 정보, KITE </p>
@@ -67,7 +67,6 @@ export default {
     line-height: 46px;
     font-family: "Nanum Myeongjo",sans-serif;
     color: #cacaca;
-    /* color: white; */
     letter-spacing: -.05em;
 }
 </style>

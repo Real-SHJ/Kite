@@ -1,17 +1,15 @@
 <template>
 <v-content>
-    <div style="position: relative; height: 400px;">
-      <div style="background-color: black; opacity: 0.5; position: absolute; width: 100%; height: 400px; z-index: 1;"></div>
-      <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRLRyPE1rUST-QejeOfla8MHp6Cq-L3ttyntRfVRGdgTdLNFl0Y" alt="" style="width: 100%; height:100%; position: absolute;"> -->
-      <!-- <img src="https://images.unsplash.com/photo-1520376698361-ba5ceb38c35b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" style="width: 100%; height: 100%; position: absolute;"> -->
-      <!-- <img src="https://images.unsplash.com/photo-1546146830-2cca9512c68e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" alt="" style="width: 100%; height: 100%; position: absolute;"> -->
-      <img src="https://cdn.pixabay.com/photo/2019/04/26/00/18/notebook-4156348__480.jpg" alt="" style="width: 100%; height: 100%; position: absolute;">
-      <p class="header-title" ><strong>My Scrap Article </strong></p>
+    <div class="my-8" style="position: relative; height: 400px;">
+      <!-- <div style="background-color: black; opacity: 0.5; position: absolute; width: 100%; height: 400px; z-index: 1;"></div> -->
+      <!-- <img src="https://cdn.pixabay.com/photo/2019/04/26/00/18/notebook-4156348__480.jpg" alt="" style="width: 100%; height: 100%; position: absolute;"> -->
+      <img src="../assets/Main_Image.png" alt="" style="width: 100%; height: 100%; position: absolute;">
       <!-- <v-col cols="3"> -->
                 <!-- <h1 class="text-center" id="homebtn" >My Scrap Article</h1> -->
              <!-- </v-col> -->
     </div>
     <!-- ------------- 검색 기간 부분 --------------- -->
+      <p class="header-title" ><strong>My Scrap Article </strong></p>
       <v-container fluid>
           <v-row class="justify-center">
             <h2><br>기업선택</h2>
@@ -38,11 +36,7 @@
     <!-- ------------- 검색 기간 부분 --------------- -->
     <!--          작업   시  작 ------------------ -->
     <div class="team">
-        <!-- <h1 class="subheading greay--text">Article</h1> -->
         <v-layout class="justify-center" row wrap>
-            <!-- <v-col cols="3">
-                <h1 class="text-center" id="homebtn">My Scrap Article</h1>
-             </v-col> -->
         </v-layout>
         <v-container class="my-5">
             <v-layout row wrap>
@@ -55,7 +49,7 @@
                         </v-card-actions>
                     </v-card>
                 <v-flex xs12 sm6 md6 lg6 v-for="article in calData" :key="article.id">
-                    <v-card flat class="text ma-3" shaped="" raised="">
+                    <v-card flat class="text ma-3" shaped="" raised="" >
                         <div @click="goDetail(article)">
                         <v-card-text>
                             <div class="subheading mb-4">{{ article.company }}</div>
@@ -409,16 +403,16 @@ body
   src: url('../fonts/BLKCHCRY.TTF'); /*폰트 파일 주소*/
 }
 .header-title {
-  position: absolute;
+  /* position: absolute; */
   z-index: 2;
-  top: 25%;
-  left: 31%;
+  /* top: 25%; */
+  /* left: 31%; */
   margin-top: auto;
-  font-size: 100px;
+  font-size: 70px;
   /* font-weight: 400; */
-  color: #ffd900;
+  color: #000000;
   /* color: grey; */
-  text-align: left;
+  text-align: center;
   letter-spacing: -.05em;
 }
 </style>

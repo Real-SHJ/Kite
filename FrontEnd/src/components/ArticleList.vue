@@ -51,21 +51,21 @@
       </div>
     </v-carousel> -->
     <v-row>
-        <div
-        class="d-flex justify-center"
-        outline
-        tile
-        v-for="(article,i) in articles" :key="article.id">
-        <v-col cols="8"></v-col>
-      <v-col class="images">
+      <div
+      class="d-flex justify-center"
+      outline
+      tile
+      v-for="(article,i) in articles" :key="article.id">
+        <v-col cols="4"></v-col>
+          <v-col class="images">
               <v-card
               @click='goDetail(article.articleid)'
-
+              class="my-2"
                   max-width="600"
                   id = "mycard"
                   :img = "`${article.image}`"
-                  height="400px"
-                  width="600px"
+                  height="350px"
+                  width="500px"
                   tile
               >
                   <v-avatar
@@ -75,39 +75,37 @@
                     <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
                   </v-avatar>
 
-                  <v-row
-                  class="row"
-                    >
-                    {{article.title}}
-                  </v-row>
-
                   <v-card-actions class="btngrp">
                     <ScrapDialog :article="article"/>
                     <ShareDialog :article="article" :myFriends="myFriends"/>
                   </v-card-actions>
-            <div class="overay textwrap" style="color:white;">
-              {{article.summary}}
-            </div>
-        <!-- <v-card-title>{{article.title}}</v-card-title>
-        <v-divider class="mx-4"></v-divider>
+              <div class="overay textwrap" style="color:white;">
+                {{article.summary}}
+              </div>
+            <!-- <v-card-title>{{article.title}}</v-card-title>
+            <v-divider class="mx-4"></v-divider>
 
-        <v-card-subtitle class="pb-0 mb-5" v-html="article.newspaper"></v-card-subtitle>
+            <v-card-subtitle class="pb-0 mb-5" v-html="article.newspaper"></v-card-subtitle>
 
-        <v-card-text>
-          <div v-html="article.summary"></div>
-        </v-card-text>
-        <v-divider class="mx-4"></v-divider> -->
+            <v-card-text>
+              <div v-html="article.summary"></div>
+            </v-card-text>
+            <v-divider class="mx-4"></v-divider> -->
 
-      <!-- <div @click="goDetail(article)">
-      </div> -->
-      </v-card>
-
-    </v-col>
-    <v-responsive
-      v-if="n === 2"
-      :key="`width-${i}`"
-    ></v-responsive>
-    </div>
+          <!-- <div @click="goDetail(article)">
+          </div> -->
+          </v-card>
+            <v-row
+            class="row"
+              >
+              {{article.title}}
+            </v-row>
+        </v-col>
+        <v-responsive
+          v-if="n === 2"
+          :key="`width-${i}`"
+        ></v-responsive>
+      </div>
     </v-row>
 
   </v-flex>
@@ -221,15 +219,16 @@ export default {
     height: 45%;
   }
   .row{
-    color:white;
-    font-size:1.4em;
-    margin:auto;
-    max-height:50px;
-    /* position: absolute; */
-    top: 0;
-    right:0;
-    margin-bottom: 10%;
-    z-index: inherit;
+    /* color:white; */
+    font-size: 18px;
+    font-weight: bold;
+    /* margin:auto; */
+    /* max-height:50px; */
+    /* top: 0; */
+    margin-left: 2%;
+    /* right:0; */
+    /* margin-bottom: 10%; */
+    /* z-index: inherit; */
   }
   .btngrp{
     position: absolute;

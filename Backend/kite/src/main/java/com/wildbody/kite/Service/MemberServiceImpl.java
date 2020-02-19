@@ -113,7 +113,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int friendDelete(int memberid, int friendid) {
-		return repo.friendDelete(memberid, friendid);
+		int delete = repo.friendDelete(memberid, friendid);
+		delete += repo.friendDelete(friendid, memberid);
+		return delete;
 	}
 
 	@Override

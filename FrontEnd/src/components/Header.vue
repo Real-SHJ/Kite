@@ -3,14 +3,21 @@
     <v-toolbar color="" light="" class="" style="width: 100%; z-index: 1; ">
     <!-- <v-toolbar color="#cecece" opacity="0.1" class="" style="width: 100%; z-index: 1;"> -->
       <v-row>
-        <v-col cols="1">
-          <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
-        </v-col>
-        <v-col class="d-flex align-center flex-row-reverse">
-            <span class="toolbar-btn" @click="goIndiRepo">개인저장소</span>
-            <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
+          <v-col cols="2"></v-col>
+          <v-col class="d-flex align-center" md="auto">
             <span class="toolbar-btn" @click="goSelectCom">관심기업추가</span>
+            <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
+          </v-col>
+        <v-col cols="2">
+          <v-col class="d-flex align-center">
+            <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
+          </v-col>
+        </v-col>
+        <v-col class="d-flex align-center">
+            <span class="toolbar-btn" @click="goIndiRepo">개인저장소</span>
           <div v-if="AuthenticatedCheck">
+            <Friend/>
+            <!-- <span class="toolbar-btn" @click="goFriend">친구관리</span> -->
             <span class="toolbar-btn" @click="logout">로그아웃</span>
             <Friend/>
           </div>
@@ -38,7 +45,7 @@
     </v-toolbar>
     <v-lazy>
       <!-- <v-toolbar v-if="offsetTop > 350" color="#FBFAF5" id="pop-up-toolbar" class="" style="opacity: 0.8;"> -->
-      <v-toolbar v-if="offsetTop > 350" dark="" id="pop-up-toolbar" class="" style="opacity: 0.8;">
+      <v-toolbar v-if="offsetTop > 350" dark="" id="pop-up-toolbar" class="" style="opacity: 0.8; z-index: 1;">
         <v-row>
           <v-col cols="1">
             <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
@@ -177,14 +184,18 @@ export default {
   /* text-decoration: underline; */
   /* text-decoration-color: rgb(255, 147, 97); */
   /* color: rgb(255, 147, 97); */
-  color: #ffd900;
+  color: #1d87be;
 }
 .toolbar-btn {
   font-size: 170%;
-  margin-right: 10px;
+  margin-right: 25px;
   /* font-size: 25px; */
   /* font-weight: bold; */
   /* font-family: 'Nanum Gothic', sans-serif; */
+}
+.toolbar-btn-left {
+  font-size: 170%;
+  margin-right: 10px;
 }
 #pop-up-toolbar {
   position: fixed;
@@ -202,5 +213,6 @@ export default {
   background-color: #ffffff;
   color: #000000;
   font-size: 40px;
+  text-align: center
 }
 </style>

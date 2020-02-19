@@ -123,9 +123,6 @@
 	<delete id="deleteFriend" parameterType="hashmap">
 		delete from friend where
 		memberid = #{memberid} and friendid = #{friendid};
-		delete from friend
-		where
-		memberid = #{friendid} and friendid = #{memberid};
 	</delete>
 
 	<insert id="insertMessage" parameterType="Message">

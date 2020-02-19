@@ -319,11 +319,11 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<>();
 		try {
-			System.out.println("memberid:" + memberid + ",friendid:" + friendid);
 			int delete = msvc.friendDelete(Integer.parseInt(memberid), Integer.parseInt(friendid));
 			map.put("message", "친구 삭제 성공");
 		} catch (RuntimeException e) {
 			map.put("message", "친구 삭제 실패");
+			System.out.println("친구 삭제 실패");
 		}
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;

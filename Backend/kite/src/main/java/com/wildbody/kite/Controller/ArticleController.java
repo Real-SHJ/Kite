@@ -157,17 +157,17 @@ public class ArticleController {
 			if (company == null) { //로그인이 안되어있을 때
 				for (String comp : member.getCompany().split(",")) {
 					list.addAll(svc.infi(comp));
-					for (Article ar : list) {
-						if (background_img.containsKey(ar.getCompany())) {
-							int index = background_img.get(ar.getCompany()).size();
-							int random_index = (int) (Math.random() * index);
-							ar.setImage(imgUrl + background_img.get(ar.getCompany()).get(random_index));
-							ar.setLogo(imgUrl + logo_img.get(ar.getCompany()));
-						}
-					}
 				}
 			} else { //로그인 되었을 때
 				list.addAll(svc.infi(company)); //회사별 기사
+			}
+			for (Article ar : list) {
+				if (background_img.containsKey(ar.getCompany())) {
+					int index = background_img.get(ar.getCompany()).size();
+					int random_index = (int) (Math.random() * index);
+					ar.setImage(imgUrl + background_img.get(ar.getCompany()).get(random_index));
+					ar.setLogo(imgUrl + logo_img.get(ar.getCompany()));
+				}
 			}
 			map.put("result", DateUtil.getInstance().makeInfi(page, list));
 			map.put("message", "인피니티 로딩 성공");

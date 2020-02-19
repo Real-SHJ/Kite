@@ -1,6 +1,6 @@
 <template>
   <!-- <v-app id="inspire" style="background-color: #FAFAFA"> -->
-  <v-app id="inspire" style="background-color: #fffafa">
+  <v-app id="inspire" style="background-color: #ffffff">
     <!-- <v-content v-if="getOpen === false">
       <Opening @changeOpen="change"/>
     </v-content> -->
@@ -24,7 +24,7 @@
 import Header from './components/Header'
 import LeftMenu from './components/LeftMenu'
 // import Footer from './components/Footer''
-import Opening from './components/Opening.vue'
+// import Opening from './components/Opening.vue'
 // import Opening from './components/Opening2'
 
 export default {
