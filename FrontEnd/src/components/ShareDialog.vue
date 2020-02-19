@@ -1,9 +1,14 @@
 <template>
-  <!-- <div></div> -->
   <v-dialog v-model="dialog" persistent="" scrollable="" max-width="400">
     <template v-slot:activator="{ on }">
-      <v-btn rounded class="mx-4" color="primary" v-on="on">
-        <v-icon size="20px">fas fa-share-alt</v-icon>
+      <v-btn
+        class="share"
+        dark
+        fab
+        color="pink"
+        v-on="on"
+      >
+        <v-icon>fas fa-share-alt</v-icon>
       </v-btn>
     </template>
     <v-card

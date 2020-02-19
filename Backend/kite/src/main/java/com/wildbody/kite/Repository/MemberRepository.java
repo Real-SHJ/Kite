@@ -1,6 +1,7 @@
 package com.wildbody.kite.Repository;
 
 import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.ArticleKeyword;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.MemberArticle;
 import com.wildbody.kite.DTO.MemberKeyword;
@@ -75,7 +76,9 @@ public interface MemberRepository {
 	
 	public int insertMemberKeyword(List<MemberKeyword> list);
 	
+	public int deleteMemberKeyword(int memberid, int articleid);
+	
 	public List<MemberKeyword> selectMemberKeywordList(int memberid);
 	
-	public int deleteMemberKeyword(int memberid, int articleid);
+	public List<ArticleKeyword> selectArticleKeywordList(String company);
 }

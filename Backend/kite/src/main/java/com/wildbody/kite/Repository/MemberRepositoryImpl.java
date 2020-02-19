@@ -1,6 +1,7 @@
 package com.wildbody.kite.Repository;
 
 import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.ArticleKeyword;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.MemberArticle;
 import com.wildbody.kite.DTO.MemberKeyword;
@@ -238,15 +239,20 @@ public class MemberRepositoryImpl implements MemberRepository {
 	}
 
 	@Override
-	public List<MemberKeyword> selectMemberKeywordList(int memberid) {
-		return session.selectList("selectMemberKeyword", memberid);
-	}
-
-	@Override
 	public int deleteMemberKeyword(int memberid, int articleid) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberid", memberid);
 		map.put("articleid", articleid);
-		return session.delete("deleteMemberKeyword", map);
+		return session.delete("kite.keyword.deleteMemberKeyword", map);
+	}
+	
+	@Override
+	public List<MemberKeyword> selectMemberKeywordList(int memberid) {
+		return session.selectList("kite.keyword.selectMemberKeyword", memberid);
+	}
+
+	@Override
+	public List<ArticleKeyword> selectArticleKeywordList(String company) {
+		return session.selectList("kite.keyword.selectArticleKeyword", company);
 	}
 }

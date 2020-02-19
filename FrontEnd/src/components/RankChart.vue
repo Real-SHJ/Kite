@@ -22,9 +22,8 @@
       </v-list>
     </v-menu>
   </div>
-
-    <p id="title2" style="margin-bottom: 10px;">{{title}}</p>
-    <div id="chartdiv"></div>
+      <p id="title2" style="margin-bottom: 10px;">{{title}}</p>
+      <div id="chartdiv" style="width:100%;"></div>
     </div>
 </template>
 
@@ -164,23 +163,23 @@ export default {
             for(const property in this.info){
                 var tmp={"title" : property}
                 this.items.push(tmp)
-                console.log(property)
+                // console.log(property)
             }
 
         },
         makeData(property){
             this.chart.data=[]
-            console.log("makedata진입")
+            // console.log("makedata진입")
         //    for (const property in this.info) {
         //        if(cnt==1)
         //         break;
         //         console.log("!!!!"+property)
                 for(const data in this.info[property]){
-                 console.log("@@@@"+"company" +" "+ this.info[property][Number(data)]["company"]+" "+ "count" +" "+ this.info[property][Number(data)]["count"])
+                //  console.log("@@@@"+"company" +" "+ this.info[property][Number(data)]["company"]+" "+ "count" +" "+ this.info[property][Number(data)]["count"])
                  var tmp={"company" : this.info[property][Number(data)]["company"], "counts" : parseInt(this.info[property][Number(data)]["count"]) }
                  this.chart.data.push(tmp)
                 }
-                console.log("!@#$"+this.chart.data)
+                // console.log("!@#$"+this.chart.data)
         //    }
         }
     }
@@ -198,7 +197,15 @@ body {
 
 }
 #chartdiv {
+  margin-left: 5%;
   width: 100%;
-  height: 600px;
+  height: 500px;
+}
+.chart{
+  width: 100%;
+  height: 500px;
+}
+.chart{
+  width: 100%;
 }
 </style>

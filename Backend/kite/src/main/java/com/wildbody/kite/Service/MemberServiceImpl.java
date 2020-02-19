@@ -1,6 +1,7 @@
 package com.wildbody.kite.Service;
 
 import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.ArticleKeyword;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.MemberArticle;
 import com.wildbody.kite.DTO.MemberKeyword;
@@ -232,6 +233,20 @@ public class MemberServiceImpl implements MemberService {
 		List<MemberKeyword> select = repo.selectMemberKeywordList(memberid);
 		List<MemberKeyword> result = new ArrayList<>();
 		for (MemberKeyword item : select) {
+			String keyword = item.getKeyword();
+			int count = item.getCount();
+			Integer freq = map.get(keyword);
+			map.put(keyword, (freq == null) ? count : freq + count);
+		}
+		return map;
+	}
+
+	@Override
+	public Map<String, Integer> selectArticleKeywordList(String company) {
+		Map<String, Integer> map = new HashMap<>();
+		List<ArticleKeyword> select = repo.selectArticleKeywordList(company);
+		List<ArticleKeyword> result = new ArrayList<>();
+		for (ArticleKeyword item : select) {
 			String keyword = item.getKeyword();
 			int count = item.getCount();
 			Integer freq = map.get(keyword);

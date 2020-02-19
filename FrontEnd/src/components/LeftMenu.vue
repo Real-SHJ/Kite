@@ -27,13 +27,16 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-       <v-input>
-         <v-icon>search</v-icon>
-         <input @keyup="search" type="text" v-model="searchText"  name="searchText" class="form-control" placeholder="검색어를 입력하세요." value="{param.searchText}">
-       </v-input>
+      <div class="d-flex justify-center">
+        <v-icon class="my-3">search</v-icon>
+        <input @keyup="search" type="text" v-model="searchText"  name="searchText" class="form-control" placeholder="검색어를 입력하세요." value="{param.searchText}">
+        <v-divider vertical></v-divider>
+        <v-list-item-title class="text-center" @click="gohome()">전체보기</v-list-item-title>
+       </div>
       <v-divider></v-divider>
       <!-- 밑에 백엔드 연결할 것... -->
       <v-list dense >
+
         <v-list-item v-for="item in info" :key="item" link @click="goArtCorp(item)">
           <v-list-item-avatar width="100" height="40">
             <img :src="items[item]"/>
@@ -129,6 +132,9 @@ export default {
     goArtCorp (item) {
       alert('클릭!!!' + item)
       this.$router.push({ name: 'articlecorpo', params: { 'company': item } })
+    },
+    gohome () {
+      this.$router.push({ name: 'home' })
     }
   }
 }
@@ -146,7 +152,7 @@ export default {
   opacity: 0;
 }
 .left-menu-button {
-  top: 270px;
+  top: 350px;
   left: -30px;
   margin-top: -10px;
   z-index: 5;

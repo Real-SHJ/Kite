@@ -20,4 +20,11 @@
 		select * from article where articleid in
 		(select articleid from member_keyword where memberid=#{memberid} and keyword=#{keyword})
 	</select>
+	<select id="selectArticleKeyword" parameterType="string" resultType="ArticleKeyword">
+		select * from article_keyword where company=#{company}
+	</select>
+	<select id="companyKeywordArticle" parameterType="string" resultType="Article">
+		select * from article where articleid in
+		(select articleid from article_keyword where keyword=#{keyword})
+	</select>
 </mapper>

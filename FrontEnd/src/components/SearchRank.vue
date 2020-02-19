@@ -1,15 +1,18 @@
 <template>
-<v-container>
-  <div class="search">
+<v-container style="width:100%;">
+  <div class="search" style="width:100%;">
+  <div class="wrap">
+  <div class="title_rank">분야별 인기 검색어</div>
+  </div>
 <v-carousel
     cycle
     height="670"
-
     hide-delimiters
     show-arrows-on-hover
+    interval="4000"
   >
     <v-carousel-item
-      v-for="(slide, i) in info"
+      v-for="(slide, i) in maninfo"
       :key="i"
     >
       <v-sheet
@@ -24,17 +27,36 @@
           style="center"
         >
         <v-card
-              class="article-cards mx-auto my-10"
+              class="article-cards mx-auto my-10 cards"
               max-width="700"
-              width="50%"
               height="78%"
               align="center"
               :color="colors[0]"
             >
-            <p style="color: black; font-size:1.5em; margin-top:5px" class="font-weight-black">{{i}}</p>
+            <p style="color: black; font-size:1.5em; margin-top:5px" class="font-weight-black">{{maninfo[i][0]}}</p>
             <v-divider dark></v-divider>
             <v-list-item-group>
-        <v-list-item  v-for="(elem,j) in slide" :key="j">
+        <v-list-item  v-for="(elem,j) in maninfo[i][1]" :key="j">
+        <v-list-item-content >
+          <v-list-item-title @click="checkArticle(elem.company)" style="color: black" text-align="center">
+            <span class="font-weight-black">{{j+1}} </span>
+            {{elem.company}}
+            </v-list-item-title>
+        </v-list-item-content>
+        </v-list-item>
+            </v-list-item-group>
+        </v-card>
+        <v-card
+              class="article-cards mx-auto my-10 cards"
+              max-width="700"
+              height="78%"
+              align="center"
+              :color="colors[0]"
+            >
+            <p style="color: black; font-size:1.5em; margin-top:5px" class="font-weight-black">{{girlinfo[i][0]}}</p>
+            <v-divider dark></v-divider>
+            <v-list-item-group>
+        <v-list-item  v-for="(elem,j) in girlinfo[i][1]" :key="j">
         <v-list-item-content >
           <v-list-item-title @click="checkArticle(elem.company)" style="color: black" text-align="center"><span class="font-weight-black">{{j+1}} </span>  {{elem.company}}</v-list-item-title>
         </v-list-item-content>
@@ -47,7 +69,7 @@
   </v-carousel>
   </div>
   <div class="rank">
-  <RankChart :info ="info"/>
+  <RankChart :info ="info" />
   </div>
   <v-dialog v-model="dialog" max-width="290">
     <v-card>
@@ -80,10 +102,12 @@ export default {
         'red lighten-3',
         'red lighten-1',
         'deep-purple accent-4',
-        'green'
+        'green lighten-1'
       ],
       info: null,
-      dialog: false
+      dialog: false,
+      maninfo: [],
+      girlinfo: []
     }
   },
   mounted () {
@@ -108,9 +132,19 @@ export default {
       http.get('/analysis/searchRank')
         .then(res => {
         // 토큰 저장
-          console.log('info에 데이터 저장')
-          this.info = res.data
-          console.log(this.info)
+          // console.log('info에 데이터 저장')
+          let info = res.data
+          this.info = info
+          const retarr = Object.keys(info).map(function (key) {
+            return [key, info[key]]
+          })
+          for (var i = 0; i < retarr.length; i++) {
+            if (i % 2 === 0) {
+              this.girlinfo.push(retarr[i])
+            } else {
+              this.maninfo.push(retarr[i])
+            }
+          }
         })
     }
   }
@@ -119,16 +153,26 @@ export default {
 <style>
 .search{
   display:inline-block;
-  width: 45%;
-  height: 50px;
+  width: 40%;
+  height: 100%;
   margin-right: 30px;
   padding: 10px
 }
 .rank{
   display:inline-block;
-  width: 45%;
-  height: 50px;
+  width: 50%;
+  height: 100%;
   margin-left: 30px;
   padding: 10px
+}
+.cards{
+  width:40%;
+}
+.wrap{
+  font-size: 24px;
+  margin-bottom: 3%;
+}
+.wrap>.title3{
+  font-size: 0.9375em;
 }
 </style>

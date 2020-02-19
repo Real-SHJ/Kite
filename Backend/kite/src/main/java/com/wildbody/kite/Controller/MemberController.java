@@ -1,6 +1,7 @@
 package com.wildbody.kite.Controller;
 
 import com.wildbody.kite.DTO.Article;
+import com.wildbody.kite.DTO.ArticleKeyword;
 import com.wildbody.kite.DTO.Check;
 import com.wildbody.kite.DTO.Member;
 import com.wildbody.kite.DTO.MemberArticle;
@@ -245,13 +246,9 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			map.put("message", "친구 목록 조회 성공");
-			System.out.println("memberid:" + memberid);
 			List<Member> flist = msvc.friendList(Integer.parseInt(memberid));
-			for (int i = 0; i < flist.size(); i++) {
-				System.out.println(flist.get(i));
-			}
 			map.put("flist", flist);
+			map.put("message", "친구 목록 조회 성공");
 		} catch (RuntimeException e) {
 			map.put("message", "친구 목록 조회 실패");
 		}
@@ -266,9 +263,7 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<>();
 		try {
-			System.out.println("requestid:" + requestid + ",responseid:" + responseid);
 			int insert = msvc.friendWaitInsert(Integer.parseInt(requestid), Integer.parseInt(responseid));
-			System.out.println(insert);
 			map.put("message", "친구 요청 등록 성공");
 		} catch (RuntimeException e) {
 			map.put("message", "친구 요청 등록 실패");
@@ -284,9 +279,7 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<>();
 		try {
-			System.out.println("친구등록: memberid:" + memberid + ",friendid:" + friendid);
 			int insert = msvc.friendInsert(Integer.parseInt(memberid), Integer.parseInt(friendid));
-			System.out.println(insert);
 			map.put("message", "친구 등록 성공");
 		} catch (RuntimeException e) {
 			map.put("message", "친구 등록 실패");
@@ -302,7 +295,6 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<>();
 		try {
-			System.out.println("requestid:" + requestid + ",responseid:" + responseid);
 			int delete = msvc.friendWaitDelete(Integer.parseInt(requestid), Integer.parseInt(responseid));
 			map.put("message", "친구 요청 삭제 성공");
 		} catch (RuntimeException e) {
@@ -323,7 +315,6 @@ public class MemberController {
 			map.put("message", "친구 삭제 성공");
 		} catch (RuntimeException e) {
 			map.put("message", "친구 삭제 실패");
-			System.out.println("친구 삭제 실패");
 		}
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
@@ -337,15 +328,11 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> resEntity=null;
 		Map<String, Object> map=new HashMap<>();
 		try{
-			System.out.println("내IDff: "+m.getSendid()+"친구ID: "+m.getReceiveid()+"기사ID: "+m.getArticleid());
 			List<Integer> tmp=m.getReceivelist();
 			for(int i=0;i<tmp.size();i++){
 				m.setReceiveid(tmp.get(i));
 				int insert= msvc.messageInsert(m);
-				System.out.println(insert);
-			} 
-			
-			
+			}
 			map.put("message", "메세지 저장 성공");
 		}catch(RuntimeException e) {
 			System.out.println(e.getMessage());
@@ -368,7 +355,6 @@ public class MemberController {
 			List<Member> mblist=new ArrayList<>();
 			List<Article> alist=new ArrayList<>();
 			for (int i = 0; i < mlist.size(); i++) {
-				System.out.println(mlist.get(i));
 				int sn=mlist.get(i).getSno();
 				Member tmp=msvc.selectid(mlist.get(i).getSendid());
 				Article atmp=asvc.oneArticle(mlist.get(i).getArticleid());
@@ -389,7 +375,6 @@ public class MemberController {
 	@PutMapping("/updatecompany/{memberid}")
 	@ApiOperation(value = "관심 기업 수정 서비스")
 	public @ResponseBody ResponseEntity<Map<String, Object>> updateCompany(@PathVariable String memberid) {
-		System.out.println("관심기업 리스트 비어있다.");
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		try {
 			int update = msvc.updateCompany(Integer.parseInt(memberid), "");
@@ -475,7 +460,6 @@ public class MemberController {
 	@GetMapping("/getScrap/{memberid}/{company}")
 	@ApiOperation(value = "내 스크랩 기사 목록 조회 서비스")
 	public @ResponseBody ResponseEntity<Map<String, Object>> selectMyArticleList(@PathVariable String memberid, @PathVariable String company) {
-		System.out.println("스크랩기업요청들어왔다." + memberid + "," + company);
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<>();
 		try {
@@ -514,7 +498,6 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<>();
 		try {
-			System.out.println("저장 요청 들어왔다:" + ma);
 			int update = msvc.saveContent(ma);
 			map.put("result", update);
 			map.put("message", "스크랩 기사 내용 수정 성공");
@@ -527,7 +510,6 @@ public class MemberController {
 	@GetMapping("/getkeyword/{memberid}")
 	@ApiOperation(value = "내 키워드 목록 조회 서비스")
 	public @ResponseBody ResponseEntity<Map<String, Object>> selectMemberKeywordList(@PathVariable String memberid) {
-		System.out.println("키워드요청들어왔다:" + memberid);
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<>();
 		try {
@@ -536,12 +518,36 @@ public class MemberController {
 			List<Integer> li2 = new ArrayList<Integer>(list.values());
 			List<MemberKeyword> result = new ArrayList<>();
 			for (int i = 0; i < li1.size(); i++) {
-				System.out.println(li1.get(i) + "," + li2.get(i));
 				MemberKeyword mk = new MemberKeyword();
 				mk.setMemberid(Integer.parseInt(memberid));
 				mk.setKeyword(li1.get(i));
 				mk.setCount(li2.get(i));
 				result.add(mk);
+			}
+			map.put("result", result);
+			map.put("message", "내 키워드 목록 조회 성공");
+		} catch (Exception e) {
+			map.put("message", "내 키워드 목록 조회 실패");
+		}
+		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	@GetMapping("/getkeywordarticle/{company}")
+	@ApiOperation(value = "기업 키워드 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> selectArticleKeywordList(@PathVariable String company) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			Map<String, Integer> list = msvc.selectArticleKeywordList(company);
+			List<String> li1 = new ArrayList<String>(list.keySet());
+			List<Integer> li2 = new ArrayList<Integer>(list.values());
+			List<ArticleKeyword> result = new ArrayList<>();
+			for (int i = 0; i < li1.size(); i++) {
+				ArticleKeyword ak = new ArticleKeyword();
+				ak.setKeyword(li1.get(i));
+				ak.setCount(li2.get(i));
+				result.add(ak);
 			}
 			for (int i = 0; i < result.size(); i++) {
 				System.out.println(result.get(i));

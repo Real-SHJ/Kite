@@ -68,4 +68,6 @@ public interface MemberService {
 	public int saveContent(MemberArticle ma);
 	
 	public Map<String, Integer> selectMemberKeywordList(int memberid);
+	
+	public Map<String, Integer> selectArticleKeywordList(String company);
 }

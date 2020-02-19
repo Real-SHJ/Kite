@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-content class="d-flex justify-center">
     <!-- <Menu/> -->
     <MainPageHeader/>
     <ArticleList :articles="articles"/>

@@ -3,23 +3,22 @@
     <v-toolbar color="" light="" class="" style="width: 100%; z-index: 1; ">
     <!-- <v-toolbar color="#cecece" opacity="0.1" class="" style="width: 100%; z-index: 1;"> -->
       <v-row>
-          <v-col cols="2"></v-col>
-          <v-col class="d-flex align-center" md="auto">
-            <span class="toolbar-btn" @click="goSelectCom">관심기업추가</span>
-            <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
-          </v-col>
+        <v-col class="d-flex justify-end align-center" cols="5">
+          <span class="toolbar-btn" @click="goSelectCom">관심기업추가</span>
+          <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
+        </v-col>
         <v-col cols="2">
-          <v-col class="d-flex align-center">
+          <v-col class="d-flex justify-center align-center">
             <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
           </v-col>
         </v-col>
         <v-col class="d-flex align-center">
-            <span class="toolbar-btn" @click="goIndiRepo">개인저장소</span>
+            <span class="toolbar-btn ml-4" @click="goIndiRepo">개인저장소</span>
           <div v-if="AuthenticatedCheck">
             <Friend/>
             <!-- <span class="toolbar-btn" @click="goFriend">친구관리</span> -->
             <span class="toolbar-btn" @click="logout">로그아웃</span>
-            <Friend/>
+            <!-- <Friend/> -->
           </div>
           <div v-else>
             <span class="toolbar-btn" @click="goStart">Start</span>
@@ -45,7 +44,7 @@
     </v-toolbar>
     <v-lazy>
       <!-- <v-toolbar v-if="offsetTop > 350" color="#FBFAF5" id="pop-up-toolbar" class="" style="opacity: 0.8;"> -->
-      <v-toolbar v-if="offsetTop > 350" dark="" id="pop-up-toolbar" class="" style="opacity: 0.8; z-index: 1;">
+      <v-toolbar v-if="offsetTop > 350" dark="" id="pop-up-toolbar" class="" style="opacity: 0.8; z-index: 3;">
         <v-row>
           <v-col cols="1">
             <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
