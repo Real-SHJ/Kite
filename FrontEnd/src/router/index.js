@@ -7,7 +7,6 @@ import ArticleDetail from '../views/ArticleDetail.vue'
 import Empty from '../views/Empty.vue'
 import ForceDirected from '../components/ForceDirected.vue'
 import NaverLogin from '../components/NaverLogin.vue'
-import IndiRepository from '../views/IndiRepository.vue'
 import SelectCompany from '../views/SelectCompany.vue'
 import SignUp from '../views/SignUp.vue'
 import KeywordWordCloud from '../components/KeywordWordCloud.vue'
@@ -62,11 +61,6 @@ const routes = [
     path: '/forcedirected',
     name: 'forcedirected',
     component: ForceDirected
-  },
-  {
-    path: '/indirepository',
-    name: 'indirepository',
-    component: IndiRepository
   },
   {
     path: '/naver',
