@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" max-width="290">
     <template v-slot:activator="{ on }">
       <span class="" v-on="on">
-        {{ article.title.slice(0, 30) }}...
+        {{ article.title.slice(0, 50) }}...
       </span>
     </template>
     <v-card>

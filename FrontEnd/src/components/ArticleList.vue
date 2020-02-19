@@ -56,6 +56,22 @@
           :key="`width-${i}`"
         ></v-responsive>
     </v-row>
+    <v-snackbar
+      v-model="snackbar"
+      color="red"
+      :timeout="timeout"
+      :bottom="true"
+      :right="true"
+    >
+      {{ text }}
+      <v-btn
+        color="white"
+        text
+        @click="snackbar = false"
+      >
+        FAIL
+      </v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -73,10 +89,12 @@ export default {
   },
   data () {
     return {
+      snackbar: false,
       // myId: null,
       test: [1, 2, 3],
       myFriends: [],
-      n: 0
+      n: 0,
+      AuthenticatedCheck: null
     }
   },
   methods: {
@@ -101,7 +119,12 @@ export default {
     },
     goDetail (articleid) {
       console.log(articleid)
-      this.$router.push({ path: `/articleDetail/${articleid}` })
+      if (this.AuthenticatedCheck) {
+        this.snackbar = true
+        this.$router.push('/signup')
+      } else {
+        this.$router.push({ path: `/articleDetail/${articleid}` })
+      }
     }
     // getArticle () {
     //   http.get('/article/list/')
@@ -112,6 +135,11 @@ export default {
     //       // console.log(this.articles)
     //     })
     //     .catch(err => console.log(err))
+    // },
+    // islogined () {
+    //   setTimeout(() => {
+    //     this.AuthenticatedCheck = this.$session.has('my-info')
+    //   }, 1000)
     // }
   },
   mounted () {
@@ -120,6 +148,7 @@ export default {
     this.getMyFriends()
   },
   updated () {
+    // this.AuthenticatedCheck = this.$session.has('my-token')
   }
 }
 
