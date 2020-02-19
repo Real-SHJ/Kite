@@ -1,15 +1,47 @@
 <template>
-  <v-container class="">
-    <h1 v-if="article">{{article.title}}</h1>
-    <br>
-    <br>
-    <br>
-    <div v-if="article" v-html="article.content"></div>
-    <div class="btngrp">
-      <ScrapDialog :article="article"/>
-      <ShareDialog :article="article" :myFriends="myFriends"/>
-    </div>
-  </v-container>
+  <v-content>
+    <v-container>
+      <v-row>
+        <v-col cols="12" sm="3">
+          <v-menu open-on-hover bottom origin="center center" transition="scale-transition" :close-on-content-click="closeOnContentClick">
+            <template v-slot:activator="{ on }">
+              <v-btn color="red" dark v-on="on">
+                색상 선택
+              </v-btn>
+            </template>
+
+            <v-row>
+              <v-col class="d-flex justify-center">
+                <v-color-picker v-model="color"></v-color-picker>
+              </v-col>
+            </v-row>
+          </v-menu>
+        </v-col>
+        <v-col cols="12" sm="3">
+          <span>Highlight 기능</span>
+          <v-btn @click="highlightOn()">
+              On
+          </v-btn>
+          <v-btn @click="highlightOff()">
+              Off
+          </v-btn>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-btn @click="save()">저장</v-btn>
+        </v-col>
+      </v-row>
+      <v-spacer></v-spacer>
+      <h1 v-if="article" class="title">{{article.title}}</h1>
+      <div class="d-flex justify-center">
+        <img v-if="article.image" :src="article.image" style="width: 50%; height: 50%">
+      </div>
+      <div v-if="article" v-html="article.content" id="maincontent" style="margin: 0%"></div>
+      <div class="btngrp">
+        <ScrapDialog :article="article"/>
+        <ShareDialog :article="article" :myFriends="myFriends"/>
+      </div>
+    </v-container>
+  </v-content>
 </template>
 <script>
 import http from '../http-common'
@@ -26,7 +58,10 @@ export default {
   data () {
     return {
       myFriends: [],
-      article: null
+      article: null,
+      type: 'hex',
+      hex: '#FFFF00',
+      closeOnContentClick: false
     }
   },
   methods: {
@@ -60,22 +95,119 @@ export default {
         }
       }, 1000)
     },
-    goDetail (article) {
-      this.$router.push({ path: `/articleDetail/${article.articleid}` })
+    highlightOn () {
+      let col = document.querySelector(`#maincontent`)
+      col.style.cursor = 'url("http://13.125.153.118:8999/img/tmp/Highlighter.png"), auto'
+      col.addEventListener('click', this.actionHighlight)
+      let cols = document.querySelectorAll('.high')
+      for (let i = 0; i < cols.length; i++) {
+        let item = cols[i]
+        item.addEventListener('click', this.removeItem)
+        item.style.cursor = 'pointer'
+      }
+    },
+    highlightOff () {
+      let col = document.querySelector(`#maincontent`)
+      col.style.cursor = 'default'
+      col.removeEventListener('click', this.actionHighlight)
+      let cols = document.querySelectorAll('.high')
+      for (let i = 0; i < cols.length; i++) {
+        let item = cols[i]
+        item.removeEventListener('click', this.removeItem)
+        item.style.cursor = 'default'
+      }
+    },
+    actionHighlight () {
+      this.message = window.getSelection()
+      let str = this.message.toString()
+      // eslint-disable-next-line camelcase
+      let blank_pattern = /^\s+|\s+$/g
+      if (str.replace(blank_pattern, '') === '') {
+        return
+      }
+      if (str.includes('<br>') || str.includes('</br>')) {
+        return
+      }
+      this.replace(`<span class="high" style="background-color: ${this.color}; cursor: pointer">` + this.message.toString() + '</span>')
+
+      let sel = window.getSelection ? window.getSelection() : document.selection
+      if (sel) {
+        if (sel.removeAllRanges) {
+          sel.removeAllRanges()
+        } else if (sel.empty) {
+          sel.empty()
+        }
+      }
+      let cols = document.querySelectorAll('.high')
+      for (let i = 0; i < cols.length; i++) {
+        let item = cols[i]
+        item.addEventListener('click', this.removeItem)
+      }
+      // let col = document.querySelector(`#high${this.spanIndex}`)
+      // col.addEventListener('click', function () {
+      //   let val = this.innerHTML
+      //   this.replaceWith(val)
+      // })
+      // this.spanIndex++
+    },
+    replace (text) {
+      var _range = window.getSelection().getRangeAt(0)
+      var _node = document.createElement('span')
+      _node.innerHTML = text
+      if (_node) _node = _node.childNodes[0]
+      _range.deleteContents()
+      _range.insertNode(_node)
+    },
+    removeItem (e) {
+      let val = e.target.innerHTML
+      e.target.replaceWith(val)
+    },
+    save () {
+      var content = document.querySelector(`#maincontent`).innerHTML
+      let fdata = new FormData()
+      fdata.append('memberid', this.$session.get('my-info').userid)
+      fdata.append('articleid', this.id)
+      fdata.append('content', content)
+      fdata.append('spanindex', this.spanIndex)
+      http
+        .put('/member/savecontent', fdata)
+        .then(
+          response => {
+            console.log(response.data.message)
+          }
+        )
+        .catch(err => console.log(err))
+        .finally(
+        )
     }
   },
   mounted () {
     this.getarticle()
     this.getMyFriends()
-    console.log(this.id)
   },
-  updated () {
+  computed: {
+    color: {
+      get () {
+        return this[this.type]
+      },
+      set (v) {
+        this[this.type] = v
+      }
+    },
+    showColor () {
+      if (typeof this.color === 'string') return this.color
+
+      return JSON.stringify(Object.keys(this.color).reduce((color, key) => {
+        color[key] = Number(this.color[key].toFixed(2))
+        return color
+      }, {}), null, 2)
+    }
   }
 }
 
 </script>
 
-<style>
+<style scoped>
   .scrap {
     position: fixed;
     bottom: 20px;
@@ -87,9 +219,25 @@ export default {
     bottom: 20px;
   }
   .btngrp{
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    position: fixed;
+    top: 10%;
+    right: 10%;
     z-index: inherit;
+  }
+  @font-face {
+    font-family: 'Noto Serif KR Bold', serif;
+    src: url('../fonts/NotoSerifKR-Bold.otf');
+  }
+  .title {
+    font-family: 'Noto Serif KR Bold' !important;
+  }
+  @font-face {
+    font-family: 'Noto Serif KR Regular', serif;
+    src: url('../fonts/NotoSerifKR-Regular.otf');
+  }
+  #maincontent {
+    margin: 5%;
+    padding: 5%;
+    font-family: 'Noto Serif KR Regular' !important;
   }
 </style>

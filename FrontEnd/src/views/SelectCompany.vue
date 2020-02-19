@@ -27,23 +27,25 @@
           </v-btn>
         </v-snackbar>
       <v-container class="pa-1">
-          <v-row class="fill-height" align="center" justify="center">
+          <v-row>
             <template v-for="(item, i) in items">
               <v-col :key="i" md="4">
                 <v-hover v-slot:default="{ hover }">
                   <v-card :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }" @click="handleClick(i)" class="vcard">
-                    <v-img :src="item.src" height="100px" width="287px">
-                      <v-card-title class="title">
-                        <v-row class="fill-height flex-column" justify="space-between">
-                          <div class="text-right float-left">
-                            <v-btn class="clickbtn" fab small color="red" icon @click="handleClick(i)">
-                              <v-icon v-if="!item.clicked" color="red">{{ 'mdi-heart-outline' }}</v-icon>
-                              <v-icon v-else color="red">{{ 'mdi-heart' }}</v-icon>
-                            </v-btn>
-                          </div>
-                        </v-row>
-                      </v-card-title>
-                    </v-img>
+                    <v-row>
+                      <v-col cols="2"></v-col>
+                      <v-col class="d-flex justify-end align-center" cols="8">
+                        <v-img :src="item.src"></v-img>
+                      </v-col>
+                      <v-col class="d-flex justify-center align-start">
+                      <!-- <v-card-title class="title" align="right"> -->
+                        <v-btn class="clickbtn" fab small color="red" icon @click="handleClick(i)">
+                          <v-icon v-if="!item.clicked" color="red">{{ 'mdi-heart-outline' }}</v-icon>
+                          <v-icon v-else color="red">{{ 'mdi-heart' }}</v-icon>
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                      <!-- </v-card-title> -->
                   </v-card>
                 </v-hover>
               </v-col>

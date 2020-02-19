@@ -1,87 +1,92 @@
 <template>
-<v-container style="width:100%;">
-  <div class="search" style="width:100%;">
-  <div class="wrap">
-  <div class="title_rank">분야별 인기 검색어</div>
-  </div>
-<v-carousel
-    cycle
-    height="670"
-    hide-delimiters
-    show-arrows-on-hover
-    interval="4000"
-  >
-    <v-carousel-item
-      v-for="(slide, i) in maninfo"
-      :key="i"
+<v-container style="width:100%; background-color: #E4E8EF" fluid>
+  <v-container>
+    <div class="search" style="width:100%;">
+    <div class="wrap">
+    <div class="title_rank" style="font-size: 25px"><strong>분야별 인기 검색어</strong> &nbsp; <span style="font-size: 18px">회사별 검색어 현황을 확인할 수 있습니다.</span></div>
+    </div>
+    <v-divider class="my-10"></v-divider>
+  <v-carousel
+      cycle
+      height="670"
+      hide-delimiters
+      show-arrows-on-hover
+      interval="4000"
     >
-      <v-sheet
-        :color="colors[6]"
-        height="100%"
-        width="100%"
+      <v-carousel-item
+        v-for="(slide, i) in maninfo"
+        :key="i"
       >
-        <v-row
-          class="fill-height"
-          align="center"
-          justify="center"
-          style="center"
+        <v-sheet
+          :color="colors[6]"
+          height="100%"
+          width="100%"
         >
-        <v-card
-              class="article-cards mx-auto my-10 cards"
-              max-width="700"
-              height="78%"
-              align="center"
-              :color="colors[0]"
-            >
-            <p style="color: black; font-size:1.5em; margin-top:5px" class="font-weight-black">{{maninfo[i][0]}}</p>
-            <v-divider dark></v-divider>
-            <v-list-item-group>
-        <v-list-item  v-for="(elem,j) in maninfo[i][1]" :key="j">
-        <v-list-item-content >
-          <v-list-item-title @click="checkArticle(elem.company)" style="color: black" text-align="center">
-            <span class="font-weight-black">{{j+1}} </span>
-            {{elem.company}}
-            </v-list-item-title>
-        </v-list-item-content>
-        </v-list-item>
-            </v-list-item-group>
-        </v-card>
-        <v-card
-              class="article-cards mx-auto my-10 cards"
-              max-width="700"
-              height="78%"
-              align="center"
-              :color="colors[0]"
-            >
-            <p style="color: black; font-size:1.5em; margin-top:5px" class="font-weight-black">{{girlinfo[i][0]}}</p>
-            <v-divider dark></v-divider>
-            <v-list-item-group>
-        <v-list-item  v-for="(elem,j) in girlinfo[i][1]" :key="j">
-        <v-list-item-content >
-          <v-list-item-title @click="checkArticle(elem.company)" style="color: black" text-align="center"><span class="font-weight-black">{{j+1}} </span>  {{elem.company}}</v-list-item-title>
-        </v-list-item-content>
-        </v-list-item>
-            </v-list-item-group>
-        </v-card>
-        </v-row>
-      </v-sheet>
-    </v-carousel-item>
-  </v-carousel>
-  </div>
-  <div class="rank">
-  <RankChart :info ="info" />
-  </div>
-  <v-dialog v-model="dialog" max-width="290">
-    <v-card>
-      <v-card-title></v-card-title>
-    <v-card-text class="">관심기사 등록으로 이동하시겠습니까?</v-card-text>
-    <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="moveselectcompany">확인</v-btn>
-        <v-btn color="green darken-1" text @click="dialog=false">취소</v-btn>
-    </v-card-actions>
-    </v-card>
-  </v-dialog>
+          <v-row
+            class="fill-height"
+            align="center"
+            justify="center"
+            style="center"
+          >
+          <v-card
+                class="article-cards mx-auto my-10 cards"
+                max-width="700"
+                height="90%"
+                :color="colors[0]"
+              >
+              <p style="color: black; font-size:1.7em; margin-top:30px" class="font-weight-black text-center">{{maninfo[i][0]}}</p>
+              <v-divider dark></v-divider>
+              <v-list-item-group style="margin-left: 5%">
+                <v-list-item  v-for="(elem,j) in maninfo[i][1].slice(0,10)" :key="j">
+                  <v-list-item-content >
+                    <v-list-item-title @click="checkArticle(elem.company)" style="color: black; font-weight: border;"  text-align="center">
+                      <span class="font-weight-black">{{j+1}} </span>
+                        {{elem.company}}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+          </v-card>
+          <v-card
+                class="article-cards mx-auto my-10 cards"
+                max-width="700"
+                height="90%"
+                :color="colors[0]"
+              >
+              <p style="color: black; font-size:1.7em; margin-top:30px" class="font-weight-black text-center">{{girlinfo[i][0]}}</p>
+              <v-list-item-group style="margin-left: 5%">
+          <v-list-item  v-for="(elem,j) in girlinfo[i][1].slice(0,10)" :key="j">
+          <v-list-item-content >
+            <v-list-item-title @click="checkArticle(elem.company)" style="color: black" text-align="center">
+              <span class="font-weight-black">{{j+1}} </span>  {{elem.company}}</v-list-item-title>
+          </v-list-item-content>
+          </v-list-item>
+              </v-list-item-group>
+          </v-card>
+          </v-row>
+        </v-sheet>
+      </v-carousel-item>
+    </v-carousel>
+    </div>
+    <div class="rank mt-10">
+      <!-- <div class="wrap"> -->
+      <div class="title_rank" style="font-size: 25px"><strong>연령별 관심기업 차트</strong> &nbsp; <span style="font-size: 18px">회사별 검색어 현황을 확인할 수 있습니다.</span></div>
+      <!-- </div> -->
+      <v-divider class="my-10"></v-divider>
+    <RankChart :info ="info" />
+    </div>
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title></v-card-title>
+      <v-card-text class="">관심기사 등록으로 이동하시겠습니까?</v-card-text>
+      <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="moveselectcompany">확인</v-btn>
+          <v-btn color="green darken-1" text @click="dialog=false">취소</v-btn>
+      </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-container>
 </v-container>
 </template>
 
@@ -102,7 +107,7 @@ export default {
         'red lighten-3',
         'red lighten-1',
         'deep-purple accent-4',
-        'green lighten-1'
+        'grey lighten-4'
       ],
       info: null,
       dialog: false,

@@ -1,32 +1,42 @@
 <template>
   <v-content>
-    <br/>
-    <br/>
-    <v-menu open-on-hover bottom origin="center center" transition="scale-transition" :close-on-content-click="closeOnContentClick">
-      <template v-slot:activator="{ on }">
-        <v-btn color="red" dark v-on="on">
-          색상 선택
-        </v-btn>
-      </template>
-
+    <v-container>
       <v-row>
-        <v-col class="d-flex justify-center">
-          <v-color-picker v-model="color"></v-color-picker>
+        <v-col cols="12" sm="3">
+          <v-menu open-on-hover bottom origin="center center" transition="scale-transition" :close-on-content-click="closeOnContentClick">
+            <template v-slot:activator="{ on }">
+              <v-btn color="red" dark v-on="on">
+                색상 선택
+              </v-btn>
+            </template>
+
+            <v-row>
+              <v-col class="d-flex justify-center">
+                <v-color-picker v-model="color"></v-color-picker>
+              </v-col>
+            </v-row>
+          </v-menu>
+        </v-col>
+        <v-col cols="12" sm="3">
+          <span>Highlight 기능</span>
+          <v-btn @click="highlightOn()">
+            On
+          </v-btn>
+          <v-btn @click="highlightOff()">
+              Off
+          </v-btn>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-btn @click="save()">저장</v-btn>
         </v-col>
       </v-row>
-    </v-menu>
-
-    <span style="margin-left:30px;">Highlight 기능</span>
-    <v-btn @click="highlightOn()" style="margin-left:30px;">
-        On
-    </v-btn>
-    <v-btn @click="highlightOff()">
-        Off
-    </v-btn>
-    <v-btn @click="save()" style="margin-left:30px;">저장</v-btn>
-    <v-spacer></v-spacer>
-    <br/>
-    <div v-if="article" v-html="article.content" id="maincontent"></div>
+      <v-spacer></v-spacer>
+      <h1 v-if="article" class="title">{{article.title}}</h1>
+      <div class="d-flex justify-center">
+        <img v-if="article.image" :src="article.image" width="50%" height="50%">
+      </div>
+      <div v-if="article" v-html="article.content" id="maincontent" style="margin: 0%"></div>
+    </v-container>
   </v-content>
 </template>
 
@@ -58,15 +68,18 @@ export default {
       for (let i = 0; i < cols.length; i++) {
         let item = cols[i]
         item.addEventListener('click', this.removeItem)
+        item.style.cursor = 'pointer'
       }
     },
     highlightOff () {
       let col = document.querySelector(`#maincontent`)
+      col.style.cursor = 'default'
       col.removeEventListener('click', this.actionHighlight)
       let cols = document.querySelectorAll('.high')
       for (let i = 0; i < cols.length; i++) {
         let item = cols[i]
         item.removeEventListener('click', this.removeItem)
+        item.style.cursor = 'default'
       }
     },
     actionHighlight () {
@@ -75,6 +88,9 @@ export default {
       // eslint-disable-next-line camelcase
       let blank_pattern = /^\s+|\s+$/g
       if (str.replace(blank_pattern, '') === '') {
+        return
+      }
+      if (str.includes('<br>') || str.includes('</br>')) {
         return
       }
       this.replace(`<span class="high" style="background-color: ${this.color}; cursor: pointer">` + this.message.toString() + '</span>')
@@ -92,12 +108,6 @@ export default {
         let item = cols[i]
         item.addEventListener('click', this.removeItem)
       }
-      // let col = document.querySelector(`#high${this.spanIndex}`)
-      // col.addEventListener('click', function () {
-      //   let val = this.innerHTML
-      //   this.replaceWith(val)
-      // })
-      // this.spanIndex++
     },
     replace (text) {
       var _range = window.getSelection().getRangeAt(0)
@@ -117,7 +127,6 @@ export default {
       fdata.append('memberid', this.$session.get('my-info').userid)
       fdata.append('articleid', this.id)
       fdata.append('content', content)
-      fdata.append('spanindex', this.spanIndex)
       http
         .put('/member/savecontent', fdata)
         .then(
@@ -132,7 +141,6 @@ export default {
   },
   data () {
     return {
-      spanIndex: 0,
       article: null,
       type: 'hex',
       hex: '#FFFF00',
@@ -164,11 +172,20 @@ export default {
 </script>
 
 <style scoped>
-#maincontent {
-    border-style: solid;
-    border-width: 1px;
-    border-color: blue;
-    margin: 30px;
-    padding: 30px;
-}
+  @font-face {
+    font-family: 'Noto Serif KR Bold', serif;
+    src: url('../fonts/NotoSerifKR-Bold.otf');
+  }
+  .title {
+    font-family: 'Noto Serif KR Bold' !important;
+  }
+  @font-face {
+    font-family: 'Noto Serif KR Regular', serif;
+    src: url('../fonts/NotoSerifKR-Regular.otf');
+  }
+  #maincontent {
+    margin: 5%;
+    padding: 5%;
+    font-family: 'Noto Serif KR Regular' !important;
+  }
 </style>
