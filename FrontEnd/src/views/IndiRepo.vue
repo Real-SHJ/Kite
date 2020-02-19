@@ -12,18 +12,18 @@
       <p class="header-title" ><strong>My Scrap Article </strong></p>
       <v-container fluid>
           <v-row class="justify-center">
-            <h2><br>기업선택</h2>
-            <v-col sm="2">
-             <v-overflow-btn
-                class=""
-                :items="company_choice"
-                label="기업선택"
-                target="#dropdown-example"
-                v-model="choice_company"
-                ></v-overflow-btn>
+            <v-col class="align-center" sm="2">
+              <p>기업선택</p>
+              <v-overflow-btn
+                  class=""
+                  :items="company_choice"
+                  label="기업선택"
+                  target="#dropdown-example"
+                  v-model="choice_company"
+                  ></v-overflow-btn>
             </v-col>
             <h2><br>검색기간</h2>
-            <div>
+            <div class="d-flex align-center">
                 <br>
                 <date-picker v-model="range" :lang="lang" range></date-picker>
 

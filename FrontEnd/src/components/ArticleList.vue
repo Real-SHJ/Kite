@@ -1,127 +1,75 @@
 <template>
-  <v-flex>
-    <!-- <v-carousel hide-delimiters>
-      <div
-        v-for="(article,i) in articles"
-        :key="i"
-      >
-        <v-carousel-item>
-          <v-row>
-            <v-col class="p-0">
-              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
-            </v-col>
-            <v-col class="p-0">
-              <v-row class="p-0">
-                <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
-              </v-row>
-              <v-row class="p-0">
-                <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
-              </v-row>
-            </v-col>
-          </v-row>
-        </v-carousel-item>
-        <v-carousel-item>
-          <v-row style="height: 50%">
-            <v-col class="p-0">
-              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
-            </v-col>
-          </v-row>
-          <v-row class="p-0">
-            <v-col class="p-0">
-                <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
-            </v-col>
-            <v-col class="p-0">
-              <img :src="article.url" class="p-0" style="height: 250px; width: 454px;">
-            </v-col>
-          </v-row>
-        </v-carousel-item>
-        <v-carousel-item>
-          <v-row style="height: 100%;">
-            <v-col cols="4" class="p-0">
-              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
-            </v-col>
-            <v-col cols="4" class="p-0">
-              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
-            </v-col>
-            <v-col cols="4" class="p-0">
-              <img :src="article.url" class="p-0" style="height: 100%; width: 100%;">
-            </v-col>
-          </v-row>
-        </v-carousel-item>
-      </div>
-    </v-carousel> -->
+  <v-container>
     <v-row>
-      <div
-      class="d-flex justify-center"
-      outline
-      tile
-      v-for="(article,i) in articles" :key="article.id">
-        <v-col cols="4"></v-col>
-          <v-col class="images">
-              <v-card
+      <v-col
+        class="images"
+        outline
+        tile
+        v-for="(article, i) in articles" :key="i"
+        :class="{'d-flex justify-end' : (i % 2 === 0)}"
+        cols="6"
+      >
+        <div>
+          <div>
+            <v-card
               @click='goDetail(article.articleid)'
               class="my-2"
-                  max-width="600"
-                  id = "mycard"
-                  :img = "`${article.image}`"
-                  height="350px"
-                  width="500px"
-                  tile
+              max-width="600"
+              id = "mycard"
+              :img = "`${article.image}`"
+              height="350px"
+              width="500px"
+              tile
+            >
+              <v-avatar
+                class="companyLogo"
+                size="100px"
               >
-                  <v-avatar
-                    class="companyLogo"
-                    size="100px"
-                  >
-                    <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
-                  </v-avatar>
+                <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
+              </v-avatar>
 
-                  <v-card-actions class="btngrp">
-                    <ScrapDialog :article="article"/>
-                    <ShareDialog :article="article" :myFriends="myFriends"/>
-                  </v-card-actions>
               <div class="overay textwrap" style="color:white;">
                 {{article.summary}}
               </div>
-            <!-- <v-card-title>{{article.title}}</v-card-title>
-            <v-divider class="mx-4"></v-divider>
-
-            <v-card-subtitle class="pb-0 mb-5" v-html="article.newspaper"></v-card-subtitle>
-
-            <v-card-text>
-              <div v-html="article.summary"></div>
-            </v-card-text>
-            <v-divider class="mx-4"></v-divider> -->
-
-          <!-- <div @click="goDetail(article)">
-          </div> -->
-          </v-card>
-            <v-row
-            class="row"
-              >
+            </v-card>
+            <p
+            v-if="article.title.length > 31"
+            class="article-title"
+            >
+              {{article.title.slice(0, 31)}}...
+            </p>
+            <p
+            v-else
+            class="article-title"
+            >
               {{article.title}}
-            </v-row>
-        </v-col>
+            </p>
+          </div>
+          <!-- <div class="btngrp">
+            <ScrapDialog :article="article"/>
+            <ShareDialog :article="article" :myFriends="myFriends"/>
+          </div> -->
+        </div>
+      </v-col>
         <v-responsive
           v-if="n === 2"
           :key="`width-${i}`"
         ></v-responsive>
-      </div>
     </v-row>
-
-  </v-flex>
+  </v-container>
 </template>
 
 <script>
 import http from '../http-common'
-import ScrapDialog from '../components/ScrapDialog.vue'
-import ShareDialog from '../components/ShareDialog.vue'
+// import ScrapDialog from '../components/ScrapDialog.vue'
+// import ShareDialog from '../components/ShareDialog.vue'
 export default {
   props: {
     articles: Array
   },
   components: {
-    ScrapDialog,
-    ShareDialog
+    // ScrapDialog,
+    // ShareDialog
   },
   data () {
     return {
@@ -151,8 +99,9 @@ export default {
         }
       }, 1000)
     },
-    goDetail (article) {
-      this.$router.push({ path: `/articleDetail/${article.articleid}` })
+    goDetail (articleid) {
+      console.log(articleid)
+      this.$router.push({ path: `/articleDetail/${articleid}` })
     }
     // getArticle () {
     //   http.get('/article/list/')
@@ -216,16 +165,16 @@ export default {
   }
 
   .images:hover .overay{
-    height: 45%;
+    height: 50%;
   }
-  .row{
+  .article-title{
     /* color:white; */
     font-size: 18px;
     font-weight: bold;
     /* margin:auto; */
     /* max-height:50px; */
     /* top: 0; */
-    margin-left: 2%;
+    /* margin-left: 2%; */
     /* right:0; */
     /* margin-bottom: 10%; */
     /* z-index: inherit; */

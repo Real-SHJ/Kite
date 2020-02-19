@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class AnalysisController {
 		ResponseEntity<Map<String,Object>> resEntity=null;
 		//[20,30,40,50],[남자:0,여자:1]
 		List<Analysis> list = null;
-		Map<String,Object> map =new HashMap<String,Object>();
+		Map<String,Object> map =new TreeMap<String,Object>();
 		//리스트가 들어왔다.. 정보들이 여기서 company별로 count를 합쳐야한다.
 		long sum[][]=new long[4][2];
 		for(int i=0;i<4;i++) {
@@ -42,8 +43,9 @@ public class AnalysisController {
 		for(int i=0;i<4;i++) {
 			for(int j=0;j<2;j++) {
 				list=as.analysisList(age[i], gender[j]);
-				Collections.sort(list);
-				map.put(""+age[i]+"대"+" "+gender[j]+" "+"검색어", list.subList(0, 10));
+				//여기 연령별 정렬하고 보내기
+				System.out.println("쿠팡 언제나오냐고!!!!!!");
+				map.put(""+age[i]+"대"+" "+gender[j]+" "+"검색어", list);
 			}
 		}
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

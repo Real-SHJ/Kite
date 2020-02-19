@@ -2,7 +2,7 @@
   <v-content>
     <br/>
     <br/>
-    <v-menu open-on-hover bottom origin="center center" transition="scale-transition">
+    <v-menu open-on-hover bottom origin="center center" transition="scale-transition" :close-on-content-click="closeOnContentClick">
       <template v-slot:activator="{ on }">
         <v-btn color="red" dark v-on="on">
           색상 선택
@@ -135,7 +135,8 @@ export default {
       spanIndex: 0,
       article: null,
       type: 'hex',
-      hex: '#FFFF00'
+      hex: '#FFFF00',
+      closeOnContentClick: false
     }
   },
   mounted () {

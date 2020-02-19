@@ -28,4 +28,6 @@ public interface ArticleRepository {
 	public List<Article> infi(String company);
 
 	public List<Article> myKeywordArticle(int memberid, String keyword);
+	
+	public List<Article> companyKeywordArticle(String keyword);
 }

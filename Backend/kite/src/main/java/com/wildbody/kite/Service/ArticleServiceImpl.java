@@ -50,21 +50,17 @@ public class ArticleServiceImpl implements ArticleService {
     
     @Override
     public Article oneScarpArticle(int memberid, int articleid) {
-    	System.out.println("서비스:" + memberid + "," + articleid);
     	MemberArticle ma = new MemberArticle();
     	ma.setMemberid(memberid);
     	ma.setArticleid(articleid);
-    	System.out.println(ma.getMemberid() + "," +ma.getArticleid());
     	return repo.oneScrapArticle(ma);
     }
     
     @Override
     public int getIndex(int memberid, int articleid) {
-    	System.out.println("서비스:" + memberid + "," + articleid);
     	MemberArticle ma = new MemberArticle();
     	ma.setMemberid(memberid);
     	ma.setArticleid(articleid);
-    	System.out.println(ma.getMemberid() + "," +ma.getArticleid());
     	return repo.getIndex(ma);
     }
 
@@ -77,5 +73,10 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<Article> myKeywordArticle(int memberid, String keyword) {
 		return repo.myKeywordArticle(memberid, keyword);
+	}
+	
+	@Override
+	public List<Article> companyKeywordArticle(String keyword) {
+		return repo.companyKeywordArticle(keyword);
 	}
 }

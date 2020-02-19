@@ -58,7 +58,7 @@ dependencies {
 //    Live load
     compile 'org.springframework.boot:spring-boot-devtools'
 
-
+    compile fileTree(dir:'libs',include:'*.jar')
 }
 
 test {

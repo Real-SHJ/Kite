@@ -1,9 +1,15 @@
 <template>
   <v-dialog v-model="dialog" max-width="290">
     <template v-slot:activator="{ on }">
-    <v-btn rounded class="mx-4" color="primary" v-on="on">
-        <v-icon size="20px">fas fa-cut</v-icon>
-    </v-btn>
+      <v-btn
+        class="scrap"
+        dark
+        fab
+        color="pink"
+        v-on="on"
+      >
+        <v-icon>fas fa-cut</v-icon>
+      </v-btn>
     </template>
     <v-card>
     <v-card-title>{{article.articleid}}</v-card-title>

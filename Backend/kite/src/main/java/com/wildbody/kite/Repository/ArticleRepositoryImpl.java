@@ -55,9 +55,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 	@Override
 	public Article oneScrapArticle(MemberArticle ma) {
 		Article article = oneArticle(ma.getArticleid());
-		System.out.println(article);
 		String content = session.selectOne("kite.article.oneScrapArticle", ma);
-		System.out.println(content);
 		article.setContent(content);
 		return article;
 	}
@@ -78,5 +76,16 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 		map.put("memberid", memberid);
 		map.put("keyword", keyword);
 		return session.selectList("kite.keyword.mykeywordarticle", map);
+	}
+	
+	@Override
+	public List<Article> companyKeywordArticle(String keyword) {
+		System.out.println(keyword + ":여기는 레포라니까");
+		List<Article> list = session.selectList("kite.keyword.companyKeywordArticle", keyword);
+		System.out.println("여기는 레포요");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
+		}
+		return list;
 	}
 }

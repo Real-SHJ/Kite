@@ -1,10 +1,8 @@
 const isToken = () => {
-  console.log('정우형')
   const storage = sessionStorage.getItem('vue-session-key')
   if (storage) {
     const isLogin = JSON.parse(storage).hasOwnProperty('my-info')
     if (isLogin) {
-      console.log('굿')
       return true
     }
   }

@@ -103,13 +103,11 @@ public class ArticleController {
 	@GetMapping("/onescraparticle/{memberid}/{articleid}")
 	@ApiOperation(value = "memberid와 articleid에 맞은 기사 하나만 출력", response = Article.class)
 	public ResponseEntity<Map<String, Object>> oneScarpArticle(@PathVariable String memberid, @PathVariable String articleid) {
-		System.out.println("스크랩 기사 1개 요청 들어왓따." + memberid + "," + articleid);
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			Article article = svc.oneScarpArticle(Integer.parseInt(memberid), Integer.parseInt(articleid));
 			int spanIndex = svc.getIndex(Integer.parseInt(memberid), Integer.parseInt(articleid));
-			System.out.println("idx:" + spanIndex);
 			map.put("article", article);
 			map.put("spanIndex", spanIndex);
 			map.put("message", "기사 1개 조회 성공");
@@ -121,7 +119,7 @@ public class ArticleController {
 	}
 
 	@GetMapping("/list")
-	@ApiOperation(value = "기사 목록 조회 서비스")
+	@ApiOperation(value = "기사 목록 조회 서비스", response = Article.class)
 	public @ResponseBody ResponseEntity<Map<String, Object>> listArticle() {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -152,7 +150,6 @@ public class ArticleController {
 		List<Article> list = new ArrayList<>();
 		member = msvc.memberInfo(member); // 멤버의 회사 정보가 들어온다.
 		String company = article.getCompany(); //회사 string 을 받아서 
-		System.out.println(company);
 		try {
 			if (company == null) { //로그인이 안되어있을 때
 				for (String comp : member.getCompany().split(",")) {
@@ -191,6 +188,26 @@ public class ArticleController {
 			map.put("message", "내 키워드 기사 조회 성공");
 		} catch (Exception e) {
 			map.put("message", "내 키워드 기사 조회  실패");
+		}
+		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	@GetMapping("/companykeywordarticle/{keyword}")
+	@ApiOperation(value = "keyword에 맞은 기사들을 출력", response = Article.class)
+	public ResponseEntity<Map<String, Object>> companyKeywordArticle(@PathVariable String keyword) {
+		System.out.println(keyword + ":이게 바로 내가 선택한 키워드다!!!!");
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			List<Article> keywordarticles = svc.companyKeywordArticle(keyword);
+			for (int i = 0; i < keywordarticles.size(); i++) {
+				System.out.println(keywordarticles.get(i));
+			}
+			map.put("result", keywordarticles);
+			map.put("message", "기업 키워드 기사 조회 성공");
+		} catch (Exception e) {
+			map.put("message", "기업 키워드 기사 조회  실패");
 		}
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
