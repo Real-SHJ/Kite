@@ -25,7 +25,7 @@
         <!-- <v-row> -->
         <v-flex xs12 sm8 md8>
           <v-container fluid>
-            <CompanyKeyword @myKeyword="goAlert" :info ="info" :choice_company = "choice_company" v-if="choice_company"/>
+            <CompanyKeyword @myKeyword="goAlert" :keywordinfo ="keywordinfo" :choice_company = "choice_company" v-if="choice_company"/>
             <p v-else>기업을 선택해 주세요</p>
           </v-container>
         </v-flex>
@@ -84,7 +84,7 @@ export default {
     return {
       myKeyword: null,
       keywordarticles: [],
-      info: null,
+      keywordinfo: null,
       choice_company: null,
       companylist: ['네이버', '삼성전자', '삼성SDS', '신한은행', '우리은행', '카카오', '쿠팡', '포스코', '하나은행', '한국전력공사', '현대모비스', '현대자동차', 'CJ제일제당', 'GS칼텍스', 'IBK기업은행', 'KB국민은행', 'KT', 'LG전자', 'LG유플러스', 'LG화학', 'SK텔레콤', 'SK하이닉스', 'S-OIL'],
       company_image: {
@@ -146,7 +146,7 @@ export default {
         .get('/member/getkeywordarticle' + '/' + this.choice_company)
         .then(
           response => {
-            this.info = response.data.result
+            this.keywordinfo = response.data.result
           }
         )
         .catch(err => console.log(err))

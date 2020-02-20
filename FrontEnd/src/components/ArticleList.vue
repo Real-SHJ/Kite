@@ -112,13 +112,11 @@ export default {
             .get(`/member/friendlist/${myId}`)
             .then((res) => {
               this.myFriends = res.data.flist
-              console.log(this.myFriends)
             })
         }
       }, 1000)
     },
     goDetail (articleid) {
-      console.log(articleid)
       if (this.AuthenticatedCheck) {
         this.snackbar = true
         this.$router.push('/signup')
@@ -126,21 +124,6 @@ export default {
         this.$router.push({ path: `/articleDetail/${articleid}` })
       }
     }
-    // getArticle () {
-    //   http.get('/article/list/')
-    //     .then(res => {
-    //     // 토큰 저장
-    //       // console.log(res)
-    //       this.articles = res.data.resvalue
-    //       // console.log(this.articles)
-    //     })
-    //     .catch(err => console.log(err))
-    // },
-    // islogined () {
-    //   setTimeout(() => {
-    //     this.AuthenticatedCheck = this.$session.has('my-info')
-    //   }, 1000)
-    // }
   },
   mounted () {
     // this.getArticle()

@@ -59,11 +59,6 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 		article.setContent(content);
 		return article;
 	}
-	
-	@Override
-	public int getIndex(MemberArticle ma) {
-		return session.selectOne("kite.article.getIndex", ma);
-	}
 
 	@Override
 	public List<Article> infi(String company) {
@@ -80,12 +75,6 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 	
 	@Override
 	public List<Article> companyKeywordArticle(String keyword) {
-		System.out.println(keyword + ":여기는 레포라니까");
-		List<Article> list = session.selectList("kite.keyword.companyKeywordArticle", keyword);
-		System.out.println("여기는 레포요");
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i));
-		}
-		return list;
+		return session.selectList("kite.keyword.companyKeywordArticle", keyword);
 	}
 }

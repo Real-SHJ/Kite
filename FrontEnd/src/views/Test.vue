@@ -54,7 +54,6 @@ export default {
         .then(
           response => {
             this.article = response.data.article
-            this.spanIndex = response.data.spanIndex
           }
         )
         .catch(err => console.log(err))

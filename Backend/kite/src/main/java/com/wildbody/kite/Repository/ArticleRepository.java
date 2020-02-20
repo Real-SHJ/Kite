@@ -22,8 +22,6 @@ public interface ArticleRepository {
 	public Article oneArticle(int articleid);
 	
 	public Article oneScrapArticle(MemberArticle ma);
-	
-	public int getIndex(MemberArticle ma);
 
 	public List<Article> infi(String company);
 

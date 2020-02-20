@@ -113,9 +113,6 @@ export default {
         // .get(`/member/messagelist/${this.$session.get('my-info').userid}`)
         .get(`/member/messagelist/7`)
         .then((res) => {
-          console.log('공유요청~~~~~~~~~~~~~~!!')
-          console.log(res.data)
-          console.log(res.data.memberlist.length)
           const memberlist = res.data.memberlist
           const articlelist = res.data.articlelist
           const sno = res.data.SNO
@@ -128,19 +125,15 @@ export default {
     reqAccept (myreq) {
       const fdata = new FormData()
       fdata.append('memberid', this.$session.get('my-info').userid)
-      console.log(this.$session.get('my-info').userid)
-      console.log(myreq.article.articleid)
       fdata.append('articleid', myreq.article.articleid)
       http
         .post('/member/insertscrap', fdata)
         .then(res => {
-          console.log(res.data.message)
         })
         .catch(err => console.log(err))
       http
         .delete(`/member/deleteMessage/${myreq.sno}`)
         .then((res) => {
-          console.log(res)
           this.reqListData = this.reqListData.filter(target => {
             return target.sno !== myreq.sno
           })
@@ -150,7 +143,6 @@ export default {
       http
         .delete(`/member/deleteMessage/${sno}`)
         .then((res) => {
-          console.log(res)
           this.reqListData = this.reqListData.filter(target => {
             return target.sno !== sno
           })
