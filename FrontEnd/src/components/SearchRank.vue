@@ -215,7 +215,7 @@ export default {
 <style>
 .search{
   display:inline-block;
-  width: 40%;
+  width: 100%;
   height: 100%;
   margin-right: 30px;
   padding: 10px
