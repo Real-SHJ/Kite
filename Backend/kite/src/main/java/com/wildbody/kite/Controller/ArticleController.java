@@ -247,6 +247,7 @@ public class ArticleController {
 
 	public static void input_img() {
 		ArrayList<String> arr[] = new ArrayList[20];
+		
 		for (int i = 0; i < 20; i++) {
 			arr[i] = new ArrayList<String>();
 		}
@@ -279,16 +280,28 @@ public class ArticleController {
 			arr[5].add("/tmp/soil" + Integer.toString(i) + ".jpg");
 		}
 		background_img.put("S-OIL", arr[5]);
-		arr[6].add("/tmp/naver.jpg");
+		for (int i = 1; i <= cnt; i++) {
+			arr[6].add("/tmp/naver" + Integer.toString(i) + ".jpg");
+		}
 		background_img.put("네이버", arr[6]);
-		arr[7].add("/tmp/Hyundai.jpg");
-		background_img.put("현대자동차", arr[7]);
-		background_img.put("현대모비스", arr[7]);
-		arr[8].add("/tmp/cj.jpg");
-		background_img.put("CJ제일제당", arr[8]);
-		arr[9].add("/tmp/posco.jpg");
-		background_img.put("포스코", arr[9]);
-		arr[10].add("/tmp/kakao.jpg");
-		background_img.put("카카오", arr[10]);
+		for (int i = 1; i <= cnt; i++) {
+			arr[7].add("/tmp/cj" + Integer.toString(i) + ".jpg");
+		}
+		background_img.put("CJ제일제당", arr[7]);
+		for (int i = 1; i <= cnt; i++) {
+			arr[8].add("/tmp/ibkbank" + Integer.toString(i) + ".jpg");
+		}
+		background_img.put("IBK기업은행", arr[8]);
+		for (int i = 1; i <= cnt; i++) {
+			arr[9].add("/tmp/korelec" + Integer.toString(i) + ".jpg");
+		}
+		background_img.put("한국전력공사", arr[9]);
+		arr[10].add("/tmp/Hyundai.jpg");
+		background_img.put("현대자동차", arr[10]);
+		background_img.put("현대모비스", arr[10]);
+		arr[11].add("/tmp/posco.jpg");
+		background_img.put("포스코", arr[11]);
+		arr[12].add("/tmp/kakao.jpg");
+		background_img.put("카카오", arr[12]);
 	}
 }
