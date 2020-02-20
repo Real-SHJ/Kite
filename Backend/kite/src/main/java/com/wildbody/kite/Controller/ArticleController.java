@@ -31,7 +31,7 @@ public class ArticleController {
 	static final String imgUrl = "http://13.125.153.118:8999/img";
 	static Map<String, ArrayList<String>> background_img = new HashMap<>();
 	static Map<String, String> logo_img = new HashMap<>();
-	static final int offset = 6;
+
 	@Autowired
 	private ArticleService svc;
 	@Autowired
