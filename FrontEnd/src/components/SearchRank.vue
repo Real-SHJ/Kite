@@ -40,7 +40,9 @@
                 <v-list-item  v-for="(elem,j) in maninfo[i][1].slice(0,10)" :key="j">
                   <v-list-item-content >
                     <v-list-item-title @click="checkArticle(elem.company)" style="color: black; font-weight: border;"  text-align="center">
-                      <span class="font-weight-black mr-5" style="display: inline-block; margin: -5px; padding: 4px;">{{j+1}} </span>  <span>{{elem.company}} </span> </v-list-item-title>
+                      <span class="font-weight-black">{{j+1}} </span>
+                        {{elem.company}}
+                    </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -56,7 +58,7 @@
           <v-list-item  v-for="(elem,j) in girlinfo[i][1].slice(0,10)" :key="j">
           <v-list-item-content >
             <v-list-item-title @click="checkArticle(elem.company)" style="color: black" text-align="center">
-              <span class="font-weight-black mr-5" style="display: inline-block; margin: -5px; padding: 4px;">{{j+1}} </span>  <span>{{elem.company}} </span> </v-list-item-title>
+              <span class="font-weight-black">{{j+1}} </span>  {{elem.company}}</v-list-item-title>
           </v-list-item-content>
           </v-list-item>
               </v-list-item-group>
@@ -65,21 +67,14 @@
         </v-sheet>
       </v-carousel-item>
     </v-carousel>
-    <!-- <div class="rank mt-10"> -->
-      <!-- <div class="wrap"> -->
-      <div class="title_rank mt-10" style="font-size: 25px"><strong>연령별 관심기업 차트</strong> &nbsp; <span style="font-size: 18px">회사별 검색어 현황을 확인할 수 있습니다.</span></div>
-      <!-- </div> -->
-      <v-divider class="my-5"></v-divider>
-
-        <v-sheet
-          :color="colors[6]"
-          height="100%"
-          width="100%"
-        >
-    <RankChart :info ="info" />
-        </v-sheet>
     </div>
-    <!-- </div> -->
+    <div class="rank mt-10">
+      <!-- <div class="wrap"> -->
+      <div class="title_rank" style="font-size: 25px"><strong>연령별 관심기업 차트</strong> &nbsp; <span style="font-size: 18px">회사별 검색어 현황을 확인할 수 있습니다.</span></div>
+      <!-- </div> -->
+      <v-divider class="my-10"></v-divider>
+    <RankChart :info ="info" />
+    </div>
     <v-dialog v-model="dialog" max-width="290">
       <v-card>
         <v-card-title></v-card-title>
@@ -163,16 +158,16 @@ export default {
 <style>
 .search{
   display:inline-block;
-  width: 100%;
+  width: 40%;
   height: 100%;
   margin-right: 30px;
   padding: 10px
 }
 .rank{
   display:inline-block;
-  width: 100%;
+  width: 50%;
   height: 100%;
-  /* margin-left: 30px; */
+  margin-left: 30px;
   padding: 10px
 }
 .cards{

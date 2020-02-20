@@ -3,6 +3,7 @@
     <v-card height="650">
       <v-list>
         <p class="share-req-title text-center mt-4" style="font-size: 35px;">공유 요청 목록</p>
+        <v-divider></v-divider>
           <v-list-item
             three-line
             v-for="(myreq, index) in calData"
@@ -61,10 +62,12 @@
         </v-row>
         </v-card> -->
       </v-list>
-    <v-pagination
-      v-model="curPageNum"
-      :length="numOfPages">
-    </v-pagination>
+      <v-divider></v-divider>
+      <v-pagination
+        class="mt-2"
+        v-model="curPageNum"
+        :length="numOfPages">
+      </v-pagination>
     </v-card>
   </v-content>
 </template>
