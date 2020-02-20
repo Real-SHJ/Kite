@@ -85,12 +85,12 @@
     </div>
     <v-divider class="mx-4"></v-divider>
     <!-- ------------- 1. 전체 (워드 클라우드, 관련뉴스 부분) start--------------- -->
-      <v-container fluid>
+      <v-container style="width:100%; background-color: #E4E8EF" fluid>
       <v-layout >
         <v-row>
         <!-- ------------- 2. 워드 클라우드 부분 start --------------- -->
         <v-flex xs12 sm8 md8>
-          <v-container fluid>
+          <v-container>
             <KeywordWordCloud @myKeyword="goAlert" :info ="info"/>
           </v-container>
         </v-flex>
@@ -99,7 +99,7 @@
         </v-row>
         <!-- ------------- 3. 내 키워드 기사 부분 start--------------- -->
         <v-flex xs12 sm4 md4>
-          <v-container fluid>
+          <v-container>
             <v-card color="basil">
                 <!-- ---------- 4. 카드 내부 기사 ----------- -->
               <v-container>

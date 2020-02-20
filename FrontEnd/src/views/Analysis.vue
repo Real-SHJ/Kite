@@ -1,17 +1,13 @@
 <template>
   <v-content>
-    <!-- 원태희 start -->
-    <v-tabs>
-      <v-tab><router-link to="/searchrank" replace>원태희꺼 작업</router-link></v-tab>
-    </v-tabs>
-    <!-- 원태희 end -->
-
     <p class="header-title" ><strong>기업 분석 데이터</strong></p>
     <searchRank/>
-    <v-divider class="mx-4"></v-divider>
-    <v-container fluid>
-      <v-row class="justify-center">
-        <h2><br>기업선택</h2>
+    <!-- <v-divider class="mx-4"></v-divider> -->
+    <v-container style="width:100%; background-color: #E4E8EF" fluid>
+      <v-container>
+      <div class="search" style="width:100%;">
+      <v-row class="">
+        <h2 style="font-size: 25px; padding: 10px;"><br>기업선택</h2>
         <v-col sm="2">
           <v-overflow-btn
             class=""
@@ -22,23 +18,23 @@
             ></v-overflow-btn>
         </v-col>
       </v-row>
-    </v-container>
+    <!-- </v-container> -->
     <v-divider class="mx-4"></v-divider>
-    <v-container fluid>
+    <!-- <v-container> -->
       <v-layout >
-        <v-row>
+        <!-- <v-row> -->
         <v-flex xs12 sm8 md8>
           <v-container fluid>
             <CompanyKeyword @myKeyword="goAlert" :info ="info" :choice_company = "choice_company" v-if="choice_company"/>
             <p v-else>기업을 선택해 주세요</p>
           </v-container>
         </v-flex>
-        </v-row>
+        <!-- </v-row> -->
         <v-flex xs12 sm4 md4>
           <v-container fluid>
-            <v-card color="basil">
+            <v-card color="grey lighten-4">
               <v-container>
-                <v-row dense>
+                <!-- <v-row dense> -->
                   <v-col cols="12">
                     <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드가 포함된 {{choice_company}} 기사</v-card-title>
                     <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
@@ -63,12 +59,14 @@
                         </div>
                     </v-card>
                   </v-col>
-                </v-row>
+                <!-- </v-row> -->
               </v-container>
             </v-card>
           </v-container>
         </v-flex>
       </v-layout>
+      </div>
+      </v-container>
     </v-container>
   </v-content>
 </template>
@@ -159,7 +157,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @font-face {
   font-family: 'LogoFont'; /* 폰트 패밀리 이름 주기*/
   src: url('../fonts/BLKCHCRY.TTF'); /*폰트 파일 주소*/
@@ -176,5 +174,12 @@ export default {
   /* color: grey; */
   text-align: center;
   letter-spacing: -.05em;
+}
+.search{
+  display:inline-block;
+  width: 100%;
+  height: 100%;
+  margin-right: 30px;
+  padding: 10px
 }
 </style>
