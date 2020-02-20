@@ -4,9 +4,9 @@
       <v-btn
         class="share"
         dark
-        fab
         color="pink"
         v-on="on"
+        style="margin-left: 1%"
       >
         <v-icon>fas fa-share-alt</v-icon>
       </v-btn>
