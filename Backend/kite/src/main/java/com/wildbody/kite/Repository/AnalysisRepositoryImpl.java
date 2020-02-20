@@ -17,7 +17,6 @@ public class AnalysisRepositoryImpl implements AnalysisRepository {
 		Analysis a=new Analysis();
 		a.setAge(age);
 		a.setGender(gender);
-		System.out.println(a.getAge()+" "+a.getGender());
 		return session.selectList("kite.analysis.selectRankCount",a);
 	}
 }

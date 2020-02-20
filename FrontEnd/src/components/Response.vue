@@ -1,20 +1,50 @@
 <template>
   <v-list>
     <div v-if="rslist.length !== 0">
-      <v-list-item  v-for="(item, i) in rslist" :key="i">
+      <v-list-item
+        v-for="(item, i) in rslist"
+        :key="i"
+      >
         <v-list-item-avatar>
-          <img v-if="item.image === 'null'" src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"/>
-          <v-img v-else :src="`http://13.125.153.118:8999/img/profile/${item.image}`"></v-img>
+          <img
+            v-if="item.image === 'null'"
+            src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"
+          >
+          <v-img
+            v-else
+            :src="`http://13.125.153.118:8999/img/profile/${item.image}`"
+          />
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title v-text="item.lastname + ' ' + item.firstname"></v-list-item-title>
+          <v-list-item-title v-text="item.lastname + ' ' + item.firstname" />
         </v-list-item-content>
-        <v-btn class="ma-2" small outlined color="indigo" @click="insertfriend(item)">수락</v-btn>
-        <v-btn class="ma-2" small outlined color="red" @click="deletefriendwait(item)">거절</v-btn>
+        <v-btn
+          class="ma-2"
+          small
+          outlined
+          color="indigo"
+          @click="insertfriend(item)"
+        >
+          수락
+        </v-btn>
+        <v-btn
+          class="ma-2"
+          small
+          outlined
+          color="red"
+          @click="deletefriendwait(item)"
+        >
+          거절
+        </v-btn>
       </v-list-item>
     </div>
     <div v-else>
-      <p class="my-3" style="font-size: 15px;">요청이 없습니다...</p>
+      <p
+        class="my-3"
+        style="font-size: 15px;"
+      >
+        요청이 없습니다...
+      </p>
     </div>
     <v-snackbar
       v-model="snackbar"
@@ -45,7 +75,7 @@
 // import router from '../router'
 import http from '../http-common'
 export default {
-  name: 'responselist',
+  name: 'Responselist',
   data () {
     return {
       memberid: this.$session.get('my-info').userid,
@@ -56,6 +86,9 @@ export default {
       timeout: 2000
     }
   },
+  mounted () {
+    this.getFriendList()
+  },
   methods: {
     deletefriendwait: function (response) {
       let requestid = response.memberid
@@ -64,7 +97,6 @@ export default {
         .delete('/member/deletefriendwait' + '/' + requestid + '/' + userid)
         .then(
           response => {
-            console.log(response.data.message)
             const target = this.rslist.indexOf(response)
             this.rslist.splice(target, 1)
           }
@@ -81,7 +113,6 @@ export default {
         .delete('/member/deletefriendwait' + '/' + requestid + '/' + userid)
         .then(
           response => {
-            console.log(response.data.message)
             const target = this.rslist.indexOf(response)
             this.rslist.splice(target, 1)
           },
@@ -90,7 +121,6 @@ export default {
             .then(
               response => {
                 this.snackbar = true
-                console.log(response.data.message)
               }
             )
             .catch(err => console.log(err))
@@ -109,16 +139,12 @@ export default {
         .then(
           response => {
             this.rslist = response.data.rslist
-            console.log(this.rslist.length)
           }
         )
         .catch(err => console.log(err))
         .finally(
         )
     }
-  },
-  mounted () {
-    this.getFriendList()
   }
 }
 </script>

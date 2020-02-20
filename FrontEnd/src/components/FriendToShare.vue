@@ -1,15 +1,32 @@
 <template>
-  <v-card class="mx-3 my-2" @click="articleShare">
+  <v-card
+    class="mx-3 my-2"
+    @click="articleShare"
+  >
     <v-list-item three-line>
       <v-list-item-avatar>
-        <img :src="`http://13.125.153.118:8999/img/profile/${friend.image}`" alt="">
+        <img
+          :src="`http://13.125.153.118:8999/img/profile/${friend.image}`"
+          alt=""
+        >
       </v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title class="headline mb-1">{{friend.lastname}}{{friend.firstname}}</v-list-item-title>
-        <v-list-item-subtitle>{{friend.email}}</v-list-item-subtitle>
+        <v-list-item-title class="headline mb-1">
+          {{ friend.lastname }}{{ friend.firstname }}
+        </v-list-item-title>
+        <v-list-item-subtitle>{{ friend.email }}</v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-avatar>
-        <v-btn outlined large fab :style="`color: ${textColor}`"><v-icon :style="`color: ${textColor}`">fas fa-check</v-icon></v-btn>
+        <v-btn
+          outlined
+          large
+          fab
+          :style="`color: ${textColor}`"
+        >
+          <v-icon :style="`color: ${textColor}`">
+            fas fa-check
+          </v-icon>
+        </v-btn>
       </v-list-item-avatar>
     </v-list-item>
   </v-card>
@@ -18,15 +35,15 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  name: 'friendtoshare',
+  name: 'Friendtoshare',
+  props: {
+    friend: Object
+  },
   data () {
     return {
       textColor: 'grey',
       check: true
     }
-  },
-  props: {
-    friend: Object
   },
   methods: {
     articleShare () {

@@ -1,41 +1,82 @@
 <template>
   <v-content>
     <v-container>
+      <br>
+      <br>
       <v-row>
-        <v-col cols="12" sm="3">
-          <v-menu open-on-hover bottom origin="center center" transition="scale-transition" :close-on-content-click="closeOnContentClick">
+        <v-col cols="2">
+          <v-menu
+            open-on-hover
+            bottom
+            origin="center center"
+            transition="scale-transition"
+            :close-on-content-click="closeOnContentClick"
+          >
             <template v-slot:activator="{ on }">
-              <v-btn color="red" dark v-on="on">
+              <v-btn
+                color="red"
+                dark
+                v-on="on"
+              >
                 색상 선택
               </v-btn>
             </template>
-
-            <v-row>
-              <v-col class="d-flex justify-center">
-                <v-color-picker v-model="color"></v-color-picker>
-              </v-col>
-            </v-row>
+            <v-color-picker v-model="color" />
           </v-menu>
         </v-col>
-        <v-col cols="12" sm="3">
-          <span>Highlight 기능</span>
+        <v-col cols="4">
+          <span style="margin-right: 4%; font-size: 120%; font-weight: bold;">Highlight 기능 :</span>
           <v-btn @click="highlightOn()">
             On
           </v-btn>
-          <v-btn @click="highlightOff()">
-              Off
+          <v-btn
+            style="margin-left: 2%"
+            @click="highlightOff()"
+          >
+            Off
           </v-btn>
         </v-col>
-        <v-col cols="12" sm="6">
-          <v-btn @click="save()">저장</v-btn>
+        <v-col cols="1">
+          <v-btn @click="save()">
+            저장
+          </v-btn>
         </v-col>
       </v-row>
-      <v-spacer></v-spacer>
-      <h1 v-if="article" class="title">{{article.title}}</h1>
-      <div class="d-flex justify-center">
-        <img v-if="article.image" :src="article.image" width="50%" height="50%">
+      <br>
+      <br>
+      <v-divider />
+      <br>
+      <br>
+      <v-spacer />
+      <p
+        v-if="article"
+        class="detail-title text-center"
+      >
+        {{ article.title }}
+      </p>
+      <p
+        v-if="article"
+        class="text-center"
+      >
+        기업: {{ article.company }}  언론사: {{ article.newspaper }}  posted: {{ article.publicationDate }}
+      </p>
+      <br>
+      <br>
+      <div
+        v-if="article.image !== null"
+        class="d-flex justify-center"
+      >
+        <img
+          :src="article.image"
+          style="width: 50%; height: 50%"
+        >
       </div>
-      <div v-if="article" v-html="article.content" id="maincontent" style="margin: 0%"></div>
+      <div
+        v-if="article"
+        id="maincontent"
+        style="margin: 0%"
+        v-html="article.content"
+      />
     </v-container>
   </v-content>
 </template>
@@ -43,9 +84,38 @@
 <script>
 import http from '../http-common'
 export default {
-  name: 'test',
+  name: 'Test',
   props: {
     id: String
+  },
+  data () {
+    return {
+      article: null,
+      type: 'hex',
+      hex: '#FFFF00',
+      closeOnContentClick: false
+    }
+  },
+  computed: {
+    color: {
+      get () {
+        return this[this.type]
+      },
+      set (v) {
+        this[this.type] = v
+      }
+    },
+    showColor () {
+      if (typeof this.color === 'string') return this.color
+
+      return JSON.stringify(Object.keys(this.color).reduce((color, key) => {
+        color[key] = Number(this.color[key].toFixed(2))
+        return color
+      }, {}), null, 2)
+    }
+  },
+  mounted () {
+    this.getArticle()
   },
   methods: {
     getArticle () {
@@ -54,7 +124,6 @@ export default {
         .then(
           response => {
             this.article = response.data.article
-            this.spanIndex = response.data.spanIndex
           }
         )
         .catch(err => console.log(err))
@@ -90,7 +159,7 @@ export default {
       if (str.replace(blank_pattern, '') === '') {
         return
       }
-      if (str.includes('<br>') || str.includes('</br>')) {
+      if (str.includes('\n')) {
         return
       }
       this.replace(`<span class="high" style="background-color: ${this.color}; cursor: pointer">` + this.message.toString() + '</span>')
@@ -138,35 +207,6 @@ export default {
         .finally(
         )
     }
-  },
-  data () {
-    return {
-      article: null,
-      type: 'hex',
-      hex: '#FFFF00',
-      closeOnContentClick: false
-    }
-  },
-  mounted () {
-    this.getArticle()
-  },
-  computed: {
-    color: {
-      get () {
-        return this[this.type]
-      },
-      set (v) {
-        this[this.type] = v
-      }
-    },
-    showColor () {
-      if (typeof this.color === 'string') return this.color
-
-      return JSON.stringify(Object.keys(this.color).reduce((color, key) => {
-        color[key] = Number(this.color[key].toFixed(2))
-        return color
-      }, {}), null, 2)
-    }
   }
 }
 </script>
@@ -176,7 +216,8 @@ export default {
     font-family: 'Noto Serif KR Bold', serif;
     src: url('../fonts/NotoSerifKR-Bold.otf');
   }
-  .title {
+  .detail-title {
+    font-size: 250%;
     font-family: 'Noto Serif KR Bold' !important;
   }
   @font-face {

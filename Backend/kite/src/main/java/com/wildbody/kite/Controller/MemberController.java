@@ -209,9 +209,6 @@ public class MemberController {
 			}
 			list.addAll(nrlist);
 			list.addAll(rqlist);
-			for (int i = 0; i < list.size(); i++) {
-				System.out.println(list.get(i));
-			}
 			map.put("list", list);
 			map.put("checklist", checklist);
 		} catch (RuntimeException e) {
@@ -227,12 +224,9 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			map.put("message", "친구 응답 목록 조회 성공");
 			List<Member> rslist = msvc.responseList(Integer.parseInt(memberid));
-			for (int i = 0; i < rslist.size(); i++) {
-				System.out.println(rslist.get(i));
-			}
 			map.put("rslist", rslist);
+			map.put("message", "친구 응답 목록 조회 성공");
 		} catch (RuntimeException e) {
 			map.put("message", "친구 목록 조회 실패");
 		}
@@ -556,6 +550,22 @@ public class MemberController {
 			map.put("message", "내 키워드 목록 조회 성공");
 		} catch (Exception e) {
 			map.put("message", "내 키워드 목록 조회 실패");
+		}
+		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	@GetMapping("/getarticleid/{memberid}")
+	@ApiOperation(value = "내 스크랩 기사id 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> getArticleid(@PathVariable String memberid) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			List<Integer> list = msvc.getArticleid(Integer.parseInt(memberid));
+			map.put("result", list);
+			map.put("message", "내 스크랩 기사id  목록 조회 성공");
+		} catch (Exception e) {
+			map.put("message", "내 스크랩 기사id 목록 조회 실패");
 		}
 		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
 		return resEntity;

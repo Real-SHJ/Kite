@@ -96,7 +96,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public int friendWaitInsert(int requestid, int responseid) {
-		System.out.println("req:" + requestid + ",res:" + responseid);
 		Map<String, Object> map = new HashMap<>();
 		map.put("requestid", requestid);
 		map.put("responseid", responseid);
@@ -113,7 +112,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public int friendInsert(int memberid, int friendid) {
-		System.out.println("repo test: mid:" + memberid + ",fid:" + friendid);
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberid", memberid);
 		map.put("friendid", friendid);
@@ -122,7 +120,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 		map.put("memberid", friendid);
 		map.put("friendid", memberid);
 		insert += session.insert("kite.member.insertFriend", map);
-		System.out.println("repo test:" + insert);
 		return insert;
 	}
 
@@ -148,7 +145,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 
 	@Override
 	public int updateCompany(int memberid, String companylist) {
-		System.out.println("repo" + memberid + "," + companylist);
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberid", memberid);
 		map.put("companylist", companylist);
@@ -169,7 +165,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 	public int insertMemberArticle(MemberArticle ma) {
 		ma.setCompany(selectArticleCompany(ma.getArticleid()));
 		ma.setContent(selectArticleContent(ma.getArticleid()));
-		ma.setSpanindex(0);
 		return session.insert("kite.member.insertMemberArticle", ma);
 	}
 
@@ -254,5 +249,10 @@ public class MemberRepositoryImpl implements MemberRepository {
 	@Override
 	public List<ArticleKeyword> selectArticleKeywordList(String company) {
 		return session.selectList("kite.keyword.selectArticleKeyword", company);
+	}
+	
+	@Override
+	public List<Integer> getArticleid(int memberid) {
+		return session.selectList("kite.member.getArticleid", memberid);
 	}
 }

@@ -1,7 +1,25 @@
 <template>
   <v-content>
-    <v-btn v-if="btnSwitch" class="ma-2" small outlined color="indigo" @click="insertfriendwait(item.memberid)">친구 요청</v-btn>
-    <v-btn v-else class="ma-2" small outlined color="red" @click="deletefriendwait(item.memberid)">응답 대기중</v-btn>
+    <v-btn
+      v-if="btnSwitch"
+      class="ma-2"
+      small
+      outlined
+      color="indigo"
+      @click="insertfriendwait(item.memberid)"
+    >
+      친구 요청
+    </v-btn>
+    <v-btn
+      v-else
+      class="ma-2"
+      small
+      outlined
+      color="red"
+      @click="deletefriendwait(item.memberid)"
+    >
+      응답 대기중
+    </v-btn>
     <!-- <v-btn v-else class="ma-2" small outlined color="indigo" @click="insertfriendwait(item.memberid)">응답 대기중</v-btn> -->
     <v-snackbar
       v-model="snackbar"
@@ -46,6 +64,10 @@ export default {
       timeout: 2000
     }
   },
+  mounted () {
+    this.findCheck()
+    // console.log(this.checkList)
+  },
   methods: {
     insertfriendwait: function (responseid) {
       http
@@ -54,7 +76,6 @@ export default {
           response => {
             this.btnSwitch = !this.btnSwitch
             this.snackbar = true
-            console.log(response.data.message)
           }
         )
         .catch(err => console.log(err))
@@ -68,7 +89,6 @@ export default {
         .then(
           response => {
             this.btnSwitch = !this.btnSwitch
-            console.log(response.data.message)
           }
         )
         .catch(err => console.log(err))
@@ -82,12 +102,7 @@ export default {
           this.btnSwitch = this.checkList[check].check
         }
       }
-      console.log(this.btnSwitch)
     }
-  },
-  mounted () {
-    this.findCheck()
-    // console.log(this.checkList)
   }
 }
 </script>

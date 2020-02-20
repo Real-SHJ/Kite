@@ -1,6 +1,6 @@
 <!-- HTML -->
 <template>
-  <div id="chartdiv"></div>
+  <div id="keywordchartdiv" />
 </template>
 
 <!-- Resources -->
@@ -25,7 +25,7 @@ am4core.useTheme(am4themes_animated);
 export default {
     name: 'companykeyword',
     props:{
-        info: Array,
+        keywordinfo: Array,
         choice_company: String
     },
     data () {
@@ -34,16 +34,16 @@ export default {
         }
     },
     watch: {
-        info : function(){
-            var chart = am4core.create("chartdiv", am4plugins_wordCloud.WordCloud);
+        keywordinfo : function(){
+            var keywordchartdiv = am4core.create("keywordchartdiv", am4plugins_wordCloud.WordCloud);
             setTimeout(()=>{
-                chart.fontFamily = "Courier New";
-                var series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
+                keywordchartdiv.fontFamily = "Courier New";
+                var series = keywordchartdiv.series.push(new am4plugins_wordCloud.WordCloudSeries());
                 series.randomness = 0.4;
                 series.rotationThreshold = 0.5;
                 series.data = null;
-                for(let index in this.info){
-                    var tmp = { "tag" : this.info[Number(index)]["keyword"], "count" : parseInt(this.info[Number(index)]["count"]) }
+                for(let index in this.keywordinfo){
+                    var tmp = { "tag" : this.keywordinfo[Number(index)]["keyword"], "count" : parseInt(this.keywordinfo[Number(index)]["count"]) }
                     series.data.push(tmp)
                 }
 
@@ -69,10 +69,10 @@ export default {
                 var hoverState = series.labels.template.states.create("hover");
                 hoverState.properties.fill = am4core.color("#FF0000");
 
-                var subtitle = chart.titles.create();
+                var subtitle = keywordchartdiv.titles.create();
                 subtitle.text = "(click to open)";
 
-                var title = chart.titles.create();
+                var title = keywordchartdiv.titles.create();
                 title.text = this.choice_company + '\n기사 연관 키워드';
                 title.fontSize = 30;
                 title.fontWeight = "800";
@@ -89,8 +89,8 @@ export default {
         }
     },
     beforeDestroy() {
-        if (this.chart) {
-            this.chart.dispose();
+        if (this.keywordchartdiv) {
+            this.keywordchartdiv.dispose();
         }
     }
 }
@@ -98,9 +98,9 @@ export default {
 
 <!-- Styles -->
 <style scoped>
-#chartdiv {
+#keywordchartdiv {
   width: 100%;
   height: 600px;
-  background-color: #FFFBE6;
+  background-color : #F5F5F5;
 }
 </style>
