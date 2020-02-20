@@ -61,9 +61,6 @@
 	<select id="oneScrapArticle" parameterType="MemberArticle" resultType="string">
 		select content from member_article where memberid=#{memberid} and articleid=#{articleid};
 	</select>
-	<select id="getIndex" parameterType="MemberArticle" resultType="int">
-		select spanindex from member_article where memberid=#{memberid} and articleid=#{articleid};
-	</select>
 	<select id="infi" parameterType="string" resultType="Article">
 		select *
 		from article

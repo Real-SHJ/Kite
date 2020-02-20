@@ -201,21 +201,11 @@ public class MemberServiceImpl implements MemberService {
 			mklist.add(mk);
 		}
 		int delete = repo.deleteMemberKeyword(ma.getMemberid(), ma.getArticleid());
-		System.out.println("삭제 몇개됐노?:" + delete);
+//		System.out.println("삭제 몇개됐노?:" + delete);
 		int insert = repo.insertMemberKeyword(mklist);
-		System.out.println("키워드 몇개들어갔노?:" + insert);
+//		System.out.println("키워드 몇개들어갔노?:" + insert);
 		return repo.saveContent(ma);
 	}
-
-//	@Override
-//	public List<MemberKeyword> selectMemberKeywordList(MemberKeyword mk) {
-//		return repo.selectMemberKeywordList(mk);
-//	}
-//
-//	@Override
-//	public int deleteMemberKeyword(MemberKeyword mk) {
-//		return repo.deleteMemberKeyword(mk);
-//	}
 
 	@Override
 	public Member selectid(int id) {
@@ -253,5 +243,10 @@ public class MemberServiceImpl implements MemberService {
 			map.put(keyword, (freq == null) ? count : freq + count);
 		}
 		return map;
+	}
+	
+	@Override
+	public List<Integer> getArticleid(int memberid) {
+		return repo.getArticleid(memberid);
 	}
 }

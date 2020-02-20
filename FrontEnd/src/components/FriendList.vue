@@ -56,12 +56,10 @@ export default {
   },
   methods: {
     deletefriend: function (friend) {
-      console.log(friend)
       http
         .delete('/member/deletefriend' + '/' + this.memberid + '/' + friend.memberid)
         .then(
           response => {
-            console.log(response.data.message)
             this.snackbar = true
             const target = this.flist.indexOf(friend)
             this.flist.splice(target, 1)
@@ -78,8 +76,6 @@ export default {
         .then(
           response => {
             this.flist = response.data.flist
-            console.log(response.data.message)
-            console.log(this.flist)
           }
         )
         .catch(err => console.log(err))
@@ -89,7 +85,6 @@ export default {
   },
   mounted () {
     this.getFriendList()
-    console.log(this.flist)
   }
 }
 </script>

@@ -35,16 +35,12 @@ export default {
     mounted () {
         var chart = am4core.create("chartdiv", am4plugins_wordCloud.WordCloud);
         setTimeout(()=>{
-            console.log('마운트한다~!!!')
-            console.log(this.info)
             chart.fontFamily = "Courier New";
             var series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
             series.randomness = 0.4;
             series.rotationThreshold = 0.5;
             series.data = null;
             for(let index in this.info){
-                console.log(index)
-                console.log("yayaya-" + "tag:" + this.info[Number(index)]["keyword"] + ",count:" + parseInt(this.info[Number(index)]["count"]))
                 var tmp = { "tag" : this.info[Number(index)]["keyword"], "count" : parseInt(this.info[Number(index)]["count"]) }
                 series.data.push(tmp)
             }
@@ -61,9 +57,7 @@ export default {
             });
             // series.labels.template.url = "https://ko.wikipedia.org/wiki/{word}";
             series.labels.template.events.on("hit", function(ev) {
-                console.log("clicked on ", ev.target.readerTitle);
                 this.mykeyword = ev.target.readerTitle;
-                console.log("내가 선택한 키워드는:" + this.mykeyword)
                 this.$emit('myKeyword', this.mykeyword)
             }, this);
             series.labels.template.urlTarget = "_blank";
