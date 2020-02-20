@@ -3,9 +3,9 @@
   <v-container>
     <div class="search" style="width:100%;">
     <div class="wrap">
-    <div class="title_rank" style="font-size: 25px"><strong>별 인기 검색어</strong> &nbsp; <span style="font-size: 18px">회사별 검색어 현황을 확인할 수 있습니다.</span></div>
+    <div class="title_rank" style="font-size: 25px"><strong>분야별 인기 검색어</strong> &nbsp; <span style="font-size: 18px">회사별 검색어 현황을 확인할 수 있습니다.</span></div>
     </div>
-    <v-divider class="my-5"></v-divider>
+    <v-divider class="my-10"></v-divider>
   <v-carousel
       cycle
       height="670"

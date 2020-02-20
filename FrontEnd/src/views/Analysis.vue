@@ -1,11 +1,5 @@
 <template>
   <v-content>
-    <!-- 원태희 start -->
-    <v-tabs>
-      <v-tab><router-link to="/searchrank" replace>원태희꺼 작업</router-link></v-tab>
-    </v-tabs>
-    <!-- 원태희 end -->
-
     <p class="header-title" ><strong>기업 분석 데이터</strong></p>
     <searchRank/>
     <!-- <v-divider class="mx-4"></v-divider> -->
