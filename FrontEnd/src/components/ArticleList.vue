@@ -28,18 +28,29 @@
             </v-avatar>
 
             <div class="overay textwrap" style="color:white;">
-              {{article.summary}}
+              <p
+                v-if="article.summary.length > 145"
+                class="article-summary"
+              >
+                {{article.summary.slice(0, 140)}}...
+              </p>
+              <p
+                v-else
+                class="article-summary"
+              >
+                {{article.summary.slice(0, 140)}}
+              </p>
             </div>
           </v-card>
           <p
-          v-if="article.title.length > 31"
-          class="article-title"
+            v-if="article.title.length > 31"
+            class="article-title"
           >
             {{article.title.slice(0, 31)}}...
           </p>
           <p
-          v-else
-          class="article-title"
+            v-else
+            class="article-title"
           >
             {{article.title}}
           </p>
@@ -49,8 +60,6 @@
         <div>
           <p class="text-center" style="font-size: 250%">로그인을 하신 후</p>
           <p style="font-size: 250%">더 많은 기능을 만나보세요.</p>
-        </div>
-      </v-col>
         <v-responsive
           v-if="n === 2"
           :key="`width-${i}`"
@@ -109,13 +118,11 @@ export default {
             .get(`/member/friendlist/${myId}`)
             .then((res) => {
               this.myFriends = res.data.flist
-              console.log(this.myFriends)
             })
         }
       }, 1000)
     },
     goDetail (articleid) {
-      console.log(articleid)
       if (this.AuthenticatedCheck) {
         this.$router.push({ path: `/articleDetail/${articleid}` })
       } else {
@@ -183,12 +190,14 @@ export default {
   }
 
   .images:hover .overay{
-    height: 50%;
+    height: 25%;
+    font-size: 18px;
   }
   .article-title{
     /* color:white; */
     font-size: 18px;
     font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
     /* margin:auto; */
     /* max-height:50px; */
     /* top: 0; */
@@ -196,6 +205,12 @@ export default {
     /* right:0; */
     /* margin-bottom: 10%; */
     /* z-index: inherit; */
+  }
+  .article-summary{
+    /* color:white; */
+    font-size: 18px;
+    /* font-weight: bold; */
+    font-family: 'Noto Sans KR', sans-serif;
   }
   .btngrp{
     position: absolute;

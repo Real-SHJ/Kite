@@ -560,4 +560,20 @@ public class MemberController {
 		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
 		return resEntity;
 	}
+	
+	@GetMapping("/getarticleid/{memberid}")
+	@ApiOperation(value = "내 스크랩 기사id 목록 조회 서비스")
+	public @ResponseBody ResponseEntity<Map<String, Object>> getArticleid(@PathVariable String memberid) {
+		ResponseEntity<Map<String, Object>> resEntity = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			List<Integer> list = msvc.getArticleid(Integer.parseInt(memberid));
+			map.put("result", list);
+			map.put("message", "내 스크랩 기사id  목록 조회 성공");
+		} catch (Exception e) {
+			map.put("message", "내 스크랩 기사id 목록 조회 실패");
+		}
+		resEntity = new ResponseEntity<>(map, HttpStatus.OK);
+		return resEntity;
+	}
 }

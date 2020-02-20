@@ -55,14 +55,6 @@ public class ArticleServiceImpl implements ArticleService {
     	ma.setArticleid(articleid);
     	return repo.oneScrapArticle(ma);
     }
-    
-    @Override
-    public int getIndex(int memberid, int articleid) {
-    	MemberArticle ma = new MemberArticle();
-    	ma.setMemberid(memberid);
-    	ma.setArticleid(articleid);
-    	return repo.getIndex(ma);
-    }
 
     @Override
     public List<Article> infi(String company) {

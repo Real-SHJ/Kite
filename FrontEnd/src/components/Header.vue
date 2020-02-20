@@ -9,7 +9,7 @@
         </v-col>
         <v-col cols="2">
           <v-col class="d-flex justify-center align-center">
-            <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
+            <span text large id="homebtn" @click="goHome">KITE</span>
           </v-col>
         </v-col>
         <v-col class="d-flex align-center ml-4">
@@ -21,7 +21,7 @@
             <!-- <Friend/> -->
           </div>
           <div v-else>
-            <span class="toolbar-btn" @click="goStart">Start</span>
+            <span class="toolbar-btn2" @click="goStart">START</span>
             <v-snackbar
               v-model="snackbar"
               color="red"
@@ -179,7 +179,7 @@ export default {
 <style scoped>
 .toolbar-btn:hover {
   cursor: pointer;
-  font-size: 200%;
+  /* font-size: 200%; */
   /* text-decoration: underline; */
   /* text-decoration-color: rgb(255, 147, 97); */
   /* color: rgb(255, 147, 97); */
@@ -191,6 +191,18 @@ export default {
   /* font-size: 25px; */
   /* font-weight: bold; */
   /* font-family: 'Nanum Gothic', sans-serif; */
+}
+.toolbar-btn2:hover {
+  cursor: pointer;
+  /* font-size: 220%; */
+  /* text-decoration: underline; */
+  /* text-decoration-color: rgb(255, 147, 97); */
+  /* color: rgb(255, 147, 97); */
+  color: #1d87be;
+}
+.toolbar-btn2 {
+  font-size: 190%;
+  margin-right: 25px;
 }
 .toolbar-btn-left {
   font-size: 170%;
@@ -207,11 +219,20 @@ export default {
   font-family: 'LogoFont';
   src: url('../fonts/BLKCHCRY.TTF');
 } */
+#homebtn:hover {
+  cursor: pointer;
+  /* font-size: 220%; */
+  /* text-decoration: underline; */
+  /* text-decoration-color: rgb(255, 147, 97); */
+  /* color: rgb(255, 147, 97); */
+  color: #1d87be;
+}
 #homebtn {
   /* font-family:'LogoFont' !important; */
   background-color: #ffffff;
   color: #000000;
-  font-size: 40px;
+  font-size: 50px;
+  font-weight: bold;
   text-align: center
 }
 </style>

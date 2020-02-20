@@ -18,53 +18,54 @@
             ></v-overflow-btn>
         </v-col>
       </v-row>
-    <!-- </v-container> -->
-    <v-divider class="mx-4"></v-divider>
-    <!-- <v-container> -->
-      <v-layout >
-        <!-- <v-row> -->
-        <v-flex xs12 sm8 md8>
-          <v-container fluid>
-            <CompanyKeyword @myKeyword="goAlert" :info ="info" :choice_company = "choice_company" v-if="choice_company"/>
-            <p v-else>기업을 선택해 주세요</p>
-          </v-container>
-        </v-flex>
-        <!-- </v-row> -->
-        <v-flex xs12 sm4 md4>
-          <v-container fluid>
-            <v-card color="grey lighten-4">
-              <v-container>
-                <!-- <v-row dense> -->
-                  <v-col cols="12">
-                    <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드가 포함된 {{choice_company}} 기사</v-card-title>
-                    <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
-                    <v-card
-                        v-for="article in keywordarticles"
-                        :key="article.id"
-                        class="mx-auto"
-                        max-width="344"
-                        outlined
-                    >
-                        <div @click="goDetail(article)">
-                        <v-list-item three-line>
-                            <v-list-item-content>
-                                <div class="overline mb-4">{{article.company}}</div>
-                                <v-list-item-title class="headline mb-1">{{article.title}}</v-list-item-title>
-                                <v-list-item-subtitle>{{article.summary}}</v-list-item-subtitle>
-                            </v-list-item-content>
-                            <v-avatar color="red lighten-4" size="70">
-                                <img :src="company_image[article.company]"/>
-                            </v-avatar>
-                        </v-list-item>
-                        </div>
-                    </v-card>
-                  </v-col>
-                <!-- </v-row> -->
-              </v-container>
-            </v-card>
-          </v-container>
-        </v-flex>
-      </v-layout>
+      <!-- </v-container> -->
+      <v-divider class="mx-4"></v-divider>
+      <!-- <v-container> -->
+        <v-layout >
+          <!-- <v-row> -->
+          <v-flex xs12 sm8 md8>
+            <v-container fluid>
+              <CompanyKeyword @myKeyword="goAlert" :keywordinfo ="keywordinfo" :choice_company = "choice_company" v-if="choice_company"/>
+              <p v-else>기업을 선택해 주세요</p>
+            </v-container>
+          </v-flex>
+          <!-- </v-row> -->
+          <v-flex xs12 sm4 md4>
+            <v-container fluid>
+              <v-card color="grey lighten-4">
+                <v-container>
+                  <!-- <v-row dense> -->
+                    <v-col cols="12">
+                      <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드가 포함된 {{choice_company}} 기사</v-card-title>
+                      <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
+                      <v-card
+                          v-for="article in keywordarticles"
+                          :key="article.id"
+                          class="mx-auto"
+                          max-width="344"
+                          outlined
+                      >
+                          <div @click="goDetail(article)">
+                          <v-list-item three-line>
+                              <v-list-item-content>
+                                  <div class="overline mb-4">{{article.company}}</div>
+                                  <v-list-item-title class="headline mb-1">{{article.title}}</v-list-item-title>
+                                  <v-list-item-subtitle>{{article.summary}}</v-list-item-subtitle>
+                              </v-list-item-content>
+                              <v-avatar color="red lighten-4" size="70">
+                                  <img :src="company_image[article.company]"/>
+                              </v-avatar>
+                          </v-list-item>
+                          </div>
+                      </v-card>
+                    </v-col>
+                  <!-- </v-row> -->
+                </v-container>
+              </v-card>
+            </v-container>
+          </v-flex>
+        </v-layout>
+
       </div>
       </v-container>
     </v-container>
@@ -84,7 +85,7 @@ export default {
     return {
       myKeyword: null,
       keywordarticles: [],
-      info: null,
+      keywordinfo: null,
       choice_company: null,
       companylist: ['네이버', '삼성전자', '삼성SDS', '신한은행', '우리은행', '카카오', '쿠팡', '포스코', '하나은행', '한국전력공사', '현대모비스', '현대자동차', 'CJ제일제당', 'GS칼텍스', 'IBK기업은행', 'KB국민은행', 'KT', 'LG전자', 'LG유플러스', 'LG화학', 'SK텔레콤', 'SK하이닉스', 'S-OIL'],
       company_image: {
@@ -146,7 +147,7 @@ export default {
         .get('/member/getkeywordarticle' + '/' + this.choice_company)
         .then(
           response => {
-            this.info = response.data.result
+            this.keywordinfo = response.data.result
           }
         )
         .catch(err => console.log(err))

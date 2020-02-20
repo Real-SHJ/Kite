@@ -45,15 +45,12 @@ export default {
     // },
     scrapArticle () {
       this.dialog = false
-      console.log(this.userid)
-      console.log(this.article.articleid)
       const fdata = new FormData()
       fdata.append('memberid', this.userid)
       fdata.append('articleid', this.article.articleid)
       http
         .post('/member/insertscrap', fdata)
         .then(res => {
-          console.log(res.data.message)
           alert(res.data.message)
         })
         .catch(err => console.log(err))

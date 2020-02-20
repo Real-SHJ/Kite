@@ -156,8 +156,8 @@
 	</select>
 	<insert id="insertMemberArticle" parameterType="MemberArticle">
 		insert into
-		member_article(memberid, articleid, company, content, spanindex) values (#{memberid},
-		#{articleid}, #{company}, #{content}, #{spanindex})
+		member_article(memberid, articleid, company, content) values (#{memberid},
+		#{articleid}, #{company}, #{content})
 	</insert>
 	
 		<select id="selectMyContentList" parameterType="int" resultType="MyArticle">
@@ -188,6 +188,10 @@
 	</delete>
 
 	<update id="saveContent" parameterType="MemberArticle">
-		update member_article set spanindex=#{spanindex}, content=#{content} where memberid=#{memberid} and articleid=#{articleid};
+		update member_article set content=#{content} where memberid=#{memberid} and articleid=#{articleid};
 	</update>
+	
+	<select id="getArticleid" parameterType="int" resultType="int">
+		select articleid from member_article where memberid=#{memberid};
+	</select>
 </mapper>

@@ -100,22 +100,17 @@ export default {
     init () {
       this.drawer = true
       let companylist = null
-      console.log('leftmenu userImage:' + this.userInfo.userImage)
       companylist = this.userInfo.companylist
-      console.log('leftmemu companylist:' + companylist)
       this.info = companylist.split(',')
     },
     search () {
       // 전부 들어간 회사명을 다로 저장해 둔다.
-      console.log('!!' + this.searchText)
       if (this.searchText === '') {
         // 빈칸이 있는경우
         this.init()
-        console.log('빈칸빈칸@##')
       } else {
         // 글자가 들어가있는 경우
         this.info2 = []
-        console.log('@@' + this.searchText)
         // for (let i = 0; i < this.info.length; i++) {
         //   if (this.info[i].match(this.searchText)) {
         //     console.log(this.info[i])

@@ -33,7 +33,6 @@ export default {
         .delete('/member/deletefriendwait' + '/' + this.requestid + '/' + responseid)
         .then(
           response => {
-            console.log(response.data.message)
           }
         )
         .catch(err => console.log(err))

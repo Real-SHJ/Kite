@@ -70,4 +70,6 @@ public interface MemberService {
 	public Map<String, Integer> selectMemberKeywordList(int memberid);
 	
 	public Map<String, Integer> selectArticleKeywordList(String company);
+	
+	public List<Integer> getArticleid(int memberid);
 }

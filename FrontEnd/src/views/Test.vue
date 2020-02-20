@@ -34,6 +34,7 @@
       <br>
       <v-spacer></v-spacer>
       <p v-if="article" class="detail-title text-center">{{article.title}}</p>
+      <p v-if="article" class="text-center">기업: {{article.company}}  언론사: {{article.newspaper}}  posted: {{article.publicationDate}}</p>
       <br>
       <br>
       <div class="d-flex justify-center">
@@ -58,7 +59,6 @@ export default {
         .then(
           response => {
             this.article = response.data.article
-            this.spanIndex = response.data.spanIndex
           }
         )
         .catch(err => console.log(err))

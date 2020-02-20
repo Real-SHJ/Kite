@@ -79,17 +79,14 @@ export default {
       this.$router.push('/ArticleDetail')
     },
     getArticle () {
-      console.log('!!!' + this.company)
       http.get('/article/list/')
         .then(res => {
         // 토큰 저장
           this.articles = res.data.resvalue
           let cidx = 0
-          console.log('기업 페이지 진입!!')
           for (let idx = 0; idx < this.articles.length; idx++) {
             if (this.articles[idx]['company'] === this.company) {
               this.corporations[cidx++] = this.articles[idx]
-              console.log('여기는 기업 페이지입니다.' + this.articles[idx])
             }
           }
         })
