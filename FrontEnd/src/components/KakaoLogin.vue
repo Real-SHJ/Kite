@@ -3,9 +3,9 @@
     <KakaoLogin
       api-key="a1b690cf634876a3bd96471c5106bd7f"
       image="kakao_login_btn"
-      :on-success=onSuccess
-      :on-failure=onFailure
-      />
+      :on-success="onSuccess"
+      :on-failure="onFailure"
+    />
   </div>
 </template>
 
@@ -32,11 +32,11 @@ const onFailure = (data) => {
 
 export default {
   name: 'App',
-  data: function () {
-    return { message: 'Hello!' }
-  },
   components: {
     KakaoLogin
+  },
+  data: function () {
+    return { message: 'Hello!' }
   },
 
   methods: {

@@ -4,8 +4,8 @@
       client-id="UmIfLWnhqmTUkrkKC3k0"
       callback-url="http://13.125.153.118:8085/api/member/naverlogin"
       is-popup="false"
-      :callbackFunction=callbackFunction
-      />
+      :callback-function="callbackFunction"
+    />
   </div>
 </template>
 

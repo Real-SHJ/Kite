@@ -1,22 +1,34 @@
 <template>
   <v-content>
-  <transition name='toggle'>
-    <div class="menu" v-if='fade'>
-      <dl>
-        <dt id='logo'>
-          <div>KITE</div>
-        </dt>
-        <dt v-for='list in linklist' :key="list.link">
-          <router-link :to='list.link'>{{list.content}}</router-link>
-        </dt>
-        <dt id='company'>
-          <div>Welcome to Inventory</div>
-          <div> Wonth</div>
-        </dt>
-      </dl>
-    </div>
-  </transition>
-   <img id='menu_btn' @click='enter' src='../assets/hamburger.png'>
+    <transition name="toggle">
+      <div
+        v-if="fade"
+        class="menu"
+      >
+        <dl>
+          <dt id="logo">
+            <div>KITE</div>
+          </dt>
+          <dt
+            v-for="list in linklist"
+            :key="list.link"
+          >
+            <router-link :to="list.link">
+              {{ list.content }}
+            </router-link>
+          </dt>
+          <dt id="company">
+            <div>Welcome to Inventory</div>
+            <div> Wonth</div>
+          </dt>
+        </dl>
+      </div>
+    </transition>
+    <img
+      id="menu_btn"
+      src="../assets/hamburger.png"
+      @click="enter"
+    >
   </v-content>
 </template>
 

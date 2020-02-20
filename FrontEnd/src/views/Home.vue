@@ -1,9 +1,9 @@
 <template>
   <v-content class="d-flex justify-center">
     <!-- <Menu/> -->
-    <MainPageHeader/>
-    <ArticleList :articles="articles"/>
-    <InfiniteLoading @infinite="infiniteHandler"/>
+    <MainPageHeader />
+    <ArticleList :articles="articles" />
+    <InfiniteLoading @infinite="infiniteHandler" />
   </v-content>
 </template>
 
@@ -14,7 +14,13 @@ import MainPageHeader from '../components/MainPageHeader.vue'
 // import Menu from '../components/Menu2'
 import InfiniteLoading from 'vue-infinite-loading'
 export default {
-  name: 'home',
+  name: 'Home',
+  components: {
+    // Menu,
+    MainPageHeader,
+    ArticleList,
+    InfiniteLoading
+  },
   data () {
     return {
       AuthenticatedCheck: this.$session.has('my-token'),
@@ -24,12 +30,6 @@ export default {
       articles: [],
       page: 1
     }
-  },
-  components: {
-    // Menu,
-    MainPageHeader,
-    ArticleList,
-    InfiniteLoading
   },
   mounted () {
     this.AuthenticatedCheck = this.$session.has('my-token')
