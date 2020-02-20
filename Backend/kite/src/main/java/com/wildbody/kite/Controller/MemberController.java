@@ -209,9 +209,6 @@ public class MemberController {
 			}
 			list.addAll(nrlist);
 			list.addAll(rqlist);
-			for (int i = 0; i < list.size(); i++) {
-				System.out.println(list.get(i));
-			}
 			map.put("list", list);
 			map.put("checklist", checklist);
 		} catch (RuntimeException e) {
@@ -227,12 +224,9 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			map.put("message", "친구 응답 목록 조회 성공");
 			List<Member> rslist = msvc.responseList(Integer.parseInt(memberid));
-			for (int i = 0; i < rslist.size(); i++) {
-				System.out.println(rslist.get(i));
-			}
 			map.put("rslist", rslist);
+			map.put("message", "친구 응답 목록 조회 성공");
 		} catch (RuntimeException e) {
 			map.put("message", "친구 목록 조회 실패");
 		}

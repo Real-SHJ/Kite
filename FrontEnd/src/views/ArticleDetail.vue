@@ -190,7 +190,7 @@ export default {
       if (str.replace(blank_pattern, '') === '') {
         return
       }
-      if (str.includes('<br>') || str.includes('</br>')) {
+      if (str.includes('\n')) {
         return
       }
       this.replace(`<span class="high" style="background-color: ${this.color}; cursor: pointer">` + this.message.toString() + '</span>')
