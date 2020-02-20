@@ -364,7 +364,6 @@ export default {
   },
   methods: {
     goAlert (key) {
-      alert(key)
       this.myKeyword = key
       this.getKeywordArticles()
     },
