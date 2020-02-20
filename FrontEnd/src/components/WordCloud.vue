@@ -1,6 +1,6 @@
 <!-- HTML -->
 <template>
-  <div id="chartdiv"></div>
+  <div id="chartdiv" />
 </template>
 
 <!-- Resources -->

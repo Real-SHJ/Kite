@@ -2,43 +2,51 @@
   <v-container>
     <v-row>
       <v-col
+        v-for="(article, i) in articles"
+        :key="i"
         class="images"
         outline
         tile
-        v-for="(article, i) in articles" :key="i"
         :class="{'d-flex justify-end' : (i % 2 === 0)}"
         cols="6"
       >
         <div>
           <v-card
-            @click='goDetail(article.articleid)'
+            id="mycard"
             class="my-2"
             max-width="600"
-            id = "mycard"
-            :img = "`${article.image}`"
+            :img="`${article.image}`"
             height="350px"
             width="500px"
             tile
+            @click="goDetail(article.articleid)"
           >
             <v-avatar
               class="companyLogo"
               size="100px"
             >
-              <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
+              <v-img
+                :src="`${article.logo}`"
+                height="60px"
+                width="60px"
+              />
             </v-avatar>
 
-            <div class="overay textwrap" style="color:white;">
+            <div
+              class="overay textwrap"
+              style="color:white;"
+            >
               <p
                 v-if="article.summary.length > 145"
                 class="article-summary"
               >
-                {{article.summary.slice(0, 140)}}...
+                {{ article.summary.slice(0, 140) }}...
               </p>
               <p
                 v-else
                 class="article-summary"
               >
-                {{article.summary.slice(0, 140)}}
+                {{ article.summary.slice(0, 140) }}
               </p>
             </div>
           </v-card>
@@ -46,24 +54,36 @@
             v-if="article.title.length > 31"
             class="article-title"
           >
-            {{article.title.slice(0, 31)}}...
+            {{ article.title.slice(0, 31) }}...
           </p>
           <p
             v-else
             class="article-title"
           >
-            {{article.title}}
+            {{ article.title }}
           </p>
         </div>
       </v-col>
-      <v-col v-if="articles.length === 5" class="d-flex justify-center align-center">
+      <v-col
+        v-if="articles.length === 5"
+        class="d-flex justify-center align-center"
+      >
         <div>
-          <p class="text-center" style="font-size: 250%">로그인을 하신 후</p>
-          <p style="font-size: 250%">더 많은 기능을 만나보세요.</p>
-        <v-responsive
-          v-if="n === 2"
-          :key="`width-${i}`"
-        ></v-responsive>
+          <p
+            class="text-center"
+            style="font-size: 250%"
+          >
+            로그인을 하신 후
+          </p>
+          <p style="font-size: 250%">
+            더 많은 기능을 만나보세요.
+          </p>
+        </div>
+      </v-col>
+      <v-responsive
+        v-if="n === 2"
+        :key="`width-${i}`"
+      />
     </v-row>
     <v-snackbar
       v-model="snackbar"
@@ -87,10 +107,10 @@
 <script>
 import http from '../http-common'
 export default {
+  components: {
+  },
   props: {
     articles: Array
-  },
-  components: {
   },
   data () {
     return {
@@ -102,6 +122,13 @@ export default {
       n: 0,
       AuthenticatedCheck: null
     }
+  },
+  mounted () {
+    this.islogined()
+    this.getMyFriends()
+  },
+  updated () {
+    this.AuthenticatedCheck = this.$session.has('my-token')
   },
   methods: {
     init () {
@@ -138,13 +165,6 @@ export default {
       }, 1000)
       console.log(this.AuthenticatedCheck)
     }
-  },
-  mounted () {
-    this.islogined()
-    this.getMyFriends()
-  },
-  updated () {
-    this.AuthenticatedCheck = this.$session.has('my-token')
   }
 }
 

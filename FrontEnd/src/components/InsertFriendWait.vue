@@ -1,15 +1,27 @@
 <template>
   <v-list>
-    <v-list-item  v-for="(item, i) in list" :key="i">
+    <v-list-item
+      v-for="(item, i) in list"
+      :key="i"
+    >
       <v-list-item-avatar>
-        <img v-if="item.image === 'null'" src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"/>
-        <v-img v-else :src="`http://13.125.153.118:8999/img/profile/${item.image}`"></v-img>
+        <img
+          v-if="item.image === 'null'"
+          src="http://13.125.153.118:8999/img/tmp/tmp.jpeg"
+        >
+        <v-img
+          v-else
+          :src="`http://13.125.153.118:8999/img/profile/${item.image}`"
+        />
       </v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title v-text="item.lastname + ' ' + item.firstname"></v-list-item-title>
+        <v-list-item-title v-text="item.lastname + ' ' + item.firstname" />
       </v-list-item-content>
       <div class="d-flex flex-row-reverse">
-        <InsertFriendBtn :item="item" :checkList="checkList"/>
+        <InsertFriendBtn
+          :item="item"
+          :check-list="checkList"
+        />
       </div>
       <!-- <v-btn class="ma-2" small outlined color="indigo" @click="insertfriendwait(item.memberid)">친구 요청</v-btn>
       <v-snackbar
@@ -37,7 +49,7 @@ import InsertFriendBtn from './InsertFriendBtn.vue'
 // import router from '../router'
 import http from '../http-common'
 export default {
-  name: 'insertfriendwait',
+  name: 'Insertfriendwait',
   components: {
     InsertFriendBtn
   },
@@ -52,6 +64,9 @@ export default {
       text: '친구 요청을 보냈습니다.',
       timeout: 2000
     }
+  },
+  mounted () {
+    this.getFriendList()
   },
   methods: {
     // insertfriendwait: function (responseid) {
@@ -79,9 +94,6 @@ export default {
         )
         .catch(err => console.log(err))
     }
-  },
-  mounted () {
-    this.getFriendList()
   }
 }
 </script>

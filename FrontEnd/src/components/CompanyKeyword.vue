@@ -1,6 +1,6 @@
 <!-- HTML -->
 <template>
-  <div id="keywordchartdiv"></div>
+  <div id="keywordchartdiv" />
 </template>
 
 <!-- Resources -->

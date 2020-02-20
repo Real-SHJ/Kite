@@ -1,9 +1,12 @@
 <template>
   <v-content>
-    <MainPageHeader/>
+    <MainPageHeader />
     <!-- <MyArticleCor :com="company"/> -->
     <ArticleList :articles="articles" />
-    <InfiniteLoading :identifier="company" @infinite="infiniteHandler"></InfiniteLoading>
+    <InfiniteLoading
+      :identifier="company"
+      @infinite="infiniteHandler"
+    />
   </v-content>
 </template>
 
@@ -14,7 +17,13 @@ import InfiniteLoading from 'vue-infinite-loading'
 import ArticleList from '../components/ArticleList.vue'
 import MainPageHeader from '../components/MainPageHeader.vue'
 export default {
-  name: 'home',
+  name: 'Home',
+  components: {
+    // MyArticleCor
+    MainPageHeader,
+    InfiniteLoading,
+    ArticleList
+  },
   props: {
     company: String
   },
@@ -27,11 +36,13 @@ export default {
       page: 1
     }
   },
-  components: {
-    // MyArticleCor
-    MainPageHeader,
-    InfiniteLoading,
-    ArticleList
+  watch: {
+    company: {
+      handler () {
+        this.articles = []
+        this.page = 1
+      }
+    }
   },
   mounted () {
   },
@@ -81,14 +92,6 @@ export default {
             $state.complete()
           }
         })
-    }
-  },
-  watch: {
-    company: {
-      handler () {
-        this.articles = []
-        this.page = 1
-      }
     }
   }
 }

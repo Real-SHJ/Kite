@@ -5,46 +5,86 @@
       <br>
       <v-row>
         <v-col cols="2">
-          <v-menu open-on-hover bottom origin="center center" transition="scale-transition" :close-on-content-click="closeOnContentClick">
+          <v-menu
+            open-on-hover
+            bottom
+            origin="center center"
+            transition="scale-transition"
+            :close-on-content-click="closeOnContentClick"
+          >
             <template v-slot:activator="{ on }">
-              <v-btn color="red" dark v-on="on">
+              <v-btn
+                color="red"
+                dark
+                v-on="on"
+              >
                 색상 선택
               </v-btn>
             </template>
-            <v-color-picker v-model="color"></v-color-picker>
+            <v-color-picker v-model="color" />
           </v-menu>
         </v-col>
         <v-col cols="4">
           <span style="margin-right: 4%; font-size: 120%; font-weight: bold;">Highlight 기능 :</span>
           <v-btn @click="highlightOn()">
-              On
+            On
           </v-btn>
-          <v-btn @click="highlightOff()" style="margin-left: 2%">
-              Off
+          <v-btn
+            style="margin-left: 2%"
+            @click="highlightOff()"
+          >
+            Off
           </v-btn>
         </v-col>
         <v-col cols="1">
-          <v-btn @click="save()">저장</v-btn>
+          <v-btn @click="save()">
+            저장
+          </v-btn>
         </v-col>
-        <v-col cols="5" class="d-flex justify-end">
-          <ScrapDialog :article="article"/>
-          <ShareDialog :article="article" :myFriends="myFriends"/>
+        <v-col
+          cols="5"
+          class="d-flex justify-end"
+        >
+          <ScrapDialog :article="article" />
+          <ShareDialog
+            :article="article"
+            :my-friends="myFriends"
+          />
         </v-col>
       </v-row>
       <br>
       <br>
-      <v-divider></v-divider>
+      <v-divider />
       <br>
       <br>
-      <v-spacer></v-spacer>
-      <p v-if="article" class="detail-title text-center">{{article.title}}</p>
-      <p v-if="article" class="text-center">기업: {{article.company}}  언론사: {{article.newspaper}}  posted: {{article.publicationDate}}</p>
+      <v-spacer />
+      <p
+        v-if="article"
+        class="detail-title text-center"
+      >
+        {{ article.title }}
+      </p>
+      <p
+        v-if="article"
+        class="text-center"
+      >
+        기업: {{ article.company }}  언론사: {{ article.newspaper }}  posted: {{ article.publicationDate }}
+      </p>
       <br>
       <br>
       <div class="d-flex justify-center">
-        <img v-if="article.image" :src="article.image" style="width: 50%; height: 50%">
+        <img
+          v-if="article.image !== null"
+          :src="article.image"
+          style="width: 50%; height: 50%"
+        >
       </div>
-      <div v-if="article" v-html="article.content" id="maincontent" style="margin: 0%"></div>
+      <div
+        v-if="article"
+        id="maincontent"
+        style="margin: 0%"
+        v-html="article.content"
+      />
     </v-container>
   </v-content>
 </template>
@@ -53,12 +93,13 @@ import http from '../http-common'
 import ScrapDialog from '../components/ScrapDialog.vue'
 import ShareDialog from '../components/ShareDialog.vue'
 export default {
-  props: {
-    id: String
-  },
+  name: 'ArticleDetail',
   components: {
     ScrapDialog,
     ShareDialog
+  },
+  props: {
+    id: String
   },
   data () {
     return {
@@ -69,6 +110,28 @@ export default {
       closeOnContentClick: false,
       myarticleid: []
     }
+  },
+  computed: {
+    color: {
+      get () {
+        return this[this.type]
+      },
+      set (v) {
+        this[this.type] = v
+      }
+    },
+    showColor () {
+      if (typeof this.color === 'string') return this.color
+
+      return JSON.stringify(Object.keys(this.color).reduce((color, key) => {
+        color[key] = Number(this.color[key].toFixed(2))
+        return color
+      }, {}), null, 2)
+    }
+  },
+  mounted () {
+    this.getarticle()
+    this.getMyFriends()
   },
   methods: {
     getarticle () {
@@ -194,28 +257,6 @@ export default {
         .finally(
         )
     }
-  },
-  mounted () {
-    this.getarticle()
-    this.getMyFriends()
-  },
-  computed: {
-    color: {
-      get () {
-        return this[this.type]
-      },
-      set (v) {
-        this[this.type] = v
-      }
-    },
-    showColor () {
-      if (typeof this.color === 'string') return this.color
-
-      return JSON.stringify(Object.keys(this.color).reduce((color, key) => {
-        color[key] = Number(this.color[key].toFixed(2))
-        return color
-      }, {}), null, 2)
-    }
   }
 }
 
@@ -248,5 +289,6 @@ export default {
     margin: 5%;
     padding: 5%;
     font-family: 'Noto Serif KR Regular' !important;
+    font-size: 120%;
   }
 </style>
