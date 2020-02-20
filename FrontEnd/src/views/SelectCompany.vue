@@ -3,7 +3,7 @@
     <v-card class="mx-auto">
       <v-btn
         color="black"
-        style="float:right"
+        style="position:fixed; right:10px;"
         class="white--text"
         @click="saveCompany()"
       >
