@@ -12,8 +12,8 @@
             <v-btn text large id="homebtn" @click="goHome">Kite</v-btn>
           </v-col>
         </v-col>
-        <v-col class="d-flex align-center">
-            <span class="toolbar-btn ml-4" @click="goIndiRepo">개인저장소</span>
+        <v-col class="d-flex align-center ml-4">
+            <span class="toolbar-btn" @click="goIndiRepo">개인저장소</span>
           <div v-if="AuthenticatedCheck">
             <Friend/>
             <!-- <span class="toolbar-btn" @click="goFriend">친구관리</span> -->
@@ -53,7 +53,6 @@
           <v-col class="d-flex align-center flex-row-reverse">
             <span class="toolbar-btn" @click="goIndiRepo">개인저장소</span>
             <span class="toolbar-btn" @click="goAnalysis">분석데이터</span>
-            <span class="toolbar-btn" @click="goFriend">친구관리</span>
             <span class="toolbar-btn" @click="goSelectCom">관심기업추가</span>
             <v-snackbar
                 v-model="snackbar"
@@ -78,6 +77,7 @@
                 </v-btn>
               </v-snackbar>
             <div class="float-right" v-if="AuthenticatedCheck">
+              <Friend/>
               <!-- <router-link class="black--text" to="/indirepository">개인저장소</router-link> |
               <router-link class="black--text" to="/analysis">분석데이터</router-link> |
               <router-link class="black--text" to="/friend">친구관리</router-link> |

@@ -34,7 +34,7 @@
       <v-divider></v-divider>
       <v-card-action>
         <div class="my-4 mr-3 d-flex flex-row-reverse">
-          <v-btn color="green darken-1" text @click="dialog = false">close</v-btn>
+          <v-btn color="green darken-1" style="font-size: 120%" text @click="dialog = false">close</v-btn>
         </div>
       </v-card-action>
     </v-card>
@@ -75,16 +75,19 @@ export default {
 }
 </script>
 <style scoped>
-  .toolbar-btn:hover {
-    cursor: pointer;
-    /* font-size: 150%; */
-    font-size: 40px;
-  }
-  .toolbar-btn {
-    /* font-size: 130%; */
-    margin-right: 10px;
-    font-size: 25px;
-    /* font-weight: bold; */
-    font-family: 'Nanum Gothic', sans-serif;
-  }
+.toolbar-btn:hover {
+  cursor: pointer;
+  font-size: 200%;
+  /* text-decoration: underline; */
+  /* text-decoration-color: rgb(255, 147, 97); */
+  /* color: rgb(255, 147, 97); */
+  color: #1d87be;
+}
+.toolbar-btn {
+  font-size: 170%;
+  margin-right: 25px;
+  /* font-size: 25px; */
+  /* font-weight: bold; */
+  /* font-family: 'Nanum Gothic', sans-serif; */
+}
 </style>

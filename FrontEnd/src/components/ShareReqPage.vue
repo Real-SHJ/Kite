@@ -1,6 +1,6 @@
 <template>
   <v-content>
-    <v-card height="600">
+    <v-card height="650">
       <v-list>
         <p class="share-req-title text-center mt-4" style="font-size: 35px;">공유 요청 목록</p>
           <v-list-item
@@ -9,23 +9,29 @@
             :key="index"
             class="mx-3"
           >
-            <v-list-item-avatar>
-              <img :src="`http://13.125.153.118:8999/img/profile/${myreq.member.image}`" alt="">
-            </v-list-item-avatar>
-              <!-- <p>{{ myreq.member.image }}</p> -->
-            <v-list-item-content class="text-center">
-              <p>{{myreq.member.lastname}}{{myreq.member.firstname}}</p>
-              <v-list-item-subtitle>{{myreq.member.email}}</v-list-item-subtitle>
-            </v-list-item-content>
-            <ShareReqs :article="myreq.article"/>
-          <v-col class="d-flex flex-row-reverse mr-2">
-            <v-icon ripple @click="reqAccept(myreq)">
-              save
-            </v-icon>
-            <v-icon ripple @click="reqDelete(myreq.sno)">
-              delete
-            </v-icon>
-          </v-col>
+          <v-row>
+            <v-col cols="4" class="d-flex justify-center align-center">
+              <v-list-item-avatar>
+                <img :src="`http://13.125.153.118:8999/img/profile/${myreq.member.image}`" alt="">
+              </v-list-item-avatar>
+                <!-- <p>{{ myreq.member.image }}</p> -->
+              <div class="text-center">
+                <p>{{myreq.member.lastname}}{{myreq.member.firstname}}</p>
+                <v-list-item-subtitle>{{myreq.member.email}}</v-list-item-subtitle>
+              </div>
+            </v-col>
+            <v-col cols="6" class="d-flex justify-center align-center">
+              <ShareReqs :article="myreq.article"/>
+            </v-col>
+            <v-col class="d-flex align-center mr-2">
+              <v-icon style="margin-right: 5%; font-size: 250%;" ripple @click="reqAccept(myreq)">
+                save
+              </v-icon>
+              <v-icon style="font-size: 250%;" ripple @click="reqDelete(myreq.sno)">
+                delete
+              </v-icon>
+            </v-col>
+          </v-row>
         </v-list-item>
         <!-- <v-card
           v-for="(myreq, index) in calData"

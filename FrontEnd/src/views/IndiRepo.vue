@@ -10,26 +10,38 @@
     </div>
     <!-- ------------- 검색 기간 부분 --------------- -->
       <p class="header-title" ><strong>My Scrap Article </strong></p>
-      <v-container fluid>
-          <v-row class="justify-center">
-            <v-col class="align-center" sm="2">
-              <p>기업선택</p>
+      <v-container>
+          <v-row class="">
+            <v-col cols="4" class="d-flex justify-center align-center">
+              <h3 style="margin-right: 5%">기업선택</h3>
               <v-overflow-btn
-                  class=""
-                  :items="company_choice"
-                  label="기업선택"
-                  target="#dropdown-example"
-                  v-model="choice_company"
-                  ></v-overflow-btn>
+                class=""
+                :items="company_choice"
+                label="기업선택"
+                target="#dropdown-example"
+                v-model="choice_company"
+                ></v-overflow-btn>
             </v-col>
-            <h2><br>검색기간</h2>
-            <div class="d-flex align-center">
-                <br>
-                <date-picker v-model="range" :lang="lang" range></date-picker>
+            <v-col class="d-flex justify-center align-center">
+            <h3 style="margin-right: 2%">검색기간</h3>
+              <date-picker v-model="range" :lang="lang" range style="margin-right: 3%"></date-picker>
 
-              <v-btn depressed large color="pink white--text" @click="scrapreq">검색</v-btn>
-              <v-btn depressed large color="blue white--text" @click="scrapchoice">전체조회</v-btn>
-            </div>
+              <v-btn depressed color="pink white--text" style="margin-right: 1%" @click="scrapreq">검색</v-btn>
+              <v-btn depressed color="blue white--text" style="margin-right: 1%" @click="scrapchoice">전체조회</v-btn>
+              <v-dialog v-model="dialog" scrollable="" max-width="1000">
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    class=""
+                    dark
+                    color="pink"
+                    v-on="on"
+                  >
+                    공유 요청함
+                  </v-btn>
+                </template>
+                <ShareReqPage/>
+              </v-dialog>
+            </v-col>
           </v-row>
         </v-container>
           <v-divider class="mx-4"></v-divider>
@@ -73,12 +85,12 @@
     </div>
     <v-divider class="mx-4"></v-divider>
     <!-- ------------- 1. 전체 (워드 클라우드, 관련뉴스 부분) start--------------- -->
-      <v-container fluid>
+      <v-container style="width:100%; background-color: #E4E8EF" fluid>
       <v-layout >
         <v-row>
         <!-- ------------- 2. 워드 클라우드 부분 start --------------- -->
         <v-flex xs12 sm8 md8>
-          <v-container fluid>
+          <v-container>
             <KeywordWordCloud @myKeyword="goAlert" :info ="info"/>
           </v-container>
         </v-flex>
@@ -87,7 +99,7 @@
         </v-row>
         <!-- ------------- 3. 내 키워드 기사 부분 start--------------- -->
         <v-flex xs12 sm4 md4>
-          <v-container fluid>
+          <v-container>
             <v-card color="basil">
                 <!-- ---------- 4. 카드 내부 기사 ----------- -->
               <v-container>
@@ -98,11 +110,11 @@
                     <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드를 표시해둔 기사</v-card-title>
                     <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
                     <v-card
-                        v-for="article in keywordarticles"
-                        :key="article.id"
-                        class="mx-auto"
-                        max-width="344"
-                        outlined
+                      v-for="article in keywordarticles"
+                      :key="article.id"
+                      class="mx-auto"
+                      max-width="344"
+                      outlined
                     >
                         <div @click="goDetail(article)">
                         <v-list-item three-line>
@@ -138,16 +150,19 @@ import WouldyouScrap from '../components/WouldyouScrap.vue'
 import DatePicker from 'vue2-datepicker'
 import 'vue2-datepicker/scss/index.scss'
 import KeywordWordCloud from '../components/KeywordWordCloud.vue'
+import ShareReqPage from '../components/ShareReqPage.vue'
 
 export default {
   name: 'indirepo',
   components: {
+    ShareReqPage,
     WouldyouScrap,
     DatePicker,
     KeywordWordCloud
   },
   data () {
     return {
+      dialog: false,
       myKeyword: null,
       keywordarticles: [],
       info: null,
