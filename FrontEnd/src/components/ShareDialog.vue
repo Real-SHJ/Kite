@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="dialog" persistent="" scrollable="" max-width="400">
+  <v-dialog
+    v-model="dialog"
+    persistent=""
+    scrollable=""
+    max-width="400"
+  >
     <template v-slot:activator="{ on }">
       <v-btn
         class="share"
@@ -15,11 +20,19 @@
       style="height: 600px;"
       class="mx-auto"
     >
-    <br>
-    <p class="share-title text-center mb-2">친구를 선택해주세요.</p>
-      <v-divider></v-divider>
+      <br>
+      <p class="share-title text-center mb-2">
+        친구를 선택해주세요.
+      </p>
+      <v-divider />
       <v-card-text>
-        <FriendToShare v-for="friend in myFriends" :key="friend.id" @shareReq="friendPlus" @cancelReq="friendPop" :friend="friend"/>
+        <FriendToShare
+          v-for="friend in myFriends"
+          :key="friend.id"
+          :friend="friend"
+          @shareReq="friendPlus"
+          @cancelReq="friendPop"
+        />
         <!-- <v-list-item
           v-for="friend in myFriends"
           :key="friend.id"
@@ -53,14 +66,32 @@
             </p>
           </v-col>
           <v-col class="d-flex flex-row-reverse">
-            <v-btn @click="alertClose" color="indigo" dark>close</v-btn>
+            <v-btn
+              color="indigo"
+              dark
+              @click="alertClose"
+            >
+              close
+            </v-btn>
           </v-col>
         </v-row>
       </v-alert>
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="shareClose">cancel</v-btn>
-        <v-btn color="green darken-1" @click="shareArticle" text>보내기</v-btn>
+        <v-spacer />
+        <v-btn
+          color="green darken-1"
+          text
+          @click="shareClose"
+        >
+          cancel
+        </v-btn>
+        <v-btn
+          color="green darken-1"
+          text
+          @click="shareArticle"
+        >
+          보내기
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -70,13 +101,13 @@
 import FriendToShare from '../components/FriendToShare.vue'
 import http from '../http-common'
 export default {
-  name: 'sharedialog',
+  name: 'Sharedialog',
+  components: {
+    FriendToShare
+  },
   props: {
     article: Object,
     myFriends: Array
-  },
-  components: {
-    FriendToShare
   },
   data () {
     return {
@@ -90,6 +121,8 @@ export default {
       shareTarget: [],
       alert: false
     }
+  },
+  mounted () {
   },
   methods: {
     // islogin () {
@@ -132,8 +165,6 @@ export default {
     alertClose () {
       this.alert = false
     }
-  },
-  mounted () {
   }
 }
 </script>

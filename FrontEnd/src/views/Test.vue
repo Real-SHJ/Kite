@@ -2,40 +2,76 @@
   <v-content>
     <v-container>
       <v-row>
-        <v-col cols="12" sm="3">
-          <v-menu open-on-hover bottom origin="center center" transition="scale-transition" :close-on-content-click="closeOnContentClick">
+        <v-col
+          cols="12"
+          sm="3"
+        >
+          <v-menu
+            open-on-hover
+            bottom
+            origin="center center"
+            transition="scale-transition"
+            :close-on-content-click="closeOnContentClick"
+          >
             <template v-slot:activator="{ on }">
-              <v-btn color="red" dark v-on="on">
+              <v-btn
+                color="red"
+                dark
+                v-on="on"
+              >
                 색상 선택
               </v-btn>
             </template>
 
             <v-row>
               <v-col class="d-flex justify-center">
-                <v-color-picker v-model="color"></v-color-picker>
+                <v-color-picker v-model="color" />
               </v-col>
             </v-row>
           </v-menu>
         </v-col>
-        <v-col cols="12" sm="3">
+        <v-col
+          cols="12"
+          sm="3"
+        >
           <span>Highlight 기능</span>
           <v-btn @click="highlightOn()">
             On
           </v-btn>
           <v-btn @click="highlightOff()">
-              Off
+            Off
           </v-btn>
         </v-col>
-        <v-col cols="12" sm="6">
-          <v-btn @click="save()">저장</v-btn>
+        <v-col
+          cols="12"
+          sm="6"
+        >
+          <v-btn @click="save()">
+            저장
+          </v-btn>
         </v-col>
       </v-row>
-      <v-spacer></v-spacer>
-      <h1 v-if="article" class="title">{{article.title}}</h1>
+      <v-spacer />
+      <h1
+        v-if="article"
+        class="title"
+      >
+        {{ article.title }}
+      </h1>
       <div class="d-flex justify-center">
-        <img v-if="article.image" :src="article.image" width="50%" height="50%">
+        <img
+          v-if="article.image"
+          :src="article.image"
+          width="50%"
+          height="50%"
+        >
       </div>
-      <div v-if="article" v-html="article.content" id="maincontent" style="margin: 0%"></div>
+      <div
+        v-if="article"
+        id="maincontent"
+        style="margin: 0%"
+        v-html="article.content"
+      />
     </v-container>
   </v-content>
 </template>
@@ -43,9 +79,38 @@
 <script>
 import http from '../http-common'
 export default {
-  name: 'test',
+  name: 'Test',
   props: {
     id: String
+  },
+  data () {
+    return {
+      article: null,
+      type: 'hex',
+      hex: '#FFFF00',
+      closeOnContentClick: false
+    }
+  },
+  computed: {
+    color: {
+      get () {
+        return this[this.type]
+      },
+      set (v) {
+        this[this.type] = v
+      }
+    },
+    showColor () {
+      if (typeof this.color === 'string') return this.color
+
+      return JSON.stringify(Object.keys(this.color).reduce((color, key) => {
+        color[key] = Number(this.color[key].toFixed(2))
+        return color
+      }, {}), null, 2)
+    }
+  },
+  mounted () {
+    this.getArticle()
   },
   methods: {
     getArticle () {
@@ -136,35 +201,6 @@ export default {
         .catch(err => console.log(err))
         .finally(
         )
-    }
-  },
-  data () {
-    return {
-      article: null,
-      type: 'hex',
-      hex: '#FFFF00',
-      closeOnContentClick: false
-    }
-  },
-  mounted () {
-    this.getArticle()
-  },
-  computed: {
-    color: {
-      get () {
-        return this[this.type]
-      },
-      set (v) {
-        this[this.type] = v
-      }
-    },
-    showColor () {
-      if (typeof this.color === 'string') return this.color
-
-      return JSON.stringify(Object.keys(this.color).reduce((color, key) => {
-        color[key] = Number(this.color[key].toFixed(2))
-        return color
-      }, {}), null, 2)
     }
   }
 }

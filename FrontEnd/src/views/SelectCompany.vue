@@ -1,56 +1,89 @@
 <template>
   <v-content>
     <v-card class="mx-auto">
-      <v-btn color="black" style="float:right" class="white--text" @click="saveCompany()">
+      <v-btn
+        color="black"
+        style="float:right"
+        class="white--text"
+        @click="saveCompany()"
+      >
         관심 기업 저장
       </v-btn>
-        <v-snackbar
-          v-model="snackbar"
-          color="green"
-          :timeout="timeout"
-          :top="true"
-          :right="true"
-        >
-          {{ text }}
-          <!-- <v-btn
+      <v-snackbar
+        v-model="snackbar"
+        color="green"
+        :timeout="timeout"
+        :top="true"
+        :right="true"
+      >
+        {{ text }}
+        <!-- <v-btn
             color="blue"
             text
             @click="addMem"
           >
           </v-btn> -->
-          <v-btn
-            color="white"
-            text
-            @click="snackbar = false"
-          >
-            SUCCESS
-          </v-btn>
-        </v-snackbar>
+        <v-btn
+          color="white"
+          text
+          @click="snackbar = false"
+        >
+          SUCCESS
+        </v-btn>
+      </v-snackbar>
       <v-container class="pa-1">
-          <v-row>
-            <template v-for="(item, i) in items">
-              <v-col :key="i" md="4">
-                <v-hover v-slot:default="{ hover }">
-                  <v-card :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }" @click="handleClick(i)" class="vcard">
-                    <v-row>
-                      <v-col cols="2"></v-col>
-                      <v-col class="d-flex justify-end align-center" cols="8">
-                        <v-img :src="item.src"></v-img>
-                      </v-col>
-                      <v-col class="d-flex justify-center align-start">
+        <v-row>
+          <template v-for="(item, i) in items">
+            <v-col
+              :key="i"
+              md="4"
+            >
+              <v-hover v-slot:default="{ hover }">
+                <v-card
+                  :elevation="hover ? 12 : 2"
+                  :class="{ 'on-hover': hover }"
+                  class="vcard"
+                  @click="handleClick(i)"
+                >
+                  <v-row>
+                    <v-col cols="2" />
+                    <v-col
+                      class="d-flex justify-end align-center"
+                      cols="8"
+                    >
+                      <v-img :src="item.src" />
+                    </v-col>
+                    <v-col class="d-flex justify-center align-start">
                       <!-- <v-card-title class="title" align="right"> -->
-                        <v-btn class="clickbtn" fab small color="red" icon @click="handleClick(i)">
-                          <v-icon v-if="!item.clicked" color="red">{{ 'mdi-heart-outline' }}</v-icon>
-                          <v-icon v-else color="red">{{ 'mdi-heart' }}</v-icon>
-                        </v-btn>
-                      </v-col>
-                    </v-row>
-                      <!-- </v-card-title> -->
-                  </v-card>
-                </v-hover>
-              </v-col>
-            </template>
-          </v-row>
+                      <v-btn
+                        class="clickbtn"
+                        fab
+                        small
+                        color="red"
+                        icon
+                        @click="handleClick(i)"
+                      >
+                        <v-icon
+                          v-if="!item.clicked"
+                          color="red"
+                        >
+                          {{ 'mdi-heart-outline' }}
+                        </v-icon>
+                        <v-icon
+                          v-else
+                          color="red"
+                        >
+                          {{ 'mdi-heart' }}
+                        </v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                  <!-- </v-card-title> -->
+                </v-card>
+              </v-hover>
+            </v-col>
+          </template>
+        </v-row>
       </v-container>
     </v-card>
   </v-content>
@@ -60,7 +93,7 @@
 import { mapGetters } from 'vuex'
 import http from '../http-common'
 export default {
-  name: 'selectcompany',
+  name: 'Selectcompany',
   data () {
     return {
       snackbar: false,

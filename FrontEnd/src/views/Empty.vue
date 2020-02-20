@@ -1,7 +1,7 @@
 <template>
-    <h1>
-        빈페이지입니다.
-    </h1>
+  <h1>
+    빈페이지입니다.
+  </h1>
 </template>
 
 <script>

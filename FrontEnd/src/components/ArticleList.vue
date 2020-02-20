@@ -2,47 +2,55 @@
   <v-container>
     <v-row>
       <v-col
+        v-for="(article, i) in articles"
+        :key="i"
         class="images"
         outline
         tile
-        v-for="(article, i) in articles" :key="i"
         :class="{'d-flex justify-end' : (i % 2 === 0)}"
         cols="6"
       >
         <div>
           <div>
             <v-card
-              @click='goDetail(article.articleid)'
+              id="mycard"
               class="my-2"
               max-width="600"
-              id = "mycard"
-              :img = "`${article.image}`"
+              :img="`${article.image}`"
               height="350px"
               width="500px"
               tile
+              @click="goDetail(article.articleid)"
             >
               <v-avatar
                 class="companyLogo"
                 size="100px"
               >
-                <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
+                <v-img
+                  :src="`${article.logo}`"
+                  height="60px"
+                  width="60px"
+                />
               </v-avatar>
 
-              <div class="overay textwrap" style="color:white;">
-                {{article.summary}}
+              <div
+                class="overay textwrap"
+                style="color:white;"
+              >
+                {{ article.summary }}
               </div>
             </v-card>
             <p
-            v-if="article.title.length > 31"
-            class="article-title"
+              v-if="article.title.length > 31"
+              class="article-title"
             >
-              {{article.title.slice(0, 31)}}...
+              {{ article.title.slice(0, 31) }}...
             </p>
             <p
-            v-else
-            class="article-title"
+              v-else
+              class="article-title"
             >
-              {{article.title}}
+              {{ article.title }}
             </p>
           </div>
           <!-- <div class="btngrp">
@@ -51,10 +59,10 @@
           </div> -->
         </div>
       </v-col>
-        <v-responsive
-          v-if="n === 2"
-          :key="`width-${i}`"
-        ></v-responsive>
+      <v-responsive
+        v-if="n === 2"
+        :key="`width-${i}`"
+      />
     </v-row>
     <v-snackbar
       v-model="snackbar"
@@ -80,12 +88,12 @@ import http from '../http-common'
 // import ScrapDialog from '../components/ScrapDialog.vue'
 // import ShareDialog from '../components/ShareDialog.vue'
 export default {
-  props: {
-    articles: Array
-  },
   components: {
     // ScrapDialog,
     // ShareDialog
+  },
+  props: {
+    articles: Array
   },
   data () {
     return {
@@ -96,6 +104,14 @@ export default {
       n: 0,
       AuthenticatedCheck: null
     }
+  },
+  mounted () {
+    // this.getArticle()
+    // this.userIdCheck()
+    this.getMyFriends()
+  },
+  updated () {
+    // this.AuthenticatedCheck = this.$session.has('my-token')
   },
   methods: {
     init () {
@@ -124,14 +140,6 @@ export default {
         this.$router.push({ path: `/articleDetail/${articleid}` })
       }
     }
-  },
-  mounted () {
-    // this.getArticle()
-    // this.userIdCheck()
-    this.getMyFriends()
-  },
-  updated () {
-    // this.AuthenticatedCheck = this.$session.has('my-token')
   }
 }
 

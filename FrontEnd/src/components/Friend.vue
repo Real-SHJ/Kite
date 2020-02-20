@@ -1,18 +1,39 @@
 <template>
-  <v-dialog v-model="dialog" scrollable="" max-width="400">
+  <v-dialog
+    v-model="dialog"
+    scrollable=""
+    max-width="400"
+  >
     <template v-slot:activator="{ on }">
-      <span class="toolbar-btn" v-on="on">친구관리</span>
+      <span
+        class="toolbar-btn"
+        v-on="on"
+      >친구관리</span>
     </template>
     <v-card>
       <v-card-title class="black white--text py-3">
-        <v-menu bottom right :open-on-hover="openOnHover" :close-on-content-click="closeOnContentClick">
+        <v-menu
+          bottom
+          right
+          :open-on-hover="openOnHover"
+          :close-on-content-click="closeOnContentClick"
+        >
           <template v-slot:activator="{ on }">
-            <v-btn color="white" dark icon v-on="on">
+            <v-btn
+              color="white"
+              dark
+              icon
+              v-on="on"
+            >
               <v-icon>mdi-menu</v-icon>
             </v-btn>
           </template>
           <v-list>
-            <v-list-item v-for="(item, i) in items" :key="i" @click="handleClick(i)">
+            <v-list-item
+              v-for="(item, i) in items"
+              :key="i"
+              @click="handleClick(i)"
+            >
               <v-list-item-icon>
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-icon>
@@ -22,19 +43,26 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <span class="headline">{{kindTitle}}</span>
-        <v-spacer></v-spacer>
+        <span class="headline">{{ kindTitle }}</span>
+        <v-spacer />
       </v-card-title>
       <v-card-text style="height: 600px;">
-        <InsertFriendWait v-if="kind===1"/>
+        <InsertFriendWait v-if="kind===1" />
         <!-- <Request v-else-if="kind===2"/> -->
-        <Response v-else-if="kind===2"/>
-        <FriendList v-else-if="kind===3"/>
+        <Response v-else-if="kind===2" />
+        <FriendList v-else-if="kind===3" />
       </v-card-text>
-      <v-divider></v-divider>
+      <v-divider />
       <v-card-action>
         <div class="my-4 mr-3 d-flex flex-row-reverse">
-          <v-btn color="green darken-1" style="font-size: 120%" text @click="dialog = false">close</v-btn>
+          <v-btn
+            color="green darken-1"
+            style="font-size: 120%"
+            text
+            @click="dialog = false"
+          >
+            close
+          </v-btn>
         </div>
       </v-card-action>
     </v-card>
@@ -46,7 +74,7 @@ import Response from '../components/Response.vue'
 import FriendList from '../components/FriendList.vue'
 import InsertFriendWait from '../components/InsertFriendWait.vue'
 export default {
-  name: 'friend',
+  name: 'Friend',
   components: {
     // Request,
     Response,

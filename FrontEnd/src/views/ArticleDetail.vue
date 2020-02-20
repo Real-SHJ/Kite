@@ -2,43 +2,81 @@
   <v-content>
     <v-container>
       <v-row>
-        <v-col cols="12" sm="3">
-          <v-menu open-on-hover bottom origin="center center" transition="scale-transition" :close-on-content-click="closeOnContentClick">
+        <v-col
+          cols="12"
+          sm="3"
+        >
+          <v-menu
+            open-on-hover
+            bottom
+            origin="center center"
+            transition="scale-transition"
+            :close-on-content-click="closeOnContentClick"
+          >
             <template v-slot:activator="{ on }">
-              <v-btn color="red" dark v-on="on">
+              <v-btn
+                color="red"
+                dark
+                v-on="on"
+              >
                 색상 선택
               </v-btn>
             </template>
 
             <v-row>
               <v-col class="d-flex justify-center">
-                <v-color-picker v-model="color"></v-color-picker>
+                <v-color-picker v-model="color" />
               </v-col>
             </v-row>
           </v-menu>
         </v-col>
-        <v-col cols="12" sm="3">
+        <v-col
+          cols="12"
+          sm="3"
+        >
           <span>Highlight 기능</span>
           <v-btn @click="highlightOn()">
-              On
+            On
           </v-btn>
           <v-btn @click="highlightOff()">
-              Off
+            Off
           </v-btn>
         </v-col>
-        <v-col cols="12" sm="6">
-          <v-btn @click="save()">저장</v-btn>
+        <v-col
+          cols="12"
+          sm="6"
+        >
+          <v-btn @click="save()">
+            저장
+          </v-btn>
         </v-col>
       </v-row>
-      <v-spacer></v-spacer>
-      <h1 v-if="article" class="title">{{article.title}}</h1>
+      <v-spacer />
+      <h1
+        v-if="article"
+        class="title"
+      >
+        {{ article.title }}
+      </h1>
       <div class="d-flex justify-center">
-        <img v-if="article.image" :src="article.image" style="width: 50%; height: 50%">
+        <img
+          v-if="article.image"
+          :src="article.image"
+          style="width: 50%; height: 50%"
+        >
       </div>
-      <div v-if="article" v-html="article.content" id="maincontent" style="margin: 0%"></div>
+      <div
+        v-if="article"
+        id="maincontent"
+        style="margin: 0%"
+        v-html="article.content"
+      />
       <div class="btngrp">
-        <ScrapDialog :article="article"/>
-        <ShareDialog :article="article" :myFriends="myFriends"/>
+        <ScrapDialog :article="article" />
+        <ShareDialog
+          :article="article"
+          :my-friends="myFriends"
+        />
       </div>
     </v-container>
   </v-content>
@@ -48,12 +86,12 @@ import http from '../http-common'
 import ScrapDialog from '../components/ScrapDialog.vue'
 import ShareDialog from '../components/ShareDialog.vue'
 export default {
-  props: {
-    id: String
-  },
   components: {
     ScrapDialog,
     ShareDialog
+  },
+  props: {
+    id: String
   },
   data () {
     return {
@@ -64,6 +102,28 @@ export default {
       closeOnContentClick: false,
       myarticleid: []
     }
+  },
+  computed: {
+    color: {
+      get () {
+        return this[this.type]
+      },
+      set (v) {
+        this[this.type] = v
+      }
+    },
+    showColor () {
+      if (typeof this.color === 'string') return this.color
+
+      return JSON.stringify(Object.keys(this.color).reduce((color, key) => {
+        color[key] = Number(this.color[key].toFixed(2))
+        return color
+      }, {}), null, 2)
+    }
+  },
+  mounted () {
+    this.getarticle()
+    this.getMyFriends()
   },
   methods: {
     getarticle () {
@@ -188,28 +248,6 @@ export default {
         .catch(err => console.log(err))
         .finally(
         )
-    }
-  },
-  mounted () {
-    this.getarticle()
-    this.getMyFriends()
-  },
-  computed: {
-    color: {
-      get () {
-        return this[this.type]
-      },
-      set (v) {
-        this[this.type] = v
-      }
-    },
-    showColor () {
-      if (typeof this.color === 'string') return this.color
-
-      return JSON.stringify(Object.keys(this.color).reduce((color, key) => {
-        color[key] = Number(this.color[key].toFixed(2))
-        return color
-      }, {}), null, 2)
     }
   }
 }

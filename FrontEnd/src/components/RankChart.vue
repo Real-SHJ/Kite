@@ -1,30 +1,38 @@
 <template>
-    <div>
+  <div>
     <div class="text-center d-flex flex-row mb-6">
-    <v-menu offset-y>
-      <template v-slot:activator="{ on }">
-        <v-btn
-          color="green"
-          dark
-          v-on="on"
-        >
-          항목을 선택하세요.
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item
-          v-for="(item, index) in items"
-          :key="index"
-          @click="getChart(item.title)"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-  </div>
-      <p id="title2" style="margin-bottom: 10px;">{{title}}</p>
-      <div id="chartdiv" style="width:100%;"></div>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            color="green"
+            dark
+            v-on="on"
+          >
+            항목을 선택하세요.
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in items"
+            :key="index"
+            @click="getChart(item.title)"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </div>
+    <p
+      id="title2"
+      style="margin-bottom: 10px;"
+    >
+      {{ title }}
+    </p>
+    <div
+      id="chartdiv"
+      style="width:100%;"
+    />
+  </div>
 </template>
 
 <!-- Resources -->

@@ -1,71 +1,107 @@
 <template>
   <v-content>
-    <p class="header-title" ><strong>기업 분석 데이터</strong></p>
-    <searchRank/>
+    <p class="header-title">
+      <strong>기업 분석 데이터</strong>
+    </p>
+    <searchRank />
     <!-- <v-divider class="mx-4"></v-divider> -->
-    <v-container style="width:100%; background-color: #E4E8EF" fluid>
+    <v-container
+      style="width:100%; background-color: #E4E8EF"
+      fluid
+    >
       <v-container>
-      <div class="search" style="width:100%;">
-      <v-row class="">
-        <h2 style="font-size: 25px; padding: 10px;"><br>기업선택</h2>
-        <v-col sm="2">
-          <v-overflow-btn
-            class=""
-            :items="companylist"
-            label="기업선택"
-            target="#dropdown-example"
-            v-model="choice_company"
-            ></v-overflow-btn>
-        </v-col>
-      </v-row>
-    <!-- </v-container> -->
-    <v-divider class="mx-4"></v-divider>
-    <!-- <v-container> -->
-      <v-layout >
-        <!-- <v-row> -->
-        <v-flex xs12 sm8 md8>
-          <v-container fluid>
-            <CompanyKeyword @myKeyword="goAlert" :keywordinfo ="keywordinfo" :choice_company = "choice_company" v-if="choice_company"/>
-            <p v-else>기업을 선택해 주세요</p>
-          </v-container>
-        </v-flex>
-        <!-- </v-row> -->
-        <v-flex xs12 sm4 md4>
-          <v-container fluid>
-            <v-card color="grey lighten-4">
-              <v-container>
-                <!-- <v-row dense> -->
-                  <v-col cols="12">
-                    <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드가 포함된 {{choice_company}} 기사</v-card-title>
-                    <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
-                    <v-card
+        <div
+          class="search"
+          style="width:100%;"
+        >
+          <v-row class="">
+            <h2 style="font-size: 25px; padding: 10px;">
+              <br>기업선택
+            </h2>
+            <v-col sm="2">
+              <v-overflow-btn
+                v-model="choice_company"
+                class=""
+                :items="companylist"
+                label="기업선택"
+                target="#dropdown-example"
+              />
+            </v-col>
+          </v-row>
+          <!-- </v-container> -->
+          <v-divider class="mx-4" />
+          <!-- <v-container> -->
+          <v-layout>
+            <!-- <v-row> -->
+            <v-flex
+              xs12
+              sm8
+              md8
+            >
+              <v-container fluid>
+                <CompanyKeyword
+                  v-if="choice_company"
+                  :keywordinfo="keywordinfo"
+                  :choice_company="choice_company"
+                  @myKeyword="goAlert"
+                />
+                <p v-else>
+                  기업을 선택해 주세요
+                </p>
+              </v-container>
+            </v-flex>
+            <!-- </v-row> -->
+            <v-flex
+              xs12
+              sm4
+              md4
+            >
+              <v-container fluid>
+                <v-card color="grey lighten-4">
+                  <v-container>
+                    <!-- <v-row dense> -->
+                    <v-col cols="12">
+                      <v-card-title v-if="myKeyword">
+                        "{{ myKeyword }}" 키워드가 포함된 {{ choice_company }} 기사
+                      </v-card-title>
+                      <v-card-title v-else>
+                        워드클라우드에서 키워드를 선택하세요
+                      </v-card-title>
+                      <v-card
                         v-for="article in keywordarticles"
                         :key="article.id"
                         class="mx-auto"
                         max-width="344"
                         outlined
-                    >
+                      >
                         <div @click="goDetail(article)">
-                        <v-list-item three-line>
+                          <v-list-item three-line>
                             <v-list-item-content>
-                                <div class="overline mb-4">{{article.company}}</div>
-                                <v-list-item-title class="headline mb-1">{{article.title}}</v-list-item-title>
-                                <v-list-item-subtitle>{{article.summary}}</v-list-item-subtitle>
+                              <div class="overline mb-4">
+                                {{ article.company }}
+                              </div>
+                              <v-list-item-title class="headline mb-1">
+                                {{ article.title }}
+                              </v-list-item-title>
+                              <v-list-item-subtitle>{{ article.summary }}</v-list-item-subtitle>
                             </v-list-item-content>
-                            <v-avatar color="red lighten-4" size="70">
-                                <img :src="company_image[article.company]"/>
+                            <v-avatar
+                              color="red lighten-4"
+                              size="70"
+                            >
+                              <img :src="company_image[article.company]">
                             </v-avatar>
-                        </v-list-item>
+                          </v-list-item>
                         </div>
-                    </v-card>
-                  </v-col>
-                <!-- </v-row> -->
+                      </v-card>
+                    </v-col>
+                    <!-- </v-row> -->
+                  </v-container>
+                </v-card>
               </v-container>
-            </v-card>
-          </v-container>
-        </v-flex>
-      </v-layout>
-      </div>
+            </v-flex>
+          </v-layout>
+        </div>
       </v-container>
     </v-container>
   </v-content>
@@ -75,7 +111,7 @@ import http from '../http-common'
 import CompanyKeyword from '../components/CompanyKeyword.vue'
 import SearchRank from '../components/SearchRank.vue'
 export default {
-  name: 'analysis',
+  name: 'Analysis',
   components: {
     SearchRank,
     CompanyKeyword
@@ -116,6 +152,20 @@ export default {
       }
     }
   },
+  watch: {
+    choice_company: function () {
+      http
+        .get('/member/getkeywordarticle' + '/' + this.choice_company)
+        .then(
+          response => {
+            this.keywordinfo = response.data.result
+          }
+        )
+        .catch(err => console.log(err))
+        .finally(
+        )
+    }
+  },
   methods: {
     goAlert (key) {
       alert(key)
@@ -133,20 +183,6 @@ export default {
             console.log(response.data.message)
             this.keywordarticles = response.data.result
             console.log(this.keywordarticles)
-          }
-        )
-        .catch(err => console.log(err))
-        .finally(
-        )
-    }
-  },
-  watch: {
-    choice_company: function () {
-      http
-        .get('/member/getkeywordarticle' + '/' + this.choice_company)
-        .then(
-          response => {
-            this.keywordinfo = response.data.result
           }
         )
         .catch(err => console.log(err))

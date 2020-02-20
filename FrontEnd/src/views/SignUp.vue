@@ -1,213 +1,305 @@
 <template>
   <v-app>
-      <v-content>
-          <v-container class="fill-height" fluid>
-              <v-row align="center" justify="center">
-                  <v-col cols="12" sm="8" md="8">
-                      <v-card class="elevation-12">
-                          <v-window v-model="step">
-                            <v-window-item :value="1">
-                                <v-row>
-                                    <v-col cols="12" md="8">
-                                        <v-card-text class="mt-12">
-                                            <h1 class="text-center display-2 teal--text text--accent-3">Sign in to Kite</h1>
-                                            <div class="text-center" mt-4>
-                                                <v-btn class="mx-2" fab color="black" outlined="">
-                                                    <v-icon>fab fa-facebook-f</v-icon>
-                                                </v-btn>
-                                                <v-btn class="mx-2" fab color="black" outlined="">
-                                                    <v-icon>fab fa-google-g</v-icon>
-                                                </v-btn>
-                                                <v-btn class="mx-2" fab color="black" outlined="">
-                                                    <v-icon>fab fa-linkedin-in</v-icon>
-                                                </v-btn>
-                                            </div>
-                                            <h4 class="text-center mlt-4">Ensure your email for registration</h4>
-                                            <v-form>
-                                                <v-text-field
-                                                    label="Email"
-                                                    name="Email"
-                                                    prepend-icon="email"
-                                                    type="text"
-                                                    v-model="credential.email"
-                                                    :rules="credential.emailRules"
-                                                    color="teal accent-3"
-                                                    aria-required=""
-                                                    />
-                                                <v-text-field
-                                                    id="password"
-                                                    label="Password"
-                                                    name="Password"
-                                                    v-model="credential.pw"
-                                                    :rules="credential.pwRules"
-                                                    prepend-icon="lock"
-                                                    type="password"
-                                                    color="teal accent-3"
-                                                />
+    <v-content>
+      <v-container
+        class="fill-height"
+        fluid
+      >
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-col
+            cols="12"
+            sm="8"
+            md="8"
+          >
+            <v-card class="elevation-12">
+              <v-window v-model="step">
+                <v-window-item :value="1">
+                  <v-row>
+                    <v-col
+                      cols="12"
+                      md="8"
+                    >
+                      <v-card-text class="mt-12">
+                        <h1 class="text-center display-2 teal--text text--accent-3">
+                          Sign in to Kite
+                        </h1>
+                        <div
+                          class="text-center"
+                          mt-4
+                        >
+                          <v-btn
+                            class="mx-2"
+                            fab
+                            color="black"
+                            outlined=""
+                          >
+                            <v-icon>fab fa-facebook-f</v-icon>
+                          </v-btn>
+                          <v-btn
+                            class="mx-2"
+                            fab
+                            color="black"
+                            outlined=""
+                          >
+                            <v-icon>fab fa-google-g</v-icon>
+                          </v-btn>
+                          <v-btn
+                            class="mx-2"
+                            fab
+                            color="black"
+                            outlined=""
+                          >
+                            <v-icon>fab fa-linkedin-in</v-icon>
+                          </v-btn>
+                        </div>
+                        <h4 class="text-center mlt-4">
+                          Ensure your email for registration
+                        </h4>
+                        <v-form>
+                          <v-text-field
+                            v-model="credential.email"
+                            label="Email"
+                            name="Email"
+                            prepend-icon="email"
+                            type="text"
+                            :rules="credential.emailRules"
+                            color="teal accent-3"
+                            aria-required=""
+                          />
+                          <v-text-field
+                            id="password"
+                            v-model="credential.pw"
+                            label="Password"
+                            name="Password"
+                            :rules="credential.pwRules"
+                            prepend-icon="lock"
+                            type="password"
+                            color="teal accent-3"
+                          />
+                        </v-form>
+                        <h3 class="text-center">
+                          Forget your password ?
+                        </h3>
+                      </v-card-text>
+                      <div class="text-center">
+                        <v-card-actions class="d-flex justify-center">
+                          <v-btn
+                            rounded
+                            color="tea1 accent-3"
+                            dark
+                            @click="login"
+                          >
+                            SIGN IN
+                          </v-btn>
+                        </v-card-actions>
+                      </div>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      md="4"
+                      class="teal accent-3"
+                    >
+                      <v-card-text class="white--text mt-12">
+                        <h1 class="text-center display-1">
+                          Hello, Friends !
+                        </h1>
+                        <h5 class="text-center">
+                          Enter your personel details and start journay with us
+                        </h5>
+                      </v-card-text>
+                      <div class="text-center">
+                        <v-btn
+                          rounded
+                          outlined=""
+                          dark
+                          @click="step++"
+                        >
+                          SIGN UP
+                        </v-btn>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-window-item>
+                <v-window-item :value="2">
+                  <v-row class="fill-height">
+                    <v-col
+                      cols="12"
+                      md="4"
+                      class="teal accent-3"
+                    >
+                      <v-card-text class="white--text mt-12">
+                        <h1 class="text-center display-1">
+                          Welcome Back !!!
+                        </h1>
+                        <h5 class="text-center">
+                          To Keep connected with us please login with your personnel info
+                        </h5>
+                      </v-card-text>
+                      <div class="text-center">
+                        <v-btn
+                          rounded
+                          outlined
+                          dark
+                          @click="step--"
+                        >
+                          SIGN IN
+                        </v-btn>
+                      </div>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      md="8"
+                    >
+                      <v-card-text>
+                        <form>
+                          <v-text-field
+                            v-model="email"
+                            :counter="20"
+                            label="E-mail"
+                            data-vv-name="email"
+                            required
+                          />
+                          <v-text-field
+                            v-model="pw"
+                            :counter="10"
+                            label="Pw"
+                            data-vv-name="pw"
+                            required
+                          />
+                          <v-text-field
+                            v-model="lastname"
+                            :counter="6"
+                            label="LastName"
+                            data-vv-name="lastname"
+                            required
+                          />
+                          <v-text-field
+                            v-model="firstname"
+                            :counter="6"
+                            label="FirstName"
+                            data-vv-name="firstname"
+                            required
+                          />
+                          <v-menu
+                            v-model="menu2"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            trasition="scale-transition"
+                            offset-y
+                            min-width="290px"
+                          >
+                            <template v-slot:activator="{ on }">
+                              <v-text-field
+                                v-model="birthday"
+                                label="생년월일 - Calendar Click"
+                                prepend-icon="event"
+                                readonly
+                                v-on="on"
+                              />
+                            </template>
+                            <v-date-picker
+                              v-model="birthday"
+                              year-icon="mdi-calendar-blank"
+                              prev-icon="mdi-skip-previous"
+                              next-icon="mdi-skip-next"
+                              @input="menu2 = false"
+                            />
+                          </v-menu>
+                          <v-spacer />
 
-                                            </v-form>
-                                            <h3 class="text-center">Forget your password ?</h3>
-                                            </v-card-text>
-                                                <div class="text-center">
-                                                    <v-card-actions class="d-flex justify-center">
-                                                         <v-btn @click="login" rounded color="tea1 accent-3" dark>SIGN IN </v-btn>
-                                                    </v-card-actions>
-                                                </div>
-                                    </v-col>
-                                    <v-col cols="12" md="4" class="teal accent-3">
-                                        <v-card-text class="white--text mt-12">
-                                            <h1 class="text-center display-1">Hello, Friends !</h1>
-                                            <h5 class="text-center">Enter your personel details and start journay with us </h5>
-                                        </v-card-text>
-                                        <div class="text-center">
-                                            <v-btn rounded outlined="" dark @click="step++">SIGN UP</v-btn>
-                                        </div>
-                                    </v-col>
-                                </v-row>
-                            </v-window-item>
-                            <v-window-item :value="2">
-                                <v-row class="fill-height">
-                                    <v-col cols="12" md="4" class="teal accent-3">
-                                        <v-card-text class="white--text mt-12">
-                                            <h1 class="text-center display-1">Welcome Back !!! </h1>
-                                            <h5 class="text-center">To Keep connected with us please login with your personnel info </h5>
-                                        </v-card-text>
-                                        <div class="text-center">
-                                            <v-btn rounded outlined dark @click="step--">SIGN IN</v-btn>
-                                        </div>
-                                    </v-col>
-                                    <v-col cols="12" md="8">
-                                        <v-card-text>
-            <form>
-              <v-text-field
-                v-model="email"
-                :counter="20"
-                label="E-mail"
-                data-vv-name="email"
-                required
-                > </v-text-field>
-              <v-text-field
-                v-model="pw"
-                :counter="10"
-                label="Pw"
-                data-vv-name="pw"
-                required
-                > </v-text-field>
-                <v-text-field
-                v-model="lastname"
-                :counter="6"
-                label="LastName"
-                data-vv-name="lastname"
-                required
-                > </v-text-field>
-                <v-text-field
-                v-model="firstname"
-                :counter="6"
-                label="FirstName"
-                data-vv-name="firstname"
-                required
-                > </v-text-field>
-                  <v-menu
-                    v-model="menu2"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    trasition="scale-transition"
-                    offset-y
-                    min-width="290px"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-text-field
-                        v-model="birthday"
-                        label="생년월일 - Calendar Click"
-                        prepend-icon="event"
-                        readonly
-                        v-on="on"
-                      > </v-text-field>
-                    </template>
-                    <v-date-picker v-model="birthday"
-                      year-icon="mdi-calendar-blank"
-                      prev-icon="mdi-skip-previous"
-                      next-icon="mdi-skip-next"
-                     @input="menu2 = false"> </v-date-picker>
-                  </v-menu>
-                <v-spacer></v-spacer>
+                          <v-radio-group
+                            v-model="gender"
+                            row
+                          >
+                            <v-radio
+                              label="남자"
+                              value="남자"
+                            />
+                            <v-radio
+                              label="여자"
+                              value="여자"
+                            />
+                          </v-radio-group>
+                          <p>{{ gender }}</p>
+                          <v-autocomplete
+                            ref="area"
+                            v-model="area"
+                            :rules="[() => !!area || 'This field is required']"
+                            :items="countries"
+                            label="area"
+                            placeholder="Select..."
+                            required
+                          />
 
-              <v-radio-group v-model="gender" row>
-                <v-radio
-                  label="남자" value="남자"
-                  > </v-radio>
-                  <v-radio
-                  label="여자" value="여자"
-                  > </v-radio>
-              </v-radio-group>
-              <p>{{gender}}</p>
-              <v-autocomplete
-                ref="area"
-                v-model="area"
-                :rules="[() => !!area || 'This field is required']"
-                :items="countries"
-                label="area"
-                placeholder="Select..."
-                required
-              > </v-autocomplete>
+                          <v-text-field
+                            v-model="job"
+                            :counter="10"
+                            label="job"
+                            data-vv-name="job"
+                            required
+                          />
 
-              <v-text-field
-                v-model="job"
-                :counter="10"
-                label="job"
-                data-vv-name="job"
-                required
-                > </v-text-field>
+                          <V-file-input
+                            v-model="image"
+                            multiple
+                            label="Profile Image"
+                          />
+                          <template>
+                            <div class="text-center mt-2">
+                              <v-btn
+                                dark
+                                color="blue darken-2"
+                                @click="addMem"
+                              >
+                                SUBMIT
+                              </v-btn>
 
-              <V-file-input multiple label="Profile Image" v-model="image"></V-file-input>
-              <template >
-                <div class="text-center mt-2">
-                  <v-btn
-                    dark
-                    color="blue darken-2"
-                    @click="addMem"
-                  >
-                    SUBMIT
-                  </v-btn>
-
-                  <v-snackbar
-                    v-model="snackbar"
-                    :timeout="timeout"
-                    :top="true"
-                    :right="true"
-                    color="success"
-                  >
-                    {{ text }}
-                    <!-- <v-btn
+                              <v-snackbar
+                                v-model="snackbar"
+                                :timeout="timeout"
+                                :top="true"
+                                :right="true"
+                                color="success"
+                              >
+                                {{ text }}
+                                <!-- <v-btn
                       color="blue"
                       text
                       @click="addMem"
                     >
                     </v-btn> -->
-                    <v-btn
-                      color="white"
-                      text
-                      @click="snackbar = false"
-                    >
-                      SUCCESS
-                    </v-btn>
-                  </v-snackbar>
-                  <v-btn @click="clear" color="grey lighten-3">clear</v-btn>
-              <!-- <v-btn size="20px" rounded color="tea1 accent-3" dark v-on="on">SIGN IN </v-btn> -->
-                </div>
-              </template>
-              <!-- <v-btn @click="addMem"  color="blue">submit</v-btn> -->
-            </form>
-          </v-card-text>
-                                    </v-col>
-                                </v-row>
-                            </v-window-item>
-                          </v-window>
-                      </v-card>
-                  </v-col>
-              </v-row>
-          </v-container>
-      </v-content>
+                                <v-btn
+                                  color="white"
+                                  text
+                                  @click="snackbar = false"
+                                >
+                                  SUCCESS
+                                </v-btn>
+                              </v-snackbar>
+                              <v-btn
+                                color="grey lighten-3"
+                                @click="clear"
+                              >
+                                clear
+                              </v-btn>
+                              <!-- <v-btn size="20px" rounded color="tea1 accent-3" dark v-on="on">SIGN IN </v-btn> -->
+                            </div>
+                          </template>
+                          <!-- <v-btn @click="addMem"  color="blue">submit</v-btn> -->
+                        </form>
+                      </v-card-text>
+                    </v-col>
+                  </v-row>
+                </v-window-item>
+              </v-window>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
   </v-app>
 </template>
 
@@ -218,9 +310,12 @@ import router from '../router'
 // import LoginSuccessModal from '../components/LoginSuccessModal.vue'
 
 export default {
-  name: 'signup',
+  name: 'Signup',
   components: {
     // LoginSuccessModal
+  },
+  props: {
+    source: String
   },
   data () {
     return {
@@ -262,9 +357,6 @@ export default {
       text: '회원가입에 성공하였습니다!!!',
       timeout: 2000
     }
-  },
-  props: {
-    source: String
   },
   computed: {
     form () {

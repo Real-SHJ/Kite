@@ -1,27 +1,41 @@
 <template>
-  <div id="app" class="wrapper" v-cloak
-  v-bind:class="{'is-previous': isPreviousSlide, 'first-load': isFirstLoad}">
-    <div class="slide-wrapper"
-    v-for="(slide, index) in slides"
-    v-bind:key="slide"
-    v-bind:class="{ active: index === currentSlide }"
-    v-bind:style="{ 'z-index': (slides.length - index),
-    'background-image': 'url(' + slide.bgImg + ')' }">
+  <div
+    v-cloak
+    id="app"
+    class="wrapper"
+    :class="{'is-previous': isPreviousSlide, 'first-load': isFirstLoad}"
+  >
+    <div
+      v-for="(slide, index) in slides"
+      :key="slide"
+      class="slide-wrapper"
+      :class="{ active: index === currentSlide }"
+      :style="{ 'z-index': (slides.length - index),
+                'background-image': 'url(' + slide.bgImg + ')' }"
+    >
       <div class="slide-inner">
         <div class="slide-bg-text">
-            <p>{{ slide.headlineFirstLine }}</p>
-            <p>{{ slide.headlineSecondLine }}</p>
+          <p>{{ slide.headlineFirstLine }}</p>
+          <p>{{ slide.headlineSecondLine }}</p>
         </div>
         <div class="slide-rect-filter">
-          <div class="slide-rect" v-bind:style="{'border-image-source':
-          'url(' + slide.rectImg + ')'}"></div>
+          <div
+            class="slide-rect"
+            :style="{'border-image-source':
+              'url(' + slide.rectImg + ')'}"
+          />
         </div>
         <div class="slide-content">
           <h1 class="slide-content-text">
             <p>{{ slide.headlineFirstLine }}</p>
             <p>{{ slide.headlineSecondLine }}</p>
           </h1>
-          <button @click="openToggle" class="slide-content-cta">Start Kite News</button>
+          <button
+            class="slide-content-cta"
+            @click="openToggle"
+          >
+            Start Kite News
+          </button>
         </div>
         <h2 class="slide-side-text">
           <span>{{ slide.sublineFirstLine }} / </span>
@@ -30,28 +44,32 @@
       </div>
     </div>
     <div class="controls-container">
-      <button class="controls-button"
-      v-for="(slide, index) in slides"
-      v-bind:key="slide"
-      v-bind:class="{ active: index === currentSlide }"
-      v-on:click="updateSlide(index)">{{ slide.headlineFirstLine }}
-      {{ slide.headlineSecondLine }}
+      <button
+        v-for="(slide, index) in slides"
+        :key="slide"
+        class="controls-button"
+        :class="{ active: index === currentSlide }"
+        @click="updateSlide(index)"
+      >
+        {{ slide.headlineFirstLine }}
+        {{ slide.headlineSecondLine }}
       </button>
     </div>
     <div class="pagination-container">
-      <span class="pagination-item"
-      v-for="(slide, index) in slides"
-      v-bind:key="slide"
-      v-bind:class="{ active: index === currentSlide }"
-      v-on:click="updateSlide(index)">
-      </span>
+      <span
+        v-for="(slide, index) in slides"
+        :key="slide"
+        class="pagination-item"
+        :class="{ active: index === currentSlide }"
+        @click="updateSlide(index)"
+      />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'opening',
+  name: 'Opening',
   data () {
     return {
       childOpen: true,

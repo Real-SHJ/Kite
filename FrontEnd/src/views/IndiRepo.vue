@@ -1,114 +1,215 @@
 <template>
-<v-content>
-    <div class="my-8" style="position: relative; height: 400px;">
+  <v-content>
+    <div
+      class="my-8"
+      style="position: relative; height: 400px;"
+    >
       <!-- <div style="background-color: black; opacity: 0.5; position: absolute; width: 100%; height: 400px; z-index: 1;"></div> -->
       <!-- <img src="https://cdn.pixabay.com/photo/2019/04/26/00/18/notebook-4156348__480.jpg" alt="" style="width: 100%; height: 100%; position: absolute;"> -->
-      <img src="../assets/Main_Image.png" alt="" style="width: 100%; height: 100%; position: absolute;">
+      <img
+        src="../assets/Main_Image.png"
+        alt=""
+        style="width: 100%; height: 100%; position: absolute;"
+      >
       <!-- <v-col cols="3"> -->
-                <!-- <h1 class="text-center" id="homebtn" >My Scrap Article</h1> -->
-             <!-- </v-col> -->
+      <!-- <h1 class="text-center" id="homebtn" >My Scrap Article</h1> -->
+      <!-- </v-col> -->
     </div>
     <!-- ------------- 검색 기간 부분 --------------- -->
-      <p class="header-title" ><strong>My Scrap Article </strong></p>
-      <v-container>
-          <v-row class="">
-            <v-col cols="4" class="d-flex justify-center align-center">
-              <h3 style="margin-right: 5%">기업선택</h3>
-              <v-overflow-btn
-                class=""
-                :items="company_choice"
-                label="기업선택"
-                target="#dropdown-example"
-                v-model="choice_company"
-                ></v-overflow-btn>
-            </v-col>
-            <v-col class="d-flex justify-center align-center">
-            <h3 style="margin-right: 2%">검색기간</h3>
-              <date-picker v-model="range" :lang="lang" range style="margin-right: 3%"></date-picker>
+    <p class="header-title">
+      <strong>My Scrap Article </strong>
+    </p>
+    <v-container>
+      <v-row class="">
+        <v-col
+          cols="4"
+          class="d-flex justify-center align-center"
+        >
+          <h3 style="margin-right: 5%">
+            기업선택
+          </h3>
+          <v-overflow-btn
+            v-model="choice_company"
+            class=""
+            :items="company_choice"
+            label="기업선택"
+            target="#dropdown-example"
+          />
+        </v-col>
+        <v-col class="d-flex justify-center align-center">
+          <h3 style="margin-right: 2%">
+            검색기간
+          </h3>
+          <date-picker
+            v-model="range"
+            :lang="lang"
+            range
+            style="margin-right: 3%"
+          />
 
-              <v-btn depressed color="pink white--text" style="margin-right: 1%" @click="scrapreq">검색</v-btn>
-              <v-btn depressed color="blue white--text" style="margin-right: 1%" @click="scrapchoice">전체조회</v-btn>
-              <v-dialog v-model="dialog" scrollable="" max-width="1000">
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    class=""
-                    dark
-                    color="pink"
-                    v-on="on"
-                  >
-                    공유 요청함
-                  </v-btn>
-                </template>
-                <ShareReqPage/>
-              </v-dialog>
-            </v-col>
-          </v-row>
-        </v-container>
-          <v-divider class="mx-4"></v-divider>
+          <v-btn
+            depressed
+            color="pink white--text"
+            style="margin-right: 1%"
+            @click="scrapreq"
+          >
+            검색
+          </v-btn>
+          <v-btn
+            depressed
+            color="blue white--text"
+            style="margin-right: 1%"
+            @click="scrapchoice"
+          >
+            전체조회
+          </v-btn>
+          <v-dialog
+            v-model="dialog"
+            scrollable=""
+            max-width="1000"
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn
+                class=""
+                dark
+                color="pink"
+                v-on="on"
+              >
+                공유 요청함
+              </v-btn>
+            </template>
+            <ShareReqPage />
+          </v-dialog>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-divider class="mx-4" />
     <!-- ------------- 검색 기간 부분 --------------- -->
     <!--          작업   시  작 ------------------ -->
     <div class="team">
-        <v-layout class="justify-center" row wrap>
+      <v-layout
+        class="justify-center"
+        row
+        wrap
+      />
+      <v-container class="my-5">
+        <v-layout
+          row
+          wrap
+        >
+          <!-- <v-flex xs12 sm6 md4 lg3 v-for="person in team" :key="person.name"> -->
+          <!-- v-card-title class="text-md-center" -->
+          <v-card
+            v-if="articles.length === 0"
+            flat
+            class="mx-auto text-center"
+            outlined
+          >
+            <h1>개인 저장소가 비어있어요</h1><h1>기사를 스크랩해보시겠어요?</h1>
+            <v-card-actions class="d-flex justify-end">
+              <WouldyouScrap />
+            </v-card-actions>
+          </v-card>
+          <v-flex
+            v-for="article in calData"
+            :key="article.id"
+            xs12
+            sm6
+            md6
+            lg6
+          >
+            <v-card
+              flat
+              class="text ma-3"
+              shaped=""
+              raised=""
+            >
+              <div @click="goDetail(article)">
+                <v-card-text>
+                  <div class="subheading mb-4">
+                    {{ article.company }}
+                  </div>
+                  <v-avatar
+                    class="mb-4"
+                    color="red lighten-4"
+                    size="70"
+                  >
+                    <img
+                      :src="company_image[article.company]"
+                    >
+                  </v-avatar>
+                  <div
+                    class="headline mb-5"
+                    style="font-size: 20px;"
+                  >
+                    {{ article.title }}
+                  </div>
+                  <div
+                    class="subheading mb-5"
+                    style="font-size: 20px;"
+                  >
+                    {{ article.summary.slice(0, 100) }}...
+                  </div>
+                  <div class="subheading">
+                    {{ article.newspaper }}
+                  </div>
+                </v-card-text>
+              </div>
+            </v-card>
+          </v-flex>
         </v-layout>
-        <v-container class="my-5">
-            <v-layout row wrap>
-                <!-- <v-flex xs12 sm6 md4 lg3 v-for="person in team" :key="person.name"> -->
-                    <!-- v-card-title class="text-md-center" -->
-                    <v-card flat class="mx-auto text-center" outlined v-if="articles.length === 0">
-                        <h1>개인 저장소가 비어있어요</h1><h1>기사를 스크랩해보시겠어요?</h1>
-                        <v-card-actions class="d-flex justify-end">
-                            <WouldyouScrap/>
-                        </v-card-actions>
-                    </v-card>
-                <v-flex xs12 sm6 md6 lg6 v-for="article in calData" :key="article.id">
-                    <v-card flat class="text ma-3" shaped="" raised="" >
-                        <div @click="goDetail(article)">
-                        <v-card-text>
-                            <div class="subheading mb-4">{{ article.company }}</div>
-                            <v-avatar class="mb-4" color="red lighten-4" size="70">
-                                <img
-                                    :src="company_image[article.company]"/>
-                            </v-avatar>
-                            <div class="headline mb-5" style="font-size: 20px;">{{ article.title }}</div>
-                            <div class="subheading mb-5" style="font-size: 20px;">{{ article.summary.slice(0, 100) }}...</div>
-                            <div class="subheading">{{ article.newspaper }}</div>
-                        </v-card-text>
-                        </div>
-                    </v-card>
-                </v-flex>
-            </v-layout>
-        </v-container>
+      </v-container>
     </div>
     <div class="text-xs-center my-4">
-        <v-pagination :length="numOfPages" v-model="curPageNum" :total-visible="7">
-        </v-pagination>
+      <v-pagination
+        v-model="curPageNum"
+        :length="numOfPages"
+        :total-visible="7"
+      />
     </div>
-    <v-divider class="mx-4"></v-divider>
+    <v-divider class="mx-4" />
     <!-- ------------- 1. 전체 (워드 클라우드, 관련뉴스 부분) start--------------- -->
-      <v-container style="width:100%; background-color: #E4E8EF" fluid>
-      <v-layout >
+    <v-container
+      style="width:100%; background-color: #E4E8EF"
+      fluid
+    >
+      <v-layout>
         <v-row>
-        <!-- ------------- 2. 워드 클라우드 부분 start --------------- -->
-        <v-flex xs12 sm8 md8>
-          <v-container>
-            <KeywordWordCloud @myKeyword="goAlert" :info ="info"/>
-          </v-container>
-        </v-flex>
+          <!-- ------------- 2. 워드 클라우드 부분 start --------------- -->
+          <v-flex
+            xs12
+            sm8
+            md8
+          >
+            <v-container>
+              <KeywordWordCloud
+                :info="info"
+                @myKeyword="goAlert"
+              />
+            </v-container>
+          </v-flex>
         <!-- ------------- 2. 워드 클라우드 부분 end --------------- -->
-
         </v-row>
         <!-- ------------- 3. 내 키워드 기사 부분 start--------------- -->
-        <v-flex xs12 sm4 md4>
+        <v-flex
+          xs12
+          sm4
+          md4
+        >
           <v-container>
             <v-card color="basil">
-                <!-- ---------- 4. 카드 내부 기사 ----------- -->
+              <!-- ---------- 4. 카드 내부 기사 ----------- -->
               <v-container>
                 <v-row dense>
-                    <!-- article for문 -->
-                <!-- <div v-for="article in articles" :key="article.id" class="my-3"> -->
+                  <!-- article for문 -->
+                  <!-- <div v-for="article in articles" :key="article.id" class="my-3"> -->
                   <v-col cols="12">
-                    <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드를 표시해둔 기사</v-card-title>
-                    <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
+                    <v-card-title v-if="myKeyword">
+                      "{{ myKeyword }}" 키워드를 표시해둔 기사
+                    </v-card-title>
+                    <v-card-title v-else>
+                      워드클라우드에서 키워드를 선택하세요
+                    </v-card-title>
                     <v-card
                       v-for="article in keywordarticles"
                       :key="article.id"
@@ -116,18 +217,25 @@
                       max-width="344"
                       outlined
                     >
-                        <div @click="goDetail(article)">
+                      <div @click="goDetail(article)">
                         <v-list-item three-line>
-                            <v-list-item-content>
-                                <div class="overline mb-4">{{article.company}}</div>
-                                <v-list-item-title class="headline mb-1">{{article.title}}</v-list-item-title>
-                                <v-list-item-subtitle>{{article.newspaper}}</v-list-item-subtitle>
-                            </v-list-item-content>
-                            <v-avatar color="red lighten-4" size="70">
-                                <img :src="company_image[article.company]"/>
-                            </v-avatar>
+                          <v-list-item-content>
+                            <div class="overline mb-4">
+                              {{ article.company }}
+                            </div>
+                            <v-list-item-title class="headline mb-1">
+                              {{ article.title }}
+                            </v-list-item-title>
+                            <v-list-item-subtitle>{{ article.newspaper }}</v-list-item-subtitle>
+                          </v-list-item-content>
+                          <v-avatar
+                            color="red lighten-4"
+                            size="70"
+                          >
+                            <img :src="company_image[article.company]">
+                          </v-avatar>
                         </v-list-item>
-                        </div>
+                      </div>
                     </v-card>
                   </v-col>
                 <!-- </div> -->
@@ -138,10 +246,10 @@
           </v-container>
         </v-flex>
         <!-- ------------- 3. 내 키워드 기사 부분 end--------------- -->
-    <!-- ------------- 1. 전체 (워드 클라우드, 관련뉴스 부분) end --------------- -->
+        <!-- ------------- 1. 전체 (워드 클라우드, 관련뉴스 부분) end --------------- -->
       </v-layout>
-      </v-container>
-</v-content>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
@@ -153,7 +261,7 @@ import KeywordWordCloud from '../components/KeywordWordCloud.vue'
 import ShareReqPage from '../components/ShareReqPage.vue'
 
 export default {
-  name: 'indirepo',
+  name: 'Indirepo',
   components: {
     ShareReqPage,
     WouldyouScrap,
@@ -251,6 +359,35 @@ export default {
       }
     }
   },
+  computed: {
+    startOffset () {
+      return ((this.curPageNum - 1) * this.dataPerPage)
+    },
+    endOffset () {
+      return (this.startOffset + this.dataPerPage)
+    },
+    numOfPages () {
+      return Math.ceil(this.articles.length / this.dataPerPage)
+    },
+    calData () {
+      return this.articles.slice(this.startOffset, this.endOffset)
+    }
+  },
+  watch: {
+    company: {
+      handler () {
+        this.articles = []
+        this.page = 1
+      }
+    }
+  },
+  mounted () {
+    // this.getArticle()
+    console.log(this.company_choice)
+    // this.scrapreq()
+    this.scrapchoice()
+    this.init()
+  },
   methods: {
     goAlert (key) {
       alert(key)
@@ -346,35 +483,6 @@ export default {
         .finally(
         )
     }
-  },
-  watch: {
-    company: {
-      handler () {
-        this.articles = []
-        this.page = 1
-      }
-    }
-  },
-  computed: {
-    startOffset () {
-      return ((this.curPageNum - 1) * this.dataPerPage)
-    },
-    endOffset () {
-      return (this.startOffset + this.dataPerPage)
-    },
-    numOfPages () {
-      return Math.ceil(this.articles.length / this.dataPerPage)
-    },
-    calData () {
-      return this.articles.slice(this.startOffset, this.endOffset)
-    }
-  },
-  mounted () {
-    // this.getArticle()
-    console.log(this.company_choice)
-    // this.scrapreq()
-    this.scrapchoice()
-    this.init()
   }
 }
 </script>

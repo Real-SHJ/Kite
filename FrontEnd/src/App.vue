@@ -1,21 +1,26 @@
 <template>
   <!-- <v-app id="inspire" style="background-color: #FAFAFA"> -->
-  <v-app id="inspire" style="background-color: #ffffff">
+  <v-app
+    id="inspire"
+    style="background-color: #ffffff"
+  >
     <!-- <v-content v-if="getOpen === false">
       <Opening @changeOpen="change"/>
     </v-content> -->
     <!-- <v-content v-else> -->
-      <Header :offsetTop="offsetTop" :AuthenticatedCheck="AuthenticatedCheck"/>
-      <LeftMenu v-if="AuthenticatedCheck"/>
-      <router-view/>
-      <!-- <Footer/> -->
-      <v-layout
-        v-scroll="onScroll"
-        align="center"
-        justify="center"
-        id="nav"
-      >
-      </v-layout>
+    <Header
+      :offset-top="offsetTop"
+      :authenticated-check="AuthenticatedCheck"
+    />
+    <LeftMenu v-if="AuthenticatedCheck" />
+    <router-view />
+    <!-- <Footer/> -->
+    <v-layout
+      id="nav"
+      v-scroll="onScroll"
+      align="center"
+      justify="center"
+    />
     <!-- </v-content> -->
   </v-app>
 </template>
@@ -28,7 +33,7 @@ import LeftMenu from './components/LeftMenu'
 // import Opening from './components/Opening2'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     Header,
     LeftMenu
@@ -41,6 +46,15 @@ export default {
       offsetTop: 0,
       getOpen: false
     }
+  },
+  updated () {
+    this.AuthenticatedCheck = this.$session.has('my-token')
+  },
+  mounted () {
+    console.log(this.AuthenticatedCheck)
+    this.AuthenticatedCheck = this.$session.has('my-token')
+    this.openCheck()
+    this.isLogin()
   },
   methods: {
     onScroll (e) {
@@ -69,15 +83,6 @@ export default {
         this.getOpen = this.$session.get('changeOpen')
       }
     }
-  },
-  updated () {
-    this.AuthenticatedCheck = this.$session.has('my-token')
-  },
-  mounted () {
-    console.log(this.AuthenticatedCheck)
-    this.AuthenticatedCheck = this.$session.has('my-token')
-    this.openCheck()
-    this.isLogin()
   }
 }
 

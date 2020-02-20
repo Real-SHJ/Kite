@@ -15,6 +15,7 @@
     "core-js": "^3.6.4",
     "jwt-decode": "^2.2.0",
     "material-design-icons-iconfont": "^5.0.1",
+    "prettier-eslint": "^9.0.1",
     "roboto-fontface": "0.10.0",
     "vue": "^2.6.11",
     "vue-hotel-datepicker": "^2.7.7",
@@ -30,9 +31,9 @@
     "vue2-datepicker": "^3.3.1",
     "vuejs-daum-postcode": "^1.0.4",
     "vuetify": "^2.2.13",
-    "yarn": "^1.22.0",
     "vuetify-dialog": "^2.0.1",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "yarn": "^1.22.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
@@ -57,7 +58,7 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/recommended",
       "@vue/standard"
     ],
     "rules": {
