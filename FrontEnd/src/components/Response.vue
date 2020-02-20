@@ -64,7 +64,6 @@ export default {
         .delete('/member/deletefriendwait' + '/' + requestid + '/' + userid)
         .then(
           response => {
-            console.log(response.data.message)
             const target = this.rslist.indexOf(response)
             this.rslist.splice(target, 1)
           }
@@ -81,7 +80,6 @@ export default {
         .delete('/member/deletefriendwait' + '/' + requestid + '/' + userid)
         .then(
           response => {
-            console.log(response.data.message)
             const target = this.rslist.indexOf(response)
             this.rslist.splice(target, 1)
           },
@@ -90,7 +88,6 @@ export default {
             .then(
               response => {
                 this.snackbar = true
-                console.log(response.data.message)
               }
             )
             .catch(err => console.log(err))
@@ -109,7 +106,6 @@ export default {
         .then(
           response => {
             this.rslist = response.data.rslist
-            console.log(this.rslist.length)
           }
         )
         .catch(err => console.log(err))

@@ -130,7 +130,6 @@ export default {
       this.$router.push({ name: 'selectcompany' })
     },
     checkArticle (company) {
-      console.log('함수에 들어옴!!' + company)
       if (this.$session.get('my-info').companylist.includes(company)) {
         this.$router.push({ name: 'articlecorpo', params: { 'company': company } })
       } else {

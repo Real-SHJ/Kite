@@ -10,23 +10,22 @@
         cols="6"
       >
         <div>
-          <div>
-            <v-card
-              @click='goDetail(article.articleid)'
-              class="my-2"
-              max-width="600"
-              id = "mycard"
-              :img = "`${article.image}`"
-              height="350px"
-              width="500px"
-              tile
+          <v-card
+            @click='goDetail(article.articleid)'
+            class="my-2"
+            max-width="600"
+            id = "mycard"
+            :img = "`${article.image}`"
+            height="350px"
+            width="500px"
+            tile
+          >
+            <v-avatar
+              class="companyLogo"
+              size="100px"
             >
-              <v-avatar
-                class="companyLogo"
-                size="100px"
-              >
-                <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
-              </v-avatar>
+              <v-img :src="`${article.logo}`" height="60px" width="60px"></v-img>
+            </v-avatar>
 
               <div class="overay textwrap" style="color:white;">
                  <p
@@ -72,7 +71,7 @@
       v-model="snackbar"
       color="red"
       :timeout="timeout"
-      :bottom="true"
+      :top="true"
       :right="true"
     >
       {{ text }}
@@ -89,20 +88,17 @@
 
 <script>
 import http from '../http-common'
-// import ScrapDialog from '../components/ScrapDialog.vue'
-// import ShareDialog from '../components/ShareDialog.vue'
 export default {
   props: {
     articles: Array
   },
   components: {
-    // ScrapDialog,
-    // ShareDialog
   },
   data () {
     return {
       snackbar: false,
-      // myId: null,
+      text: '로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.',
+      timeout: 1000,
       test: [1, 2, 3],
       myFriends: [],
       n: 0,
@@ -124,43 +120,33 @@ export default {
             .get(`/member/friendlist/${myId}`)
             .then((res) => {
               this.myFriends = res.data.flist
-              console.log(this.myFriends)
             })
         }
       }, 1000)
     },
     goDetail (articleid) {
-      console.log(articleid)
       if (this.AuthenticatedCheck) {
-        this.snackbar = true
-        this.$router.push('/signup')
-      } else {
         this.$router.push({ path: `/articleDetail/${articleid}` })
+      } else {
+        this.snackbar = true
+        setTimeout(() => {
+          this.$router.push('/signup')
+        }, this.timeout)
       }
+    },
+    islogined () {
+      setTimeout(() => {
+        this.AuthenticatedCheck = this.$session.has('my-token')
+      }, 1000)
+      console.log(this.AuthenticatedCheck)
     }
-    // getArticle () {
-    //   http.get('/article/list/')
-    //     .then(res => {
-    //     // 토큰 저장
-    //       // console.log(res)
-    //       this.articles = res.data.resvalue
-    //       // console.log(this.articles)
-    //     })
-    //     .catch(err => console.log(err))
-    // },
-    // islogined () {
-    //   setTimeout(() => {
-    //     this.AuthenticatedCheck = this.$session.has('my-info')
-    //   }, 1000)
-    // }
   },
   mounted () {
-    // this.getArticle()
-    // this.userIdCheck()
+    this.islogined()
     this.getMyFriends()
   },
   updated () {
-    // this.AuthenticatedCheck = this.$session.has('my-token')
+    this.AuthenticatedCheck = this.$session.has('my-token')
   }
 }
 

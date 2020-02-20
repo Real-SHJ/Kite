@@ -3,6 +3,7 @@
     <v-card height="650">
       <v-list>
         <p class="share-req-title text-center mt-4" style="font-size: 35px;">공유 요청 목록</p>
+        <v-divider></v-divider>
           <v-list-item
             three-line
             v-for="(myreq, index) in calData"
@@ -61,10 +62,12 @@
         </v-row>
         </v-card> -->
       </v-list>
-    <v-pagination
-      v-model="curPageNum"
-      :length="numOfPages">
-    </v-pagination>
+      <v-divider></v-divider>
+      <v-pagination
+        class="mt-2"
+        v-model="curPageNum"
+        :length="numOfPages">
+      </v-pagination>
     </v-card>
   </v-content>
 </template>
@@ -113,9 +116,6 @@ export default {
         // .get(`/member/messagelist/${this.$session.get('my-info').userid}`)
         .get(`/member/messagelist/7`)
         .then((res) => {
-          console.log('공유요청~~~~~~~~~~~~~~!!')
-          console.log(res.data)
-          console.log(res.data.memberlist.length)
           const memberlist = res.data.memberlist
           const articlelist = res.data.articlelist
           const sno = res.data.SNO
@@ -128,19 +128,15 @@ export default {
     reqAccept (myreq) {
       const fdata = new FormData()
       fdata.append('memberid', this.$session.get('my-info').userid)
-      console.log(this.$session.get('my-info').userid)
-      console.log(myreq.article.articleid)
       fdata.append('articleid', myreq.article.articleid)
       http
         .post('/member/insertscrap', fdata)
         .then(res => {
-          console.log(res.data.message)
         })
         .catch(err => console.log(err))
       http
         .delete(`/member/deleteMessage/${myreq.sno}`)
         .then((res) => {
-          console.log(res)
           this.reqListData = this.reqListData.filter(target => {
             return target.sno !== myreq.sno
           })
@@ -150,7 +146,6 @@ export default {
       http
         .delete(`/member/deleteMessage/${sno}`)
         .then((res) => {
-          console.log(res)
           this.reqListData = this.reqListData.filter(target => {
             return target.sno !== sno
           })

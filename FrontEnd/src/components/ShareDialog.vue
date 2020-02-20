@@ -4,9 +4,9 @@
       <v-btn
         class="share"
         dark
-        fab
         color="pink"
         v-on="on"
+        style="margin-left: 1%"
       >
         <v-icon>fas fa-share-alt</v-icon>
       </v-btn>
@@ -100,16 +100,13 @@ export default {
     // },
     friendPlus (memberid) {
       this.shareTarget.push(memberid)
-      console.log(this.shareTarget)
     },
     friendPop (memberid) {
       this.shareTarget = this.shareTarget.filter(target => {
         return target !== memberid
       })
-      console.log(this.shareTarget)
     },
     shareArticle () {
-      console.log('공유하겠습니다.')
       if (this.shareTarget.length) {
         const fdata = new FormData()
         fdata.append('sendid', this.$session.get('my-info').userid)

@@ -1,45 +1,49 @@
 <template>
   <v-content>
     <v-container>
+      <br>
+      <br>
       <v-row>
-        <v-col cols="12" sm="3">
+        <v-col cols="2">
           <v-menu open-on-hover bottom origin="center center" transition="scale-transition" :close-on-content-click="closeOnContentClick">
             <template v-slot:activator="{ on }">
               <v-btn color="red" dark v-on="on">
                 색상 선택
               </v-btn>
             </template>
-
-            <v-row>
-              <v-col class="d-flex justify-center">
-                <v-color-picker v-model="color"></v-color-picker>
-              </v-col>
-            </v-row>
+            <v-color-picker v-model="color"></v-color-picker>
           </v-menu>
         </v-col>
-        <v-col cols="12" sm="3">
-          <span>Highlight 기능</span>
+        <v-col cols="4">
+          <span style="margin-right: 4%; font-size: 120%; font-weight: bold;">Highlight 기능 :</span>
           <v-btn @click="highlightOn()">
               On
           </v-btn>
-          <v-btn @click="highlightOff()">
+          <v-btn @click="highlightOff()" style="margin-left: 2%">
               Off
           </v-btn>
         </v-col>
-        <v-col cols="12" sm="6">
+        <v-col cols="1">
           <v-btn @click="save()">저장</v-btn>
         </v-col>
+        <v-col cols="5" class="d-flex justify-end">
+          <ScrapDialog :article="article"/>
+          <ShareDialog :article="article" :myFriends="myFriends"/>
+        </v-col>
       </v-row>
+      <br>
+      <br>
+      <v-divider></v-divider>
+      <br>
+      <br>
       <v-spacer></v-spacer>
-      <h1 v-if="article" class="title">{{article.title}}</h1>
+      <p v-if="article" class="detail-title text-center">{{article.title}}</p>
+      <br>
+      <br>
       <div class="d-flex justify-center">
         <img v-if="article.image" :src="article.image" style="width: 50%; height: 50%">
       </div>
       <div v-if="article" v-html="article.content" id="maincontent" style="margin: 0%"></div>
-      <div class="btngrp">
-        <ScrapDialog :article="article"/>
-        <ShareDialog :article="article" :myFriends="myFriends"/>
-      </div>
     </v-container>
   </v-content>
 </template>
@@ -61,18 +65,16 @@ export default {
       article: null,
       type: 'hex',
       hex: '#FFFF00',
-      closeOnContentClick: false
+      closeOnContentClick: false,
+      myarticleid: []
     }
   },
   methods: {
     getarticle () {
-      console.log(this.id)
-      http.get(`/article/onearticle/${this.id}`)
+      const myId = this.$session.get('my-info').userid
+      http.get(`/article/onearticle/${myId}/${this.id}`)
         .then(res => {
-          console.log(res)
-          console.log(res.data)
           this.article = res.data.result
-          console.log(this.article)
         })
         .catch(err => console.log(err))
     },
@@ -90,7 +92,6 @@ export default {
             .get(`/member/friendlist/${myId}`)
             .then((res) => {
               this.myFriends = res.data.flist
-              console.log(this.myFriends)
             })
         }
       }, 1000)
@@ -143,12 +144,6 @@ export default {
         let item = cols[i]
         item.addEventListener('click', this.removeItem)
       }
-      // let col = document.querySelector(`#high${this.spanIndex}`)
-      // col.addEventListener('click', function () {
-      //   let val = this.innerHTML
-      //   this.replaceWith(val)
-      // })
-      // this.spanIndex++
     },
     replace (text) {
       var _range = window.getSelection().getRangeAt(0)
@@ -163,19 +158,37 @@ export default {
       e.target.replaceWith(val)
     },
     save () {
-      var content = document.querySelector(`#maincontent`).innerHTML
-      let fdata = new FormData()
-      fdata.append('memberid', this.$session.get('my-info').userid)
-      fdata.append('articleid', this.id)
-      fdata.append('content', content)
-      fdata.append('spanindex', this.spanIndex)
       http
-        .put('/member/savecontent', fdata)
-        .then(
-          response => {
-            console.log(response.data.message)
+        .get('/member/getarticleid/' + this.$session.get('my-info').userid)
+        .then(response => {
+          this.myarticleid = response.data.result
+          let flag = false
+          for (let index = 0; index < this.myarticleid.length; index++) {
+            if (Number(this.id) === this.myarticleid[index]) {
+              flag = true
+              break
+            }
           }
-        )
+          if (flag) {
+            var content = document.querySelector(`#maincontent`).innerHTML
+            let fdata = new FormData()
+            fdata.append('memberid', this.$session.get('my-info').userid)
+            fdata.append('articleid', this.id)
+            fdata.append('content', content)
+            http
+              .put('/member/savecontent', fdata)
+              .then(
+                response => {
+                  console.log(response.data.message)
+                }
+              )
+              .catch(err => console.log(err))
+              .finally(
+              )
+          } else {
+            alert('저장 기능을 사용하시려면 스크랩을 하셔야 합니다')
+          }
+        })
         .catch(err => console.log(err))
         .finally(
         )
@@ -218,17 +231,12 @@ export default {
     right: 20px;
     bottom: 20px;
   }
-  .btngrp{
-    position: fixed;
-    top: 10%;
-    right: 10%;
-    z-index: inherit;
-  }
   @font-face {
     font-family: 'Noto Serif KR Bold', serif;
     src: url('../fonts/NotoSerifKR-Bold.otf');
   }
-  .title {
+  .detail-title {
+    font-size: 250%;
     font-family: 'Noto Serif KR Bold' !important;
   }
   @font-face {

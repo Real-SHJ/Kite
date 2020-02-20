@@ -1,39 +1,43 @@
 <template>
   <v-content>
     <v-container>
+      <br>
+      <br>
       <v-row>
-        <v-col cols="12" sm="3">
+        <v-col cols="2">
           <v-menu open-on-hover bottom origin="center center" transition="scale-transition" :close-on-content-click="closeOnContentClick">
             <template v-slot:activator="{ on }">
               <v-btn color="red" dark v-on="on">
                 색상 선택
               </v-btn>
             </template>
-
-            <v-row>
-              <v-col class="d-flex justify-center">
-                <v-color-picker v-model="color"></v-color-picker>
-              </v-col>
-            </v-row>
+            <v-color-picker v-model="color"></v-color-picker>
           </v-menu>
         </v-col>
-        <v-col cols="12" sm="3">
-          <span>Highlight 기능</span>
+        <v-col cols="4">
+          <span style="margin-right: 4%; font-size: 120%; font-weight: bold;">Highlight 기능 :</span>
           <v-btn @click="highlightOn()">
-            On
+              On
           </v-btn>
-          <v-btn @click="highlightOff()">
+          <v-btn @click="highlightOff()" style="margin-left: 2%">
               Off
           </v-btn>
         </v-col>
-        <v-col cols="12" sm="6">
+        <v-col cols="1">
           <v-btn @click="save()">저장</v-btn>
         </v-col>
       </v-row>
+      <br>
+      <br>
+      <v-divider></v-divider>
+      <br>
+      <br>
       <v-spacer></v-spacer>
-      <h1 v-if="article" class="title">{{article.title}}</h1>
+      <p v-if="article" class="detail-title text-center">{{article.title}}</p>
+      <br>
+      <br>
       <div class="d-flex justify-center">
-        <img v-if="article.image" :src="article.image" width="50%" height="50%">
+        <img v-if="article.image" :src="article.image" style="width: 50%; height: 50%">
       </div>
       <div v-if="article" v-html="article.content" id="maincontent" style="margin: 0%"></div>
     </v-container>
@@ -54,7 +58,6 @@ export default {
         .then(
           response => {
             this.article = response.data.article
-            this.spanIndex = response.data.spanIndex
           }
         )
         .catch(err => console.log(err))
@@ -176,7 +179,8 @@ export default {
     font-family: 'Noto Serif KR Bold', serif;
     src: url('../fonts/NotoSerifKR-Bold.otf');
   }
-  .title {
+  .detail-title {
+    font-size: 250%;
     font-family: 'Noto Serif KR Bold' !important;
   }
   @font-face {

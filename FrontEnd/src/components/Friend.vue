@@ -32,11 +32,9 @@
         <FriendList v-else-if="kind===3"/>
       </v-card-text>
       <v-divider></v-divider>
-      <v-card-action>
         <div class="my-4 mr-3 d-flex flex-row-reverse">
           <v-btn color="green darken-1" style="font-size: 120%" text @click="dialog = false">close</v-btn>
         </div>
-      </v-card-action>
     </v-card>
   </v-dialog>
 </template>

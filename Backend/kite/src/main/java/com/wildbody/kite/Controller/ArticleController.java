@@ -31,7 +31,7 @@ public class ArticleController {
 	static final String imgUrl = "http://13.125.153.118:8999/img";
 	static Map<String, ArrayList<String>> background_img = new HashMap<>();
 	static Map<String, String> logo_img = new HashMap<>();
-	static final int offset = 5;
+
 	@Autowired
 	private ArticleService svc;
 	@Autowired
@@ -82,15 +82,29 @@ public class ArticleController {
 		}
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
-    }
+	}
 
-	@GetMapping("/onearticle/{articleid}")
+	@GetMapping("/onearticle/{memberid}/{articleid}")
 	@ApiOperation(value = "articleid에 맞은 기사 하나만 출력", response = Article.class)
-	public ResponseEntity<Map<String, Object>> oneArticle(@PathVariable String articleid) {
+	public ResponseEntity<Map<String, Object>> oneArticle(@PathVariable String memberid,
+			@PathVariable String articleid) {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			Article article = svc.oneArticle(Integer.parseInt(articleid));
+			// 내 스크랩 목록에 있는지 확인한다
+			List<Integer> list = msvc.getArticleid(Integer.parseInt(memberid));
+			Article article = null;
+			boolean flag = false;
+			for (int i = 0; i < list.size(); i++) {
+				if (Integer.parseInt(articleid) == list.get(i)) {
+					flag = true;
+					article = svc.oneScarpArticle(Integer.parseInt(memberid), Integer.parseInt(articleid));
+					break;
+				}
+			}
+			if (!flag) {
+				article = svc.oneArticle(Integer.parseInt(articleid));
+			}
 			map.put("result", article);
 			map.put("message", "기사 1개 조회 성공");
 		} catch (Exception e) {
@@ -99,17 +113,16 @@ public class ArticleController {
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
 	}
-	
+
 	@GetMapping("/onescraparticle/{memberid}/{articleid}")
 	@ApiOperation(value = "memberid와 articleid에 맞은 기사 하나만 출력", response = Article.class)
-	public ResponseEntity<Map<String, Object>> oneScarpArticle(@PathVariable String memberid, @PathVariable String articleid) {
+	public ResponseEntity<Map<String, Object>> oneScarpArticle(@PathVariable String memberid,
+			@PathVariable String articleid) {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			Article article = svc.oneScarpArticle(Integer.parseInt(memberid), Integer.parseInt(articleid));
-			int spanIndex = svc.getIndex(Integer.parseInt(memberid), Integer.parseInt(articleid));
 			map.put("article", article);
-			map.put("spanIndex", spanIndex);
 			map.put("message", "기사 1개 조회 성공");
 		} catch (Exception e) {
 			map.put("message", "기사 1개 조회 실패");
@@ -144,19 +157,20 @@ public class ArticleController {
 
 	@PostMapping("/infiloading/{page}")
 	@ApiOperation("Infinite Loading")
-	public @ResponseBody ResponseEntity<Map<String, Object>> infiniteLoading(@PathVariable int page, Member member, Article article) {
+	public @ResponseBody ResponseEntity<Map<String, Object>> infiniteLoading(@PathVariable int page, Member member,
+			Article article) {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Article> list = new ArrayList<>();
 		member = msvc.memberInfo(member); // 멤버의 회사 정보가 들어온다.
-		String company = article.getCompany(); //회사 string 을 받아서 
+		String company = article.getCompany(); // 회사 string 을 받아서
 		try {
-			if (company == null) { //로그인이 안되어있을 때
+			if (company == null) { // 로그인이 안되어있을 때
 				for (String comp : member.getCompany().split(",")) {
 					list.addAll(svc.infi(comp));
 				}
-			} else { //로그인 되었을 때
-				list.addAll(svc.infi(company)); //회사별 기사
+			} else { // 로그인 되었을 때
+				list.addAll(svc.infi(company)); // 회사별 기사
 			}
 			for (Article ar : list) {
 				if (background_img.containsKey(ar.getCompany())) {
@@ -176,10 +190,11 @@ public class ArticleController {
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
 	}
-	
+
 	@GetMapping("/mykeywordarticle/{memberid}/{keyword}")
 	@ApiOperation(value = "memberid와 keyword에 맞은 기사들을 출력", response = Article.class)
-	public ResponseEntity<Map<String, Object>> myKeywordArticle(@PathVariable String memberid, @PathVariable String keyword) {
+	public ResponseEntity<Map<String, Object>> myKeywordArticle(@PathVariable String memberid,
+			@PathVariable String keyword) {
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
@@ -192,11 +207,10 @@ public class ArticleController {
 		resEntity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return resEntity;
 	}
-	
+
 	@GetMapping("/companykeywordarticle/{keyword}")
 	@ApiOperation(value = "keyword에 맞은 기사들을 출력", response = Article.class)
 	public ResponseEntity<Map<String, Object>> companyKeywordArticle(@PathVariable String keyword) {
-		System.out.println(keyword + ":이게 바로 내가 선택한 키워드다!!!!");
 		ResponseEntity<Map<String, Object>> resEntity = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {

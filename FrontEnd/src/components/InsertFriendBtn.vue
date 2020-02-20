@@ -54,7 +54,6 @@ export default {
           response => {
             this.btnSwitch = !this.btnSwitch
             this.snackbar = true
-            console.log(response.data.message)
           }
         )
         .catch(err => console.log(err))
@@ -68,7 +67,6 @@ export default {
         .then(
           response => {
             this.btnSwitch = !this.btnSwitch
-            console.log(response.data.message)
           }
         )
         .catch(err => console.log(err))
@@ -82,7 +80,6 @@ export default {
           this.btnSwitch = this.checkList[check].check
         }
       }
-      console.log(this.btnSwitch)
     }
   },
   mounted () {

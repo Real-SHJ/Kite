@@ -75,8 +75,6 @@ export default {
           response => {
             this.list = response.data.list
             this.checkList = response.data.checklist
-            console.log(response.data)
-            console.log(this.checkList)
           }
         )
         .catch(err => console.log(err))

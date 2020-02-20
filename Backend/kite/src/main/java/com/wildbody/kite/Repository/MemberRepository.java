@@ -81,4 +81,6 @@ public interface MemberRepository {
 	public List<MemberKeyword> selectMemberKeywordList(int memberid);
 	
 	public List<ArticleKeyword> selectArticleKeywordList(String company);
+	
+	public List<Integer> getArticleid(int memberid);
 }

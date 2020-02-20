@@ -22,8 +22,6 @@ public interface ArticleService {
 	public Article oneArticle(int articleid);
 	
 	public Article oneScarpArticle(int memberid, int articleid);
-	
-    public int getIndex(int memberid, int articleid);
 
 	public List<Article> infi(String company);
 	
