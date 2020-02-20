@@ -29,7 +29,19 @@
               </v-avatar>
 
               <div class="overay textwrap" style="color:white;">
-                {{article.summary}}
+                 <p
+            v-if="article.summary.length > 145"
+            class="article-summary"
+            >
+              {{article.summary.slice(0, 140)}}...
+            </p>
+            <p
+            v-else
+            class="article-summary"
+            >
+              {{article.summary.slice(0, 140)}}
+            </p>
+                <!-- {{article.summary.slice(0, 180)}} -->
               </div>
             </v-card>
             <p
@@ -194,12 +206,14 @@ export default {
   }
 
   .images:hover .overay{
-    height: 50%;
+    height: 25%;
+    font-size: 18px;
   }
   .article-title{
     /* color:white; */
     font-size: 18px;
     font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
     /* margin:auto; */
     /* max-height:50px; */
     /* top: 0; */
@@ -207,6 +221,12 @@ export default {
     /* right:0; */
     /* margin-bottom: 10%; */
     /* z-index: inherit; */
+  }
+  .article-summary{
+    /* color:white; */
+    font-size: 18px;
+    /* font-weight: bold; */
+    font-family: 'Noto Sans KR', sans-serif;
   }
   .btngrp{
     position: absolute;

@@ -1,10 +1,5 @@
 <template>
   <v-content>
-    <!-- 원태희 start -->
-    <v-tabs>
-      <v-tab><router-link to="/searchrank" replace>원태희꺼 작업</router-link></v-tab>
-    </v-tabs>
-    <!-- 원태희 end -->
 
     <p class="header-title" ><strong>기업 분석 데이터</strong></p>
     <searchRank/>
@@ -24,53 +19,53 @@
             ></v-overflow-btn>
         </v-col>
       </v-row>
-    <!-- </v-container> -->
-    <v-divider class="mx-4"></v-divider>
-    <!-- <v-container> -->
-      <v-layout >
-        <!-- <v-row> -->
-        <v-flex xs12 sm8 md8>
-          <v-container fluid>
-            <CompanyKeyword @myKeyword="goAlert" :info ="info" :choice_company = "choice_company" v-if="choice_company"/>
-            <p v-else>기업을 선택해 주세요</p>
-          </v-container>
-        </v-flex>
-        <!-- </v-row> -->
-        <v-flex xs12 sm4 md4>
-          <v-container fluid>
-            <v-card color="grey lighten-4">
-              <v-container>
-                <!-- <v-row dense> -->
-                  <v-col cols="12">
-                    <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드가 포함된 {{choice_company}} 기사</v-card-title>
-                    <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
-                    <v-card
-                        v-for="article in keywordarticles"
-                        :key="article.id"
-                        class="mx-auto"
-                        max-width="344"
-                        outlined
-                    >
-                        <div @click="goDetail(article)">
-                        <v-list-item three-line>
-                            <v-list-item-content>
-                                <div class="overline mb-4">{{article.company}}</div>
-                                <v-list-item-title class="headline mb-1">{{article.title}}</v-list-item-title>
-                                <v-list-item-subtitle>{{article.summary}}</v-list-item-subtitle>
-                            </v-list-item-content>
-                            <v-avatar color="red lighten-4" size="70">
-                                <img :src="company_image[article.company]"/>
-                            </v-avatar>
-                        </v-list-item>
-                        </div>
-                    </v-card>
-                  </v-col>
-                <!-- </v-row> -->
-              </v-container>
-            </v-card>
-          </v-container>
-        </v-flex>
-      </v-layout>
+      <!-- </v-container> -->
+      <v-divider class="mx-4"></v-divider>
+      <!-- <v-container> -->
+        <v-layout >
+          <!-- <v-row> -->
+          <v-flex xs12 sm8 md8>
+            <v-container fluid>
+              <CompanyKeyword @myKeyword="goAlert" :info ="info" :choice_company = "choice_company" v-if="choice_company"/>
+              <p v-else>기업을 선택해 주세요</p>
+            </v-container>
+          </v-flex>
+          <!-- </v-row> -->
+          <v-flex xs12 sm4 md4>
+            <v-container fluid>
+              <v-card color="grey lighten-4">
+                <v-container>
+                  <!-- <v-row dense> -->
+                    <v-col cols="12">
+                      <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드가 포함된 {{choice_company}} 기사</v-card-title>
+                      <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
+                      <v-card
+                          v-for="article in keywordarticles"
+                          :key="article.id"
+                          class="mx-auto"
+                          max-width="344"
+                          outlined
+                      >
+                          <div @click="goDetail(article)">
+                          <v-list-item three-line>
+                              <v-list-item-content>
+                                  <div class="overline mb-4">{{article.company}}</div>
+                                  <v-list-item-title class="headline mb-1">{{article.title}}</v-list-item-title>
+                                  <v-list-item-subtitle>{{article.summary}}</v-list-item-subtitle>
+                              </v-list-item-content>
+                              <v-avatar color="red lighten-4" size="70">
+                                  <img :src="company_image[article.company]"/>
+                              </v-avatar>
+                          </v-list-item>
+                          </div>
+                      </v-card>
+                    </v-col>
+                  <!-- </v-row> -->
+                </v-container>
+              </v-card>
+            </v-container>
+          </v-flex>
+        </v-layout>
       </div>
       </v-container>
     </v-container>

@@ -84,63 +84,44 @@
         </v-pagination>
     </div>
     <v-divider class="mx-4"></v-divider>
-    <!-- ------------- 1. 전체 (워드 클라우드, 관련뉴스 부분) start--------------- -->
-      <v-container style="width:100%; background-color: #E4E8EF" fluid>
-      <v-layout >
+    <!-- ------------- 3. 내 키워드 기사 부분 start--------------- -->
+    <v-container style="width:100%; background-color: #E4E8EF" fluid>
+      <v-container>
         <v-row>
-        <!-- ------------- 2. 워드 클라우드 부분 start --------------- -->
-        <v-flex xs12 sm8 md8>
-          <v-container>
+          <v-col>
             <KeywordWordCloud @myKeyword="goAlert" :info ="info"/>
-          </v-container>
-        </v-flex>
-        <!-- ------------- 2. 워드 클라우드 부분 end --------------- -->
-
-        </v-row>
-        <!-- ------------- 3. 내 키워드 기사 부분 start--------------- -->
-        <v-flex xs12 sm4 md4>
-          <v-container>
-            <v-card color="basil">
-                <!-- ---------- 4. 카드 내부 기사 ----------- -->
-              <v-container>
-                <v-row dense>
-                    <!-- article for문 -->
-                <!-- <div v-for="article in articles" :key="article.id" class="my-3"> -->
-                  <v-col cols="12">
-                    <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드를 표시해둔 기사</v-card-title>
-                    <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
-                    <v-card
-                      v-for="article in keywordarticles"
-                      :key="article.id"
-                      class="mx-auto"
-                      max-width="344"
-                      outlined
-                    >
-                        <div @click="goDetail(article)">
-                        <v-list-item three-line>
-                            <v-list-item-content>
-                                <div class="overline mb-4">{{article.company}}</div>
-                                <v-list-item-title class="headline mb-1">{{article.title}}</v-list-item-title>
-                                <v-list-item-subtitle>{{article.newspaper}}</v-list-item-subtitle>
-                            </v-list-item-content>
-                            <v-avatar color="red lighten-4" size="70">
-                                <img :src="company_image[article.company]"/>
-                            </v-avatar>
-                        </v-list-item>
-                        </div>
-                    </v-card>
-                  </v-col>
-                <!-- </div> -->
-                </v-row>
-              </v-container>
-              <!-- ---------- 4. 카드 내부 기사 ----------- -->
+          </v-col>
+          <v-col>
+            <v-card color="grey lighten-4">
+              <v-card-title v-if="myKeyword">"{{myKeyword}}" 키워드가 포함된 {{choice_company}} 기사</v-card-title>
+              <v-card-title v-else>워드클라우드에서 키워드를 선택하세요</v-card-title>
+              <v-list>
+                <v-card
+                    v-for="article in keywordarticles"
+                    :key="article.id"
+                    class="mx-auto"
+                    max-width="344"
+                    outlined
+                >
+                  <div @click="goDetail(article)">
+                    <v-list-item three-line>
+                      <v-list-item-content>
+                        <div class="overline mb-4">{{article.company}}</div>
+                        <v-list-item-title class="headline mb-1">{{article.title}}</v-list-item-title>
+                        <v-list-item-subtitle>{{article.summary}}</v-list-item-subtitle>
+                      </v-list-item-content>
+                      <v-avatar color="red lighten-4" size="70">
+                          <img :src="company_image[article.company]"/>
+                      </v-avatar>
+                    </v-list-item>
+                  </div>
+                </v-card>
+              </v-list>
             </v-card>
-          </v-container>
-        </v-flex>
-        <!-- ------------- 3. 내 키워드 기사 부분 end--------------- -->
-    <!-- ------------- 1. 전체 (워드 클라우드, 관련뉴스 부분) end --------------- -->
-      </v-layout>
+          </v-col>
+        </v-row>
       </v-container>
+    </v-container>
 </v-content>
 </template>
 

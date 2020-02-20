@@ -1,6 +1,6 @@
 <!-- HTML -->
 <template>
-  <div id="chartdiv"></div>
+  <div id="keywordchartdiv"></div>
 </template>
 
 <!-- Resources -->
@@ -35,10 +35,10 @@ export default {
     },
     watch: {
         info : function(){
-            var chart = am4core.create("chartdiv", am4plugins_wordCloud.WordCloud);
+            var keywordchart = am4core.create("keywordchartdiv", am4plugins_wordCloud.WordCloud);
             setTimeout(()=>{
-                chart.fontFamily = "Courier New";
-                var series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
+                keywordchart.fontFamily = "Courier New";
+                var series = keywordchart.series.push(new am4plugins_wordCloud.WordCloudSeries());
                 series.randomness = 0.4;
                 series.rotationThreshold = 0.5;
                 series.data = null;
@@ -69,10 +69,10 @@ export default {
                 var hoverState = series.labels.template.states.create("hover");
                 hoverState.properties.fill = am4core.color("#FF0000");
 
-                var subtitle = chart.titles.create();
+                var subtitle = keywordchart.titles.create();
                 subtitle.text = "(click to open)";
 
-                var title = chart.titles.create();
+                var title = keywordchart.titles.create();
                 title.text = this.choice_company + '\n기사 연관 키워드';
                 title.fontSize = 30;
                 title.fontWeight = "800";
@@ -89,8 +89,8 @@ export default {
         }
     },
     beforeDestroy() {
-        if (this.chart) {
-            this.chart.dispose();
+        if (this.keywordchart) {
+            this.keywordchart.dispose();
         }
     }
 }
@@ -98,9 +98,9 @@ export default {
 
 <!-- Styles -->
 <style scoped>
-#chartdiv {
+#keywordchartdiv {
   width: 100%;
   height: 600px;
-  background-color: #FFFBE6;
+  background-color : #F5F5F5;
 }
 </style>

@@ -33,6 +33,7 @@
                                                     :rules="credential.emailRules"
                                                     color="teal accent-3"
                                                     aria-required=""
+                                                    @keydown.enter="login"
                                                     />
                                                 <v-text-field
                                                     id="password"
@@ -43,6 +44,7 @@
                                                     prepend-icon="lock"
                                                     type="password"
                                                     color="teal accent-3"
+                                                    @keydown.enter="login"
                                                 />
 
                                             </v-form>
