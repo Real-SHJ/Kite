@@ -101,6 +101,6 @@ export default {
 #keywordchartdiv {
   width: 100%;
   height: 600px;
-  background-color: #FFFBE6;
+  background-color : #F5F5F5;
 }
 </style>

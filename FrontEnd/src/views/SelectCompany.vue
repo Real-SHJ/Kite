@@ -68,11 +68,6 @@ export default {
       timeout: 1000,
       items: [
         {
-          name: '네이버',
-          src: 'http://13.125.153.118:8999/img/logo/Naver.svg',
-          clicked: false
-        },
-        {
           name: '삼성전자',
           src: 'http://13.125.153.118:8999/img/logo/Samsung_Elec.svg',
           clicked: false
@@ -80,6 +75,11 @@ export default {
         {
           name: '삼성SDS',
           src: 'http://13.125.153.118:8999/img/logo/Samsung_SDS.svg',
+          clicked: false
+        },
+        {
+          name: '네이버',
+          src: 'http://13.125.153.118:8999/img/logo/Naver.svg',
           clicked: false
         },
         {

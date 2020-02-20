@@ -75,7 +75,7 @@ export default {
 <style scoped>
 .toolbar-btn:hover {
   cursor: pointer;
-  font-size: 200%;
+  /* font-size: 200%; */
   /* text-decoration: underline; */
   /* text-decoration-color: rgb(255, 147, 97); */
   /* color: rgb(255, 147, 97); */
